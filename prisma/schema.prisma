@@ -1,0 +1,131 @@
+generator client {
+    provider = "prisma-client"
+    output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+    provider = "postgresql"
+}
+
+// ============================================================================
+// ENUMS
+// ============================================================================
+
+enum OrganizationStatus {
+    DRAFT
+    PUBLISHED
+    ARCHIVED
+}
+
+enum SocialPlatform {
+    FACEBOOK
+    INSTAGRAM
+    TIKTOK
+    X
+    LINKEDIN
+    YOUTUBE
+    OTHER
+}
+
+// ============================================================================
+// MODELS
+// ============================================================================
+
+/// Organización principal (ONG, Asociación Civil, Proyecto Social)
+model Organization {
+    id               String             @id @default(cuid())
+    slug             String             @unique
+    name             String
+    shortDescription String             @db.VarChar(160)
+    fullDescription  String?            @db.Text
+    logoUrl          String?
+    coverImageUrl    String?
+    status           OrganizationStatus @default(DRAFT)
+    featured         Boolean            @default(false)
+    verified         Boolean            @default(false)
+    website          String?
+    email            String
+    phone            String?
+    donationLink     String?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    // Relations
+    location    Location?
+    socialLinks SocialLink[]
+    categories  Category[]
+
+    @@index([slug])
+    @@index([status])
+    @@index([featured])
+    @@index([verified])
+}
+
+/// Categoría/Taxonomía para clasificar organizaciones
+model Category {
+    id          String  @id @default(cuid())
+    slug        String  @unique
+    name        String
+    description String?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    // Relations (Many-to-Many)
+    organizations Organization[]
+
+    @@index([slug])
+}
+
+/// Ubicación/Dirección de la organización (sede principal)
+model Location {
+    id             String  @id @default(cuid())
+    street         String
+    exteriorNumber String
+    interiorNumber String?
+    neighborhood   String // Colonia
+    city           String // Municipio/Delegación
+    state          String // Estado
+    postalCode     String
+    latitude       Float?
+    longitude      Float?
+    googleMapsUrl  String?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    // Relations (1-to-1)
+    organizationId String       @unique
+    organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+}
+
+/// Enlaces a redes sociales de la organización
+model SocialLink {
+    id       String         @id @default(cuid())
+    platform SocialPlatform
+    url      String
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    // Relations (Many-to-1)
+    organizationId String
+    organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+    @@index([organizationId])
+}
+
+/// Log de auditoría para rastrear cambios de administradores
+model AuditLog {
+    id        String   @id @default(cuid())
+    action    String // CREATE, UPDATE, DELETE, UPDATE_STATUS, etc.
+    entityId  String // ID de la organización afectada
+    adminId   String // ID del usuario de Clerk
+    details   Json? // Snapshot de cambios
+    createdAt DateTime @default(now())
+
+    @@index([entityId])
+    @@index([adminId])
+    @@index([createdAt])
+}

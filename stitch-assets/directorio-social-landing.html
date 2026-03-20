@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Directorio Social - Encuentra y apoya causas que importan</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-primary-container": "#9dd090",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#a1d494",
+                        "tertiary-fixed-dim": "#9fcaff",
+                        "on-error": "#ffffff",
+                        "outline-variant": "#c2c9bb",
+                        "tertiary": "#003b67",
+                        "secondary": "#a14009",
+                        "outline": "#72796e",
+                        "tertiary-fixed": "#d2e4ff",
+                        "surface-container-highest": "#e2e2e2",
+                        "on-primary-fixed": "#002201",
+                        "error-container": "#ffdad6",
+                        "surface-container": "#eeeeee",
+                        "on-error-container": "#93000a",
+                        "surface-tint": "#3b6934",
+                        "primary-fixed": "#bcf0ae",
+                        "on-secondary-fixed-variant": "#7d2d00",
+                        "inverse-surface": "#2f3131",
+                        "surface-container-low": "#f3f3f3",
+                        "on-secondary-fixed": "#360f00",
+                        "primary-container": "#2d5a27",
+                        "on-tertiary-container": "#98c6ff",
+                        "tertiary-container": "#00528d",
+                        "secondary-fixed-dim": "#ffb596",
+                        "inverse-on-surface": "#f0f1f1",
+                        "on-surface-variant": "#42493e",
+                        "on-primary-fixed-variant": "#23501e",
+                        "surface-dim": "#dadada",
+                        "on-secondary-container": "#6a2500",
+                        "surface-bright": "#f9f9f9",
+                        "surface-container-high": "#e8e8e8",
+                        "secondary-container": "#fd844c",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed": "#ffdbcd",
+                        "background": "#f9f9f9",
+                        "on-surface": "#1a1c1c",
+                        "on-tertiary-fixed-variant": "#00497e",
+                        "on-background": "#1a1c1c",
+                        "inverse-primary": "#a1d494",
+                        "primary": "#154212",
+                        "surface-variant": "#e2e2e2",
+                        "on-primary": "#ffffff",
+                        "surface": "#f9f9f9",
+                        "on-tertiary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed": "#001d37"
+                    },
+                    fontFamily: {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Plus Jakarta Sans"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #F9F9F9;
+            color: #1a1c1c;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .editorial-shadow {
+            box-shadow: 0 20px 40px rgba(26, 28, 28, 0.06);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 w-full z-50 bg-white/80 dark:bg-stone-900/80 backdrop-blur-xl no-border bg-stone-100 dark:bg-stone-800 flat no-shadows">
+<div class="flex justify-between items-center w-full px-8 py-6 max-w-7xl mx-auto">
+<div class="text-2xl font-bold text-emerald-900 dark:text-emerald-50 font-['Plus_Jakarta_Sans'] tracking-tight">
+                Directorio Social
+            </div>
+<div class="hidden md:flex items-center space-x-10">
+<a class="text-emerald-900 dark:text-emerald-400 font-bold border-b-2 border-emerald-900 dark:border-emerald-400 pb-1 font-['Plus_Jakarta_Sans'] text-base transition-all duration-300" href="#">Todas las causas</a>
+<a class="text-stone-600 dark:text-stone-400 font-medium font-['Plus_Jakarta_Sans'] text-base hover:text-emerald-700 dark:hover:text-emerald-300 transition-all duration-300" href="#">Sobre el proyecto</a>
+</div>
+<button class="bg-gradient-to-r from-primary to-primary-container text-on-primary px-6 py-3 rounded-DEFAULT font-semibold active:scale-95 transition-transform">
+                Sugerir ONG
+            </button>
+</div>
+</nav>
+<main class="pt-24">
+<!-- Hero Section -->
+<section class="relative px-8 pt-20 pb-16 overflow-hidden">
+<div class="max-w-7xl mx-auto relative z-10">
+<div class="max-w-3xl">
+<h1 class="font-headline font-bold text-5xl md:text-7xl text-on-surface tracking-tight leading-[1.1] mb-8">
+                        Encuentra y apoya causas que <span class="text-primary italic">importan</span>.
+                    </h1>
+<!-- Search Bar Cluster -->
+<div class="relative max-w-2xl group">
+<div class="absolute inset-y-0 left-6 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline">search</span>
+</div>
+<input class="w-full bg-surface-container-highest border-none h-16 pl-16 pr-6 rounded-md text-lg focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all duration-300 editorial-shadow outline-none" placeholder="Buscar por causa, ONG o ciudad..." type="text"/>
+</div>
+</div>
+</div>
+<!-- Background Decorative Image -->
+<div class="absolute right-0 top-0 w-1/2 h-full hidden lg:block">
+<div class="w-full h-full bg-gradient-to-l from-transparent via-surface to-surface absolute inset-0 z-0"></div>
+<img alt="Comunidad trabajando en un huerto" class="w-full h-full object-cover opacity-30 grayscale hover:grayscale-0 transition-all duration-1000" data-alt="People gardening together in a community space" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3sLIFr3POSlhNULvxil1ByEPfFf6V-HU4AJo5Ae46wRatSi8jv6JsqYCj_hHstXL3th29sKhjIrYsSiKcEB1fOdVjbbU0Q7p2yb54_JRrRJb5PFeKVW9lcGQLnJMRSuOLiB2XBStcEHsw_OULANswyWXPkPXdnEkzZkqPY8dFsDJXVOIBn1tX_KUW7ZYj14Yd6w5R7VnwwGooxrwlVQ4dfEeodyFUN2b5GSg-pny4V4qEPCfRN8ROzwTZV-IQ9kJOb-CZ01ge2W8"/>
+</div>
+</section>
+<!-- Categories Pill Grid -->
+<section class="px-8 py-10">
+<div class="max-w-7xl mx-auto">
+<div class="flex flex-wrap gap-3">
+<button class="px-6 py-3 bg-primary-fixed text-on-primary-fixed rounded-full font-label font-medium flex items-center gap-2 hover:bg-primary transition-colors">
+<span class="material-symbols-outlined text-sm">eco</span>
+                        Environment
+                    </button>
+<button class="px-6 py-3 bg-surface-container text-on-surface-variant rounded-full font-label font-medium flex items-center gap-2 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-sm">health_and_safety</span>
+                        Health
+                    </button>
+<button class="px-6 py-3 bg-surface-container text-on-surface-variant rounded-full font-label font-medium flex items-center gap-2 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-sm">school</span>
+                        Education
+                    </button>
+<button class="px-6 py-3 bg-surface-container text-on-surface-variant rounded-full font-label font-medium flex items-center gap-2 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-sm">pets</span>
+                        Animals
+                    </button>
+<button class="px-6 py-3 bg-surface-container text-on-surface-variant rounded-full font-label font-medium flex items-center gap-2 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-sm">gavel</span>
+                        Social Justice
+                    </button>
+</div>
+</div>
+</section>
+<!-- Featured NGOs Grid -->
+<section class="px-8 py-20 bg-surface-container-low">
+<div class="max-w-7xl mx-auto">
+<div class="flex justify-between items-end mb-12">
+<div>
+<h2 class="font-headline font-bold text-3xl text-on-surface">Organizaciones destacadas</h2>
+<p class="text-on-surface-variant mt-2 font-body">Proyectos locales que están transformando realidades hoy.</p>
+</div>
+<a class="text-primary font-bold flex items-center gap-1 group" href="#">
+                        Ver todas 
+                        <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+<!-- NGO Card 1 -->
+<div class="group relative bg-surface-container-lowest rounded-DEFAULT overflow-hidden transition-all duration-500 hover:-translate-y-2">
+<div class="h-48 overflow-hidden relative">
+<img alt="Niños en una escuela comunitaria" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Children playing in a colorful outdoor setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA52AHrbZj9BazPQmeg3xiMjxYAjXgFaIWq8U3qmKNu5i2RpYhoF4E1O8h20H6G_xlcs5DJKhVA0ahOFePEsJiTwmN5fv2CdeuwKQU5L5evlwJLdSXAYMIFtGRUG4H_UTtTtYuuvM4w7Wos8Ex2r7RVCOZRkbYfQ-lsbh3r61WrhRc044QwmGxDlF6YHp8WVkbFqKj4WHFd3huuYToDh-S2h7LpPIhDgE8il25KneDaTulCE5C3Mzj58LXWsbpUYFT_UlqwBjhCeO0"/>
+<div class="absolute top-4 left-4">
+<span class="bg-tertiary-container text-on-tertiary-container px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">Impact</span>
+</div>
+</div>
+<div class="p-6 pt-12 relative">
+<div class="absolute -top-8 left-6 w-16 h-16 bg-white rounded-xl shadow-lg flex items-center justify-center p-2">
+<img alt="Logo Red de Apoyo" class="w-full h-full rounded-md" data-alt="Abstract minimal logo with green shapes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuARppnct6HKt5WSAwtczBBH9g89DH7zKWMByEHLtPBsl0FSD9r9mxpoNYhpc7C1vOfOhWrL_c3bAhj42QQ3Z659S3KcPBt6HbRGa-AXMu4l_i13QGNYh-8zn4NYLOeb2vhv9JG9oy3elIiPwRmDnX_8Zcwg4jpDkh_J5ihJHoC_ci3SY3YFiZydl7wufSpJ3EwiSPUKKnUc3EFsnfN_hPrAJDyxUQBIL7Vys1Da-wqbon3bQV6uoduUr5gYn8smZAuuFTuqhxPeI0k"/>
+</div>
+<h3 class="font-headline font-bold text-xl mb-2 text-on-surface">Red de Apoyo Escolar</h3>
+<p class="text-on-surface-variant text-sm line-clamp-2 mb-4 leading-relaxed">Brindamos refuerzo educativo y nutricional a niños en zonas vulnerables de la periferia.</p>
+<div class="flex items-center justify-between mt-auto">
+<div class="flex items-center text-outline text-xs font-medium gap-1">
+<span class="material-symbols-outlined text-sm">location_on</span>
+                                    Bogotá, Colombia
+                                </div>
+<span class="bg-primary-fixed text-on-primary-fixed-variant px-3 py-1 rounded-full text-[10px] font-bold">VERIFICADA</span>
+</div>
+</div>
+</div>
+<!-- NGO Card 2 -->
+<div class="group relative bg-surface-container-lowest rounded-DEFAULT overflow-hidden transition-all duration-500 hover:-translate-y-2">
+<div class="h-48 overflow-hidden relative">
+<img alt="Perro rescatado en refugio" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Happy golden retriever running in a park" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdlmeDvcYwDW-9Zd4NbHOwOYRIfeihBEcBWHyhveBiTVKhzE1O7Jr-_hkxQ_dG01m336uR56P_fU7nSpip_KL14zOEqlmLsezE1NuMsYGe5FcyEp7-0E6q6vdjIfr5Gankmc5S001VjJRP_Q_SCc38Zj8yPKiBJRhHtstTTvheM-fN8_BZUwpBXZ1Duj8boh3ID9ezzSS7P2TuuJajgQ1MWfxcoUG9WsbpHIzbQnDw6eX3SGwgw60CAYj3tgoM_JAd3oKO006X4Ho"/>
+<div class="absolute top-4 left-4">
+<span class="bg-tertiary-container text-on-tertiary-container px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">Local</span>
+</div>
+</div>
+<div class="p-6 pt-12 relative">
+<div class="absolute -top-8 left-6 w-16 h-16 bg-white rounded-xl shadow-lg flex items-center justify-center p-2">
+<img alt="Logo Huellas" class="w-full h-full rounded-md" data-alt="Minimalist orange paw print logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpvGmZUa68qKUKC-FmqImP4Wl6FcCjaGHgrSknQQIZ9mJyxjVy9N5UYRzxaonQwUPYveVS68qcs58BSwzdWafICvmkFo8TJcHzG7-QJduGFPxVhgw9nKoU46F0SRUvw28CkpNw2v9_Nd8tLX5YxcydRf62lAsRMyhm92uSrS7sTuOT14FUlLRCaQdbVGlBUDdznCnEmjnBv0hTaDiglU5RpBHqXb_T_ZXXNDGynvH1evUK6O1chw4rKajdVS-IqTylmLSwFk7jpNI"/>
+</div>
+<h3 class="font-headline font-bold text-xl mb-2 text-on-surface">Huellas de Libertad</h3>
+<p class="text-on-surface-variant text-sm line-clamp-2 mb-4 leading-relaxed">Refugio dedicado al rescate, rehabilitación y adopción responsable de animales domésticos.</p>
+<div class="flex items-center justify-between mt-auto">
+<div class="flex items-center text-outline text-xs font-medium gap-1">
+<span class="material-symbols-outlined text-sm">location_on</span>
+                                    Medellín, Colombia
+                                </div>
+<span class="bg-primary-fixed text-on-primary-fixed-variant px-3 py-1 rounded-full text-[10px] font-bold">VERIFICADA</span>
+</div>
+</div>
+</div>
+<!-- NGO Card 3 -->
+<div class="group relative bg-surface-container-lowest rounded-DEFAULT overflow-hidden transition-all duration-500 hover:-translate-y-2">
+<div class="h-48 overflow-hidden relative">
+<img alt="Manos plantando un árbol" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Close up of hands planting a sapling in soil" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXheFEFBqfIMbKQ4_1JRkkAecNmQqsd0OD54BoxI47xQ3dE22tXflT9jSEC58LD-qx6bi4cR21Jic5bf4-2jk7y9ELMkYmceNOm5q5_TGeoagmvvcgjsnRNJB_aA6DMlQyiJz_9yA5-vgj-a6DEj-wLYDPNvdSEsFzk0L1oX386-zSWGNTq8irTaFd7IJFP8ZqqnHHQkj2PP1jpgsRdrQ0ytyCbOR3xDwNrVn9SHoEVURpdqB4b8cGL96X_Luuu-j1VM_gGZ8A58E"/>
+<div class="absolute top-4 left-4">
+<span class="bg-tertiary-container text-on-tertiary-container px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">Planet</span>
+</div>
+</div>
+<div class="p-6 pt-12 relative">
+<div class="absolute -top-8 left-6 w-16 h-16 bg-white rounded-xl shadow-lg flex items-center justify-center p-2">
+<img alt="Logo Planeta Vivo" class="w-full h-full rounded-md" data-alt="Earth colored abstract circular logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpqOnn4OZIwo8Lrw105tw-zWjS4ocbPXyYB2m3icoTMSSCV3x_uuPnNM3CFIslTyOV837ca41I2gD8M60vjbuTZ7ojGPvvVHqjnokX0WMIUXsumubG8256OyXPXCt6C3HjZVLQ5PLquJ1pMm8sCuT45oJ6aryFnmQ03WadpsDyEXlSOul3hgLQRT3GgbMEYdtMcERnrE5y1BUbwKQY20McRoH9uQHJEAmB23MZX6z6r4mDBe4LPpEghx_pEuhnkylL6EuiwVSNDSU"/>
+</div>
+<h3 class="font-headline font-bold text-xl mb-2 text-on-surface">Fundación Planeta Vivo</h3>
+<p class="text-on-surface-variant text-sm line-clamp-2 mb-4 leading-relaxed">Reforestación nativa y educación ambiental para frenar el impacto del cambio climático.</p>
+<div class="flex items-center justify-between mt-auto">
+<div class="flex items-center text-outline text-xs font-medium gap-1">
+<span class="material-symbols-outlined text-sm">location_on</span>
+                                    Cali, Colombia
+                                </div>
+<span class="bg-primary-fixed text-on-primary-fixed-variant px-3 py-1 rounded-full text-[10px] font-bold">VERIFICADA</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Trust Section / Editorial Content -->
+<section class="px-8 py-32 bg-white">
+<div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-20 items-center">
+<div class="lg:w-1/2 relative">
+<div class="absolute -top-10 -left-10 w-40 h-40 bg-secondary-fixed rounded-full opacity-30 blur-3xl"></div>
+<div class="bg-surface-container-low rounded-xl overflow-hidden p-4 rotate-3 hover:rotate-0 transition-transform duration-500">
+<img alt="Equipo trabajando feliz" class="rounded-lg shadow-xl" data-alt="Diverse group of volunteers smiling and working together" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmLNwGqAQzMm-LKHgcfEvO-Rrp1G47w1Rq-biYHrpnUz8IuBbQyeMw6FE4nGGWMcOd8fCtB9MBRByPGbulBSL6U_f4wJUW2mbVbtEQ6z9w3whts_sICK5RyK5UzlsmyBSdLvMdPehxOtwQV6i1yFc9avfn68rU7jTUnAg2G_x9rTFNUBoxs_8T41Vgo-j5egk7hzq9n1uHrYMimkdDTbXZLh_tspxQCwwp9oaJIUmho0a5iYSFtENdxzsksnoEYDIpGA74j2FJzoM"/>
+</div>
+</div>
+<div class="lg:w-1/2">
+<h2 class="font-headline font-bold text-4xl mb-6 text-on-surface leading-tight">Por un ecosistema social transparente y accesible.</h2>
+<p class="font-body text-lg text-on-surface-variant mb-8 leading-relaxed">
+                        No somos una plataforma de recaudación, somos un puente. Creemos que la transformación social ocurre cuando las personas saben exactamente dónde y cómo su ayuda puede tener el mayor impacto.
+                    </p>
+<div class="grid grid-cols-2 gap-6">
+<div class="p-6 bg-surface-container rounded-lg">
+<span class="material-symbols-outlined text-primary text-3xl mb-3">verified_user</span>
+<h4 class="font-bold text-on-surface mb-1 text-base">Organizaciones Curadas</h4>
+<p class="text-sm text-outline">Verificamos la existencia y legalidad de cada ONG antes de listarla.</p>
+</div>
+<div class="p-6 bg-surface-container rounded-lg">
+<span class="material-symbols-outlined text-secondary text-3xl mb-3">diversity_1</span>
+<h4 class="font-bold text-on-surface mb-1 text-base">Impacto Real</h4>
+<p class="text-sm text-outline">Conecta directamente con los líderes de cada proyecto sin intermediarios.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-stone-50 dark:bg-stone-950 w-full py-12 px-8 tonal-shift from surface to surface-container">
+<div class="flex flex-col md:flex-row justify-between items-center max-w-7xl mx-auto space-y-4 md:space-y-0">
+<div class="flex flex-col items-center md:items-start">
+<div class="text-lg font-bold text-emerald-900 dark:text-emerald-50 font-['Plus_Jakarta_Sans']">
+                    Directorio Social
+                </div>
+<p class="font-['Plus_Jakarta_Sans'] text-sm leading-relaxed text-stone-500 dark:text-stone-400 mt-2">
+                    Hecho con amor por una familia
+                </p>
+</div>
+<div class="flex items-center space-x-8">
+<a class="text-stone-500 dark:text-stone-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors font-['Plus_Jakarta_Sans'] text-sm" href="#">Datos abiertos</a>
+<a class="text-emerald-900 dark:text-emerald-400 underline underline-offset-4 font-['Plus_Jakarta_Sans'] text-sm opacity-80 hover:opacity-100 transition-opacity" href="#">Principios</a>
+</div>
+</div>
+<div class="max-w-7xl mx-auto mt-8 pt-8 border-t border-stone-200 dark:border-stone-800 text-center md:text-left">
+<p class="text-[10px] text-stone-400 uppercase tracking-widest font-label">© 2024 DIRECTORIO SOCIAL · PROYECTO CIUDADANO</p>
+</div>
+</footer>
+</body></html>
