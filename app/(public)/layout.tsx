@@ -1,4 +1,4 @@
-import { Navbar, Footer } from "@/components/landing";
+import { Navbar, Footer } from "@/components/public";
 
 export default function PublicLayout({
   children,

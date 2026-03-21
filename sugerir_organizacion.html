@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sugerir ONG | Directorio Social</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-variant": "#e2e2e2",
+              "on-tertiary-container": "#98c6ff",
+              "secondary-fixed-dim": "#ffb596",
+              "inverse-on-surface": "#f0f1f1",
+              "error": "#ba1a1a",
+              "surface-dim": "#dadada",
+              "primary-fixed-dim": "#a1d494",
+              "tertiary": "#003b67",
+              "on-tertiary-fixed-variant": "#00497e",
+              "on-primary-fixed-variant": "#23501e",
+              "background": "#f9f9f9",
+              "secondary-fixed": "#ffdbcd",
+              "on-secondary-fixed": "#360f00",
+              "on-primary-container": "#9dd090",
+              "tertiary-fixed-dim": "#9fcaff",
+              "surface-bright": "#f9f9f9",
+              "on-secondary-container": "#6a2500",
+              "outline-variant": "#c2c9bb",
+              "surface-tint": "#3b6934",
+              "primary": "#154212",
+              "inverse-primary": "#a1d494",
+              "on-error": "#ffffff",
+              "on-secondary-fixed-variant": "#7d2d00",
+              "on-tertiary-fixed": "#001d37",
+              "on-primary": "#ffffff",
+              "inverse-surface": "#2f3131",
+              "secondary-container": "#fd844c",
+              "on-tertiary": "#ffffff",
+              "on-error-container": "#93000a",
+              "on-surface": "#1a1c1c",
+              "surface-container-lowest": "#ffffff",
+              "surface": "#f9f9f9",
+              "tertiary-container": "#00528d",
+              "on-secondary": "#ffffff",
+              "secondary": "#a14009",
+              "surface-container-highest": "#e2e2e2",
+              "error-container": "#ffdad6",
+              "surface-container-high": "#e8e8e8",
+              "surface-container": "#eeeeee",
+              "outline": "#72796e",
+              "surface-container-low": "#f3f3f3",
+              "on-primary-fixed": "#002201",
+              "on-background": "#1a1c1c",
+              "primary-fixed": "#bcf0ae",
+              "on-surface-variant": "#42493e",
+              "tertiary-fixed": "#d2e4ff",
+              "primary-container": "#2d5a27"
+            },
+            fontFamily: {
+              "headline": ["Plus Jakarta Sans"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface selection:bg-primary-fixed selection:text-on-primary-fixed min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-white/80 dark:bg-stone-900/80 backdrop-blur-xl">
+<div class="flex justify-between items-center w-full px-8 py-6 max-w-7xl mx-auto">
+<div class="text-2xl font-bold text-emerald-900 dark:text-emerald-50">
+                Directorio Social
+            </div>
+<div class="hidden md:flex items-center space-x-8">
+<a class="text-stone-600 dark:text-stone-400 font-medium hover:text-emerald-700 dark:hover:text-emerald-300 transition-all duration-300" href="#">Todas las causas</a>
+<a class="text-stone-600 dark:text-stone-400 font-medium hover:text-emerald-700 dark:hover:text-emerald-300 transition-all duration-300" href="#">Sobre el proyecto</a>
+<a class="text-emerald-900 dark:text-emerald-400 font-bold border-b-2 border-emerald-900 dark:border-emerald-400 pb-1 hover:text-emerald-700 dark:hover:text-emerald-300 transition-all duration-300 active:scale-95 transition-transform" href="#">Sugerir ONG</a>
+</div>
+<!-- Mobile Menu Placeholder -->
+<button class="md:hidden p-2 text-primary">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+</div>
+</nav>
+<main class="flex-grow pt-32 pb-24 px-6">
+<!-- Main Form Container -->
+<div class="max-w-2xl mx-auto">
+<!-- Header Section -->
+<div class="text-center mb-10">
+<h1 class="font-headline text-4xl md:text-5xl font-bold tracking-tight text-primary mb-4">
+                    Sugerir una Organización
+                </h1>
+<p class="font-body text-on-surface-variant text-lg max-w-lg mx-auto leading-relaxed">
+                    Ayúdanos a ampliar nuestra red conectando a más personas con causas que importan.
+                </p>
+</div>
+<!-- Alert/Callout -->
+<div class="bg-surface-container-low rounded-xl p-5 mb-10 flex gap-4 items-start border-l-4 border-primary/20">
+<span class="material-symbols-outlined text-primary mt-1" data-icon="info">info</span>
+<p class="font-body text-on-surface-variant text-sm leading-relaxed">
+                    Todas las sugerencias son revisadas manualmente por nuestro equipo antes de ser publicadas para garantizar la calidad del directorio.
+                </p>
+</div>
+<!-- Suggestion Form -->
+<div class="bg-surface-container-lowest rounded-xl p-8 md:p-10 shadow-[0_20px_40px_rgba(26,28,28,0.04)]">
+<form action="#" class="space-y-8" method="POST">
+<!-- Field: Name -->
+<div class="space-y-2">
+<label class="font-label text-xs font-medium uppercase tracking-wider text-on-surface-variant" for="org_name">
+                            Nombre de la Organización
+                        </label>
+<input class="w-full bg-surface-container-highest border-none rounded-md px-4 py-3 focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all duration-300 outline-none font-body text-on-surface placeholder:text-on-surface-variant/50" id="org_name" name="org_name" placeholder="Ej. Fundación Vida Verde" required="" type="text"/>
+</div>
+<!-- Field Row: Category & Location -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="font-label text-xs font-medium uppercase tracking-wider text-on-surface-variant" for="category">
+                                Categoría Principal
+                            </label>
+<select class="w-full bg-surface-container-highest border-none rounded-md px-4 py-3 focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all duration-300 outline-none font-body text-on-surface appearance-none" id="category" name="category" required="">
+<option disabled="" selected="" value="">Seleccionar...</option>
+<option value="medio-ambiente">Medio Ambiente</option>
+<option value="salud">Salud</option>
+<option value="educacion">Educación</option>
+<option value="animales">Bienestar Animal</option>
+<option value="social">Acción Social</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="font-label text-xs font-medium uppercase tracking-wider text-on-surface-variant" for="location">
+                                Ciudad / Estado
+                            </label>
+<input class="w-full bg-surface-container-highest border-none rounded-md px-4 py-3 focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all duration-300 outline-none font-body text-on-surface placeholder:text-on-surface-variant/50" id="location" name="location" placeholder="Ej. Madrid, España" required="" type="text"/>
+</div>
+</div>
+<!-- Field: Description -->
+<div class="space-y-2">
+<label class="font-label text-xs font-medium uppercase tracking-wider text-on-surface-variant" for="description">
+                            Breve descripción
+                        </label>
+<textarea class="w-full bg-surface-container-highest border-none rounded-md px-4 py-3 focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all duration-300 outline-none font-body text-on-surface placeholder:text-on-surface-variant/50" id="description" name="description" placeholder="¿Qué hace esta organización por su comunidad?" required="" rows="4"></textarea>
+</div>
+<!-- Field: URL -->
+<div class="space-y-2">
+<label class="font-label text-xs font-medium uppercase tracking-wider text-on-surface-variant" for="url">
+                            URL del sitio web o red social
+                        </label>
+<div class="relative">
+<input class="w-full bg-surface-container-highest border-none rounded-md pl-12 pr-4 py-3 focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all duration-300 outline-none font-body text-on-surface placeholder:text-on-surface-variant/50" id="url" name="url" placeholder="https://www.organizacion.org" required="" type="url"/>
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant/60" data-icon="link">link</span>
+</div>
+<p class="font-label text-[10px] text-on-surface-variant/70 italic mt-1">Utilizamos este enlace para verificar la autenticidad de la ONG.</p>
+</div>
+<!-- Submit Button -->
+<div class="pt-4">
+<button class="w-full bg-gradient-to-r from-primary to-primary-container text-on-primary font-headline font-bold py-4 rounded-md shadow-lg shadow-primary/10 hover:shadow-primary/20 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300 flex justify-center items-center gap-2" type="submit">
+<span>Enviar Sugerencia</span>
+<span class="material-symbols-outlined text-lg" data-icon="send">send</span>
+</button>
+</div>
+</form>
+</div>
+<!-- Secondary CTA / Help -->
+<div class="mt-12 text-center">
+<p class="text-on-surface-variant font-body text-sm">
+                    ¿Tienes dudas sobre los criterios de inclusión? 
+                    <a class="text-primary font-semibold underline underline-offset-4 hover:text-primary-container transition-colors" href="#">Consulta nuestras guías</a>
+</p>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-stone-50 dark:bg-stone-950 w-full py-12 px-8">
+<div class="flex flex-col md:flex-row justify-between items-center max-w-7xl mx-auto space-y-4 md:space-y-0">
+<div class="text-lg font-bold text-emerald-900 dark:text-emerald-50">
+                Directorio Social
+            </div>
+<div class="flex space-x-8">
+<a class="text-stone-500 dark:text-stone-400 font-['Plus_Jakarta_Sans'] text-sm leading-relaxed hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors opacity-80 hover:opacity-100" href="#">Datos abiertos</a>
+<a class="text-stone-500 dark:text-stone-400 font-['Plus_Jakarta_Sans'] text-sm leading-relaxed hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors opacity-80 hover:opacity-100" href="#">Principios</a>
+</div>
+<div class="text-stone-500 dark:text-stone-400 font-['Plus_Jakarta_Sans'] text-sm leading-relaxed">
+                Hecho con amor por una familia
+            </div>
+</div>
+</footer>
+</body></html>

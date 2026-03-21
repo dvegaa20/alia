@@ -1,38 +1,38 @@
+import { getPublishedOrgs } from "@/server/actions";
+import { HeroContainer } from "@/components/public/home/hero-container";
 import {
   HeroSection,
   CategoriesSection,
   FeaturedSection,
   TrustSection,
-} from "@/components/landing";
+} from "@/components/public";
 
-export default function Page() {
+// Fallback emojis by category slug
+const fallbackIcons: Record<string, string> = {
+  'medio-ambiente': '🌍',
+  'educacion': '📚',
+  'salud': '🏥',
+  'vivienda': '🏠',
+  'derechos-humanos': '⚖️',
+  'infancia': '👶',
+}
+
+export default async function Page() {
+  const { data: orgs } = await getPublishedOrgs({ limit: 100 });
+  
+  const formattedOrgs = (orgs || []).map(org => ({
+    slug: org.slug,
+    name: org.name,
+    category: org.categories[0]?.name || 'Organización',
+    logo: org.logoUrl || fallbackIcons[org.categories[0]?.slug] || '🤝'
+  }));
+
   return (
     <>
-      {/* Wrapper for Hero + Categories with shared glow overlay */}
-      <div className="relative overflow-hidden">
-        {/* Glow Effect — positioned at the boundary between Hero and Categories */}
-        <div
-          className="absolute left-1/4 bottom-1/2 -translate-x-1/2 w-200 h-150 pointer-events-none z-10"
-          style={{
-            background:
-              "radial-gradient(ellipse at center, var(--color-ds-primary-fixed) 0%, transparent 70%)",
-            opacity: 0.25,
-            filter: "blur(80px)",
-          }}
-        />
-        <div
-          className="absolute left-1/3 bottom-[40%] -translate-x-1/3 w-125 h-100 pointer-events-none z-10"
-          style={{
-            background:
-              "radial-gradient(ellipse at center, var(--color-ds-tertiary-container) 0%, transparent 70%)",
-            opacity: 0.15,
-            filter: "blur(100px)",
-          }}
-        />
-
-        <HeroSection />
+      <HeroContainer>
+        <HeroSection organizations={formattedOrgs} />
         <CategoriesSection />
-      </div>
+      </HeroContainer>
       <FeaturedSection />
       <TrustSection />
     </>
