@@ -2,8 +2,8 @@ import { clerkMiddleware, createRouteMatcher, clerkClient } from '@clerk/nextjs/
 import { NextResponse } from 'next/server'
 
 const ALLOWED_EMAILS = process.env.ALLOWED_EMAILS?.split(',') || []
-const isProtectedRoute = createRouteMatcher(['/adm/alia(.*)'])
-const isSignInRoute = createRouteMatcher(['/adm/alia/sign-in(.*)'])
+const isProtectedRoute = createRouteMatcher(['/admin(.*)'])
+const isSignInRoute = createRouteMatcher(['/admin/sign-in(.*)'])
 
 export default clerkMiddleware(async (auth, req) => {
   // Skip authentication check for sign-in route (prevents redirect loop)
@@ -17,7 +17,7 @@ export default clerkMiddleware(async (auth, req) => {
 
     // Require authentication
     if (!userId) {
-      return NextResponse.redirect(new URL('/adm/alia/sign-in', req.url))
+      return NextResponse.redirect(new URL('/admin/sign-in', req.url))
     }
 
     // Get user's email from Clerk
@@ -38,6 +38,6 @@ export default clerkMiddleware(async (auth, req) => {
 export const config = {
   matcher: [
     // Only run middleware on admin routes
-    '/adm/alia/:path*',
+    '/admin/:path*',
   ],
 }

@@ -11,8 +11,8 @@ export default function SignInPage() {
                     },
                 }}
                 routing="path"
-                path="/adm/alia/sign-in"
-                signUpUrl="/adm/alia/sign-in"
+                path="/admin/sign-in"
+                signUpUrl="/admin/sign-in"
             />
         </div>
     )

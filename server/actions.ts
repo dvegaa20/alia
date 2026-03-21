@@ -16,8 +16,9 @@ export async function getPublishedOrgs(filters?: {
   query?: string
   page?: number
   limit?: number
+  featured?: boolean
 }) {
-  const { categorySlug, query, page = 1, limit = 10 } = filters || {}
+  const { categorySlug, query, page = 1, limit = 10, featured } = filters || {}
   const skip = (page - 1) * limit
 
   try {
@@ -29,6 +30,10 @@ export async function getPublishedOrgs(filters?: {
       whereClause.categories = {
         some: { slug: categorySlug },
       }
+    }
+
+    if (featured !== undefined) {
+      whereClause.featured = featured
     }
 
     if (query) {
@@ -89,6 +94,93 @@ export async function getOrgBySlug(slug: string) {
   } catch (error) {
     console.error('[getOrgBySlug] Error:', error)
     return { success: false, error: 'Failed to fetch organization' }
+  }
+}
+
+export async function getTopCategoriesWithOrgs() {
+  try {
+    const categories = await prisma.category.findMany({
+      include: {
+        _count: {
+          select: {
+            organizations: {
+              where: { status: OrganizationStatus.PUBLISHED },
+            },
+          },
+        },
+        organizations: {
+          where: { status: OrganizationStatus.PUBLISHED },
+          orderBy: [
+            { featured: 'desc' },
+            { createdAt: 'desc' }
+          ],
+          take: 5,
+          include: {
+            location: true
+          }
+        },
+      },
+    })
+
+    // Sort by org count descending and take top 5
+    const topCategories = categories
+      .sort((a, b) => b._count.organizations - a._count.organizations)
+      .slice(0, 5)
+
+    return { success: true, data: topCategories }
+  } catch (error) {
+    console.error('[getTopCategoriesWithOrgs] Error:', error)
+    return { success: false, error: 'Failed to fetch top categories' }
+  }
+}
+
+export async function getFeaturedOrganizations() {
+  try {
+    const orgs = await prisma.organization.findMany({
+      where: {
+        status: OrganizationStatus.PUBLISHED,
+        verified: true,
+        featured: true,
+      },
+      take: 5,
+      orderBy: {
+        updatedAt: 'desc',
+      },
+      include: {
+        location: true,
+        categories: true,
+      },
+    })
+    return { success: true, data: orgs }
+  } catch (error) {
+    console.error('[getFeaturedOrganizations] Error:', error)
+    return { success: false, error: 'Failed to fetch featured organizations' }
+  }
+}
+
+export async function getLatestByCategory(categorySlug: string) {
+  try {
+    const orgs = await prisma.organization.findMany({
+      where: {
+        status: OrganizationStatus.PUBLISHED,
+        verified: true,
+        categories: {
+          some: { slug: categorySlug }
+        }
+      },
+      take: 5,
+      orderBy: {
+        createdAt: 'desc',
+      },
+      include: {
+        location: true,
+        categories: true,
+      },
+    })
+    return { success: true, data: orgs }
+  } catch (error) {
+    console.error('[getLatestByCategory] Error:', error)
+    return { success: false, error: 'Failed to fetch latest by category' }
   }
 }
 
