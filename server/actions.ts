@@ -17,8 +17,12 @@ export async function getPublishedOrgs(filters?: {
   page?: number
   limit?: number
   featured?: boolean
+  state?: string
+  city?: string
+  verified?: boolean
+  sort?: string
 }) {
-  const { categorySlug, query, page = 1, limit = 10, featured } = filters || {}
+  const { categorySlug, query, page = 1, limit = 10, featured, state, city, verified, sort } = filters || {}
   const skip = (page - 1) * limit
 
   try {
@@ -36,11 +40,34 @@ export async function getPublishedOrgs(filters?: {
       whereClause.featured = featured
     }
 
+    if (verified !== undefined) {
+      whereClause.verified = verified
+    }
+
+    if (state || city) {
+      whereClause.location = {}
+      if (state) {
+        whereClause.location.state = { contains: state, mode: 'insensitive' }
+      }
+      if (city) {
+        whereClause.location.city = { contains: city, mode: 'insensitive' }
+      }
+    }
+
     if (query) {
       whereClause.OR = [
         { name: { contains: query, mode: 'insensitive' } },
         { shortDescription: { contains: query, mode: 'insensitive' } },
       ]
+    }
+
+    let orderByClause: any = { createdAt: 'desc' }
+    if (sort === 'name-asc') {
+      orderByClause = { name: 'asc' }
+    } else if (sort === 'name-desc') {
+      orderByClause = { name: 'desc' }
+    } else if (sort === 'oldest') {
+      orderByClause = { createdAt: 'asc' }
     }
 
     const [orgs, total] = await Promise.all([
@@ -52,9 +79,7 @@ export async function getPublishedOrgs(filters?: {
         },
         skip,
         take: limit,
-        orderBy: {
-          createdAt: 'desc',
-        },
+        orderBy: orderByClause,
       }),
       prisma.organization.count({ where: whereClause }),
     ])
@@ -72,6 +97,32 @@ export async function getPublishedOrgs(filters?: {
   } catch (error) {
     console.error('[getPublishedOrgs] Error:', error)
     return { success: false, error: 'Failed to fetch organizations' }
+  }
+}
+
+export async function getAvailableCities(state: string) {
+  try {
+    const locations = await prisma.location.findMany({
+      where: {
+        state: { contains: state, mode: 'insensitive' },
+        organization: {
+          status: OrganizationStatus.PUBLISHED,
+        },
+      },
+      select: {
+        city: true,
+      },
+      distinct: ['city'],
+      orderBy: {
+        city: 'asc',
+      },
+    })
+
+    const cities = locations.map((l) => l.city)
+    return { success: true, data: cities }
+  } catch (error) {
+    console.error('[getAvailableCities] Error:', error)
+    return { success: false, error: 'Failed to fetch cities' }
   }
 }
 
@@ -131,6 +182,32 @@ export async function getTopCategoriesWithOrgs() {
   } catch (error) {
     console.error('[getTopCategoriesWithOrgs] Error:', error)
     return { success: false, error: 'Failed to fetch top categories' }
+  }
+}
+
+export async function getAllCategoriesWithCount() {
+  try {
+    const categories = await prisma.category.findMany({
+      include: {
+        _count: {
+          select: {
+            organizations: {
+              where: { status: OrganizationStatus.PUBLISHED },
+            },
+          },
+        },
+      },
+    })
+
+    // Sort by org count descending
+    const sortedCategories = categories
+      .filter((cat) => cat._count.organizations > 0) // Optional: only show categories with orgs
+      .sort((a, b) => b._count.organizations - a._count.organizations)
+
+    return { success: true, data: sortedCategories }
+  } catch (error) {
+    console.error('[getAllCategoriesWithCount] Error:', error)
+    return { success: false, error: 'Failed to fetch all categories' }
   }
 }
 

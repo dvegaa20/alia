@@ -4,7 +4,7 @@ import { Separator } from "@/components/ui/separator";
 export function Footer() {
   return (
     <footer className="bg-muted w-full py-12 px-8">
-      <div className="flex flex-col md:flex-row justify-between items-center max-w-7xl mx-auto space-y-4 md:space-y-0">
+      <div className="flex flex-col md:flex-row justify-between items-center max-w-[1440px] mx-auto space-y-4 md:space-y-0">
         <div className="flex flex-col items-center md:items-start">
           <div className="text-lg font-bold text-ds-primary dark:text-ds-primary-fixed font-headline">
             Directorio Social
@@ -30,7 +30,7 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto mt-8">
+      <div className="max-w-[1440px] mx-auto mt-8">
         <Separator className="bg-border" />
         <div className="pt-8 text-center md:text-left">
           <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-label">

@@ -1,9 +1,20 @@
 "use client";
 
+import { useState, useEffect, useCallback, useTransition } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
-import { Search, Grid2x2, GraduationCap, TreePine, Stethoscope } from "lucide-react";
+import { Search, Grid2x2, GraduationCap, TreePine, Stethoscope, Hash } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { MEXICO_STATES } from "@/lib/mexico-states";
+import { getAvailableCities } from "@/server/actions";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import {
@@ -12,6 +23,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  SelectGroup,
 } from "@/components/ui/select";
 import {
   SidebarProvider,
@@ -23,17 +35,109 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
-  SidebarFooter,
 } from "@/components/ui/sidebar";
 
-const categories = [
-  { label: "Todas las causas", icon: Grid2x2, active: true },
-  { label: "Educación", icon: GraduationCap, active: false },
-  { label: "Medio Ambiente", icon: TreePine, active: false },
-  { label: "Salud", icon: Stethoscope, active: false },
-];
+interface CategoryData {
+  id: string;
+  slug: string;
+  name: string;
+  _count: { organizations: number };
+}
 
-export function SidebarFilters() {
+interface SidebarFiltersProps {
+  searchQuery?: string;
+  categories?: CategoryData[];
+  activeCategorySlug?: string;
+  activeState?: string;
+  activeCity?: string;
+  activeVerified?: boolean;
+}
+
+const iconMap: Record<string, React.ElementType> = {
+  "educacion": GraduationCap,
+  "medio-ambiente": TreePine,
+  "salud": Stethoscope,
+};
+
+export function SidebarFilters({
+  searchQuery = "",
+  categories = [],
+  activeCategorySlug = "",
+  activeState,
+  activeCity,
+  activeVerified,
+}: SidebarFiltersProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [inputValue, setInputValue] = useState(searchQuery);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [availableCities, setAvailableCities] = useState<string[]>([]);
+  const [isCitiesLoading, startCitiesTransition] = useTransition();
+
+  // Fetch available cities when state changes
+  useEffect(() => {
+    if (activeState) {
+      startCitiesTransition(async () => {
+        const result = await getAvailableCities(activeState);
+        setAvailableCities(result.data || []);
+      });
+    } else {
+      setAvailableCities([]);
+    }
+  }, [activeState]);
+
+  // Sync input when URL changes externally (e.g. browser back/forward)
+  useEffect(() => {
+    setInputValue(searchQuery);
+  }, [searchQuery]);
+
+  // Debounced URL update
+  const updateSearch = useCallback(
+    (value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+
+      if (value.trim()) {
+        params.set("q", value.trim());
+      } else {
+        params.delete("q");
+      }
+
+      // Reset to page 1 on new search
+      params.delete("page");
+
+      const qs = params.toString();
+      router.push(`/directory${qs ? `?${qs}` : ""}`, { scroll: false });
+    },
+    [router, searchParams]
+  );
+
+  const handleCategoryClick = (e: React.MouseEvent, slug: string | null) => {
+    e.preventDefault();
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (slug) {
+      params.set("category", slug);
+    } else {
+      params.delete("category");
+    }
+
+    params.delete("page");
+    const qs = params.toString();
+    router.push(`/directory${qs ? `?${qs}` : ""}`, { scroll: false });
+    setIsDialogOpen(false);
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      // Only push if value actually changed from current URL
+      if (inputValue !== searchQuery) {
+        updateSearch(inputValue);
+      }
+    }, 200);
+
+    return () => clearTimeout(timer);
+  }, [inputValue, searchQuery, updateSearch]);
+
   return (
     <motion.aside
       initial={{ x: -30, opacity: 0 }}
@@ -59,62 +163,198 @@ export function SidebarFilters() {
                 className="pl-10 pr-4 py-3 h-auto bg-muted/50 border-none rounded-lg focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:bg-background text-sm font-medium placeholder:text-muted-foreground"
                 placeholder="Buscar ONG..."
                 type="text"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
               />
             </div>
           </SidebarHeader>
 
-          <SidebarContent className="px-0 scrollbar-none flex-initial">
+          <SidebarContent className="px-0 scrollbar-none">
             <SidebarGroup className="px-0">
               <SidebarGroupContent>
                 <SidebarMenu className="space-y-1">
-                  {categories.map((category) => {
-                    const Icon = category.icon;
+                  {/* Default Action: All Categories */}
+                  <SidebarMenuItem>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={!activeCategorySlug}
+                      className="rounded-xl px-4 py-5 flex items-center space-x-3 transition-all duration-200 active:translate-x-1"
+                    >
+                      <a href="#" onClick={(e) => handleCategoryClick(e, null)}>
+                        <Grid2x2
+                          className="size-5"
+                          {...(!activeCategorySlug
+                            ? { fill: "currentColor", strokeWidth: 0 }
+                            : {})}
+                        />
+                        <span className="font-headline text-sm font-medium">
+                          Todas las causas
+                        </span>
+                      </a>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+
+                  {/* Dynamic Categories */}
+                  {categories.slice(0, 4).map((category) => {
+                    const Icon = iconMap[category.slug] || Hash;
+                    const isActive = activeCategorySlug === category.slug;
 
                     return (
-                      <SidebarMenuItem key={category.label}>
+                      <SidebarMenuItem key={category.id}>
                         <SidebarMenuButton
                           asChild
-                          isActive={category.active}
+                          isActive={isActive}
                           className="rounded-xl px-4 py-5 flex items-center space-x-3 transition-all duration-200 active:translate-x-1"
                         >
-                          <a href="#">
+                          <a href="#" onClick={(e) => handleCategoryClick(e, category.slug)}>
                             <Icon
                               className="size-5"
-                              {...(category.active
+                              {...(isActive
                                 ? { fill: "currentColor", strokeWidth: 0 }
                                 : {})}
                             />
-                            <span className="font-headline text-sm font-medium">
-                              {category.label}
+                            <span className="font-headline text-sm font-medium flex-1">
+                              {category.name}
+                            </span>
+                            <span className="text-xs font-medium text-muted-foreground bg-muted px-2 py-0.5 rounded-full">
+                              {category._count.organizations}
                             </span>
                           </a>
                         </SidebarMenuButton>
                       </SidebarMenuItem>
                     );
                   })}
+
+                  {/* Show More Button */}
+                  {categories.length > 4 && (
+                    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                      <SidebarMenuItem>
+                        <DialogTrigger asChild>
+                          <SidebarMenuButton className="rounded-xl px-4 py-5 flex items-center space-x-3 transition-all duration-200 hover:bg-muted/50 text-muted-foreground hover:text-foreground">
+                            <Grid2x2 className="size-5 opacity-70" />
+                            <span className="font-headline text-sm font-medium">
+                              Ver todas las causas
+                            </span>
+                          </SidebarMenuButton>
+                        </DialogTrigger>
+                      </SidebarMenuItem>
+
+                      <DialogContent className="sm:max-w-[700px] gap-6 px-8 py-10 rounded-3xl max-h-[90vh] overflow-y-auto" data-lenis-prevent>
+                        <DialogHeader>
+                          <DialogTitle className="text-2xl font-headline font-bold text-center mb-4">
+                            Todas las causas
+                          </DialogTitle>
+                        </DialogHeader>
+                        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+                          {categories.map((category) => {
+                            const Icon = iconMap[category.slug] || Hash;
+                            const isActive = activeCategorySlug === category.slug;
+
+                            return (
+                              <button
+                                key={`dialog-${category.id}`}
+                                onClick={(e) => handleCategoryClick(e, category.slug)}
+                                className={cn(
+                                  "flex flex-col items-center justify-center p-6 rounded-2xl border text-center transition-all duration-200 hover:shadow-md hover:-translate-y-1",
+                                  isActive
+                                    ? "bg-ds-primary/10 border-ds-primary text-ds-primary dark:bg-ds-primary-fixed/20 dark:text-ds-primary-fixed dark:border-ds-primary-fixed"
+                                    : "bg-background border-border hover:border-border/80"
+                                )}
+                              >
+                                <Icon className="size-8 mb-3 opacity-80" />
+                                <span className="font-headline font-bold mb-1 leading-tight">
+                                  {category.name}
+                                </span>
+                                <span className="text-xs text-muted-foreground font-medium">
+                                  {category._count.organizations} ONG{category._count.organizations !== 1 && "s"} activas
+                                </span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+                  )}
                 </SidebarMenu>
               </SidebarGroupContent>
             </SidebarGroup>
 
             <SidebarGroup className="px-0 mt-4 border-t border-border pt-4">
               <SidebarGroupContent className="space-y-6">
+                {/* Estado */}
                 <div className="space-y-2">
                   <Label className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground px-4">
-                    Ubicación
+                    Estado
                   </Label>
-                  <Select defaultValue="all">
+                  <Select
+                    value={activeState || "all"}
+                    onValueChange={(value) => {
+                      const params = new URLSearchParams(searchParams.toString());
+                      if (value && value !== "all") {
+                        params.set("state", value);
+                      } else {
+                        params.delete("state");
+                      }
+                      params.delete("city");
+                      params.delete("page");
+                      const qs = params.toString();
+                      router.push(`/directory${qs ? `?${qs}` : ""}`, { scroll: false });
+                    }}
+                  >
                     <SelectTrigger className="w-full bg-muted/30 border-none rounded-lg text-sm font-medium">
-                      <SelectValue placeholder="Todo el país" />
+                      <SelectValue placeholder="Todo México" />
                     </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">Todo el país</SelectItem>
-                      <SelectItem value="madrid">Madrid</SelectItem>
-                      <SelectItem value="barcelona">Barcelona</SelectItem>
-                      <SelectItem value="valencia">Valencia</SelectItem>
+                    <SelectContent position="popper" className="max-h-64" data-lenis-prevent>
+                      <SelectGroup>
+                        <SelectItem value="all">Todo México</SelectItem>
+                        {MEXICO_STATES.map((state) => (
+                          <SelectItem key={state.slug} value={state.name}>
+                            {state.name}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
                     </SelectContent>
                   </Select>
                 </div>
 
+                {/* Municipio (only shows when a state is selected) */}
+                {activeState && (
+                  <div className="space-y-2">
+                    <Label className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground px-4">
+                      Municipio
+                    </Label>
+                    <Select
+                      value={activeCity || "all"}
+                      onValueChange={(value) => {
+                        const params = new URLSearchParams(searchParams.toString());
+                        if (value && value !== "all") {
+                          params.set("city", value);
+                        } else {
+                          params.delete("city");
+                        }
+                        params.delete("page");
+                        const qs = params.toString();
+                        router.push(`/directory${qs ? `?${qs}` : ""}`, { scroll: false });
+                      }}
+                    >
+                      <SelectTrigger className="w-full bg-muted/30 border-none rounded-lg text-sm font-medium">
+                        <SelectValue placeholder={isCitiesLoading ? "Cargando..." : "Todos los municipios"} />
+                      </SelectTrigger>
+                      <SelectContent position="popper" className="max-h-72" data-lenis-prevent>
+                        <SelectGroup>
+                          <SelectItem value="all">Todos los municipios</SelectItem>
+                          {availableCities.map((city) => (
+                            <SelectItem key={city} value={city}>
+                              {city}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
+
+                {/* Verified Toggle */}
                 <div className="px-4 flex items-center justify-between">
                   <Label
                     htmlFor="verified-toggle"
@@ -122,17 +362,25 @@ export function SidebarFilters() {
                   >
                     Solo verificadas
                   </Label>
-                  <Switch id="verified-toggle" />
+                  <Switch
+                    id="verified-toggle"
+                    checked={activeVerified === true}
+                    onCheckedChange={(checked) => {
+                      const params = new URLSearchParams(searchParams.toString());
+                      if (checked) {
+                        params.set("verified", "true");
+                      } else {
+                        params.delete("verified");
+                      }
+                      params.delete("page");
+                      const qs = params.toString();
+                      router.push(`/directory${qs ? `?${qs}` : ""}`, { scroll: false });
+                    }}
+                  />
                 </div>
               </SidebarGroupContent>
             </SidebarGroup>
           </SidebarContent>
-
-          <SidebarFooter className="px-0 pt-4 pb-2">
-            <Button className="w-full bg-ds-primary hover:bg-ds-primary/90 text-white py-4 h-auto rounded-xl font-bold text-sm tracking-tight shadow-md hover:shadow-lg transition-all active:scale-95">
-              Aplicar Filtros
-            </Button>
-          </SidebarFooter>
         </Sidebar>
       </SidebarProvider>
     </motion.aside>

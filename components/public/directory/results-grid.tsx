@@ -1,8 +1,15 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ChevronDown } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useRouter, useSearchParams } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
+import { SearchX } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   OrganizationCard,
   type OrganizationCardProps,
@@ -17,40 +24,45 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 
-const sampleOrganizations: OrganizationCardProps[] = [
-  {
-    name: "Reforesta Verde",
-    description:
-      "Recuperamos ecosistemas locales a través de la plantación estratégica de especies nativas y educación ambiental.",
-    category: "Medio Ambiente",
-    location: "Galicia, España",
-    coverImage: "/images/directorio/card-forest.jpg",
-    logoImage: "/images/directorio/logo-forest.jpg",
-    verified: true,
-  },
-  {
-    name: "Letras para el Futuro",
-    description:
-      "Programa de alfabetización digital y apoyo escolar para niños en zonas rurales de difícil acceso.",
-    category: "Educación",
-    location: "Sevilla, España",
-    coverImage: "/images/directorio/card-education.jpg",
-    logoImage: "/images/directorio/logo-education.jpg",
-    verified: true,
-  },
-  {
-    name: "Asistencia Solidaria",
-    description:
-      "Red de asistencia médica gratuita y acompañamiento psicológico para familias vulnerables.",
-    category: "Salud",
-    location: "Madrid, España",
-    coverImage: "/images/directorio/card-health.jpg",
-    logoImage: "/images/directorio/logo-health.jpg",
-    verified: false,
-  },
-];
+interface ResultsGridProps {
+  organizations: OrganizationCardProps[];
+  total: number;
+  currentPage: number;
+  totalPages: number;
+  searchQuery?: string;
+  sort?: string;
+}
 
-export function ResultsGrid() {
+function buildPageHref(page: number, searchQuery?: string, sort?: string) {
+  const params = new URLSearchParams();
+  if (searchQuery) params.set("q", searchQuery);
+  if (sort) params.set("sort", sort);
+  if (page > 1) params.set("page", String(page));
+  const qs = params.toString();
+  return `/directory${qs ? `?${qs}` : ""}`;
+}
+
+export function ResultsGrid({
+  organizations,
+  total,
+  currentPage,
+  totalPages,
+  searchQuery,
+  sort = "relevance",
+}: ResultsGridProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const handleSortChange = (value: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("sort", value);
+    // Reset to page 1 on sort to prevent empty pages
+    params.delete("page");
+    const qs = params.toString();
+    router.push(`/directory${qs ? `?${qs}` : ""}`, { scroll: false });
+  };
+  const hasResults = organizations.length > 0;
+
   return (
     <section className="flex-1 min-w-0">
       {/* Header */}
@@ -66,75 +78,141 @@ export function ResultsGrid() {
           </h1>
           <div className="flex items-center space-x-2 text-muted-foreground font-medium">
             <span className="text-ds-primary dark:text-ds-primary-fixed font-bold">
-              124
+              {total}
             </span>
-            <span>organizaciones encontradas</span>
+            <span>
+              {total === 1
+                ? "organización encontrada"
+                : "organizaciones encontradas"}
+            </span>
           </div>
         </div>
 
         <div className="flex items-center space-x-4 text-sm font-medium">
           <span className="text-muted-foreground">Ordenar por:</span>
-          <Button
-            variant="ghost"
-            className="flex items-center space-x-1 text-foreground hover:text-ds-primary dark:hover:text-ds-primary-fixed p-0 h-auto font-medium"
-          >
-            <span>Relevancia</span>
-            <ChevronDown className="size-4" />
-          </Button>
+          <Select value={sort} onValueChange={handleSortChange}>
+            <SelectTrigger className="border-none shadow-none bg-transparent hover:text-ds-primary dark:hover:text-ds-primary-fixed p-0 px-2 h-auto font-medium space-x-1 focus:ring-0">
+              <SelectValue placeholder="Relevancia" />
+            </SelectTrigger>
+            <SelectContent position="popper" align="end" className="w-45">
+              <SelectItem value="relevance">Relevancia</SelectItem>
+              <SelectItem value="oldest">Antiguas primero</SelectItem>
+              <SelectItem value="name-asc">Nombre (A - Z)</SelectItem>
+              <SelectItem value="name-desc">Nombre (Z - A)</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </motion.header>
 
-      {/* Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-        {sampleOrganizations.map((org, idx) => (
+      {/* Grid or Empty State */}
+      <AnimatePresence mode="wait">
+        {hasResults ? (
           <motion.div
-            key={org.name}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.5, delay: idx * 0.1 }}
+            key={`grid-${searchQuery}-${currentPage}`}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3 }}
+            className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"
           >
-            <OrganizationCard {...org} />
+            {organizations.map((org, idx) => (
+              <motion.div
+                key={org.slug}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: idx * 0.06 }}
+              >
+                <OrganizationCard {...org} />
+              </motion.div>
+            ))}
           </motion.div>
-        ))}
-      </div>
+        ) : (
+          <motion.div
+            key="empty"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.3 }}
+            className="flex flex-col items-center justify-center py-32 text-center"
+          >
+            <div className="w-20 h-20 rounded-2xl bg-muted flex items-center justify-center mb-6">
+              <SearchX className="size-10 text-muted-foreground" />
+            </div>
+            <h2 className="text-2xl font-bold text-foreground font-headline mb-2">
+              Sin resultados
+            </h2>
+            <p className="text-muted-foreground font-medium max-w-sm">
+              {searchQuery
+                ? `No encontramos organizaciones para "${searchQuery}". Intenta con otro término.`
+                : "No hay organizaciones disponibles en este momento."}
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Pagination */}
-      <motion.footer
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-        className="mt-20"
-      >
-        <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious href="#" text="Anterior" />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#" isActive>
-                1
-              </PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#">2</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#">3</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#">12</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationNext href="#" text="Siguiente" />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
-      </motion.footer>
+      {totalPages > 1 && (
+        <motion.footer
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="mt-20"
+        >
+          <Pagination>
+            <PaginationContent>
+              {currentPage > 1 && (
+                <PaginationItem>
+                  <PaginationPrevious
+                    href={buildPageHref(currentPage - 1, searchQuery, sort)}
+                    text="Anterior"
+                  />
+                </PaginationItem>
+              )}
+
+              {Array.from({ length: totalPages }, (_, i) => i + 1)
+                .filter((page) => {
+                  // Show first, last, current, and neighbors
+                  if (page === 1 || page === totalPages) return true;
+                  if (Math.abs(page - currentPage) <= 1) return true;
+                  return false;
+                })
+                .reduce<(number | "ellipsis")[]>((acc, page, idx, arr) => {
+                  if (idx > 0 && page - (arr[idx - 1] as number) > 1) {
+                    acc.push("ellipsis");
+                  }
+                  acc.push(page);
+                  return acc;
+                }, [])
+                .map((item, idx) =>
+                  item === "ellipsis" ? (
+                    <PaginationItem key={`ellipsis-${idx}`}>
+                      <PaginationEllipsis />
+                    </PaginationItem>
+                  ) : (
+                    <PaginationItem key={item}>
+                      <PaginationLink
+                        href={buildPageHref(item, searchQuery, sort)}
+                        isActive={item === currentPage}
+                      >
+                        {item}
+                      </PaginationLink>
+                    </PaginationItem>
+                  )
+                )}
+
+              {currentPage < totalPages && (
+                <PaginationItem>
+                  <PaginationNext
+                    href={buildPageHref(currentPage + 1, searchQuery, sort)}
+                    text="Siguiente"
+                  />
+                </PaginationItem>
+              )}
+            </PaginationContent>
+          </Pagination>
+        </motion.footer>
+      )}
     </section>
   );
 }

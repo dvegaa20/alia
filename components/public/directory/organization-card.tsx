@@ -1,9 +1,11 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MapPin, BadgeCheck } from "lucide-react";
 
 export interface OrganizationCardProps {
+  slug: string;
   name: string;
   description: string;
   category: string;
@@ -14,6 +16,7 @@ export interface OrganizationCardProps {
 }
 
 export function OrganizationCard({
+  slug,
   name,
   description,
   category,
@@ -23,6 +26,7 @@ export function OrganizationCard({
   verified = false,
 }: OrganizationCardProps) {
   return (
+    <Link href={`/directory/${slug}`} className="block">
     <article className="group relative bg-background rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(26,28,28,0.06)] dark:hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)] border border-border/50">
       {/* Cover Image */}
       <div className="h-40 overflow-hidden relative">
@@ -82,15 +86,15 @@ export function OrganizationCard({
               <MapPin className="size-4 mr-1" />
               <span>{location}</span>
             </div>
-            <Button
-              variant="link"
-              className="text-ds-primary dark:text-ds-primary-fixed font-bold text-sm p-0 h-auto hover:underline underline-offset-4"
+            <span
+              className="text-ds-primary dark:text-ds-primary-fixed font-bold text-sm hover:underline underline-offset-4"
             >
               Ver perfil
-            </Button>
+            </span>
           </div>
         </div>
       </div>
     </article>
+    </Link>
   );
 }

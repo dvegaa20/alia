@@ -7,7 +7,7 @@ import { ShieldCheck, HeartHandshake } from "lucide-react";
 export function TrustSection() {
   return (
     <section className="px-8 py-32 bg-background">
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-20 items-center">
+      <div className="max-w-[1440px] mx-auto flex flex-col lg:flex-row gap-20 items-center">
         {/* Image Side */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}

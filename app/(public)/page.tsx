@@ -46,7 +46,7 @@ export default async function Page(props: {
         <HeroSection organizations={formattedOrgs} />
 
         {/* New Category Approach via Server Components */}
-        <div id="categorias" className="py-20 px-8 max-w-7xl mx-auto scroll-mt-20">
+        <div id="categorias" className="py-20 px-8 max-w-[1440px] mx-auto scroll-mt-20">
           <CategoryFilters
             categories={topCategories || []}
             activeCategorySlug={activeCategorySlug}

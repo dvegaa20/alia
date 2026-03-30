@@ -17,7 +17,7 @@ export function Navbar() {
 
   return (
     <nav className="sticky top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
-      <div className="flex justify-between items-center w-full px-8 py-6 max-w-7xl mx-auto">
+      <div className="flex justify-between items-center w-full px-8 py-6 max-w-[1440px] mx-auto">
         <Link
           href="/"
           className="text-2xl font-bold text-ds-primary dark:text-ds-primary-fixed font-headline tracking-tight"
