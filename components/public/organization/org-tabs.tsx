@@ -2,8 +2,12 @@
 
 import { motion } from "framer-motion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { AboutContent } from "./about-content";
-import { ContactSidebar } from "./contact-sidebar";
+import AboutTab from "./tabs/about-tab";
+import ExploreTab from "./tabs/explore-tab";
+import ImpactTab from "./tabs/impact-tab";
+import ContactTab from "./tabs/contact-tab";
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 interface OrgTabsProps {
   name: string;
@@ -13,6 +17,22 @@ interface OrgTabsProps {
   phone?: string | null;
   website?: string | null;
   location?: string;
+  googleMapsUrl?: string | null;
+  // Impact sidebar
+  impactCurrent?: number | null;
+  impactGoal?: number | null;
+  impactType?: string | null;
+  // Explore tab
+  relevantLinks: string[];
+  // Impact tab
+  featuredFact?: any;
+  secondaryFacts?: any;
+  testimony?: any;
+  milestone?: any;
+  foundedYear?: number | null;
+  verified?: boolean;
+  // Contact tab
+  officeHours?: any;
 }
 
 export function OrgTabs({
@@ -23,6 +43,18 @@ export function OrgTabs({
   phone,
   website,
   location,
+  googleMapsUrl,
+  impactCurrent,
+  impactGoal,
+  impactType,
+  relevantLinks,
+  featuredFact,
+  secondaryFacts,
+  testimony,
+  milestone,
+  foundedYear,
+  verified,
+  officeHours,
 }: OrgTabsProps) {
   return (
     <motion.div
@@ -35,100 +67,71 @@ export function OrgTabs({
         <TabsList className="bg-transparent border-b border-border/30 rounded-none w-full justify-start gap-10 h-auto p-0">
         <TabsTrigger
           value="sobre"
-          className="rounded-none border-b-4 border-transparent data-[state=active]:border-ds-primary data-[state=active]:text-ds-primary data-[state=active]:font-bold data-[state=active]:shadow-none text-muted-foreground font-medium tracking-tight pb-4 px-0 bg-transparent hover:text-ds-primary transition-colors cursor-pointer"
+          className="rounded-none border-0 border-b-4 border-transparent data-[state=active]:border-b-ds-primary data-[state=active]:text-ds-primary data-[state=active]:font-bold data-[state=active]:shadow-none text-muted-foreground font-medium tracking-tight pb-4 px-0 bg-transparent! dark:data-[state=active]:bg-transparent hover:text-ds-primary transition-colors cursor-pointer"
         >
           Sobre nosotros
         </TabsTrigger>
         <TabsTrigger
           value="explorar"
-          className="rounded-none border-b-4 border-transparent data-[state=active]:border-ds-primary data-[state=active]:text-ds-primary data-[state=active]:font-bold data-[state=active]:shadow-none text-muted-foreground font-medium tracking-tight pb-4 px-0 bg-transparent hover:text-ds-primary transition-colors cursor-pointer"
+          className="rounded-none border-0 border-b-4 border-transparent data-[state=active]:border-b-ds-primary data-[state=active]:text-ds-primary data-[state=active]:font-bold data-[state=active]:shadow-none text-muted-foreground font-medium tracking-tight pb-4 px-0 bg-transparent! dark:data-[state=active]:bg-transparent hover:text-ds-primary transition-colors cursor-pointer"
         >
           Explorar
         </TabsTrigger>
         <TabsTrigger
           value="impacto"
-          className="rounded-none border-b-4 border-transparent data-[state=active]:border-ds-primary data-[state=active]:text-ds-primary data-[state=active]:font-bold data-[state=active]:shadow-none text-muted-foreground font-medium tracking-tight pb-4 px-0 bg-transparent hover:text-ds-primary transition-colors cursor-pointer"
+          className="rounded-none border-0 border-b-4 border-transparent data-[state=active]:border-b-ds-primary data-[state=active]:text-ds-primary data-[state=active]:font-bold data-[state=active]:shadow-none text-muted-foreground font-medium tracking-tight pb-4 px-0 bg-transparent! dark:data-[state=active]:bg-transparent hover:text-ds-primary transition-colors cursor-pointer"
         >
           Impacto
         </TabsTrigger>
         <TabsTrigger
           value="contacto"
-          className="rounded-none border-b-4 border-transparent data-[state=active]:border-ds-primary data-[state=active]:text-ds-primary data-[state=active]:font-bold data-[state=active]:shadow-none text-muted-foreground font-medium tracking-tight pb-4 px-0 bg-transparent hover:text-ds-primary transition-colors cursor-pointer"
+          className="rounded-none border-0 border-b-4 border-transparent data-[state=active]:border-b-ds-primary data-[state=active]:text-ds-primary data-[state=active]:font-bold data-[state=active]:shadow-none text-muted-foreground font-medium tracking-tight pb-4 px-0 bg-transparent! dark:data-[state=active]:bg-transparent hover:text-ds-primary transition-colors cursor-pointer"
         >
           Contacto
         </TabsTrigger>
-        <TabsTrigger
-          value="donar"
-          className="rounded-none border-b-4 border-transparent data-[state=active]:border-ds-primary data-[state=active]:text-ds-primary data-[state=active]:font-bold data-[state=active]:shadow-none text-muted-foreground font-medium tracking-tight pb-4 px-0 bg-transparent hover:text-ds-primary transition-colors cursor-pointer"
-        >
-          Donar
-        </TabsTrigger>
-      </TabsList>
+        </TabsList>
 
       {/* Tab Content */}
       <TabsContent value="sobre" className="mt-12">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-16 items-start">
-          {/* Left Column: Story */}
-          <AboutContent
-            name={name}
-            fullDescription={fullDescription}
-            galleryImages={galleryImages}
-          />
-
-          {/* Right Column: Sidebar */}
-          <ContactSidebar
-            location={location}
-            email={email}
-            phone={phone}
-            website={website}
-          />
-        </div>
+        <AboutTab
+          name={name}
+          fullDescription={fullDescription}
+          galleryImages={galleryImages}
+          email={email}
+          phone={phone}
+          website={website}
+          location={location}
+          impactCurrent={impactCurrent}
+          impactGoal={impactGoal}
+          impactType={impactType}
+        />
       </TabsContent>
 
       <TabsContent value="explorar" className="mt-12">
-        <div className="py-20 text-center text-muted-foreground">
-          <p className="text-lg font-medium">Próximamente</p>
-          <p className="text-sm mt-2">
-            Aquí podrás explorar los proyectos y actividades de esta
-            organización.
-          </p>
-        </div>
+        <ExploreTab relevantLinks={relevantLinks} />
       </TabsContent>
 
       <TabsContent value="impacto" className="mt-12">
-        <div className="py-20 text-center text-muted-foreground">
-          <p className="text-lg font-medium">Próximamente</p>
-          <p className="text-sm mt-2">
-            Métricas de impacto y reportes estarán disponibles aquí.
-          </p>
-        </div>
+        <ImpactTab
+          featuredFact={featuredFact}
+          secondaryFacts={secondaryFacts}
+          testimony={testimony}
+          milestone={milestone}
+          foundedYear={foundedYear}
+          verified={verified}
+        />
       </TabsContent>
 
       <TabsContent value="contacto" className="mt-12">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-16 items-start">
-          <div className="py-20 text-center text-muted-foreground">
-            <p className="text-lg font-medium">Próximamente</p>
-            <p className="text-sm mt-2">
-              Formulario de contacto directo disponible próximamente.
-            </p>
-          </div>
-          <ContactSidebar
-            location={location}
-            email={email}
-            phone={phone}
-            website={website}
-          />
-        </div>
+        <ContactTab
+          email={email}
+          phone={phone}
+          location={location}
+          googleMapsUrl={googleMapsUrl}
+          officeHours={officeHours}
+        />
       </TabsContent>
 
-      <TabsContent value="donar" className="mt-12">
-        <div className="py-20 text-center text-muted-foreground">
-          <p className="text-lg font-medium">Próximamente</p>
-          <p className="text-sm mt-2">
-            Opciones de donación estarán disponibles aquí.
-          </p>
-        </div>
-      </TabsContent>
     </Tabs>
     </motion.div>
   );
