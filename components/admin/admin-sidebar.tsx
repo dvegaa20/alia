@@ -1,14 +1,13 @@
 "use client"
 
-import * as React from "react"
 import Link from "next/link"
-import { SignOutButton } from "@clerk/nextjs"
+import { usePathname } from "next/navigation"
+import { SignOutButton, useUser } from "@clerk/nextjs"
 import {
   LayoutDashboard,
   Building2,
   Tags,
   ClipboardList,
-  UserCircle,
   LogOut,
 } from "lucide-react"
 
@@ -22,55 +21,59 @@ import {
 } from "@/components/ui/sidebar"
 
 export function AdminSidebar() {
+  const { user } = useUser()
+  const pathname = usePathname()
+
+  const routes = [
+    {
+      label: "Dashboard",
+      icon: LayoutDashboard,
+      href: "/admin",
+    },
+    {
+      label: "Categorías",
+      icon: Tags,
+      href: "/admin/categories",
+    },
+    {
+      label: "Sugerencias Pendientes",
+      icon: ClipboardList,
+      href: "/admin/suggestions",
+    },
+  ]
+
   return (
     <Sidebar className="border-r-0">
       <SidebarHeader className="px-6 py-8 flex flex-col gap-1">
         <span className="text-lg font-bold text-sidebar-foreground">
           Admin Panel
         </span>
-        <span className="text-xs font-medium text-sidebar-foreground/70 tracking-wide uppercase">
-          Digital Curator
+        <span className="text-xs font-medium text-sidebar-foreground/70 tracking-wide uppercase truncate">
+          {user?.fullName || user?.firstName || "Digital Curator"}
         </span>
       </SidebarHeader>
 
       <SidebarContent className="px-3">
         <SidebarMenu className="flex flex-col gap-1">
-          <SidebarMenuItem>
-            <Link
-              href="#"
-              className="flex w-full items-center gap-3 px-4 py-3 text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors duration-200 rounded-lg font-medium text-sm"
-            >
-              <LayoutDashboard className="h-5 w-5" />
-              Dashboard
-            </Link>
-          </SidebarMenuItem>
-          <SidebarMenuItem>
-            <Link
-              href="#"
-              className="flex w-full items-center gap-3 px-4 py-3 text-sidebar-accent-foreground font-semibold border-r-4 border-sidebar-primary bg-sidebar-accent rounded-lg text-sm"
-            >
-              <Building2 className="h-5 w-5" />
-              Organizaciones
-            </Link>
-          </SidebarMenuItem>
-          <SidebarMenuItem>
-            <Link
-              href="#"
-              className="flex w-full items-center gap-3 px-4 py-3 text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors duration-200 rounded-lg font-medium text-sm"
-            >
-              <Tags className="h-5 w-5" />
-              Categorías
-            </Link>
-          </SidebarMenuItem>
-          <SidebarMenuItem>
-            <Link
-              href="#"
-              className="flex w-full items-center gap-3 px-4 py-3 text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors duration-200 rounded-lg font-medium text-sm"
-            >
-              <ClipboardList className="h-5 w-5" />
-              Sugerencias Pendientes
-            </Link>
-          </SidebarMenuItem>
+          {routes.map((route) => {
+            const isActive = pathname === route.href || (route.href !== "/admin" && pathname?.startsWith(route.href))
+
+            return (
+              <SidebarMenuItem key={route.href}>
+                <Link
+                  href={route.href}
+                  className={
+                    isActive
+                      ? "flex w-full items-center gap-3 px-4 py-3 text-sidebar-accent-foreground font-semibold border-r-4 border-sidebar-primary bg-sidebar-accent rounded-lg text-sm"
+                      : "flex w-full items-center gap-3 px-4 py-3 text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors duration-200 rounded-lg font-medium text-sm"
+                  }
+                >
+                  <route.icon className="h-5 w-5" />
+                  {route.label}
+                </Link>
+              </SidebarMenuItem>
+            )
+          })}
         </SidebarMenu>
       </SidebarContent>
 

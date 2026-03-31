@@ -1,6 +1,25 @@
 "use client"
 
-import { Search, Filter, MoreVertical } from "lucide-react"
+import { useState, useTransition, useEffect, useRef } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
+import Image from "next/image"
+import Link from "next/link"
+import {
+  Search,
+  MoreVertical,
+  Pencil,
+  Star,
+  StarOff,
+  Eye,
+  CheckCircle2,
+  EyeOff,
+  XCircle,
+  Trash2,
+  Building2,
+  Loader2,
+  ArrowDownNarrowWide,
+  ArrowUpNarrowWide,
+} from "lucide-react"
 import {
   Table,
   TableBody,
@@ -11,198 +30,585 @@ import {
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { toggleOrgStatus, toggleOrgFeatured, deleteOrganization } from "@/server/actions"
+import type { OrganizationStatus } from "@/prisma/generated/client"
 
-const NGOs = [
-  {
-    id: 1,
-    name: "EcoWorld Foundation",
-    website: "ecoworld.org",
-    logo: "https://lh3.googleusercontent.com/aida-public/AB6AXuDD0nhdM1W_afnbIti-8aBcmT1FBuCjpiu9XIkTBsgHxgy6uHYJORiKuxQ5yE1m6LhnXHsxX3YDh1c5bAqkjyCYr8p3a3tq8lJvP82fuVEN3Bfa07iYQaGRv2NahludryBmxcaNul7DFWymascYQ6HGTojoi46u4BPW5Ee36j7a7DNmjrd1505ZpRE-71lafwnNFrZwSBj7P3b1SLhXYHF7ehddNoQbHIjd-X0PzLUKJuSC-agjgZh2dYQUpqUcI4LJYQwRNZ1xspU",
-    logoBg: "bg-emerald-500/20",
-    category: "Medio Ambiente",
-    categoryBg: "bg-blue-500/20 text-blue-700 dark:text-blue-300",
-    location: "Madrid, ES",
-    status: "Publicado",
-    statusColor: "bg-emerald-500",
-    statusText: "text-emerald-700 dark:text-emerald-400",
-  },
-  {
-    id: 2,
-    name: "ChildHope Global",
-    website: "childhope.intl",
-    logo: "https://lh3.googleusercontent.com/aida-public/AB6AXuBhSSerksVnSsdpSuyefYFbzoBd74i9ljfebuyEKvDy8fPeidOW7K5SI4NGdRm-l8Q3m7NUHeMqp_DFxLvu1HZzJDpQeo6FwMVCdia5tdGAinCrelaCn_2JljiUbuAtLqxXYNWQc-twVyCKkxMTjrOZfrjuwvoOGz-sQYJ_Q21jDqHX3TNzYzRIIw0HCOMi2b50EBB3P_MTbHUtrrCuIfLetnpXfNrL7BWcfwyeR-Sf04CzZpHRrK6rCJPprdveoWu5sD4gxUMVoCI",
-    logoBg: "bg-orange-500/20",
-    category: "Social",
-    categoryBg: "bg-orange-500/20 text-orange-700 dark:text-orange-300",
-    location: "Lima, PE",
-    status: "Borrador",
-    statusColor: "bg-muted-foreground",
-    statusText: "text-muted-foreground",
-  },
-  {
-    id: 3,
-    name: "EduTech Without Borders",
-    website: "edutech.io",
-    logo: "https://lh3.googleusercontent.com/aida-public/AB6AXuDxB52DgZl9OLfJcGnKYJe1jkkpA1tk_jLjezKz7Arh5oIV7E-qsBK5Xj4mRkXthWAFCeaQ2mtLDhCjixNFadEFRaN7za4w-B31pAEhmhHfproeb3YRkII0XRlMK-8M2WGZCv43fA4-63Q4QYM_mh60tBSxyO9U1wp60bOXAaUsbmC2c_M-c_IJ3difc3lRgSr-s9_-O7CaM6fvJis5t7MO6RoZ3xaQbLZwteB8trgRL7ch3KqoL7AOh8zeT6Zk2IJOVSnDSqXtkw0",
-    logoBg: "bg-blue-500/20",
-    category: "Educación",
-    categoryBg: "bg-muted text-foreground",
-    location: "Bogotá, CO",
-    status: "Pendiente",
-    statusColor: "bg-amber-500",
-    statusText: "text-amber-700 dark:text-amber-400",
-  },
-  {
-    id: 4,
-    name: "ForestKeep Action",
-    website: "forestkeep.ngo",
-    logo: "https://lh3.googleusercontent.com/aida-public/AB6AXuB-s8L9GriFdYvRd9zyNC2qnEI6ZPT-pvK4BebiUjM-2IL9v7HFUbMh5YHVPFKfmUZnbcZWXIT_ZjlQs_hIiQuLXSnrfQ7uS2SNQi4lWZUofuIp6gov8qmt2CdviRLhG8mcFzN-8GPdUJIvDSKZXsAUWU-hq3CXLMEcAmHgzt-Q7bkUad3cbJ5MYGLQ3027Ue1ghlLFvmhBDhThgr8IaapaBKnHxivTewfE9eWMmfkwzPa9F401paGpnXPc7O7CNzor8Ingc2fiFlM",
-    logoBg: "bg-emerald-500/20",
-    category: "Medio Ambiente",
-    categoryBg: "bg-blue-500/20 text-blue-700 dark:text-blue-300",
-    location: "Berlin, DE",
-    status: "Publicado",
-    statusColor: "bg-emerald-500",
-    statusText: "text-emerald-700 dark:text-emerald-400",
-  },
-]
+// ---------------------------------------------------------------------------
+// Types
+// ---------------------------------------------------------------------------
 
-export function OrganizationsTable() {
+type OrgWithRelations = {
+  id: string
+  slug: string
+  name: string
+  logoUrl: string | null
+  website: string | null
+  email: string
+  status: OrganizationStatus
+  featured: boolean
+  location: { city: string; state: string } | null
+  categories: { id: string; name: string; slug: string }[]
+}
+
+type Props = {
+  organizations: OrgWithRelations[]
+  meta: {
+    total: number
+    page: number
+    limit: number
+    totalPages: number
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Status config
+// ---------------------------------------------------------------------------
+
+const STATUS_CONFIG: Record<
+  string,
+  { label: string; dotColor: string; textColor: string }
+> = {
+  PUBLISHED: {
+    label: "Publicada",
+    dotColor: "bg-emerald-500",
+    textColor: "text-emerald-700 dark:text-emerald-400",
+  },
+  DRAFT: {
+    label: "En Revisión",
+    dotColor: "bg-amber-500",
+    textColor: "text-amber-700 dark:text-amber-400",
+  },
+  ARCHIVED: {
+    label: "Inactiva",
+    dotColor: "bg-slate-400 dark:bg-slate-500",
+    textColor: "text-slate-600 dark:text-slate-400",
+  },
+  REJECTED: {
+    label: "Rechazada",
+    dotColor: "bg-red-500",
+    textColor: "text-red-700 dark:text-red-400",
+  },
+}
+
+// ---------------------------------------------------------------------------
+// Component
+// ---------------------------------------------------------------------------
+
+export function OrganizationsTable({ organizations, meta }: Props) {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const [isPending, startTransition] = useTransition()
+  const [isFilteringStatus, startFilteringStatus] = useTransition()
+
+  // Local state for search input (debounced push to URL)
+  const [searchInput, setSearchInput] = useState(searchParams.get("q") ?? "")
+  const [isDebouncing, setIsDebouncing] = useState(false)
+  const initialMount = useRef(true)
+
+  const isSearchLoading = isPending || isDebouncing
+
+  // Alert dialog for soft-delete confirmation
+  const [deleteTarget, setDeleteTarget] = useState<{
+    id: string
+    name: string
+  } | null>(null)
+
+  // ------ URL helpers ------
+
+  function pushParams(params: Record<string, string | undefined>) {
+    const sp = new URLSearchParams(searchParams.toString())
+    Object.entries(params).forEach(([key, value]) => {
+      if (value) {
+        sp.set(key, value)
+      } else {
+        sp.delete(key)
+      }
+    })
+    // Always reset to page 1 when filters change (except when changing page itself)
+    if (!("page" in params)) {
+      sp.delete("page")
+    }
+    startTransition(() => {
+      router.push(`?${sp.toString()}`)
+    })
+  }
+
+  // Debounced search
+  useEffect(() => {
+    if (initialMount.current) {
+      initialMount.current = false
+      return
+    }
+
+    setIsDebouncing(true)
+    const handler = setTimeout(() => {
+      pushParams({ q: searchInput || undefined })
+      setIsDebouncing(false)
+    }, 400)
+
+    return () => clearTimeout(handler)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchInput])
+
+  function handleSearch(e: React.FormEvent) {
+    e.preventDefault()
+    pushParams({ q: searchInput || undefined })
+  }
+
+  const currentStatus = searchParams.get("status") ?? "ALL"
+  const currentSort = searchParams.get("sort") ?? "createdAt"
+  const currentOrder = (searchParams.get("order") as "asc" | "desc") ?? "desc"
+
+  function toggleOrder() {
+    const sp = new URLSearchParams(searchParams.toString())
+    sp.set("order", currentOrder === "desc" ? "asc" : "desc")
+    sp.delete("page")
+    startFilteringStatus(() => {
+      router.push(`?${sp.toString()}`)
+    })
+  }
+
+  // ------ Server action wrappers ------
+
+  async function handleToggleFeatured(id: string) {
+    startTransition(async () => {
+      await toggleOrgFeatured(id)
+    })
+  }
+
+  async function handleChangeStatus(id: string, status: OrganizationStatus) {
+    startTransition(async () => {
+      await toggleOrgStatus(id, status)
+    })
+  }
+
+  async function handleDelete() {
+    if (!deleteTarget) return
+    startTransition(async () => {
+      await deleteOrganization(deleteTarget.id)
+      setDeleteTarget(null)
+    })
+  }
+
+  // ------ Pagination helpers ------
+
+  const { page, totalPages, total, limit } = meta
+  const start = (page - 1) * limit + 1
+  const end = Math.min(page * limit, total)
+
   return (
-    <section className="bg-card rounded-lg overflow-hidden border shadow-sm">
-      {/* Table Header Actions */}
-      <div className="px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b bg-transparent">
-        <div className="space-y-1">
-          <h2 className="text-xl font-bold text-card-foreground">Gestión de Organizaciones</h2>
-          <p className="text-sm text-muted-foreground">
-            Visualiza y administra el directorio de ONGs activas.
-          </p>
-        </div>
-        <div className="flex items-center gap-3">
-          <div className="relative w-full md:w-64">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4" />
-            <Input
-              className="pl-10 pr-4 py-2 bg-muted border-none rounded-md text-sm w-full focus-visible:ring-1 focus-visible:ring-primary/50 focus-visible:ring-offset-0 transition-all"
-              placeholder="Filtrar por nombre..."
-            />
+    <>
+      <section className="bg-card rounded-lg overflow-hidden border shadow-sm">
+        {/* Header */}
+        <div className="px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b bg-transparent">
+          <div className="space-y-1">
+            <h2 className="text-xl font-bold text-card-foreground">
+              Gestión de Organizaciones
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              Visualiza y administra el directorio de ONGs.
+            </p>
           </div>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="bg-muted hover:bg-muted/80 text-foreground rounded-md transition-colors"
-          >
-            <Filter className="h-4 w-4" />
-          </Button>
-        </div>
-      </div>
+          <div className="flex items-center gap-3">
+            {/* Search */}
+            <form onSubmit={handleSearch} className="relative w-full md:w-64">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4" />
+              <Input
+                className="pl-10 pr-10 py-2 bg-muted border-none rounded-md text-sm w-full focus-visible:ring-1 focus-visible:ring-primary/50 focus-visible:ring-offset-0 transition-all"
+                placeholder="Buscar por nombre..."
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+              />
+              {isSearchLoading && (
+                <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4 animate-spin" />
+              )}
+            </form>
 
-      {/* Data Table */}
-      <div className="overflow-x-auto">
-        <Table className="w-full text-left">
-          <TableHeader>
-            <TableRow className="bg-muted/50 hover:bg-muted/50">
-              <TableHead className="px-8 py-4 font-semibold text-muted-foreground text-xs uppercase tracking-wider">
-                Organización
-              </TableHead>
-              <TableHead className="px-8 py-4 font-semibold text-muted-foreground text-xs uppercase tracking-wider">
-                Categoría
-              </TableHead>
-              <TableHead className="px-8 py-4 font-semibold text-muted-foreground text-xs uppercase tracking-wider">
-                Ubicación
-              </TableHead>
-              <TableHead className="px-8 py-4 font-semibold text-muted-foreground text-xs uppercase tracking-wider">
-                Estado
-              </TableHead>
-              <TableHead className="px-8 py-4 font-semibold text-muted-foreground text-xs uppercase tracking-wider text-right">
-                Acciones
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {NGOs.map((ngo, index) => (
-              <TableRow
-                key={ngo.id}
-                className="group"
+            {/* Status Filter */}
+            <Select
+              value={currentStatus}
+              onValueChange={(value) => {
+                const sp = new URLSearchParams(searchParams.toString())
+                if (value === "ALL") {
+                  sp.delete("status")
+                } else {
+                  sp.set("status", value)
+                }
+                sp.delete("page")
+                startFilteringStatus(() => {
+                  router.push(`?${sp.toString()}`)
+                })
+              }}
+            >
+              <SelectTrigger className="w-40 bg-muted border-none text-sm">
+                <SelectValue placeholder="Estado" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="ALL">Todos</SelectItem>
+                <SelectItem value="PUBLISHED">Publicadas</SelectItem>
+                <SelectItem value="DRAFT">En Revisión</SelectItem>
+                <SelectItem value="ARCHIVED">Inactivas</SelectItem>
+                <SelectItem value="REJECTED">Rechazadas</SelectItem>
+              </SelectContent>
+            </Select>
+
+            {/* Sort Filter */}
+            <div className="flex items-center gap-1">
+              <Select
+                value={currentSort}
+                onValueChange={(value) => {
+                  const sp = new URLSearchParams(searchParams.toString())
+                  sp.set("sort", value)
+                  sp.delete("page")
+                  startFilteringStatus(() => {
+                    router.push(`?${sp.toString()}`)
+                  })
+                }}
               >
-                <TableCell className="px-8 py-5">
-                  <div className="flex items-center gap-4">
-                    <div
-                      className={`h-10 w-10 rounded-lg ${ngo.logoBg} flex items-center justify-center overflow-hidden`}
-                    >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={ngo.logo}
-                        alt={`${ngo.name} Logo`}
-                        className="h-full w-full object-cover"
-                      />
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="font-bold text-sm text-foreground">
-                        {ngo.name}
-                      </span>
-                      <span className="text-xs text-muted-foreground">{ngo.website}</span>
-                    </div>
-                  </div>
-                </TableCell>
-                <TableCell className="px-8 py-5">
-                  <span
-                    className={`px-3 py-1 ${ngo.categoryBg} text-[11px] font-bold rounded-full uppercase tracking-tighter`}
-                  >
-                    {ngo.category}
-                  </span>
-                </TableCell>
-                <TableCell className="px-8 py-5">
-                  <span className="text-sm text-muted-foreground">{ngo.location}</span>
-                </TableCell>
-                <TableCell className="px-8 py-5">
-                  <div className="flex items-center gap-2">
-                    <span
-                      className={`h-2 w-2 rounded-full ${ngo.statusColor}`}
-                    ></span>
-                    <span className={`text-sm font-medium ${ngo.statusText}`}>
-                      {ngo.status}
-                    </span>
-                  </div>
-                </TableCell>
-                <TableCell className="px-8 py-5 text-right">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    <MoreVertical className="h-4 w-4" />
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
-
-      {/* Pagination Footer */}
-      <div className="px-8 py-4 flex items-center justify-between border-t border-border">
-        <span className="text-xs text-muted-foreground">
-          Mostrando 1 a 4 de 124 resultados
-        </span>
-        <div className="flex items-center gap-2">
-          {/* We emulate the HTML exactly but with standard semantic colors */}
-          <button className="px-3 py-1 rounded border-none bg-muted text-muted-foreground cursor-not-allowed text-xs">
-            &lt;
-          </button>
-          <button className="px-3 py-1 rounded border-none bg-muted hover:bg-muted/80 text-foreground transition-colors font-bold text-xs">
-            1
-          </button>
-          <button className="px-3 py-1 rounded border-none text-muted-foreground hover:bg-muted transition-colors text-xs">
-            2
-          </button>
-          <button className="px-3 py-1 rounded border-none text-muted-foreground hover:bg-muted transition-colors text-xs">
-            3
-          </button>
-          <button className="px-3 py-1 rounded border-none bg-muted hover:bg-muted/80 text-foreground transition-colors text-xs">
-            &gt;
-          </button>
+                <SelectTrigger className="w-32 bg-muted border-none text-sm">
+                  <SelectValue placeholder="Ordenar por" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="createdAt">Registro</SelectItem>
+                  <SelectItem value="name">Nombre</SelectItem>
+                  <SelectItem value="featured">Destacados</SelectItem>
+                </SelectContent>
+              </Select>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={toggleOrder}
+                className="h-9 w-9 border-none bg-muted hover:bg-muted/80 shrink-0"
+                title={currentOrder === "desc" ? "Orden Descendente" : "Orden Ascendente"}
+              >
+                {currentOrder === "desc" ? (
+                  <ArrowDownNarrowWide className="h-4 w-4 text-muted-foreground" />
+                ) : (
+                  <ArrowUpNarrowWide className="h-4 w-4 text-muted-foreground" />
+                )}
+              </Button>
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
+
+        {/* Table */}
+        <div className="relative overflow-x-auto">
+          {isFilteringStatus && (
+            <div className="absolute inset-0 z-10 flex items-center justify-center bg-background/50 backdrop-blur-[1px]">
+              <Loader2 className="h-8 w-8 text-primary animate-spin" />
+            </div>
+          )}
+          <Table className="w-full text-left">
+            <TableHeader>
+              <TableRow className="bg-muted/50 hover:bg-muted/50">
+                <TableHead className="px-8 py-4 font-semibold text-muted-foreground text-xs uppercase tracking-wider">
+                  Organización
+                </TableHead>
+                <TableHead className="px-8 py-4 font-semibold text-muted-foreground text-xs uppercase tracking-wider">
+                  Categoría
+                </TableHead>
+                <TableHead className="px-8 py-4 font-semibold text-muted-foreground text-xs uppercase tracking-wider">
+                  Ubicación
+                </TableHead>
+                <TableHead className="px-8 py-4 font-semibold text-muted-foreground text-xs uppercase tracking-wider">
+                  Estado
+                </TableHead>
+                <TableHead className="px-8 py-4 font-semibold text-muted-foreground text-xs uppercase tracking-wider text-right">
+                  Acciones
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {organizations.length === 0 ? (
+                <TableRow>
+                  <TableCell
+                    colSpan={5}
+                    className="px-8 py-16 text-center text-muted-foreground"
+                  >
+                    <div className="flex flex-col items-center gap-2">
+                      <Building2 className="h-8 w-8 opacity-40" />
+                      <p className="text-sm font-medium">
+                        No se encontraron organizaciones
+                      </p>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ) : (
+                organizations.map((org) => {
+                  const statusCfg = STATUS_CONFIG[org.status] ?? STATUS_CONFIG.DRAFT
+                  const isPublished = org.status === "PUBLISHED"
+
+                  return (
+                    <TableRow key={org.id} className="group">
+                      {/* Org info */}
+                      <TableCell className="px-8 py-5">
+                        <div className="flex items-center gap-4">
+                          <div className="h-10 w-10 rounded-lg bg-muted flex items-center justify-center overflow-hidden shrink-0">
+                            {org.logoUrl ? (
+                              <Image
+                                src={org.logoUrl}
+                                alt={`${org.name} Logo`}
+                                width={64}
+                                height={64}
+                                className="h-full w-full object-cover"
+                              />
+                            ) : (
+                              <Building2 className="h-5 w-5 text-muted-foreground" />
+                            )}
+                          </div>
+                          <div className="flex flex-col min-w-0">
+                            <div className="flex items-center gap-1.5">
+                              <span className="font-bold text-sm text-foreground truncate">
+                                {org.name}
+                              </span>
+                              {org.featured && (
+                                <Star className="h-3.5 w-3.5 text-amber-500 fill-amber-500 shrink-0" />
+                              )}
+                            </div>
+                            <span className="text-xs text-muted-foreground truncate">
+                              {org.website || org.email}
+                            </span>
+                          </div>
+                        </div>
+                      </TableCell>
+
+                      {/* Category */}
+                      <TableCell className="px-8 py-5">
+                        {org.categories.length > 0 ? (
+                          <span className="px-3 py-1 bg-muted text-foreground text-[11px] font-bold rounded-full uppercase tracking-tighter">
+                            {org.categories[0].name}
+                          </span>
+                        ) : (
+                          <span className="text-xs text-muted-foreground italic">
+                            Sin categoría
+                          </span>
+                        )}
+                      </TableCell>
+
+                      {/* Location */}
+                      <TableCell className="px-8 py-5">
+                        <span className="text-sm text-muted-foreground">
+                          {org.location
+                            ? `${org.location.city}, ${org.location.state}`
+                            : "—"}
+                        </span>
+                      </TableCell>
+
+                      {/* Status */}
+                      <TableCell className="px-8 py-5">
+                        <div className="flex items-center gap-2">
+                          <span
+                            className={`h-2 w-2 rounded-full ${statusCfg.dotColor}`}
+                          />
+                          <span
+                            className={`text-sm font-medium ${statusCfg.textColor}`}
+                          >
+                            {statusCfg.label}
+                          </span>
+                        </div>
+                      </TableCell>
+
+                      {/* Actions */}
+                      <TableCell className="px-8 py-5 text-right">
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="text-muted-foreground hover:text-foreground transition-colors"
+                            >
+                              <MoreVertical className="h-4 w-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end" className="w-52">
+                            {/* Edit */}
+                            <DropdownMenuItem asChild>
+                              <Link href={`/admin/organizations/${org.id}/edit`}>
+                                <Pencil className="h-4 w-4 mr-2" />
+                                Editar Perfil
+                              </Link>
+                            </DropdownMenuItem>
+
+                            {/* Toggle Featured */}
+                            <DropdownMenuItem
+                              onClick={() => handleToggleFeatured(org.id)}
+                            >
+                              {org.featured ? (
+                                <>
+                                  <StarOff className="h-4 w-4 mr-2" />
+                                  Quitar Destacado
+                                </>
+                              ) : (
+                                <>
+                                  <Star className="h-4 w-4 mr-2" />
+                                  Destacar
+                                </>
+                              )}
+                            </DropdownMenuItem>
+
+                            {/* View public profile */}
+                            <DropdownMenuItem asChild>
+                              <Link
+                                href={`/directory/${org.slug}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                <Eye className="h-4 w-4 mr-2" />
+                                Ver perfil público
+                              </Link>
+                            </DropdownMenuItem>
+
+                            <DropdownMenuSeparator />
+
+                            {/* Publish / Hide / Reject */}
+                            {!isPublished && (
+                              <DropdownMenuItem
+                                onClick={() =>
+                                  handleChangeStatus(org.id, "PUBLISHED" as OrganizationStatus)
+                                }
+                              >
+                                <CheckCircle2 className="h-4 w-4 mr-2 text-emerald-600" />
+                                Publicar
+                              </DropdownMenuItem>
+                            )}
+
+                            {isPublished && (
+                              <DropdownMenuItem
+                                onClick={() =>
+                                  handleChangeStatus(org.id, "ARCHIVED" as OrganizationStatus)
+                                }
+                              >
+                                <EyeOff className="h-4 w-4 mr-2" />
+                                Ocultar
+                              </DropdownMenuItem>
+                            )}
+
+                            {org.status !== "REJECTED" && org.status !== "PUBLISHED" && (
+                              <DropdownMenuItem
+                                onClick={() =>
+                                  handleChangeStatus(org.id, "REJECTED" as OrganizationStatus)
+                                }
+                              >
+                                <XCircle className="h-4 w-4 mr-2 text-red-600" />
+                                Rechazar
+                              </DropdownMenuItem>
+                            )}
+
+                            <DropdownMenuSeparator />
+
+                            {/* Soft Delete */}
+                            <DropdownMenuItem
+                              className="text-red-600 focus:text-red-600"
+                              onClick={() =>
+                                setDeleteTarget({ id: org.id, name: org.name })
+                              }
+                            >
+                              <Trash2 className="h-4 w-4 mr-2" />
+                              Eliminar
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </TableCell>
+                    </TableRow>
+                  )
+                })
+              )}
+            </TableBody>
+          </Table>
+        </div>
+
+        {/* Pagination */}
+        {total > 0 && (
+          <div className="px-8 py-4 flex items-center justify-between border-t border-border">
+            <span className="text-xs text-muted-foreground">
+              Mostrando {start} a {end} de {total} resultados
+            </span>
+            <div className="flex items-center gap-2">
+              <button
+                disabled={page <= 1}
+                onClick={() => pushParams({ page: String(page - 1) })}
+                className="px-3 py-1 rounded border-none bg-muted text-muted-foreground hover:bg-muted/80 transition-colors text-xs disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                &lt;
+              </button>
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                (p) => (
+                  <button
+                    key={p}
+                    onClick={() => pushParams({ page: String(p) })}
+                    className={`px-3 py-1 rounded border-none transition-colors text-xs ${p === page
+                      ? "bg-muted text-foreground font-bold"
+                      : "text-muted-foreground hover:bg-muted"
+                      }`}
+                  >
+                    {p}
+                  </button>
+                )
+              )}
+              <button
+                disabled={page >= totalPages}
+                onClick={() => pushParams({ page: String(page + 1) })}
+                className="px-3 py-1 rounded border-none bg-muted text-muted-foreground hover:bg-muted/80 transition-colors text-xs disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                &gt;
+              </button>
+            </div>
+          </div>
+        )}
+      </section>
+
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog
+        open={!!deleteTarget}
+        onOpenChange={(open) => !open && setDeleteTarget(null)}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>¿Eliminar organización?</AlertDialogTitle>
+            <AlertDialogDescription>
+              La organización{" "}
+              <span className="font-semibold text-foreground">
+                {deleteTarget?.name}
+              </span>{" "}
+              será marcada como inactiva. No aparecerá en el directorio público
+              pero se conservará en la base de datos.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDelete}
+              className="bg-red-600 hover:bg-red-700 text-white"
+            >
+              {isPending ? "Eliminando..." : "Eliminar"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   )
 }
