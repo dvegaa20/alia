@@ -13,6 +13,7 @@ import {
   ComboboxEmpty,
 } from "@/components/ui/combobox";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 type OrganizationOption = {
   slug: string;
@@ -30,10 +31,10 @@ export function HeroSection({ organizations }: { organizations: OrganizationOpti
     inputValue === ""
       ? []
       : organizations.filter(
-          (org) =>
-            org.name.toLowerCase().includes(inputValue.toLowerCase()) ||
-            org.category.toLowerCase().includes(inputValue.toLowerCase())
-        );
+        (org) =>
+          org.name.toLowerCase().includes(inputValue.toLowerCase()) ||
+          org.category.toLowerCase().includes(inputValue.toLowerCase())
+      );
 
   const isOpen = inputValue.length > 0;
 
@@ -101,9 +102,9 @@ export function HeroSection({ organizations }: { organizations: OrganizationOpti
                   <ComboboxList className="p-2 pt-0">
                     {filteredOrgs.length > 0 ? (
                       filteredOrgs.map((org) => (
-                        <ComboboxItem 
-                          key={org.slug} 
-                          value={org.slug} 
+                        <ComboboxItem
+                          key={org.slug}
+                          value={org.slug}
                           className="rounded-lg data-highlighted:bg-black/5 dark:data-highlighted:bg-white/5 cursor-pointer"
                         >
                           <span className="text-xl mr-2">{org.logo}</span>
@@ -134,11 +135,12 @@ export function HeroSection({ organizations }: { organizations: OrganizationOpti
         className="absolute right-0 top-0 w-1/2 h-full hidden lg:block"
       >
         <div className="w-full h-full bg-linear-to-l from-transparent via-background to-background absolute inset-0 z-0" />
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Image
           alt="Comunidad trabajando en un huerto"
           className="w-full h-full object-cover opacity-30 grayscale hover:grayscale-0 transition-all duration-1000"
           src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3sLIFr3POSlhNULvxil1ByEPfFf6V-HU4AJo5Ae46wRatSi8jv6JsqYCj_hHstXL3th29sKhjIrYsSiKcEB1fOdVjbbU0Q7p2yb54_JRrRJb5PFeKVW9lcGQLnJMRSuOLiB2XBStcEHsw_OULANswyWXPkPXdnEkzZkqPY8dFsDJXVOIBn1tX_KUW7ZYj14Yd6w5R7VnwwGooxrwlVQ4dfEeodyFUN2b5GSg-pny4V4qEPCfRN8ROzwTZV-IQ9kJOb-CZ01ge2W8"
+          width={1200}
+          height={800}
         />
       </motion.div>
     </section>

@@ -3,6 +3,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 export async function FeaturedGrid() {
   const { data: featuredOrgs } = await getFeaturedOrganizations();
@@ -54,11 +55,12 @@ export async function FeaturedGrid() {
             >
               {/* Cover Image */}
               <div className="h-48 overflow-hidden relative">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Image
                   alt={org.name}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   src={org.coverImageUrl || "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?auto=format&fit=crop&q=80"}
+                  width={400}
+                  height={300}
                 />
                 <div className="absolute top-4 left-4">
                   <Badge className="bg-ds-tertiary-container text-ds-on-tertiary-container border-none px-3 py-1 h-auto rounded-full text-xs font-bold uppercase tracking-wider">
@@ -71,11 +73,12 @@ export async function FeaturedGrid() {
               <CardContent className="p-6 pt-12 relative">
                 {/* Logo overlapping the image */}
                 <div className="absolute -top-8 left-6 w-16 h-16 bg-card rounded-xl shadow-lg flex items-center justify-center p-2">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  <Image
                     alt={`Logo ${org.name}`}
                     className="w-full h-full rounded-md object-cover"
                     src={org.logoUrl || "https://ui-avatars.com/api/?name=" + encodeURIComponent(org.name) + "&background=random"}
+                    width={64}
+                    height={64}
                   />
                 </div>
 

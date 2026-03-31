@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
-/* eslint-disable @next/next/no-img-element */
 export function ProblemSection() {
   return (
     <section className="px-8 py-20 bg-ds-surface-container-low overflow-hidden">
@@ -45,10 +45,12 @@ export function ProblemSection() {
           className="flex-1 relative"
         >
           <div className="aspect-4/5 rounded-xl overflow-hidden shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-500">
-            <img
+            <Image
               alt="Voluntarios trabajando juntos"
               className="w-full h-full object-cover"
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuDU3XvkKQaeT9fD1SsYXd6PKBjNwZTNHq2ZZ-WMeJNtKuJMJZvtPgqIHJ-8WVZ52YzdnU-xiM1zDGOVvt1CMXZL7iKBACJ-zN6WvkH7FjpnbRSH0PpyKcSvv5RjmrCiXyPAYS-S0Q3-1bhYnvopgNw5ju9mdXaHtSRpKwGUUmffhiEN7rMKQ7IF6l0RK0HzuZh7C30ecNe_VtawlIR18G__U4jnTZT7Bxyn6idLkjQhZsQcXCzKPMVpG9r4rPjsNMMbg14tK33wxK0"
+              width={800}
+              height={1000}
             />
           </div>
           {/* Decorative element */}

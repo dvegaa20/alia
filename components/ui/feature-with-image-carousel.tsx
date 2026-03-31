@@ -10,6 +10,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import Image from "next/image";
 
 export interface CampaignItem {
   name: string;
@@ -55,11 +56,12 @@ function Feature({ badge, title, description, items }: FeatureProps) {
                   <Card className="group relative bg-card rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2 border-none ring-0 py-0 gap-0">
                     {/* Cover Image */}
                     <div className="h-48 overflow-hidden relative">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
+                      <Image
                         alt={item.name}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                         src={item.image}
+                        width={400}
+                        height={300}
                       />
                       <div className="absolute top-4 left-4">
                         <Badge className="bg-ds-tertiary-container text-ds-on-tertiary-container border-none px-3 py-1 h-auto rounded-full text-xs font-bold uppercase tracking-wider">
@@ -72,11 +74,12 @@ function Feature({ badge, title, description, items }: FeatureProps) {
                     <CardContent className="p-6 pt-12 relative">
                       {/* Logo overlapping the image */}
                       <div className="absolute -top-8 left-6 w-16 h-16 bg-card rounded-xl shadow-lg flex items-center justify-center p-2">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
+                        <Image
                           alt={`Logo ${item.name}`}
                           className="w-full h-full rounded-md object-cover"
                           src={item.logo}
+                          width={64}
+                          height={64}
                         />
                       </div>
 
