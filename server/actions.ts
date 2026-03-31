@@ -1,15 +1,33 @@
 'use server'
 
 import { auth } from '@clerk/nextjs/server'
+import { revalidatePath } from 'next/cache'
 import prisma from '@/lib/prisma'
 import { orgFormSchema, type OrgFormValues } from '@/lib/schemas'
 import { OrganizationStatus } from '@/prisma/generated/client'
+import { slugify } from '@/lib/utils'
 
 type TxClient = Parameters<Parameters<typeof prisma.$transaction>[0]>[0]
 
 // ============================================================================
 // PUBLIC ACTIONS
 // ============================================================================
+
+export async function trackDonationClick(organizationId: string) {
+  try {
+    await prisma.auditLog.create({
+      data: {
+        action: 'DONATION_CLICK',
+        entityId: organizationId,
+        details: { timestamp: new Date().toISOString() },
+      },
+    })
+    return { success: true }
+  } catch (error) {
+    console.error('[trackDonationClick] Error:', error)
+    return { success: false }
+  }
+}
 
 export async function getPublishedOrgs(filters?: {
   categorySlug?: string
@@ -318,7 +336,6 @@ export async function upsertOrganization(data: OrgFormValues, id?: string) {
           data: {
             action: 'UPDATE',
             entityId: id,
-            adminId: userId,
             details: JSON.parse(JSON.stringify(validatedData)),
           },
         })
@@ -341,7 +358,6 @@ export async function upsertOrganization(data: OrgFormValues, id?: string) {
           data: {
             action: 'CREATE',
             entityId: organization.id,
-            adminId: userId,
             details: JSON.parse(JSON.stringify(validatedData)),
           },
         })
@@ -379,7 +395,6 @@ export async function toggleOrgStatus(id: string, status: OrganizationStatus) {
         data: {
           action: 'UPDATE_STATUS',
           entityId: id,
-          adminId: userId,
           details: { newStatus: status },
         },
       })
@@ -387,9 +402,233 @@ export async function toggleOrgStatus(id: string, status: OrganizationStatus) {
       return org
     })
 
+    revalidatePath('/admin')
     return { success: true, data: result }
   } catch (error) {
     console.error('[toggleOrgStatus] Error:', error)
     return { success: false, error: 'Failed to toggle status' }
+  }
+}
+
+// ============================================================================
+// ADMIN TABLE ACTIONS
+// ============================================================================
+
+export async function getAdminOrganizations(filters?: {
+  query?: string
+  status?: OrganizationStatus
+  page?: number
+  limit?: number
+  sort?: string
+  order?: 'asc' | 'desc'
+}) {
+  const { query, status, page = 1, limit = 10, sort = 'createdAt', order = 'desc' } = filters || {}
+  const skip = (page - 1) * limit
+
+  try {
+    const { userId } = await auth()
+    if (!userId) {
+      return { success: false, error: 'Unauthorized' }
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const whereClause: any = {}
+
+    if (status) {
+      whereClause.status = status
+    }
+
+    if (query) {
+      whereClause.OR = [
+        { name: { contains: query, mode: 'insensitive' } },
+        { slug: { contains: query, mode: 'insensitive' } },
+        { email: { contains: query, mode: 'insensitive' } },
+      ]
+    }
+
+    let orderByClause: any = { createdAt: 'desc' }
+    if (['createdAt', 'name', 'featured', 'updatedAt'].includes(sort)) {
+      orderByClause = { [sort]: order }
+    }
+
+    const [orgs, total] = await Promise.all([
+      prisma.organization.findMany({
+        where: whereClause,
+        include: {
+          location: true,
+          categories: true,
+        },
+        skip,
+        take: limit,
+        orderBy: orderByClause,
+      }),
+      prisma.organization.count({ where: whereClause }),
+    ])
+
+    return {
+      success: true,
+      data: orgs,
+      meta: {
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+      },
+    }
+  } catch (error) {
+    console.error('[getAdminOrganizations] Error:', error)
+    return { success: false, error: 'Failed to fetch organizations' }
+  }
+}
+
+export async function toggleOrgFeatured(id: string) {
+  try {
+    const { userId } = await auth()
+    if (!userId) {
+      return { success: false, error: 'Unauthorized' }
+    }
+
+    const org = await prisma.organization.findUnique({ where: { id }, select: { featured: true } })
+    if (!org) {
+      return { success: false, error: 'Organization not found' }
+    }
+
+    const result = await prisma.$transaction(async (tx: TxClient) => {
+      const updated = await tx.organization.update({
+        where: { id },
+        data: { featured: !org.featured },
+      })
+
+      await tx.auditLog.create({
+        data: {
+          action: 'TOGGLE_FEATURED',
+          entityId: id,
+          details: { featured: !org.featured },
+        },
+      })
+
+      return updated
+    })
+
+    revalidatePath('/admin')
+    return { success: true, data: result }
+  } catch (error) {
+    console.error('[toggleOrgFeatured] Error:', error)
+    return { success: false, error: 'Failed to toggle featured' }
+  }
+}
+
+export async function deleteOrganization(id: string) {
+  try {
+    const { userId } = await auth()
+    if (!userId) {
+      return { success: false, error: 'Unauthorized' }
+    }
+
+    const result = await prisma.$transaction(async (tx: TxClient) => {
+      const org = await tx.organization.update({
+        where: { id },
+        data: { status: OrganizationStatus.ARCHIVED },
+      })
+
+      await tx.auditLog.create({
+        data: {
+          action: 'SOFT_DELETE',
+          entityId: id,
+          details: { previousStatus: org.status, newStatus: OrganizationStatus.ARCHIVED },
+        },
+      })
+
+      return org
+    })
+
+    revalidatePath('/admin')
+    return { success: true, data: result }
+  } catch (error) {
+    console.error('[deleteOrganization] Error:', error)
+    return { success: false, error: 'Failed to delete organization' }
+  }
+}
+
+// ============================================================================
+// ADMIN CATEGORIES ACTIONS
+// ============================================================================
+
+export async function getAdminCategories() {
+  try {
+    const { userId } = await auth()
+    if (!userId) {
+      return { success: false, error: 'Unauthorized' }
+    }
+
+    const categories = await prisma.category.findMany({
+      include: {
+        _count: {
+          select: { organizations: true },
+        },
+      },
+      orderBy: { name: 'asc' },
+    })
+
+    return { success: true, data: categories }
+  } catch (error) {
+    console.error('[getAdminCategories] Error:', error)
+    return { success: false, error: 'Failed to fetch categories' }
+  }
+}
+
+export async function upsertAdminCategory(data: { name: string; description?: string; id?: string }) {
+  try {
+    const { userId } = await auth()
+    if (!userId) {
+      return { success: false, error: 'Unauthorized' }
+    }
+
+    const slug = slugify(data.name)
+
+    let result
+    if (data.id) {
+      result = await prisma.category.update({
+        where: { id: data.id },
+        data: {
+          name: data.name,
+          slug,
+          description: data.description,
+        },
+      })
+    } else {
+      result = await prisma.category.create({
+        data: {
+          name: data.name,
+          slug,
+          description: data.description,
+        },
+      })
+    }
+
+    revalidatePath('/admin/categories')
+    return { success: true, data: result }
+  } catch (error) {
+    console.error('[upsertAdminCategory] Error:', error)
+    return { success: false, error: 'Failed to upsert category' }
+  }
+}
+
+export async function deleteAdminCategory(id: string) {
+  try {
+    const { userId } = await auth()
+    if (!userId) {
+      return { success: false, error: 'Unauthorized' }
+    }
+
+    const result = await prisma.category.delete({
+      where: { id },
+    })
+
+    revalidatePath('/admin/categories')
+    return { success: true, data: result }
+  } catch (error) {
+    console.error('[deleteAdminCategory] Error:', error)
+    return { success: false, error: 'Failed to delete category' }
   }
 }

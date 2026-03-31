@@ -2,15 +2,8 @@ import * as z from 'zod'
 import { OrganizationStatus, SocialPlatform } from '@/prisma/generated/client'
 
 export const locationSchema = z.object({
-  street: z.string().min(2, 'Street is required'),
-  exteriorNumber: z.string().min(1, 'Exterior number is required'),
-  interiorNumber: z.string().optional(),
-  neighborhood: z.string().min(2, 'Neighborhood is required'),
   city: z.string().min(2, 'City is required'),
   state: z.string().min(2, 'State is required'),
-  postalCode: z.string().min(4, 'Postal code is required'),
-  latitude: z.number().optional(),
-  longitude: z.number().optional(),
   googleMapsUrl: z.url('Must be a valid URL').optional().or(z.literal('')),
 })
 
@@ -45,6 +38,27 @@ export const orgFormSchema = z.object({
   email: z.email('Invalid email address'),
   phone: z.string().optional(),
   donationLink: z.url().optional().or(z.literal('')),
+  foundedYear: z.number().int().optional(),
+
+  // Gallery
+  galleryImages: z.array(z.string()).default([]),
+
+  // Impact sidebar
+  impactCurrent: z.number().int().optional(),
+  impactGoal: z.number().int().optional(),
+  impactType: z.string().optional(),
+
+  // Explore tab
+  relevantLinks: z.array(z.string()).default([]),
+
+  // Impact tab (JSON)
+  featuredFact: z.any().optional(),
+  secondaryFacts: z.any().optional(),
+  testimony: z.any().optional(),
+  milestone: z.any().optional(),
+
+  // Contact tab
+  officeHours: z.any().optional(),
 
   // Relations
   location: locationSchema.optional(),
