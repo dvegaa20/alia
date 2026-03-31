@@ -447,10 +447,18 @@ export function OrganizationsTable({ organizations, meta }: Props) {
                           <DropdownMenuContent align="end" className="w-52">
                             {/* Edit */}
                             <DropdownMenuItem asChild>
-                              <Link href={`/admin/organizations/${org.id}/edit`}>
+                              <button
+                                className="w-full flex items-center"
+                                onClick={() => {
+                                  const params = new URLSearchParams(searchParams.toString());
+                                  params.set("orgSheet", "edit");
+                                  params.set("orgId", org.id);
+                                  router.push(`?${params.toString()}`);
+                                }}
+                              >
                                 <Pencil className="h-4 w-4 mr-2" />
                                 Editar Perfil
-                              </Link>
+                              </button>
                             </DropdownMenuItem>
 
                             {/* Toggle Featured */}

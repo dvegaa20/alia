@@ -632,3 +632,25 @@ export async function deleteAdminCategory(id: string) {
     return { success: false, error: 'Failed to delete category' }
   }
 }
+
+export async function getOrgById(id: string) {
+  try {
+    const org = await prisma.organization.findUnique({
+      where: { id },
+      include: {
+        location: true,
+        socialLinks: true,
+        categories: true,
+      },
+    })
+
+    if (!org) {
+      return { success: false, error: 'Organization not found' }
+    }
+
+    return { success: true, data: org }
+  } catch (error) {
+    console.error('[getOrgById] Error:', error)
+    return { success: false, error: 'Failed to fetch organization' }
+  }
+}

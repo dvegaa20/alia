@@ -1,8 +1,8 @@
-import { Plus } from "lucide-react"
 import { UserButton } from "@clerk/nextjs"
+import { Suspense } from "react"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { ModeToggle } from "../mode-toggle"
-import { Button } from "../ui/button"
+import { NewOrgButton } from "./new-org-button"
 
 export function AdminHeader() {
   return (
@@ -12,10 +12,9 @@ export function AdminHeader() {
         <h1 className="text-md font-bold text-foreground">Admin Dashboard</h1>
       </div>
       <div className="flex items-center gap-6">
-        <Button className="bg-primary hover:bg-primary/90 text-primary-foreground px-5 py-2 rounded-md text-sm font-semibold transition-transform active:translate-y-0.5 flex items-center gap-2">
-          <Plus className="h-4 w-4" />
-          New Organization
-        </Button>
+        <Suspense fallback={null}>
+          <NewOrgButton />
+        </Suspense>
         <div className="flex items-center gap-4 text-muted-foreground">
           <UserButton
             appearance={{

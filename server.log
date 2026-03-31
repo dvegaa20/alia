@@ -1,0 +1,76 @@
+
+> alia@0.1.0 start
+> next start
+
+▲ Next.js 16.1.6
+- Local:         http://localhost:3000
+- Network:       http://192.168.0.2:3000
+
+✓ Starting...
+✓ Ready in 811ms
+[getPublishedOrgs] Error: Error [PrismaClientKnownRequestError]:
+Invalid `prisma.organization.findMany()` invocation:
+
+
+
+    at async n (.next/server/chunks/ssr/[root-of-the-server]__4c420236._.js:44:52010)
+    at async n (.next/server/chunks/ssr/[root-of-the-server]__218d0ffd._.js:1:700) {
+  code: 'ECONNREFUSED',
+  meta: [Object],
+  clientVersion: '7.6.0'
+}
+[getTopCategoriesWithOrgs] Error: Error [PrismaClientKnownRequestError]:
+Invalid `prisma.category.findMany()` invocation:
+
+
+
+    at async q (.next/server/chunks/ssr/[root-of-the-server]__4c420236._.js:44:53107)
+    at async n (.next/server/chunks/ssr/[root-of-the-server]__218d0ffd._.js:1:700) {
+  code: 'ECONNREFUSED',
+  meta: [Object],
+  clientVersion: '7.6.0'
+}
+[getFeaturedOrganizations] Error: Error [PrismaClientKnownRequestError]:
+Invalid `prisma.organization.findMany()` invocation:
+
+
+
+    at async s (.next/server/chunks/ssr/[root-of-the-server]__4c420236._.js:44:54022)
+    at async m (.next/server/chunks/ssr/_15d89e1d._.js:3:1186) {
+  code: 'ECONNREFUSED',
+  meta: [Object],
+  clientVersion: '7.6.0'
+}
+[getPublishedOrgs] Error: Error [PrismaClientKnownRequestError]:
+Invalid `prisma.organization.findMany()` invocation:
+
+
+
+    at async n (.next/server/chunks/ssr/[root-of-the-server]__4c420236._.js:44:52010)
+    at async n (.next/server/chunks/ssr/[root-of-the-server]__218d0ffd._.js:1:700) {
+  code: 'ECONNREFUSED',
+  meta: [Object],
+  clientVersion: '7.6.0'
+}
+[getTopCategoriesWithOrgs] Error: Error [PrismaClientKnownRequestError]:
+Invalid `prisma.category.findMany()` invocation:
+
+
+
+    at async q (.next/server/chunks/ssr/[root-of-the-server]__4c420236._.js:44:53107)
+    at async n (.next/server/chunks/ssr/[root-of-the-server]__218d0ffd._.js:1:700) {
+  code: 'ECONNREFUSED',
+  meta: [Object],
+  clientVersion: '7.6.0'
+}
+[getFeaturedOrganizations] Error: Error [PrismaClientKnownRequestError]:
+Invalid `prisma.organization.findMany()` invocation:
+
+
+
+    at async s (.next/server/chunks/ssr/[root-of-the-server]__4c420236._.js:44:54022)
+    at async m (.next/server/chunks/ssr/_15d89e1d._.js:3:1186) {
+  code: 'ECONNREFUSED',
+  meta: [Object],
+  clientVersion: '7.6.0'
+}

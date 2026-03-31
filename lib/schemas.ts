@@ -1,5 +1,5 @@
 import * as z from 'zod'
-import { OrganizationStatus, SocialPlatform } from '@/prisma/generated/client'
+import { OrganizationStatus, SocialPlatform } from '@/prisma/generated/enums'
 
 export const locationSchema = z.object({
   city: z.string().min(2, 'City is required'),
