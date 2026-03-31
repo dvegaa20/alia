@@ -29,7 +29,7 @@ export type Organization = Prisma.OrganizationModel
 export type Category = Prisma.CategoryModel
 /**
  * Model Location
- * Ubicación/Dirección de la organización (sede principal)
+ * Ubicación de la organización (sede principal)
  */
 export type Location = Prisma.LocationModel
 /**
@@ -39,6 +39,6 @@ export type Location = Prisma.LocationModel
 export type SocialLink = Prisma.SocialLinkModel
 /**
  * Model AuditLog
- * Log de auditoría para rastrear cambios de administradores
+ * Log de auditoría para rastrear cambios
  */
 export type AuditLog = Prisma.AuditLogModel

@@ -14,39 +14,20 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model Location
- * Ubicación/Dirección de la organización (sede principal)
+ * Ubicación de la organización (sede principal)
  */
 export type LocationModel = runtime.Types.Result.DefaultSelection<Prisma.$LocationPayload>
 
 export type AggregateLocation = {
   _count: LocationCountAggregateOutputType | null
-  _avg: LocationAvgAggregateOutputType | null
-  _sum: LocationSumAggregateOutputType | null
   _min: LocationMinAggregateOutputType | null
   _max: LocationMaxAggregateOutputType | null
 }
 
-export type LocationAvgAggregateOutputType = {
-  latitude: number | null
-  longitude: number | null
-}
-
-export type LocationSumAggregateOutputType = {
-  latitude: number | null
-  longitude: number | null
-}
-
 export type LocationMinAggregateOutputType = {
   id: string | null
-  street: string | null
-  exteriorNumber: string | null
-  interiorNumber: string | null
-  neighborhood: string | null
   city: string | null
   state: string | null
-  postalCode: string | null
-  latitude: number | null
-  longitude: number | null
   googleMapsUrl: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -55,15 +36,8 @@ export type LocationMinAggregateOutputType = {
 
 export type LocationMaxAggregateOutputType = {
   id: string | null
-  street: string | null
-  exteriorNumber: string | null
-  interiorNumber: string | null
-  neighborhood: string | null
   city: string | null
   state: string | null
-  postalCode: string | null
-  latitude: number | null
-  longitude: number | null
   googleMapsUrl: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -72,15 +46,8 @@ export type LocationMaxAggregateOutputType = {
 
 export type LocationCountAggregateOutputType = {
   id: number
-  street: number
-  exteriorNumber: number
-  interiorNumber: number
-  neighborhood: number
   city: number
   state: number
-  postalCode: number
-  latitude: number
-  longitude: number
   googleMapsUrl: number
   createdAt: number
   updatedAt: number
@@ -89,27 +56,10 @@ export type LocationCountAggregateOutputType = {
 }
 
 
-export type LocationAvgAggregateInputType = {
-  latitude?: true
-  longitude?: true
-}
-
-export type LocationSumAggregateInputType = {
-  latitude?: true
-  longitude?: true
-}
-
 export type LocationMinAggregateInputType = {
   id?: true
-  street?: true
-  exteriorNumber?: true
-  interiorNumber?: true
-  neighborhood?: true
   city?: true
   state?: true
-  postalCode?: true
-  latitude?: true
-  longitude?: true
   googleMapsUrl?: true
   createdAt?: true
   updatedAt?: true
@@ -118,15 +68,8 @@ export type LocationMinAggregateInputType = {
 
 export type LocationMaxAggregateInputType = {
   id?: true
-  street?: true
-  exteriorNumber?: true
-  interiorNumber?: true
-  neighborhood?: true
   city?: true
   state?: true
-  postalCode?: true
-  latitude?: true
-  longitude?: true
   googleMapsUrl?: true
   createdAt?: true
   updatedAt?: true
@@ -135,15 +78,8 @@ export type LocationMaxAggregateInputType = {
 
 export type LocationCountAggregateInputType = {
   id?: true
-  street?: true
-  exteriorNumber?: true
-  interiorNumber?: true
-  neighborhood?: true
   city?: true
   state?: true
-  postalCode?: true
-  latitude?: true
-  longitude?: true
   googleMapsUrl?: true
   createdAt?: true
   updatedAt?: true
@@ -189,18 +125,6 @@ export type LocationAggregateArgs<ExtArgs extends runtime.Types.Extensions.Inter
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: LocationAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: LocationSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: LocationMinAggregateInputType
@@ -231,30 +155,19 @@ export type LocationGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   _count?: LocationCountAggregateInputType | true
-  _avg?: LocationAvgAggregateInputType
-  _sum?: LocationSumAggregateInputType
   _min?: LocationMinAggregateInputType
   _max?: LocationMaxAggregateInputType
 }
 
 export type LocationGroupByOutputType = {
   id: string
-  street: string
-  exteriorNumber: string
-  interiorNumber: string | null
-  neighborhood: string
   city: string
   state: string
-  postalCode: string
-  latitude: number | null
-  longitude: number | null
   googleMapsUrl: string | null
   createdAt: Date
   updatedAt: Date
   organizationId: string
   _count: LocationCountAggregateOutputType | null
-  _avg: LocationAvgAggregateOutputType | null
-  _sum: LocationSumAggregateOutputType | null
   _min: LocationMinAggregateOutputType | null
   _max: LocationMaxAggregateOutputType | null
 }
@@ -279,15 +192,8 @@ export type LocationWhereInput = {
   OR?: Prisma.LocationWhereInput[]
   NOT?: Prisma.LocationWhereInput | Prisma.LocationWhereInput[]
   id?: Prisma.StringFilter<"Location"> | string
-  street?: Prisma.StringFilter<"Location"> | string
-  exteriorNumber?: Prisma.StringFilter<"Location"> | string
-  interiorNumber?: Prisma.StringNullableFilter<"Location"> | string | null
-  neighborhood?: Prisma.StringFilter<"Location"> | string
   city?: Prisma.StringFilter<"Location"> | string
   state?: Prisma.StringFilter<"Location"> | string
-  postalCode?: Prisma.StringFilter<"Location"> | string
-  latitude?: Prisma.FloatNullableFilter<"Location"> | number | null
-  longitude?: Prisma.FloatNullableFilter<"Location"> | number | null
   googleMapsUrl?: Prisma.StringNullableFilter<"Location"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Location"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Location"> | Date | string
@@ -297,15 +203,8 @@ export type LocationWhereInput = {
 
 export type LocationOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  street?: Prisma.SortOrder
-  exteriorNumber?: Prisma.SortOrder
-  interiorNumber?: Prisma.SortOrderInput | Prisma.SortOrder
-  neighborhood?: Prisma.SortOrder
   city?: Prisma.SortOrder
   state?: Prisma.SortOrder
-  postalCode?: Prisma.SortOrder
-  latitude?: Prisma.SortOrderInput | Prisma.SortOrder
-  longitude?: Prisma.SortOrderInput | Prisma.SortOrder
   googleMapsUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -319,15 +218,8 @@ export type LocationWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.LocationWhereInput | Prisma.LocationWhereInput[]
   OR?: Prisma.LocationWhereInput[]
   NOT?: Prisma.LocationWhereInput | Prisma.LocationWhereInput[]
-  street?: Prisma.StringFilter<"Location"> | string
-  exteriorNumber?: Prisma.StringFilter<"Location"> | string
-  interiorNumber?: Prisma.StringNullableFilter<"Location"> | string | null
-  neighborhood?: Prisma.StringFilter<"Location"> | string
   city?: Prisma.StringFilter<"Location"> | string
   state?: Prisma.StringFilter<"Location"> | string
-  postalCode?: Prisma.StringFilter<"Location"> | string
-  latitude?: Prisma.FloatNullableFilter<"Location"> | number | null
-  longitude?: Prisma.FloatNullableFilter<"Location"> | number | null
   googleMapsUrl?: Prisma.StringNullableFilter<"Location"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Location"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Location"> | Date | string
@@ -336,24 +228,15 @@ export type LocationWhereUniqueInput = Prisma.AtLeast<{
 
 export type LocationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  street?: Prisma.SortOrder
-  exteriorNumber?: Prisma.SortOrder
-  interiorNumber?: Prisma.SortOrderInput | Prisma.SortOrder
-  neighborhood?: Prisma.SortOrder
   city?: Prisma.SortOrder
   state?: Prisma.SortOrder
-  postalCode?: Prisma.SortOrder
-  latitude?: Prisma.SortOrderInput | Prisma.SortOrder
-  longitude?: Prisma.SortOrderInput | Prisma.SortOrder
   googleMapsUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   _count?: Prisma.LocationCountOrderByAggregateInput
-  _avg?: Prisma.LocationAvgOrderByAggregateInput
   _max?: Prisma.LocationMaxOrderByAggregateInput
   _min?: Prisma.LocationMinOrderByAggregateInput
-  _sum?: Prisma.LocationSumOrderByAggregateInput
 }
 
 export type LocationScalarWhereWithAggregatesInput = {
@@ -361,15 +244,8 @@ export type LocationScalarWhereWithAggregatesInput = {
   OR?: Prisma.LocationScalarWhereWithAggregatesInput[]
   NOT?: Prisma.LocationScalarWhereWithAggregatesInput | Prisma.LocationScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Location"> | string
-  street?: Prisma.StringWithAggregatesFilter<"Location"> | string
-  exteriorNumber?: Prisma.StringWithAggregatesFilter<"Location"> | string
-  interiorNumber?: Prisma.StringNullableWithAggregatesFilter<"Location"> | string | null
-  neighborhood?: Prisma.StringWithAggregatesFilter<"Location"> | string
   city?: Prisma.StringWithAggregatesFilter<"Location"> | string
   state?: Prisma.StringWithAggregatesFilter<"Location"> | string
-  postalCode?: Prisma.StringWithAggregatesFilter<"Location"> | string
-  latitude?: Prisma.FloatNullableWithAggregatesFilter<"Location"> | number | null
-  longitude?: Prisma.FloatNullableWithAggregatesFilter<"Location"> | number | null
   googleMapsUrl?: Prisma.StringNullableWithAggregatesFilter<"Location"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Location"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Location"> | Date | string
@@ -378,15 +254,8 @@ export type LocationScalarWhereWithAggregatesInput = {
 
 export type LocationCreateInput = {
   id?: string
-  street: string
-  exteriorNumber: string
-  interiorNumber?: string | null
-  neighborhood: string
   city: string
   state: string
-  postalCode: string
-  latitude?: number | null
-  longitude?: number | null
   googleMapsUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -395,15 +264,8 @@ export type LocationCreateInput = {
 
 export type LocationUncheckedCreateInput = {
   id?: string
-  street: string
-  exteriorNumber: string
-  interiorNumber?: string | null
-  neighborhood: string
   city: string
   state: string
-  postalCode: string
-  latitude?: number | null
-  longitude?: number | null
   googleMapsUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -412,15 +274,8 @@ export type LocationUncheckedCreateInput = {
 
 export type LocationUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  street?: Prisma.StringFieldUpdateOperationsInput | string
-  exteriorNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  interiorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  neighborhood?: Prisma.StringFieldUpdateOperationsInput | string
   city?: Prisma.StringFieldUpdateOperationsInput | string
   state?: Prisma.StringFieldUpdateOperationsInput | string
-  postalCode?: Prisma.StringFieldUpdateOperationsInput | string
-  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -429,15 +284,8 @@ export type LocationUpdateInput = {
 
 export type LocationUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  street?: Prisma.StringFieldUpdateOperationsInput | string
-  exteriorNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  interiorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  neighborhood?: Prisma.StringFieldUpdateOperationsInput | string
   city?: Prisma.StringFieldUpdateOperationsInput | string
   state?: Prisma.StringFieldUpdateOperationsInput | string
-  postalCode?: Prisma.StringFieldUpdateOperationsInput | string
-  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -446,15 +294,8 @@ export type LocationUncheckedUpdateInput = {
 
 export type LocationCreateManyInput = {
   id?: string
-  street: string
-  exteriorNumber: string
-  interiorNumber?: string | null
-  neighborhood: string
   city: string
   state: string
-  postalCode: string
-  latitude?: number | null
-  longitude?: number | null
   googleMapsUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -463,15 +304,8 @@ export type LocationCreateManyInput = {
 
 export type LocationUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  street?: Prisma.StringFieldUpdateOperationsInput | string
-  exteriorNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  interiorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  neighborhood?: Prisma.StringFieldUpdateOperationsInput | string
   city?: Prisma.StringFieldUpdateOperationsInput | string
   state?: Prisma.StringFieldUpdateOperationsInput | string
-  postalCode?: Prisma.StringFieldUpdateOperationsInput | string
-  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -479,15 +313,8 @@ export type LocationUpdateManyMutationInput = {
 
 export type LocationUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  street?: Prisma.StringFieldUpdateOperationsInput | string
-  exteriorNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  interiorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  neighborhood?: Prisma.StringFieldUpdateOperationsInput | string
   city?: Prisma.StringFieldUpdateOperationsInput | string
   state?: Prisma.StringFieldUpdateOperationsInput | string
-  postalCode?: Prisma.StringFieldUpdateOperationsInput | string
-  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -501,37 +328,18 @@ export type LocationNullableScalarRelationFilter = {
 
 export type LocationCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  street?: Prisma.SortOrder
-  exteriorNumber?: Prisma.SortOrder
-  interiorNumber?: Prisma.SortOrder
-  neighborhood?: Prisma.SortOrder
   city?: Prisma.SortOrder
   state?: Prisma.SortOrder
-  postalCode?: Prisma.SortOrder
-  latitude?: Prisma.SortOrder
-  longitude?: Prisma.SortOrder
   googleMapsUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
 }
 
-export type LocationAvgOrderByAggregateInput = {
-  latitude?: Prisma.SortOrder
-  longitude?: Prisma.SortOrder
-}
-
 export type LocationMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  street?: Prisma.SortOrder
-  exteriorNumber?: Prisma.SortOrder
-  interiorNumber?: Prisma.SortOrder
-  neighborhood?: Prisma.SortOrder
   city?: Prisma.SortOrder
   state?: Prisma.SortOrder
-  postalCode?: Prisma.SortOrder
-  latitude?: Prisma.SortOrder
-  longitude?: Prisma.SortOrder
   googleMapsUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -540,24 +348,12 @@ export type LocationMaxOrderByAggregateInput = {
 
 export type LocationMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  street?: Prisma.SortOrder
-  exteriorNumber?: Prisma.SortOrder
-  interiorNumber?: Prisma.SortOrder
-  neighborhood?: Prisma.SortOrder
   city?: Prisma.SortOrder
   state?: Prisma.SortOrder
-  postalCode?: Prisma.SortOrder
-  latitude?: Prisma.SortOrder
-  longitude?: Prisma.SortOrder
   googleMapsUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
-}
-
-export type LocationSumOrderByAggregateInput = {
-  latitude?: Prisma.SortOrder
-  longitude?: Prisma.SortOrder
 }
 
 export type LocationCreateNestedOneWithoutOrganizationInput = {
@@ -592,25 +388,10 @@ export type LocationUncheckedUpdateOneWithoutOrganizationNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.LocationUpdateToOneWithWhereWithoutOrganizationInput, Prisma.LocationUpdateWithoutOrganizationInput>, Prisma.LocationUncheckedUpdateWithoutOrganizationInput>
 }
 
-export type NullableFloatFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type LocationCreateWithoutOrganizationInput = {
   id?: string
-  street: string
-  exteriorNumber: string
-  interiorNumber?: string | null
-  neighborhood: string
   city: string
   state: string
-  postalCode: string
-  latitude?: number | null
-  longitude?: number | null
   googleMapsUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -618,15 +399,8 @@ export type LocationCreateWithoutOrganizationInput = {
 
 export type LocationUncheckedCreateWithoutOrganizationInput = {
   id?: string
-  street: string
-  exteriorNumber: string
-  interiorNumber?: string | null
-  neighborhood: string
   city: string
   state: string
-  postalCode: string
-  latitude?: number | null
-  longitude?: number | null
   googleMapsUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -650,15 +424,8 @@ export type LocationUpdateToOneWithWhereWithoutOrganizationInput = {
 
 export type LocationUpdateWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  street?: Prisma.StringFieldUpdateOperationsInput | string
-  exteriorNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  interiorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  neighborhood?: Prisma.StringFieldUpdateOperationsInput | string
   city?: Prisma.StringFieldUpdateOperationsInput | string
   state?: Prisma.StringFieldUpdateOperationsInput | string
-  postalCode?: Prisma.StringFieldUpdateOperationsInput | string
-  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -666,15 +433,8 @@ export type LocationUpdateWithoutOrganizationInput = {
 
 export type LocationUncheckedUpdateWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  street?: Prisma.StringFieldUpdateOperationsInput | string
-  exteriorNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  interiorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  neighborhood?: Prisma.StringFieldUpdateOperationsInput | string
   city?: Prisma.StringFieldUpdateOperationsInput | string
   state?: Prisma.StringFieldUpdateOperationsInput | string
-  postalCode?: Prisma.StringFieldUpdateOperationsInput | string
-  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -684,15 +444,8 @@ export type LocationUncheckedUpdateWithoutOrganizationInput = {
 
 export type LocationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  street?: boolean
-  exteriorNumber?: boolean
-  interiorNumber?: boolean
-  neighborhood?: boolean
   city?: boolean
   state?: boolean
-  postalCode?: boolean
-  latitude?: boolean
-  longitude?: boolean
   googleMapsUrl?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -702,15 +455,8 @@ export type LocationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
 
 export type LocationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  street?: boolean
-  exteriorNumber?: boolean
-  interiorNumber?: boolean
-  neighborhood?: boolean
   city?: boolean
   state?: boolean
-  postalCode?: boolean
-  latitude?: boolean
-  longitude?: boolean
   googleMapsUrl?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -720,15 +466,8 @@ export type LocationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
 
 export type LocationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  street?: boolean
-  exteriorNumber?: boolean
-  interiorNumber?: boolean
-  neighborhood?: boolean
   city?: boolean
   state?: boolean
-  postalCode?: boolean
-  latitude?: boolean
-  longitude?: boolean
   googleMapsUrl?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -738,22 +477,15 @@ export type LocationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
 
 export type LocationSelectScalar = {
   id?: boolean
-  street?: boolean
-  exteriorNumber?: boolean
-  interiorNumber?: boolean
-  neighborhood?: boolean
   city?: boolean
   state?: boolean
-  postalCode?: boolean
-  latitude?: boolean
-  longitude?: boolean
   googleMapsUrl?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   organizationId?: boolean
 }
 
-export type LocationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "street" | "exteriorNumber" | "interiorNumber" | "neighborhood" | "city" | "state" | "postalCode" | "latitude" | "longitude" | "googleMapsUrl" | "createdAt" | "updatedAt" | "organizationId", ExtArgs["result"]["location"]>
+export type LocationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "city" | "state" | "googleMapsUrl" | "createdAt" | "updatedAt" | "organizationId", ExtArgs["result"]["location"]>
 export type LocationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
 }
@@ -771,15 +503,8 @@ export type $LocationPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    street: string
-    exteriorNumber: string
-    interiorNumber: string | null
-    neighborhood: string
     city: string
     state: string
-    postalCode: string
-    latitude: number | null
-    longitude: number | null
     googleMapsUrl: string | null
     createdAt: Date
     updatedAt: Date
@@ -1209,15 +934,8 @@ export interface Prisma__LocationClient<T, Null = never, ExtArgs extends runtime
  */
 export interface LocationFieldRefs {
   readonly id: Prisma.FieldRef<"Location", 'String'>
-  readonly street: Prisma.FieldRef<"Location", 'String'>
-  readonly exteriorNumber: Prisma.FieldRef<"Location", 'String'>
-  readonly interiorNumber: Prisma.FieldRef<"Location", 'String'>
-  readonly neighborhood: Prisma.FieldRef<"Location", 'String'>
   readonly city: Prisma.FieldRef<"Location", 'String'>
   readonly state: Prisma.FieldRef<"Location", 'String'>
-  readonly postalCode: Prisma.FieldRef<"Location", 'String'>
-  readonly latitude: Prisma.FieldRef<"Location", 'Float'>
-  readonly longitude: Prisma.FieldRef<"Location", 'Float'>
   readonly googleMapsUrl: Prisma.FieldRef<"Location", 'String'>
   readonly createdAt: Prisma.FieldRef<"Location", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Location", 'DateTime'>

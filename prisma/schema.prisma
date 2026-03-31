@@ -15,6 +15,7 @@ enum OrganizationStatus {
     DRAFT
     PUBLISHED
     ARCHIVED
+    REJECTED
 }
 
 enum SocialPlatform {
@@ -48,6 +49,29 @@ model Organization {
     phone            String?
     donationLink     String?
 
+    // Gallery (4 image URLs)
+    galleryImages String[]
+
+    // Impact sidebar (progress bar)
+    impactCurrent Int?
+    impactGoal    Int?
+    impactType    String?
+
+    // Explore tab
+    relevantLinks String[]
+
+    // Impact tab (JSON fields — 1:1 with org)
+    featuredFact   Json? // { value, unit, label, description, badge }
+    secondaryFacts Json? // [{ value, unit, label, icon, color }]
+    testimony      Json? // { quote, author, role, avatarUrl }
+    milestone      Json? // { year, category, tagline, stats: [{ label, value }] }
+
+    // Contact tab
+    officeHours Json? // { monday: { open, close }, tuesday: ... , sunday: null }
+
+    // Organization metadata
+    foundedYear Int?
+
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
@@ -78,19 +102,12 @@ model Category {
     @@index([slug])
 }
 
-/// Ubicación/Dirección de la organización (sede principal)
+/// Ubicación de la organización (sede principal)
 model Location {
-    id             String  @id @default(cuid())
-    street         String
-    exteriorNumber String
-    interiorNumber String?
-    neighborhood   String // Colonia
-    city           String // Municipio/Delegación
-    state          String // Estado
-    postalCode     String
-    latitude       Float?
-    longitude      Float?
-    googleMapsUrl  String?
+    id            String  @id @default(cuid())
+    city          String // Municipio/Delegación
+    state         String // Estado
+    googleMapsUrl String?
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -116,16 +133,14 @@ model SocialLink {
     @@index([organizationId])
 }
 
-/// Log de auditoría para rastrear cambios de administradores
+/// Log de auditoría para rastrear cambios
 model AuditLog {
     id        String   @id @default(cuid())
-    action    String // CREATE, UPDATE, DELETE, UPDATE_STATUS, etc.
+    action    String // CREATE, UPDATE, DELETE, UPDATE_STATUS, DONATION_CLICK, etc.
     entityId  String // ID de la organización afectada
-    adminId   String // ID del usuario de Clerk
     details   Json? // Snapshot de cambios
     createdAt DateTime @default(now())
 
     @@index([entityId])
-    @@index([adminId])
     @@index([createdAt])
 }

@@ -20,8 +20,22 @@ export type OrganizationModel = runtime.Types.Result.DefaultSelection<Prisma.$Or
 
 export type AggregateOrganization = {
   _count: OrganizationCountAggregateOutputType | null
+  _avg: OrganizationAvgAggregateOutputType | null
+  _sum: OrganizationSumAggregateOutputType | null
   _min: OrganizationMinAggregateOutputType | null
   _max: OrganizationMaxAggregateOutputType | null
+}
+
+export type OrganizationAvgAggregateOutputType = {
+  impactCurrent: number | null
+  impactGoal: number | null
+  foundedYear: number | null
+}
+
+export type OrganizationSumAggregateOutputType = {
+  impactCurrent: number | null
+  impactGoal: number | null
+  foundedYear: number | null
 }
 
 export type OrganizationMinAggregateOutputType = {
@@ -39,6 +53,10 @@ export type OrganizationMinAggregateOutputType = {
   email: string | null
   phone: string | null
   donationLink: string | null
+  impactCurrent: number | null
+  impactGoal: number | null
+  impactType: string | null
+  foundedYear: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -58,6 +76,10 @@ export type OrganizationMaxAggregateOutputType = {
   email: string | null
   phone: string | null
   donationLink: string | null
+  impactCurrent: number | null
+  impactGoal: number | null
+  impactType: string | null
+  foundedYear: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -77,11 +99,34 @@ export type OrganizationCountAggregateOutputType = {
   email: number
   phone: number
   donationLink: number
+  galleryImages: number
+  impactCurrent: number
+  impactGoal: number
+  impactType: number
+  relevantLinks: number
+  featuredFact: number
+  secondaryFacts: number
+  testimony: number
+  milestone: number
+  officeHours: number
+  foundedYear: number
   createdAt: number
   updatedAt: number
   _all: number
 }
 
+
+export type OrganizationAvgAggregateInputType = {
+  impactCurrent?: true
+  impactGoal?: true
+  foundedYear?: true
+}
+
+export type OrganizationSumAggregateInputType = {
+  impactCurrent?: true
+  impactGoal?: true
+  foundedYear?: true
+}
 
 export type OrganizationMinAggregateInputType = {
   id?: true
@@ -98,6 +143,10 @@ export type OrganizationMinAggregateInputType = {
   email?: true
   phone?: true
   donationLink?: true
+  impactCurrent?: true
+  impactGoal?: true
+  impactType?: true
+  foundedYear?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -117,6 +166,10 @@ export type OrganizationMaxAggregateInputType = {
   email?: true
   phone?: true
   donationLink?: true
+  impactCurrent?: true
+  impactGoal?: true
+  impactType?: true
+  foundedYear?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -136,6 +189,17 @@ export type OrganizationCountAggregateInputType = {
   email?: true
   phone?: true
   donationLink?: true
+  galleryImages?: true
+  impactCurrent?: true
+  impactGoal?: true
+  impactType?: true
+  relevantLinks?: true
+  featuredFact?: true
+  secondaryFacts?: true
+  testimony?: true
+  milestone?: true
+  officeHours?: true
+  foundedYear?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -179,6 +243,18 @@ export type OrganizationAggregateArgs<ExtArgs extends runtime.Types.Extensions.I
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: OrganizationAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: OrganizationSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: OrganizationMinAggregateInputType
@@ -209,6 +285,8 @@ export type OrganizationGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   _count?: OrganizationCountAggregateInputType | true
+  _avg?: OrganizationAvgAggregateInputType
+  _sum?: OrganizationSumAggregateInputType
   _min?: OrganizationMinAggregateInputType
   _max?: OrganizationMaxAggregateInputType
 }
@@ -228,9 +306,22 @@ export type OrganizationGroupByOutputType = {
   email: string
   phone: string | null
   donationLink: string | null
+  galleryImages: string[]
+  impactCurrent: number | null
+  impactGoal: number | null
+  impactType: string | null
+  relevantLinks: string[]
+  featuredFact: runtime.JsonValue | null
+  secondaryFacts: runtime.JsonValue | null
+  testimony: runtime.JsonValue | null
+  milestone: runtime.JsonValue | null
+  officeHours: runtime.JsonValue | null
+  foundedYear: number | null
   createdAt: Date
   updatedAt: Date
   _count: OrganizationCountAggregateOutputType | null
+  _avg: OrganizationAvgAggregateOutputType | null
+  _sum: OrganizationSumAggregateOutputType | null
   _min: OrganizationMinAggregateOutputType | null
   _max: OrganizationMaxAggregateOutputType | null
 }
@@ -268,6 +359,17 @@ export type OrganizationWhereInput = {
   email?: Prisma.StringFilter<"Organization"> | string
   phone?: Prisma.StringNullableFilter<"Organization"> | string | null
   donationLink?: Prisma.StringNullableFilter<"Organization"> | string | null
+  galleryImages?: Prisma.StringNullableListFilter<"Organization">
+  impactCurrent?: Prisma.IntNullableFilter<"Organization"> | number | null
+  impactGoal?: Prisma.IntNullableFilter<"Organization"> | number | null
+  impactType?: Prisma.StringNullableFilter<"Organization"> | string | null
+  relevantLinks?: Prisma.StringNullableListFilter<"Organization">
+  featuredFact?: Prisma.JsonNullableFilter<"Organization">
+  secondaryFacts?: Prisma.JsonNullableFilter<"Organization">
+  testimony?: Prisma.JsonNullableFilter<"Organization">
+  milestone?: Prisma.JsonNullableFilter<"Organization">
+  officeHours?: Prisma.JsonNullableFilter<"Organization">
+  foundedYear?: Prisma.IntNullableFilter<"Organization"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Organization"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Organization"> | Date | string
   location?: Prisma.XOR<Prisma.LocationNullableScalarRelationFilter, Prisma.LocationWhereInput> | null
@@ -290,6 +392,17 @@ export type OrganizationOrderByWithRelationInput = {
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   donationLink?: Prisma.SortOrderInput | Prisma.SortOrder
+  galleryImages?: Prisma.SortOrder
+  impactCurrent?: Prisma.SortOrderInput | Prisma.SortOrder
+  impactGoal?: Prisma.SortOrderInput | Prisma.SortOrder
+  impactType?: Prisma.SortOrderInput | Prisma.SortOrder
+  relevantLinks?: Prisma.SortOrder
+  featuredFact?: Prisma.SortOrderInput | Prisma.SortOrder
+  secondaryFacts?: Prisma.SortOrderInput | Prisma.SortOrder
+  testimony?: Prisma.SortOrderInput | Prisma.SortOrder
+  milestone?: Prisma.SortOrderInput | Prisma.SortOrder
+  officeHours?: Prisma.SortOrderInput | Prisma.SortOrder
+  foundedYear?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   location?: Prisma.LocationOrderByWithRelationInput
@@ -315,6 +428,17 @@ export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
   email?: Prisma.StringFilter<"Organization"> | string
   phone?: Prisma.StringNullableFilter<"Organization"> | string | null
   donationLink?: Prisma.StringNullableFilter<"Organization"> | string | null
+  galleryImages?: Prisma.StringNullableListFilter<"Organization">
+  impactCurrent?: Prisma.IntNullableFilter<"Organization"> | number | null
+  impactGoal?: Prisma.IntNullableFilter<"Organization"> | number | null
+  impactType?: Prisma.StringNullableFilter<"Organization"> | string | null
+  relevantLinks?: Prisma.StringNullableListFilter<"Organization">
+  featuredFact?: Prisma.JsonNullableFilter<"Organization">
+  secondaryFacts?: Prisma.JsonNullableFilter<"Organization">
+  testimony?: Prisma.JsonNullableFilter<"Organization">
+  milestone?: Prisma.JsonNullableFilter<"Organization">
+  officeHours?: Prisma.JsonNullableFilter<"Organization">
+  foundedYear?: Prisma.IntNullableFilter<"Organization"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Organization"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Organization"> | Date | string
   location?: Prisma.XOR<Prisma.LocationNullableScalarRelationFilter, Prisma.LocationWhereInput> | null
@@ -337,11 +461,24 @@ export type OrganizationOrderByWithAggregationInput = {
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   donationLink?: Prisma.SortOrderInput | Prisma.SortOrder
+  galleryImages?: Prisma.SortOrder
+  impactCurrent?: Prisma.SortOrderInput | Prisma.SortOrder
+  impactGoal?: Prisma.SortOrderInput | Prisma.SortOrder
+  impactType?: Prisma.SortOrderInput | Prisma.SortOrder
+  relevantLinks?: Prisma.SortOrder
+  featuredFact?: Prisma.SortOrderInput | Prisma.SortOrder
+  secondaryFacts?: Prisma.SortOrderInput | Prisma.SortOrder
+  testimony?: Prisma.SortOrderInput | Prisma.SortOrder
+  milestone?: Prisma.SortOrderInput | Prisma.SortOrder
+  officeHours?: Prisma.SortOrderInput | Prisma.SortOrder
+  foundedYear?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.OrganizationCountOrderByAggregateInput
+  _avg?: Prisma.OrganizationAvgOrderByAggregateInput
   _max?: Prisma.OrganizationMaxOrderByAggregateInput
   _min?: Prisma.OrganizationMinOrderByAggregateInput
+  _sum?: Prisma.OrganizationSumOrderByAggregateInput
 }
 
 export type OrganizationScalarWhereWithAggregatesInput = {
@@ -362,6 +499,17 @@ export type OrganizationScalarWhereWithAggregatesInput = {
   email?: Prisma.StringWithAggregatesFilter<"Organization"> | string
   phone?: Prisma.StringNullableWithAggregatesFilter<"Organization"> | string | null
   donationLink?: Prisma.StringNullableWithAggregatesFilter<"Organization"> | string | null
+  galleryImages?: Prisma.StringNullableListFilter<"Organization">
+  impactCurrent?: Prisma.IntNullableWithAggregatesFilter<"Organization"> | number | null
+  impactGoal?: Prisma.IntNullableWithAggregatesFilter<"Organization"> | number | null
+  impactType?: Prisma.StringNullableWithAggregatesFilter<"Organization"> | string | null
+  relevantLinks?: Prisma.StringNullableListFilter<"Organization">
+  featuredFact?: Prisma.JsonNullableWithAggregatesFilter<"Organization">
+  secondaryFacts?: Prisma.JsonNullableWithAggregatesFilter<"Organization">
+  testimony?: Prisma.JsonNullableWithAggregatesFilter<"Organization">
+  milestone?: Prisma.JsonNullableWithAggregatesFilter<"Organization">
+  officeHours?: Prisma.JsonNullableWithAggregatesFilter<"Organization">
+  foundedYear?: Prisma.IntNullableWithAggregatesFilter<"Organization"> | number | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Organization"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Organization"> | Date | string
 }
@@ -381,6 +529,17 @@ export type OrganizationCreateInput = {
   email: string
   phone?: string | null
   donationLink?: string | null
+  galleryImages?: Prisma.OrganizationCreategalleryImagesInput | string[]
+  impactCurrent?: number | null
+  impactGoal?: number | null
+  impactType?: string | null
+  relevantLinks?: Prisma.OrganizationCreaterelevantLinksInput | string[]
+  featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  testimony?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  milestone?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  officeHours?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  foundedYear?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   location?: Prisma.LocationCreateNestedOneWithoutOrganizationInput
@@ -403,6 +562,17 @@ export type OrganizationUncheckedCreateInput = {
   email: string
   phone?: string | null
   donationLink?: string | null
+  galleryImages?: Prisma.OrganizationCreategalleryImagesInput | string[]
+  impactCurrent?: number | null
+  impactGoal?: number | null
+  impactType?: string | null
+  relevantLinks?: Prisma.OrganizationCreaterelevantLinksInput | string[]
+  featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  testimony?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  milestone?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  officeHours?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  foundedYear?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   location?: Prisma.LocationUncheckedCreateNestedOneWithoutOrganizationInput
@@ -425,6 +595,17 @@ export type OrganizationUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donationLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  galleryImages?: Prisma.OrganizationUpdategalleryImagesInput | string[]
+  impactCurrent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  impactGoal?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  impactType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  relevantLinks?: Prisma.OrganizationUpdaterelevantLinksInput | string[]
+  featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  testimony?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  milestone?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  officeHours?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  foundedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   location?: Prisma.LocationUpdateOneWithoutOrganizationNestedInput
@@ -447,6 +628,17 @@ export type OrganizationUncheckedUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donationLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  galleryImages?: Prisma.OrganizationUpdategalleryImagesInput | string[]
+  impactCurrent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  impactGoal?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  impactType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  relevantLinks?: Prisma.OrganizationUpdaterelevantLinksInput | string[]
+  featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  testimony?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  milestone?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  officeHours?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  foundedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   location?: Prisma.LocationUncheckedUpdateOneWithoutOrganizationNestedInput
@@ -469,6 +661,17 @@ export type OrganizationCreateManyInput = {
   email: string
   phone?: string | null
   donationLink?: string | null
+  galleryImages?: Prisma.OrganizationCreategalleryImagesInput | string[]
+  impactCurrent?: number | null
+  impactGoal?: number | null
+  impactType?: string | null
+  relevantLinks?: Prisma.OrganizationCreaterelevantLinksInput | string[]
+  featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  testimony?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  milestone?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  officeHours?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  foundedYear?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -488,6 +691,17 @@ export type OrganizationUpdateManyMutationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donationLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  galleryImages?: Prisma.OrganizationUpdategalleryImagesInput | string[]
+  impactCurrent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  impactGoal?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  impactType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  relevantLinks?: Prisma.OrganizationUpdaterelevantLinksInput | string[]
+  featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  testimony?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  milestone?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  officeHours?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  foundedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -507,8 +721,27 @@ export type OrganizationUncheckedUpdateManyInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donationLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  galleryImages?: Prisma.OrganizationUpdategalleryImagesInput | string[]
+  impactCurrent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  impactGoal?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  impactType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  relevantLinks?: Prisma.OrganizationUpdaterelevantLinksInput | string[]
+  featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  testimony?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  milestone?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  officeHours?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  foundedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type StringNullableListFilter<$PrismaModel = never> = {
+  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
+  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
+  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  isEmpty?: boolean
 }
 
 export type OrganizationCountOrderByAggregateInput = {
@@ -526,8 +759,25 @@ export type OrganizationCountOrderByAggregateInput = {
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   donationLink?: Prisma.SortOrder
+  galleryImages?: Prisma.SortOrder
+  impactCurrent?: Prisma.SortOrder
+  impactGoal?: Prisma.SortOrder
+  impactType?: Prisma.SortOrder
+  relevantLinks?: Prisma.SortOrder
+  featuredFact?: Prisma.SortOrder
+  secondaryFacts?: Prisma.SortOrder
+  testimony?: Prisma.SortOrder
+  milestone?: Prisma.SortOrder
+  officeHours?: Prisma.SortOrder
+  foundedYear?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type OrganizationAvgOrderByAggregateInput = {
+  impactCurrent?: Prisma.SortOrder
+  impactGoal?: Prisma.SortOrder
+  foundedYear?: Prisma.SortOrder
 }
 
 export type OrganizationMaxOrderByAggregateInput = {
@@ -545,6 +795,10 @@ export type OrganizationMaxOrderByAggregateInput = {
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   donationLink?: Prisma.SortOrder
+  impactCurrent?: Prisma.SortOrder
+  impactGoal?: Prisma.SortOrder
+  impactType?: Prisma.SortOrder
+  foundedYear?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -564,8 +818,18 @@ export type OrganizationMinOrderByAggregateInput = {
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   donationLink?: Prisma.SortOrder
+  impactCurrent?: Prisma.SortOrder
+  impactGoal?: Prisma.SortOrder
+  impactType?: Prisma.SortOrder
+  foundedYear?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type OrganizationSumOrderByAggregateInput = {
+  impactCurrent?: Prisma.SortOrder
+  impactGoal?: Prisma.SortOrder
+  foundedYear?: Prisma.SortOrder
 }
 
 export type OrganizationListRelationFilter = {
@@ -583,6 +847,14 @@ export type OrganizationScalarRelationFilter = {
   isNot?: Prisma.OrganizationWhereInput
 }
 
+export type OrganizationCreategalleryImagesInput = {
+  set: string[]
+}
+
+export type OrganizationCreaterelevantLinksInput = {
+  set: string[]
+}
+
 export type StringFieldUpdateOperationsInput = {
   set?: string
 }
@@ -597,6 +869,24 @@ export type EnumOrganizationStatusFieldUpdateOperationsInput = {
 
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
+}
+
+export type OrganizationUpdategalleryImagesInput = {
+  set?: string[]
+  push?: string | string[]
+}
+
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
+export type OrganizationUpdaterelevantLinksInput = {
+  set?: string[]
+  push?: string | string[]
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
@@ -684,6 +974,17 @@ export type OrganizationCreateWithoutCategoriesInput = {
   email: string
   phone?: string | null
   donationLink?: string | null
+  galleryImages?: Prisma.OrganizationCreategalleryImagesInput | string[]
+  impactCurrent?: number | null
+  impactGoal?: number | null
+  impactType?: string | null
+  relevantLinks?: Prisma.OrganizationCreaterelevantLinksInput | string[]
+  featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  testimony?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  milestone?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  officeHours?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  foundedYear?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   location?: Prisma.LocationCreateNestedOneWithoutOrganizationInput
@@ -705,6 +1006,17 @@ export type OrganizationUncheckedCreateWithoutCategoriesInput = {
   email: string
   phone?: string | null
   donationLink?: string | null
+  galleryImages?: Prisma.OrganizationCreategalleryImagesInput | string[]
+  impactCurrent?: number | null
+  impactGoal?: number | null
+  impactType?: string | null
+  relevantLinks?: Prisma.OrganizationCreaterelevantLinksInput | string[]
+  featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  testimony?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  milestone?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  officeHours?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  foundedYear?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   location?: Prisma.LocationUncheckedCreateNestedOneWithoutOrganizationInput
@@ -750,6 +1062,17 @@ export type OrganizationScalarWhereInput = {
   email?: Prisma.StringFilter<"Organization"> | string
   phone?: Prisma.StringNullableFilter<"Organization"> | string | null
   donationLink?: Prisma.StringNullableFilter<"Organization"> | string | null
+  galleryImages?: Prisma.StringNullableListFilter<"Organization">
+  impactCurrent?: Prisma.IntNullableFilter<"Organization"> | number | null
+  impactGoal?: Prisma.IntNullableFilter<"Organization"> | number | null
+  impactType?: Prisma.StringNullableFilter<"Organization"> | string | null
+  relevantLinks?: Prisma.StringNullableListFilter<"Organization">
+  featuredFact?: Prisma.JsonNullableFilter<"Organization">
+  secondaryFacts?: Prisma.JsonNullableFilter<"Organization">
+  testimony?: Prisma.JsonNullableFilter<"Organization">
+  milestone?: Prisma.JsonNullableFilter<"Organization">
+  officeHours?: Prisma.JsonNullableFilter<"Organization">
+  foundedYear?: Prisma.IntNullableFilter<"Organization"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Organization"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Organization"> | Date | string
 }
@@ -769,6 +1092,17 @@ export type OrganizationCreateWithoutLocationInput = {
   email: string
   phone?: string | null
   donationLink?: string | null
+  galleryImages?: Prisma.OrganizationCreategalleryImagesInput | string[]
+  impactCurrent?: number | null
+  impactGoal?: number | null
+  impactType?: string | null
+  relevantLinks?: Prisma.OrganizationCreaterelevantLinksInput | string[]
+  featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  testimony?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  milestone?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  officeHours?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  foundedYear?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   socialLinks?: Prisma.SocialLinkCreateNestedManyWithoutOrganizationInput
@@ -790,6 +1124,17 @@ export type OrganizationUncheckedCreateWithoutLocationInput = {
   email: string
   phone?: string | null
   donationLink?: string | null
+  galleryImages?: Prisma.OrganizationCreategalleryImagesInput | string[]
+  impactCurrent?: number | null
+  impactGoal?: number | null
+  impactType?: string | null
+  relevantLinks?: Prisma.OrganizationCreaterelevantLinksInput | string[]
+  featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  testimony?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  milestone?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  officeHours?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  foundedYear?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   socialLinks?: Prisma.SocialLinkUncheckedCreateNestedManyWithoutOrganizationInput
@@ -827,6 +1172,17 @@ export type OrganizationUpdateWithoutLocationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donationLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  galleryImages?: Prisma.OrganizationUpdategalleryImagesInput | string[]
+  impactCurrent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  impactGoal?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  impactType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  relevantLinks?: Prisma.OrganizationUpdaterelevantLinksInput | string[]
+  featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  testimony?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  milestone?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  officeHours?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  foundedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   socialLinks?: Prisma.SocialLinkUpdateManyWithoutOrganizationNestedInput
@@ -848,6 +1204,17 @@ export type OrganizationUncheckedUpdateWithoutLocationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donationLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  galleryImages?: Prisma.OrganizationUpdategalleryImagesInput | string[]
+  impactCurrent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  impactGoal?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  impactType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  relevantLinks?: Prisma.OrganizationUpdaterelevantLinksInput | string[]
+  featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  testimony?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  milestone?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  officeHours?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  foundedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   socialLinks?: Prisma.SocialLinkUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -869,6 +1236,17 @@ export type OrganizationCreateWithoutSocialLinksInput = {
   email: string
   phone?: string | null
   donationLink?: string | null
+  galleryImages?: Prisma.OrganizationCreategalleryImagesInput | string[]
+  impactCurrent?: number | null
+  impactGoal?: number | null
+  impactType?: string | null
+  relevantLinks?: Prisma.OrganizationCreaterelevantLinksInput | string[]
+  featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  testimony?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  milestone?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  officeHours?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  foundedYear?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   location?: Prisma.LocationCreateNestedOneWithoutOrganizationInput
@@ -890,6 +1268,17 @@ export type OrganizationUncheckedCreateWithoutSocialLinksInput = {
   email: string
   phone?: string | null
   donationLink?: string | null
+  galleryImages?: Prisma.OrganizationCreategalleryImagesInput | string[]
+  impactCurrent?: number | null
+  impactGoal?: number | null
+  impactType?: string | null
+  relevantLinks?: Prisma.OrganizationCreaterelevantLinksInput | string[]
+  featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  testimony?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  milestone?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  officeHours?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  foundedYear?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   location?: Prisma.LocationUncheckedCreateNestedOneWithoutOrganizationInput
@@ -927,6 +1316,17 @@ export type OrganizationUpdateWithoutSocialLinksInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donationLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  galleryImages?: Prisma.OrganizationUpdategalleryImagesInput | string[]
+  impactCurrent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  impactGoal?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  impactType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  relevantLinks?: Prisma.OrganizationUpdaterelevantLinksInput | string[]
+  featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  testimony?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  milestone?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  officeHours?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  foundedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   location?: Prisma.LocationUpdateOneWithoutOrganizationNestedInput
@@ -948,6 +1348,17 @@ export type OrganizationUncheckedUpdateWithoutSocialLinksInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donationLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  galleryImages?: Prisma.OrganizationUpdategalleryImagesInput | string[]
+  impactCurrent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  impactGoal?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  impactType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  relevantLinks?: Prisma.OrganizationUpdaterelevantLinksInput | string[]
+  featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  testimony?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  milestone?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  officeHours?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  foundedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   location?: Prisma.LocationUncheckedUpdateOneWithoutOrganizationNestedInput
@@ -969,6 +1380,17 @@ export type OrganizationUpdateWithoutCategoriesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donationLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  galleryImages?: Prisma.OrganizationUpdategalleryImagesInput | string[]
+  impactCurrent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  impactGoal?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  impactType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  relevantLinks?: Prisma.OrganizationUpdaterelevantLinksInput | string[]
+  featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  testimony?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  milestone?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  officeHours?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  foundedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   location?: Prisma.LocationUpdateOneWithoutOrganizationNestedInput
@@ -990,6 +1412,17 @@ export type OrganizationUncheckedUpdateWithoutCategoriesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donationLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  galleryImages?: Prisma.OrganizationUpdategalleryImagesInput | string[]
+  impactCurrent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  impactGoal?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  impactType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  relevantLinks?: Prisma.OrganizationUpdaterelevantLinksInput | string[]
+  featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  testimony?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  milestone?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  officeHours?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  foundedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   location?: Prisma.LocationUncheckedUpdateOneWithoutOrganizationNestedInput
@@ -1011,6 +1444,17 @@ export type OrganizationUncheckedUpdateManyWithoutCategoriesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donationLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  galleryImages?: Prisma.OrganizationUpdategalleryImagesInput | string[]
+  impactCurrent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  impactGoal?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  impactType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  relevantLinks?: Prisma.OrganizationUpdaterelevantLinksInput | string[]
+  featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  testimony?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  milestone?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  officeHours?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  foundedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1070,6 +1514,17 @@ export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   email?: boolean
   phone?: boolean
   donationLink?: boolean
+  galleryImages?: boolean
+  impactCurrent?: boolean
+  impactGoal?: boolean
+  impactType?: boolean
+  relevantLinks?: boolean
+  featuredFact?: boolean
+  secondaryFacts?: boolean
+  testimony?: boolean
+  milestone?: boolean
+  officeHours?: boolean
+  foundedYear?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   location?: boolean | Prisma.Organization$locationArgs<ExtArgs>
@@ -1093,6 +1548,17 @@ export type OrganizationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   email?: boolean
   phone?: boolean
   donationLink?: boolean
+  galleryImages?: boolean
+  impactCurrent?: boolean
+  impactGoal?: boolean
+  impactType?: boolean
+  relevantLinks?: boolean
+  featuredFact?: boolean
+  secondaryFacts?: boolean
+  testimony?: boolean
+  milestone?: boolean
+  officeHours?: boolean
+  foundedYear?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["organization"]>
@@ -1112,6 +1578,17 @@ export type OrganizationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   email?: boolean
   phone?: boolean
   donationLink?: boolean
+  galleryImages?: boolean
+  impactCurrent?: boolean
+  impactGoal?: boolean
+  impactType?: boolean
+  relevantLinks?: boolean
+  featuredFact?: boolean
+  secondaryFacts?: boolean
+  testimony?: boolean
+  milestone?: boolean
+  officeHours?: boolean
+  foundedYear?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["organization"]>
@@ -1131,11 +1608,22 @@ export type OrganizationSelectScalar = {
   email?: boolean
   phone?: boolean
   donationLink?: boolean
+  galleryImages?: boolean
+  impactCurrent?: boolean
+  impactGoal?: boolean
+  impactType?: boolean
+  relevantLinks?: boolean
+  featuredFact?: boolean
+  secondaryFacts?: boolean
+  testimony?: boolean
+  milestone?: boolean
+  officeHours?: boolean
+  foundedYear?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type OrganizationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "name" | "shortDescription" | "fullDescription" | "logoUrl" | "coverImageUrl" | "status" | "featured" | "verified" | "website" | "email" | "phone" | "donationLink" | "createdAt" | "updatedAt", ExtArgs["result"]["organization"]>
+export type OrganizationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "name" | "shortDescription" | "fullDescription" | "logoUrl" | "coverImageUrl" | "status" | "featured" | "verified" | "website" | "email" | "phone" | "donationLink" | "galleryImages" | "impactCurrent" | "impactGoal" | "impactType" | "relevantLinks" | "featuredFact" | "secondaryFacts" | "testimony" | "milestone" | "officeHours" | "foundedYear" | "createdAt" | "updatedAt", ExtArgs["result"]["organization"]>
 export type OrganizationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   location?: boolean | Prisma.Organization$locationArgs<ExtArgs>
   socialLinks?: boolean | Prisma.Organization$socialLinksArgs<ExtArgs>
@@ -1167,6 +1655,17 @@ export type $OrganizationPayload<ExtArgs extends runtime.Types.Extensions.Intern
     email: string
     phone: string | null
     donationLink: string | null
+    galleryImages: string[]
+    impactCurrent: number | null
+    impactGoal: number | null
+    impactType: string | null
+    relevantLinks: string[]
+    featuredFact: runtime.JsonValue | null
+    secondaryFacts: runtime.JsonValue | null
+    testimony: runtime.JsonValue | null
+    milestone: runtime.JsonValue | null
+    officeHours: runtime.JsonValue | null
+    foundedYear: number | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["organization"]>
@@ -1609,6 +2108,17 @@ export interface OrganizationFieldRefs {
   readonly email: Prisma.FieldRef<"Organization", 'String'>
   readonly phone: Prisma.FieldRef<"Organization", 'String'>
   readonly donationLink: Prisma.FieldRef<"Organization", 'String'>
+  readonly galleryImages: Prisma.FieldRef<"Organization", 'String[]'>
+  readonly impactCurrent: Prisma.FieldRef<"Organization", 'Int'>
+  readonly impactGoal: Prisma.FieldRef<"Organization", 'Int'>
+  readonly impactType: Prisma.FieldRef<"Organization", 'String'>
+  readonly relevantLinks: Prisma.FieldRef<"Organization", 'String[]'>
+  readonly featuredFact: Prisma.FieldRef<"Organization", 'Json'>
+  readonly secondaryFacts: Prisma.FieldRef<"Organization", 'Json'>
+  readonly testimony: Prisma.FieldRef<"Organization", 'Json'>
+  readonly milestone: Prisma.FieldRef<"Organization", 'Json'>
+  readonly officeHours: Prisma.FieldRef<"Organization", 'Json'>
+  readonly foundedYear: Prisma.FieldRef<"Organization", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Organization", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Organization", 'DateTime'>
 }

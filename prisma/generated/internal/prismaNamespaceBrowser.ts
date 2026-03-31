@@ -89,6 +89,17 @@ export const OrganizationScalarFieldEnum = {
   email: 'email',
   phone: 'phone',
   donationLink: 'donationLink',
+  galleryImages: 'galleryImages',
+  impactCurrent: 'impactCurrent',
+  impactGoal: 'impactGoal',
+  impactType: 'impactType',
+  relevantLinks: 'relevantLinks',
+  featuredFact: 'featuredFact',
+  secondaryFacts: 'secondaryFacts',
+  testimony: 'testimony',
+  milestone: 'milestone',
+  officeHours: 'officeHours',
+  foundedYear: 'foundedYear',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -110,15 +121,8 @@ export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typ
 
 export const LocationScalarFieldEnum = {
   id: 'id',
-  street: 'street',
-  exteriorNumber: 'exteriorNumber',
-  interiorNumber: 'interiorNumber',
-  neighborhood: 'neighborhood',
   city: 'city',
   state: 'state',
-  postalCode: 'postalCode',
-  latitude: 'latitude',
-  longitude: 'longitude',
   googleMapsUrl: 'googleMapsUrl',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
@@ -144,7 +148,6 @@ export const AuditLogScalarFieldEnum = {
   id: 'id',
   action: 'action',
   entityId: 'entityId',
-  adminId: 'adminId',
   details: 'details',
   createdAt: 'createdAt'
 } as const
@@ -176,14 +179,6 @@ export const QueryMode = {
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
-export const NullsOrder = {
-  first: 'first',
-  last: 'last'
-} as const
-
-export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
-
-
 export const JsonNullValueFilter = {
   DbNull: DbNull,
   JsonNull: JsonNull,
@@ -191,4 +186,12 @@ export const JsonNullValueFilter = {
 } as const
 
 export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
