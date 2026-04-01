@@ -1,5 +1,5 @@
 import * as z from 'zod'
-import { OrganizationStatus, SocialPlatform } from '@/prisma/generated/client'
+import { OrganizationStatus, SocialPlatform } from '@/prisma/generated/enums'
 
 export const locationSchema = z.object({
   city: z.string().min(2, 'City is required'),
@@ -67,3 +67,13 @@ export const orgFormSchema = z.object({
 })
 
 export type OrgFormValues = z.infer<typeof orgFormSchema>
+
+export const suggestionSchema = z.object({
+  orgName: z.string().min(2, 'El nombre es obligatorio.'),
+  category: z.string().min(1, 'Selecciona una categoría.'),
+  location: z.string().min(2, 'La ubicación es obligatoria.'),
+  description: z.string().min(10, 'Escribe al menos 10 caracteres.'),
+  url: z.string().url('Introduce una URL válida.'),
+})
+
+export type SuggestionValues = z.infer<typeof suggestionSchema>
