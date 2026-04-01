@@ -5,9 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { Info, Link as LinkIcon, Send, Loader2, Check, X } from "lucide-react";
-
-import { submitSuggestion } from "@/server/actions";
-
+import { submitSuggestion, getPublicCategories } from "@/server/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -38,6 +36,7 @@ import {
   FieldGroup,
   FieldLabel,
 } from "@/components/ui/field";
+import { MEXICO_STATES } from "@/lib/mexico-states";
 
 /* ── Zod schema ─────────────────────────────────────── */
 const suggestSchema = z.object({
@@ -98,6 +97,18 @@ export function SuggestOrgDialog({
 }) {
   const [open, setOpen] = useState(false);
   const [submitState, setSubmitState] = useState<SubmitState>("idle");
+  const [categories, setCategories] = useState<{ id: string; name: string }[]>([]);
+
+  // Fetch categories when dialog opens
+  useEffect(() => {
+    if (open && categories.length === 0) {
+      getPublicCategories().then((res) => {
+        if (res.success && res.data) {
+          setCategories(res.data);
+        }
+      });
+    }
+  }, [open, categories.length]);
 
   const form = useForm<SuggestValues>({
     resolver: zodResolver(suggestSchema),
@@ -227,16 +238,18 @@ export function SuggestOrgDialog({
                         >
                           <SelectValue placeholder="Seleccionar..." />
                         </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="Medio Ambiente">
-                            Medio Ambiente
-                          </SelectItem>
-                          <SelectItem value="Salud">Salud</SelectItem>
-                          <SelectItem value="Educación">Educación</SelectItem>
-                          <SelectItem value="Bienestar Animal">
-                            Bienestar Animal
-                          </SelectItem>
-                          <SelectItem value="Acción Social">Acción Social</SelectItem>
+                        <SelectContent data-lenis-prevent>
+                          {categories.length > 0 ? (
+                            categories.map((cat) => (
+                              <SelectItem key={cat.id} value={cat.name}>
+                                {cat.name}
+                              </SelectItem>
+                            ))
+                          ) : (
+                            <SelectItem value="loading" disabled>
+                              Cargando...
+                            </SelectItem>
+                          )}
                         </SelectContent>
                       </Select>
                       {fieldState.invalid && (
@@ -246,24 +259,35 @@ export function SuggestOrgDialog({
                   )}
                 />
 
-                {/* Ciudad / Estado */}
+                {/* Estado */}
                 <Controller
                   name="location"
                   control={form.control}
                   render={({ field, fieldState }) => (
                     <Field data-invalid={fieldState.invalid}>
                       <FieldLabel htmlFor="location" className={labelCx}>
-                        Ciudad / Estado
+                        Estado
                       </FieldLabel>
-                      <Input
-                        {...field}
-                        id="location"
-                        aria-invalid={fieldState.invalid}
-                        placeholder="Ej. Madrid, España"
-                        autoComplete="off"
-                        className={inputCx}
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
                         disabled={submitState !== "idle"}
-                      />
+                      >
+                        <SelectTrigger
+                          id="location"
+                          aria-invalid={fieldState.invalid}
+                          className={inputCx}
+                        >
+                          <SelectValue placeholder="Seleccionar estado..." />
+                        </SelectTrigger>
+                        <SelectContent data-lenis-prevent>
+                          {MEXICO_STATES.map((state) => (
+                            <SelectItem key={state.slug} value={state.name}>
+                              {state.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                       {fieldState.invalid && (
                         <FieldError errors={[fieldState.error]} />
                       )}

@@ -256,6 +256,18 @@ export async function getAllCategoriesWithCount() {
   }
 }
 
+export async function getPublicCategories() {
+  try {
+    const categories = await prisma.category.findMany({
+      orderBy: { name: 'asc' },
+    })
+    return { success: true, data: categories }
+  } catch (error) {
+    console.error('[getPublicCategories] Error:', error)
+    return { success: false, error: 'Failed to fetch categories' }
+  }
+}
+
 export async function getFeaturedOrganizations() {
   try {
     const orgs = await prisma.organization.findMany({
