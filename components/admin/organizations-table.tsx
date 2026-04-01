@@ -13,7 +13,6 @@ import {
   Eye,
   CheckCircle2,
   EyeOff,
-  XCircle,
   Trash2,
   Building2,
   Loader2,
@@ -54,8 +53,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { toggleOrgStatus, toggleOrgFeatured, deleteOrganization } from "@/server/actions"
-import type { OrganizationStatus } from "@/prisma/generated/client"
+import { toggleOrgStatus, toggleOrgFeatured, deleteOrganization, getOrganizationById, upsertOrganization } from "@/server/actions"
+import type { OrganizationStatus } from "@/prisma/generated/enums"
+import { OrganizationSheet, type OrgWithAllRelations } from "./organization-sheet"
 
 // ---------------------------------------------------------------------------
 // Types
@@ -82,6 +82,7 @@ type Props = {
     limit: number
     totalPages: number
   }
+  categories: { id: string; name: string }[]
 }
 
 // ---------------------------------------------------------------------------
@@ -107,18 +108,13 @@ const STATUS_CONFIG: Record<
     dotColor: "bg-slate-400 dark:bg-slate-500",
     textColor: "text-slate-600 dark:text-slate-400",
   },
-  REJECTED: {
-    label: "Rechazada",
-    dotColor: "bg-red-500",
-    textColor: "text-red-700 dark:text-red-400",
-  },
 }
 
 // ---------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------
 
-export function OrganizationsTable({ organizations, meta }: Props) {
+export function OrganizationsTable({ organizations, meta, categories }: Props) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isPending, startTransition] = useTransition()
@@ -136,6 +132,35 @@ export function OrganizationsTable({ organizations, meta }: Props) {
     id: string
     name: string
   } | null>(null)
+
+  // Sheet state
+  const [sheetOpen, setSheetOpen] = useState(false)
+  const [isLoadingOrg, setIsLoadingOrg] = useState(false)
+  const [editingOrg, setEditingOrg] = useState<OrgWithAllRelations | null>(null)
+
+  useEffect(() => {
+    if (searchParams.get("action") === "new-org") {
+      setEditingOrg(null)
+      setIsLoadingOrg(false)
+      setSheetOpen(true)
+      const sp = new URLSearchParams(searchParams.toString())
+      sp.delete("action")
+      router.replace(`?${sp.toString()}`, { scroll: false })
+    }
+  }, [searchParams, router])
+
+  async function handleEditClick(id: string) {
+    // Open sheet immediately — show skeleton while data loads
+    setEditingOrg(null)
+    setIsLoadingOrg(true)
+    setSheetOpen(true)
+
+    const result = await getOrganizationById(id)
+    if (result.success && result.data) {
+      setEditingOrg(result.data)
+    }
+    setIsLoadingOrg(false)
+  }
 
   // ------ URL helpers ------
 
@@ -272,7 +297,6 @@ export function OrganizationsTable({ organizations, meta }: Props) {
                 <SelectItem value="PUBLISHED">Publicadas</SelectItem>
                 <SelectItem value="DRAFT">En Revisión</SelectItem>
                 <SelectItem value="ARCHIVED">Inactivas</SelectItem>
-                <SelectItem value="REJECTED">Rechazadas</SelectItem>
               </SelectContent>
             </Select>
 
@@ -446,11 +470,9 @@ export function OrganizationsTable({ organizations, meta }: Props) {
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end" className="w-52">
                             {/* Edit */}
-                            <DropdownMenuItem asChild>
-                              <Link href={`/admin/organizations/${org.id}/edit`}>
-                                <Pencil className="h-4 w-4 mr-2" />
-                                Editar Perfil
-                              </Link>
+                            <DropdownMenuItem onClick={() => handleEditClick(org.id)}>
+                              <Pencil className="h-4 w-4 mr-2" />
+                              Editar Perfil
                             </DropdownMenuItem>
 
                             {/* Toggle Featured */}
@@ -504,17 +526,6 @@ export function OrganizationsTable({ organizations, meta }: Props) {
                               >
                                 <EyeOff className="h-4 w-4 mr-2" />
                                 Ocultar
-                              </DropdownMenuItem>
-                            )}
-
-                            {org.status !== "REJECTED" && org.status !== "PUBLISHED" && (
-                              <DropdownMenuItem
-                                onClick={() =>
-                                  handleChangeStatus(org.id, "REJECTED" as OrganizationStatus)
-                                }
-                              >
-                                <XCircle className="h-4 w-4 mr-2 text-red-600" />
-                                Rechazar
                               </DropdownMenuItem>
                             )}
 
@@ -609,6 +620,22 @@ export function OrganizationsTable({ organizations, meta }: Props) {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* Organization Sheet */}
+      <OrganizationSheet
+        open={sheetOpen}
+        onOpenChange={(open) => {
+          setSheetOpen(open)
+          if (!open) {
+            setEditingOrg(null)
+            setIsLoadingOrg(false)
+          }
+        }}
+        organization={editingOrg}
+        isLoading={isLoadingOrg}
+        categories={categories || []}
+        onSave={upsertOrganization}
+      />
     </>
   )
 }

@@ -133,7 +133,7 @@ export function CategoriesTable({ categories }: Props) {
                 onChange={(e) => setSearch(e.target.value)}
               />
             </div>
-            
+
             <div className="flex items-center gap-1">
               <Select
                 value={sortField}

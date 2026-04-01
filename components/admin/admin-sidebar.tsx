@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation"
 import { SignOutButton, useUser } from "@clerk/nextjs"
 import {
   LayoutDashboard,
-  Building2,
   Tags,
   ClipboardList,
   LogOut,
@@ -20,7 +19,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 
-export function AdminSidebar() {
+export function AdminSidebar({ pendingCount = 0 }: { pendingCount?: number }) {
   const { user } = useUser()
   const pathname = usePathname()
 
@@ -36,9 +35,10 @@ export function AdminSidebar() {
       href: "/admin/categories",
     },
     {
-      label: "Sugerencias Pendientes",
+      label: "Sugerencias",
       icon: ClipboardList,
       href: "/admin/suggestions",
+      badge: pendingCount,
     },
   ]
 
@@ -69,7 +69,12 @@ export function AdminSidebar() {
                   }
                 >
                   <route.icon className="h-5 w-5" />
-                  {route.label}
+                  <span className="flex-1">{route.label}</span>
+                  {"badge" in route && route.badge !== undefined && route.badge > 0 && (
+                    <span className="ml-auto inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 bg-red-500 text-white text-[11px] font-bold rounded-full animate-pulse">
+                      {route.badge > 99 ? "99+" : route.badge}
+                    </span>
+                  )}
                 </Link>
               </SidebarMenuItem>
             )
