@@ -99,14 +99,14 @@ const STATUS_CONFIG: Record<
     textColor: "text-emerald-700 dark:text-emerald-400",
   },
   DRAFT: {
-    label: "En Revisión",
+    label: "Borrador",
     dotColor: "bg-amber-500",
     textColor: "text-amber-700 dark:text-amber-400",
   },
   ARCHIVED: {
-    label: "Inactiva",
-    dotColor: "bg-slate-400 dark:bg-slate-500",
-    textColor: "text-slate-600 dark:text-slate-400",
+    label: "Archivada",
+    dotColor: "bg-red-400 dark:bg-red-500",
+    textColor: "text-red-600 dark:text-red-400",
   },
 }
 
@@ -295,8 +295,8 @@ export function OrganizationsTable({ organizations, meta, categories }: Props) {
               <SelectContent>
                 <SelectItem value="ALL">Todos</SelectItem>
                 <SelectItem value="PUBLISHED">Publicadas</SelectItem>
-                <SelectItem value="DRAFT">En Revisión</SelectItem>
-                <SelectItem value="ARCHIVED">Inactivas</SelectItem>
+                <SelectItem value="DRAFT">Borradores / Ocultas</SelectItem>
+                <SelectItem value="ARCHIVED">Archivadas</SelectItem>
               </SelectContent>
             </Select>
 
@@ -521,7 +521,7 @@ export function OrganizationsTable({ organizations, meta, categories }: Props) {
                             {isPublished && (
                               <DropdownMenuItem
                                 onClick={() =>
-                                  handleChangeStatus(org.id, "ARCHIVED" as OrganizationStatus)
+                                  handleChangeStatus(org.id, "DRAFT" as OrganizationStatus)
                                 }
                               >
                                 <EyeOff className="h-4 w-4 mr-2" />
@@ -605,8 +605,8 @@ export function OrganizationsTable({ organizations, meta, categories }: Props) {
               <span className="font-semibold text-foreground">
                 {deleteTarget?.name}
               </span>{" "}
-              será marcada como inactiva. No aparecerá en el directorio público
-              pero se conservará en la base de datos.
+              será archivada y eliminada de las tablas principales. No aparecerá en el directorio
+              público pero se conservará en la base de datos.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
