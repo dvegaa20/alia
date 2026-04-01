@@ -1,9 +1,12 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
-import { Info, Link as LinkIcon, Send } from "lucide-react";
+import { Info, Link as LinkIcon, Send, Loader2, Check, X } from "lucide-react";
+
+import { submitSuggestion } from "@/server/actions";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -47,6 +50,8 @@ const suggestSchema = z.object({
 
 type SuggestValues = z.infer<typeof suggestSchema>;
 
+type SubmitState = "idle" | "loading" | "success" | "error";
+
 /* ── Shared styles ──────────────────────────────────── */
 const labelCx =
   "font-label text-[11px] font-medium uppercase tracking-wider text-ds-on-surface-variant";
@@ -54,12 +59,46 @@ const labelCx =
 const inputCx =
   "w-full bg-ds-surface-container-highest border-none rounded-lg px-4 py-3 h-auto focus-visible:ring-2 focus-visible:ring-ds-primary/20 focus-visible:bg-white dark:focus-visible:bg-card transition-all duration-300 font-body text-ds-on-surface placeholder:text-ds-on-surface-variant/50";
 
+/* ── Button content map ─────────────────────────────── */
+const BUTTON_STATES: Record<
+  SubmitState,
+  { text: string; icon: React.ReactNode; className: string }
+> = {
+  idle: {
+    text: "Enviar Sugerencia",
+    icon: <Send className="size-4" />,
+    className:
+      "bg-gradient-to-r from-ds-primary to-ds-primary-container text-ds-on-primary shadow-lg shadow-ds-primary/10 hover:shadow-ds-primary/20 hover:-translate-y-0.5",
+  },
+  loading: {
+    text: "Enviando...",
+    icon: <Loader2 className="size-4 animate-spin" />,
+    className:
+      "bg-gradient-to-r from-ds-primary to-ds-primary-container text-ds-on-primary opacity-90 cursor-wait",
+  },
+  success: {
+    text: "¡Enviado con éxito!",
+    icon: <Check className="size-4" />,
+    className:
+      "bg-gradient-to-r from-emerald-500 to-emerald-600 text-white shadow-lg shadow-emerald-500/20",
+  },
+  error: {
+    text: "Error al enviar",
+    icon: <X className="size-4" />,
+    className:
+      "bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg shadow-red-500/20",
+  },
+};
+
 /* ── Component ──────────────────────────────────────── */
 export function SuggestOrgDialog({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const [open, setOpen] = useState(false);
+  const [submitState, setSubmitState] = useState<SubmitState>("idle");
+
   const form = useForm<SuggestValues>({
     resolver: zodResolver(suggestSchema),
     defaultValues: {
@@ -71,13 +110,40 @@ export function SuggestOrgDialog({
     },
   });
 
-  function onSubmit(data: SuggestValues) {
-    // TODO: wire to server action
-    console.log(data);
+  // Reset state when dialog opens/closes
+  useEffect(() => {
+    if (open) {
+      setSubmitState("idle");
+      form.reset();
+    }
+  }, [open, form]);
+
+  async function onSubmit(data: SuggestValues) {
+    setSubmitState("loading");
+
+    try {
+      const result = await submitSuggestion(data);
+
+      if (result.success) {
+        setSubmitState("success");
+        // Close dialog after showing success
+        setTimeout(() => {
+          setOpen(false);
+        }, 1500);
+      } else {
+        setSubmitState("error");
+        setTimeout(() => setSubmitState("idle"), 2500);
+      }
+    } catch {
+      setSubmitState("error");
+      setTimeout(() => setSubmitState("idle"), 2500);
+    }
   }
 
+  const btnState = BUTTON_STATES[submitState];
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
 
       <DialogContent
@@ -129,6 +195,7 @@ export function SuggestOrgDialog({
                       placeholder="Ej. Fundación Vida Verde"
                       autoComplete="off"
                       className={inputCx}
+                      disabled={submitState !== "idle"}
                     />
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
@@ -151,6 +218,7 @@ export function SuggestOrgDialog({
                       <Select
                         onValueChange={field.onChange}
                         defaultValue={field.value}
+                        disabled={submitState !== "idle"}
                       >
                         <SelectTrigger
                           id="category"
@@ -160,15 +228,15 @@ export function SuggestOrgDialog({
                           <SelectValue placeholder="Seleccionar..." />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="medio-ambiente">
+                          <SelectItem value="Medio Ambiente">
                             Medio Ambiente
                           </SelectItem>
-                          <SelectItem value="salud">Salud</SelectItem>
-                          <SelectItem value="educacion">Educación</SelectItem>
-                          <SelectItem value="animales">
+                          <SelectItem value="Salud">Salud</SelectItem>
+                          <SelectItem value="Educación">Educación</SelectItem>
+                          <SelectItem value="Bienestar Animal">
                             Bienestar Animal
                           </SelectItem>
-                          <SelectItem value="social">Acción Social</SelectItem>
+                          <SelectItem value="Acción Social">Acción Social</SelectItem>
                         </SelectContent>
                       </Select>
                       {fieldState.invalid && (
@@ -194,6 +262,7 @@ export function SuggestOrgDialog({
                         placeholder="Ej. Madrid, España"
                         autoComplete="off"
                         className={inputCx}
+                        disabled={submitState !== "idle"}
                       />
                       {fieldState.invalid && (
                         <FieldError errors={[fieldState.error]} />
@@ -219,6 +288,7 @@ export function SuggestOrgDialog({
                       aria-invalid={fieldState.invalid}
                       placeholder="¿Qué hace esta organización por su comunidad?"
                       className={`${inputCx} min-h-[100px]`}
+                      disabled={submitState !== "idle"}
                     />
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
@@ -247,6 +317,7 @@ export function SuggestOrgDialog({
                         aria-invalid={fieldState.invalid}
                         placeholder="https://www.organizacion.org"
                         className="font-body text-ds-on-surface placeholder:text-ds-on-surface-variant/50 py-3"
+                        disabled={submitState !== "idle"}
                       />
                     </InputGroup>
                     <p className="font-label text-[10px] text-ds-on-surface-variant/70 italic mt-1">
@@ -265,10 +336,16 @@ export function SuggestOrgDialog({
             <div className="pt-2">
               <Button
                 type="submit"
-                className="w-full bg-gradient-to-r from-ds-primary to-ds-primary-container text-ds-on-primary font-headline font-bold py-4 h-auto rounded-lg shadow-lg shadow-ds-primary/10 hover:shadow-ds-primary/20 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300 text-base border-none"
+                disabled={submitState === "loading" || submitState === "success"}
+                className={`w-full font-headline font-bold py-4 h-auto rounded-lg active:scale-[0.98] transition-all duration-500 text-base border-none ${btnState.className}`}
               >
-                <span>Enviar Sugerencia</span>
-                <Send className="size-4" />
+                <span
+                  className="inline-flex items-center gap-2 transition-all duration-300 animate-fade-slide-in"
+                  key={submitState}
+                >
+                  {btnState.icon}
+                  <span>{btnState.text}</span>
+                </span>
               </Button>
             </div>
           </form>
