@@ -14,7 +14,7 @@ export default async function AdminLayout({
   return (
     <SidebarProvider>
       <AdminSidebar pendingCount={pendingCount} />
-      <SidebarInset className="bg-background min-h-screen">
+      <SidebarInset className="bg-background text-foreground min-h-screen overflow-x-hidden">
         <AdminHeader />
         <main className="p-10 max-w-7xl mx-auto w-full">
           {children}

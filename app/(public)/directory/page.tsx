@@ -3,6 +3,8 @@ import { getPublishedOrgs, getAllCategoriesWithCount } from "@/server/actions";
 import { SidebarFilters } from "@/components/public/directory/sidebar-filters";
 import { ResultsGrid } from "@/components/public/directory/results-grid";
 import type { OrganizationCardProps } from "@/components/public/directory/organization-card";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { Filter } from "lucide-react";
 
 export default async function DirectoryPage(props: {
   searchParams: Promise<{
@@ -58,25 +60,40 @@ export default async function DirectoryPage(props: {
   const meta = result.meta || { total: 0, page: 1, limit: 12, totalPages: 0 };
 
   return (
-    <div className="pt-8 pb-12 max-w-[1440px] mx-auto px-8 flex gap-12">
-      <Suspense>
-        <SidebarFilters
-          searchQuery={query}
-          categories={categories}
-          activeCategorySlug={categorySlug}
-          activeState={state}
-          activeCity={city}
-          activeVerified={verified}
-        />
-      </Suspense>
-      <ResultsGrid
-        organizations={organizations}
-        total={meta.total}
-        currentPage={meta.page}
-        totalPages={meta.totalPages}
-        searchQuery={query}
-        sort={sort}
-      />
-    </div>
+    <SidebarProvider>
+      <div className="pt-8 pb-12 w-full max-w-[1440px] mx-auto px-4 md:px-8 flex flex-col lg:flex-row gap-6 lg:gap-12">
+        <Suspense>
+          <SidebarFilters
+            searchQuery={query}
+            categories={categories}
+            activeCategorySlug={categorySlug}
+            activeState={state}
+            activeCity={city}
+            activeVerified={verified}
+          />
+        </Suspense>
+        <div className="flex-1 min-w-0 w-full">
+          <div className="lg:hidden mb-6 flex items-center justify-between bg-muted/30 p-2 rounded-xl border border-border/50">
+            <div className="flex items-center gap-2">
+              <SidebarTrigger />
+              <span className="font-semibold text-sm">Filtros</span>
+            </div>
+            {meta.total > 0 && (
+              <span className="text-xs font-medium text-muted-foreground mr-3">
+                {meta.total} resultados
+              </span>
+            )}
+          </div>
+          <ResultsGrid
+            organizations={organizations}
+            total={meta.total}
+            currentPage={meta.page}
+            totalPages={meta.totalPages}
+            searchQuery={query}
+            sort={sort}
+          />
+        </div>
+      </div>
+    </SidebarProvider>
   );
 }
