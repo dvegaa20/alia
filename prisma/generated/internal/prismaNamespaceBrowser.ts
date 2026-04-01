@@ -55,7 +55,8 @@ export const ModelName = {
   Category: 'Category',
   Location: 'Location',
   SocialLink: 'SocialLink',
-  AuditLog: 'AuditLog'
+  AuditLog: 'AuditLog',
+  Suggestion: 'Suggestion'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -153,6 +154,22 @@ export const AuditLogScalarFieldEnum = {
 } as const
 
 export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
+
+
+export const SuggestionScalarFieldEnum = {
+  id: 'id',
+  orgName: 'orgName',
+  category: 'category',
+  location: 'location',
+  description: 'description',
+  url: 'url',
+  status: 'status',
+  adminNotes: 'adminNotes',
+  createdAt: 'createdAt',
+  reviewedAt: 'reviewedAt'
+} as const
+
+export type SuggestionScalarFieldEnum = (typeof SuggestionScalarFieldEnum)[keyof typeof SuggestionScalarFieldEnum]
 
 
 export const SortOrder = {

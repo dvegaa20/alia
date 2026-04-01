@@ -388,7 +388,8 @@ export const ModelName = {
   Category: 'Category',
   Location: 'Location',
   SocialLink: 'SocialLink',
-  AuditLog: 'AuditLog'
+  AuditLog: 'AuditLog',
+  Suggestion: 'Suggestion'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -404,7 +405,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "organization" | "category" | "location" | "socialLink" | "auditLog"
+    modelProps: "organization" | "category" | "location" | "socialLink" | "auditLog" | "suggestion"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -778,6 +779,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Suggestion: {
+      payload: Prisma.$SuggestionPayload<ExtArgs>
+      fields: Prisma.SuggestionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SuggestionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SuggestionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionPayload>
+        }
+        findFirst: {
+          args: Prisma.SuggestionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SuggestionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionPayload>
+        }
+        findMany: {
+          args: Prisma.SuggestionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionPayload>[]
+        }
+        create: {
+          args: Prisma.SuggestionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionPayload>
+        }
+        createMany: {
+          args: Prisma.SuggestionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SuggestionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionPayload>[]
+        }
+        delete: {
+          args: Prisma.SuggestionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionPayload>
+        }
+        update: {
+          args: Prisma.SuggestionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionPayload>
+        }
+        deleteMany: {
+          args: Prisma.SuggestionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SuggestionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SuggestionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionPayload>[]
+        }
+        upsert: {
+          args: Prisma.SuggestionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionPayload>
+        }
+        aggregate: {
+          args: Prisma.SuggestionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSuggestion>
+        }
+        groupBy: {
+          args: Prisma.SuggestionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SuggestionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SuggestionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SuggestionCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -896,6 +971,22 @@ export const AuditLogScalarFieldEnum = {
 } as const
 
 export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
+
+
+export const SuggestionScalarFieldEnum = {
+  id: 'id',
+  orgName: 'orgName',
+  category: 'category',
+  location: 'location',
+  description: 'description',
+  url: 'url',
+  status: 'status',
+  adminNotes: 'adminNotes',
+  createdAt: 'createdAt',
+  reviewedAt: 'reviewedAt'
+} as const
+
+export type SuggestionScalarFieldEnum = (typeof SuggestionScalarFieldEnum)[keyof typeof SuggestionScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1037,6 +1128,20 @@ export type ListEnumSocialPlatformFieldRefInput<$PrismaModel> = FieldRefInputTyp
 
 
 /**
+ * Reference to a field of type 'SuggestionStatus'
+ */
+export type EnumSuggestionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SuggestionStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'SuggestionStatus[]'
+ */
+export type ListEnumSuggestionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SuggestionStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -1149,6 +1254,7 @@ export type GlobalOmitConfig = {
   location?: Prisma.LocationOmit
   socialLink?: Prisma.SocialLinkOmit
   auditLog?: Prisma.AuditLogOmit
+  suggestion?: Prisma.SuggestionOmit
 }
 
 /* Types for Logging */

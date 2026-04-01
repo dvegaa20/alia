@@ -42,3 +42,8 @@ export type SocialLink = Prisma.SocialLinkModel
  * Log de auditoría para rastrear cambios
  */
 export type AuditLog = Prisma.AuditLogModel
+/**
+ * Model Suggestion
+ * Sugerencias de organizaciones enviadas por usuarios anónimos
+ */
+export type Suggestion = Prisma.SuggestionModel

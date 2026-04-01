@@ -15,6 +15,11 @@ enum OrganizationStatus {
     DRAFT
     PUBLISHED
     ARCHIVED
+}
+
+enum SuggestionStatus {
+    PENDING
+    APPROVED
     REJECTED
 }
 
@@ -142,5 +147,24 @@ model AuditLog {
     createdAt DateTime @default(now())
 
     @@index([entityId])
+    @@index([createdAt])
+}
+
+/// Sugerencias de organizaciones enviadas por usuarios anónimos
+model Suggestion {
+    id          String           @id @default(cuid())
+    orgName     String
+    category    String           // slug de categoría sugerida
+    location    String           // Ciudad / Estado (texto libre)
+    description String           @db.Text
+    url         String           // URL para verificación
+
+    status      SuggestionStatus @default(PENDING)
+    adminNotes  String?          @db.Text
+
+    createdAt   DateTime         @default(now())
+    reviewedAt  DateTime?
+
+    @@index([status])
     @@index([createdAt])
 }

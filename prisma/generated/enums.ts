@@ -12,11 +12,19 @@
 export const OrganizationStatus = {
   DRAFT: 'DRAFT',
   PUBLISHED: 'PUBLISHED',
-  ARCHIVED: 'ARCHIVED',
-  REJECTED: 'REJECTED'
+  ARCHIVED: 'ARCHIVED'
 } as const
 
 export type OrganizationStatus = (typeof OrganizationStatus)[keyof typeof OrganizationStatus]
+
+
+export const SuggestionStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type SuggestionStatus = (typeof SuggestionStatus)[keyof typeof SuggestionStatus]
 
 
 export const SocialPlatform = {
