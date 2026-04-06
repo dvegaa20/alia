@@ -2,7 +2,8 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { SearchX } from "lucide-react";
+import { SearchX, LayoutGrid, MapPin } from "lucide-react";
+import { cn } from "@/lib/utils";
 import {
   Select,
   SelectContent,
@@ -23,6 +24,9 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { MapViewPlaceholder } from "./map-view-placeholder";
+
+type ViewMode = "list" | "map";
 
 interface ResultsGridProps {
   organizations: OrganizationCardProps[];
@@ -53,6 +57,20 @@ export function ResultsGrid({
   const router = useRouter();
   const searchParams = useSearchParams();
 
+  const currentView: ViewMode =
+    (searchParams.get("view") as ViewMode) || "list";
+
+  const handleViewChange = (view: ViewMode) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (view === "list") {
+      params.delete("view");
+    } else {
+      params.set("view", view);
+    }
+    const qs = params.toString();
+    router.push(`/directory${qs ? `?${qs}` : ""}`, { scroll: false });
+  };
+
   const handleSortChange = (value: string) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("sort", value);
@@ -64,7 +82,7 @@ export function ResultsGrid({
   const hasResults = organizations.length > 0;
 
   return (
-    <section className="flex-1 min-w-0">
+    <section className="flex-1 min-w-0 bg-slate-50/40 dark:bg-zinc-900/20 p-6 md:p-8 rounded-3xl border border-border/30">
       {/* Header */}
       <motion.header
         initial={{ opacity: 0, y: -20 }}
@@ -88,25 +106,68 @@ export function ResultsGrid({
           </div>
         </div>
 
-        <div className="flex items-center space-x-4 text-sm font-medium">
-          <span className="text-muted-foreground">Ordenar por:</span>
-          <Select value={sort} onValueChange={handleSortChange}>
-            <SelectTrigger className="border-none shadow-none bg-transparent hover:text-primary dark:hover:text-ds-primary-fixed p-0 px-2 h-auto font-medium space-x-1 focus:ring-0">
-              <SelectValue placeholder="Relevancia" />
-            </SelectTrigger>
-            <SelectContent position="popper" align="end" className="w-45">
-              <SelectItem value="relevance">Relevancia</SelectItem>
-              <SelectItem value="oldest">Antiguas primero</SelectItem>
-              <SelectItem value="name-asc">Nombre (A - Z)</SelectItem>
-              <SelectItem value="name-desc">Nombre (Z - A)</SelectItem>
-            </SelectContent>
-          </Select>
+        <div className="flex items-center gap-4">
+          {/* Sort — only visible in list view */}
+          {currentView === "list" && (
+            <div className="flex items-center space-x-4 text-sm font-medium">
+              <span className="text-muted-foreground">Ordenar por:</span>
+              <Select value={sort} onValueChange={handleSortChange}>
+                <SelectTrigger className="border-none shadow-none bg-transparent hover:text-primary dark:hover:text-ds-primary-fixed p-0 px-2 h-auto font-medium space-x-1 focus:ring-0">
+                  <SelectValue placeholder="Relevancia" />
+                </SelectTrigger>
+                <SelectContent position="popper" align="end" className="w-45">
+                  <SelectItem value="relevance">Relevancia</SelectItem>
+                  <SelectItem value="oldest">Antiguas primero</SelectItem>
+                  <SelectItem value="name-asc">Nombre (A - Z)</SelectItem>
+                  <SelectItem value="name-desc">Nombre (Z - A)</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          )}
+
+          {/* View Toggle */}
+          <div className="flex items-center bg-muted rounded-xl p-1 gap-0.5">
+            <button
+              onClick={() => handleViewChange("list")}
+              className={cn(
+                "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200",
+                currentView === "list"
+                  ? "bg-background text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              <LayoutGrid className="size-4" />
+              <span className="hidden sm:inline">Lista</span>
+            </button>
+            <button
+              onClick={() => handleViewChange("map")}
+              className={cn(
+                "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200",
+                currentView === "map"
+                  ? "bg-background text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              <MapPin className="size-4" />
+              <span className="hidden sm:inline">Mapa</span>
+            </button>
+          </div>
         </div>
       </motion.header>
 
-      {/* Grid or Empty State */}
+      {/* Content: List View or Map View */}
       <AnimatePresence mode="wait">
-        {hasResults ? (
+        {currentView === "map" ? (
+          <motion.div
+            key="map-view"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3 }}
+          >
+            <MapViewPlaceholder total={total} />
+          </motion.div>
+        ) : hasResults ? (
           <motion.div
             key={`grid-${searchQuery}-${currentPage}`}
             initial={{ opacity: 0, y: 20 }}
@@ -150,8 +211,8 @@ export function ResultsGrid({
         )}
       </AnimatePresence>
 
-      {/* Pagination */}
-      {totalPages > 1 && (
+      {/* Pagination — only in list view */}
+      {currentView === "list" && totalPages > 1 && (
         <motion.footer
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}

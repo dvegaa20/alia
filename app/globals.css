@@ -48,6 +48,29 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
+
+  /* Directorio Social — Custom palette */
+  --color-ds-surface: #f9f9f9;
+  --color-ds-surface-container: #eeeeee;
+  --color-ds-surface-container-low: #f3f3f3;
+  --color-ds-surface-container-high: #e8e8e8;
+  --color-ds-surface-container-highest: #e2e2e2;
+  --color-ds-on-surface: #1a1c1c;
+  --color-ds-on-surface-variant: #42493e;
+  --color-ds-outline: #72796e;
+  --color-ds-primary: #154212;
+  --color-ds-primary-container: #2d5a27;
+  --color-ds-on-primary: #ffffff;
+  --color-ds-primary-fixed: #bcf0ae;
+  --color-ds-on-primary-fixed: #002201;
+  --color-ds-on-primary-fixed-variant: #23501e;
+  --color-ds-secondary: #a14009;
+  --color-ds-secondary-container: #fd844c;
+  --color-ds-secondary-fixed: #ffdbcd;
+  --color-ds-tertiary: #003b67;
+  --color-ds-tertiary-container: #00528d;
+  --color-ds-on-tertiary-container: #98c6ff;
+  --color-ds-tertiary-fixed: #d2e4ff;
 }
 
 :root {
@@ -154,6 +177,12 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+  .maplibregl-popup-content {
+    @apply bg-transparent! shadow-none! p-0! rounded-none!;
+  }
+  .maplibregl-popup-tip {
+    @apply hidden!;
   }
 }
 
