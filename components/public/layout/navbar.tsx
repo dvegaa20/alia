@@ -49,7 +49,7 @@ export function Navbar() {
 
         <div className="flex justify-end items-center space-x-4">
           <SuggestOrgDialog>
-            <Button className="bg-gradient-to-r from-ds-primary to-ds-primary-container text-primary-foreground px-6 py-3 h-auto rounded-xl font-semibold active:scale-95 transition-transform">
+            <Button className="bg-gradient-to-r from-primary to-primary/30 text-primary-foreground px-6 py-3 h-auto rounded-xl font-semibold active:scale-95 transition-transform">
               Sugerir ONG
             </Button>
           </SuggestOrgDialog>

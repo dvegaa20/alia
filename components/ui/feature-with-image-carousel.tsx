@@ -56,7 +56,7 @@ function Feature({ badge, title, description, items }: FeatureProps) {
               {items.map((item) => (
                 <CarouselItem key={item.name}>
                   <Link href={`/directory/${item.slug}`} className="block h-full">
-                    <Card className="group relative bg-card rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2 border-none ring-0 py-0 gap-0 h-full">
+                    <Card className="group relative bg-slate-50/40 dark:bg-zinc-900/20 rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2 border-none ring-0 py-0 gap-0 h-full">
                       {/* Cover Image */}
                       <div className="h-48 overflow-hidden relative">
                         <Image
