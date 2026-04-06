@@ -1,6 +1,7 @@
 // Layout
 export { Navbar } from './layout/navbar'
 export { Footer } from './layout/footer'
+export { FooterCTA } from './layout/footer-cta'
 
 // Home
 export { HeroContainer } from './home/hero-container'
