@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 export async function StatsGrid() {
   const [totalOrgs, pendingSuggestions, totalCategories] = await Promise.all([
-    prisma.organization.count({ where: { status: { not: "ARCHIVED" } } }),
+    prisma.organization.count({ where: { status: "PUBLISHED" } }),
     prisma.suggestion.count({ where: { status: SuggestionStatus.PENDING } }),
     prisma.category.count(),
   ])
