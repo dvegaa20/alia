@@ -17,15 +17,17 @@ export function Navbar() {
 
   return (
     <nav className="sticky top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
-      <div className="flex justify-between items-center w-full px-8 py-6 max-w-[1440px] mx-auto">
-        <Link
-          href="/"
-          className="text-2xl font-bold text-ds-primary dark:text-ds-primary-fixed font-headline tracking-tight"
-        >
-          Directorio Social
-        </Link>
+      <div className="grid grid-cols-2 md:grid-cols-3 items-center w-full px-8 py-6 max-w-360 mx-auto">
+        <div className="flex justify-start">
+          <Link
+            href="/"
+            className="text-2xl font-bold text-ds-primary dark:text-ds-primary-fixed font-headline tracking-tight"
+          >
+            Alia
+          </Link>
+        </div>
 
-        <div className="hidden md:flex items-center space-x-10">
+        <div className="hidden md:flex justify-center items-center space-x-10">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
 
@@ -45,7 +47,7 @@ export function Navbar() {
           })}
         </div>
 
-        <div className="flex items-center space-x-4">
+        <div className="flex justify-end items-center space-x-4">
           <SuggestOrgDialog>
             <Button className="bg-gradient-to-r from-ds-primary to-ds-primary-container text-ds-on-primary px-6 py-3 h-auto rounded-xl font-semibold active:scale-95 transition-transform">
               Sugerir ONG

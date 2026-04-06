@@ -12,7 +12,7 @@ export async function FeaturedGrid() {
   if (!featuredOrgs || featuredOrgs.length === 0) {
     return (
       <section className="px-8 py-20 bg-muted">
-        <div className="max-w-[1440px] mx-auto text-center">
+        <div className="max-w-360 mx-auto text-center">
           <h2 className="font-headline font-bold text-3xl text-foreground mb-4">
             Organizaciones destacadas
           </h2>
@@ -26,7 +26,7 @@ export async function FeaturedGrid() {
 
   return (
     <section className="px-8 py-20 bg-muted">
-      <div className="max-w-[1440px] mx-auto">
+      <div className="max-w-360 mx-auto">
         {/* Header */}
         <div className="flex justify-between items-end mb-12">
           <div>
