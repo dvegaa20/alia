@@ -160,7 +160,7 @@ export function Footer() {
               <div className="space-y-5">
                 <Link
                   href="/"
-                  className="text-2xl font-bold text-ds-primary dark:text-ds-primary-fixed font-headline tracking-tight inline-block"
+                  className="text-2xl font-bold text-primary dark:text-ds-primary-fixed font-headline tracking-tight inline-block"
                 >
                   Alia
                 </Link>
@@ -178,7 +178,7 @@ export function Footer() {
                       key={social.label}
                       href={social.href}
                       aria-label={social.label}
-                      className="flex items-center justify-center w-9 h-9 rounded-lg bg-muted hover:bg-ds-primary hover:text-white dark:hover:bg-ds-primary-fixed dark:hover:text-ds-on-primary-fixed text-muted-foreground transition-all duration-200"
+                      className="flex items-center justify-center w-9 h-9 rounded-lg bg-muted hover:bg-primary hover:text-white dark:hover:bg-primary/20 dark:hover:text-primary text-muted-foreground transition-all duration-200"
                     >
                       <social.icon className="h-4 w-4" />
                     </Link>
@@ -198,7 +198,7 @@ export function Footer() {
                         <li key={link.label}>
                           <Link
                             href={link.href}
-                            className="text-[13px] text-muted-foreground hover:text-ds-primary dark:hover:text-ds-primary-fixed transition-colors duration-200 font-body"
+                            className="text-[13px] text-muted-foreground hover:text-primary dark:hover:text-ds-primary-fixed transition-colors duration-200 font-body"
                           >
                             {link.label}
                           </Link>

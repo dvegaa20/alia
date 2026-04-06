@@ -18,7 +18,7 @@ interface OrgHeaderProps {
 export function OrgHeader({ name, verified, categories, donationLink, orgId }: OrgHeaderProps) {
   const handleDonateClick = async () => {
     // Fire-and-forget tracking — don't block navigation
-    trackDonationClick(orgId).catch(() => {});
+    trackDonationClick(orgId).catch(() => { });
   };
 
   return (
@@ -31,7 +31,7 @@ export function OrgHeader({ name, verified, categories, donationLink, orgId }: O
       >
         <Link
           href="/directory"
-          className="inline-flex items-center gap-2 text-muted-foreground hover:text-ds-primary transition-colors font-label text-sm font-bold uppercase tracking-wider group"
+          className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors font-label text-sm font-bold uppercase tracking-wider group"
         >
           <ArrowLeft className="size-4 transition-transform group-hover:-translate-x-1" />
           Volver al directorio
@@ -51,7 +51,7 @@ export function OrgHeader({ name, verified, categories, donationLink, orgId }: O
               {name}
             </h1>
             {verified && (
-              <Badge className="bg-ds-primary-fixed text-ds-on-primary-fixed border-none px-3 py-1 rounded-full text-xs font-bold font-label uppercase tracking-wider h-auto gap-1">
+              <Badge className="bg-primary/20 text-primary border-none px-3 py-1 rounded-full text-xs font-bold font-label uppercase tracking-wider h-auto gap-1">
                 <BadgeCheck className="size-3.5" />
                 Verificada
               </Badge>
@@ -63,7 +63,7 @@ export function OrgHeader({ name, verified, categories, donationLink, orgId }: O
             {categories.map((cat) => (
               <Badge
                 key={cat.id}
-                className="bg-ds-tertiary-container text-ds-on-tertiary-container border-none px-4 py-1.5 rounded-full text-sm font-medium font-label h-auto"
+                className="bg-ds-tertiary-container text-secondary-foreground border-none px-4 py-1.5 rounded-full text-sm font-medium font-label h-auto"
               >
                 {cat.name}
               </Badge>

@@ -258,7 +258,7 @@ export function SidebarFilters({
                               className={cn(
                                 "flex flex-col items-center justify-center p-6 rounded-2xl border text-center transition-all duration-200 hover:shadow-md hover:-translate-y-1",
                                 isActive
-                                  ? "bg-ds-primary/10 border-ds-primary text-ds-primary dark:bg-ds-primary-fixed/20 dark:text-ds-primary-fixed dark:border-ds-primary-fixed"
+                                  ? "bg-ds-primary/10 border-ds-primary text-primary dark:bg-ds-primary-fixed/20 dark:text-ds-primary-fixed dark:border-ds-primary-fixed"
                                   : "bg-background border-border hover:border-border/80"
                               )}
                             >

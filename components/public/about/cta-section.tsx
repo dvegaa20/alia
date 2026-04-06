@@ -12,11 +12,11 @@ export function CtaSection() {
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="max-w-7xl mx-auto bg-ds-primary rounded-xl overflow-hidden relative"
+        className="max-w-7xl mx-auto bg-primary rounded-xl overflow-hidden relative"
       >
         {/* Background Decorations */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-ds-primary-container rounded-full opacity-20 -mr-20 -mt-20 blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-ds-secondary rounded-full opacity-10 -ml-20 -mb-20 blur-3xl" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/80 rounded-full opacity-20 -mr-20 -mt-20 blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent rounded-full opacity-10 -ml-20 -mb-20 blur-3xl" />
 
         {/* Content */}
         <div className="relative px-8 py-20 md:py-24 text-center max-w-4xl mx-auto space-y-10">
@@ -32,14 +32,14 @@ export function CtaSection() {
             <Button
               asChild
               size="lg"
-              className="bg-linear-to-r from-ds-primary-fixed to-[#a1d494] text-ds-on-primary-fixed px-10 py-5 h-auto rounded-lg font-bold text-lg hover:opacity-90 transition-all active:scale-95 shadow-xl border-none"
+              className="bg-linear-to-r from-ds-primary-fixed to-[#a1d494] text-primary px-10 py-5 h-auto rounded-lg font-bold text-lg hover:opacity-90 transition-all active:scale-95 shadow-xl border-none"
             >
               <Link href="/sugerir">Sumar proyecto</Link>
             </Button>
 
             <Link
               href="#"
-              className="text-ds-on-primary font-bold hover:underline underline-offset-8 decoration-2 px-8 py-5"
+              className="text-primary-foreground font-bold hover:underline underline-offset-8 decoration-2 px-8 py-5"
             >
               Contactar al equipo
             </Link>

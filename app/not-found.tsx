@@ -37,14 +37,14 @@ export default function NotFound() {
                     <div className="relative mb-6 md:mb-8">
                         {/* Background organic shape decorative element */}
                         <div className="absolute inset-0 bg-ds-primary/20 blur-2xl organic-shape -z-10 transform scale-125 md:scale-150"></div>
-                        
+
                         <div className="relative flex flex-col items-center">
                             <div className="w-40 h-40 md:w-48 md:h-48 bg-background rounded-2xl md:rounded-[1.5rem] flex items-center justify-center shadow-[0_10px_30px_rgba(0,0,0,0.06)] overflow-hidden border">
                                 <div className="absolute inset-0 opacity-10 bg-[radial-gradient(var(--color-ds-primary)_1.5px,transparent_1.5px)] bg-size-[20px_20px]"></div>
-                                
+
                                 {/* Symbolic Compass/Map Illustration */}
                                 <div className="relative z-10 flex flex-col items-center gap-3">
-                                    <Compass className="text-ds-primary w-16 h-16 md:w-20 md:h-20" strokeWidth={1} />
+                                    <Compass className="text-primary w-16 h-16 md:w-20 md:h-20" strokeWidth={1} />
                                     <div className="flex gap-1.5 md:gap-2">
                                         <span className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-ds-secondary"></span>
                                         <span className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-ds-primary/30"></span>
@@ -52,9 +52,9 @@ export default function NotFound() {
                                     </div>
                                 </div>
                             </div>
-                            
+
                             {/* Floating Badge */}
-                            <div className="absolute -bottom-4 -right-3 md:-right-6 bg-ds-secondary text-white px-4 py-1.5 md:py-2 rounded-full shadow-lg text-[10px] md:text-xs font-semibold flex items-center gap-1.5">
+                            <div className="absolute -bottom-4 -right-3 md:-right-6 bg-accent text-white px-4 py-1.5 md:py-2 rounded-full shadow-lg text-[10px] md:text-xs font-semibold flex items-center gap-1.5">
                                 <MapPinOff className="w-3.5 h-3.5 md:w-4 md:h-4" />
                                 <span>Ruta no encontrada</span>
                             </div>
@@ -63,8 +63,8 @@ export default function NotFound() {
 
                     {/* Content */}
                     <div className="max-w-xl">
-                        <span className="text-ds-primary font-bold tracking-[0.2em] text-xs uppercase mb-2 md:mb-3 block">Error 404</span>
-                        <h1 className="text-3xl md:text-4xl font-extrabold text-ds-primary tracking-tight mb-3 md:mb-4">
+                        <span className="text-primary font-bold tracking-[0.2em] text-xs uppercase mb-2 md:mb-3 block">Error 404</span>
+                        <h1 className="text-3xl md:text-4xl font-extrabold text-primary tracking-tight mb-3 md:mb-4">
                             Parece que te perdiste buscando buenas causas.
                         </h1>
                         <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-6 md:mb-8">
@@ -81,8 +81,8 @@ export default function NotFound() {
                                     </span>
                                 </Link>
                             </Button>
-                            
-                            <Button variant="outline" className="rounded-xl border-ds-primary/20 text-ds-primary hover:bg-muted hover:text-ds-primary transition-colors duration-300 px-6" asChild>
+
+                            <Button variant="outline" className="rounded-xl border-ds-primary/20 text-primary hover:bg-muted hover:text-primary transition-colors duration-300 px-6" asChild>
                                 <Link href="/">
                                     Ir al Inicio ({countdown}s)
                                 </Link>

@@ -54,7 +54,7 @@ export function OrganizationCard({
           {/* Verified Badge */}
           {verified && (
             <div className="absolute top-4 right-6">
-              <Badge className="bg-ds-primary-fixed text-ds-on-primary-fixed border-none px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase shadow-sm h-auto gap-1">
+              <Badge className="bg-primary/20 text-primary border-none px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase shadow-sm h-auto gap-1">
                 <BadgeCheck className="size-3" />
                 VERIFICADA
               </Badge>
@@ -64,7 +64,7 @@ export function OrganizationCard({
           <div className="space-y-3 pt-2">
             {/* Category */}
             <div className="flex items-center space-x-2">
-              <Badge className="bg-ds-tertiary-fixed text-ds-on-tertiary-container border-none px-3 py-0.5 rounded-full text-[11px] font-bold tracking-tight h-auto">
+              <Badge className="bg-secondary text-secondary-foreground border-none px-3 py-0.5 rounded-full text-[11px] font-bold tracking-tight h-auto">
                 {category}
               </Badge>
             </div>
@@ -93,7 +93,7 @@ export function OrganizationCard({
               </div>
 
               <div className="flex items-center justify-end">
-                <span className="text-ds-primary dark:text-ds-primary-fixed font-bold text-[11px] uppercase tracking-wider hover:underline underline-offset-4 flex items-center">
+                <span className="text-primary dark:text-ds-primary-fixed font-bold text-[11px] uppercase tracking-wider hover:underline underline-offset-4 flex items-center">
                   Ver perfil <ArrowRight className="size-3 ml-1" />
                 </span>
               </div>

@@ -77,7 +77,7 @@ export function ResultsGrid({
             Resultados
           </h1>
           <div className="flex items-center space-x-2 text-muted-foreground font-medium">
-            <span className="text-ds-primary dark:text-ds-primary-fixed font-bold">
+            <span className="text-primary dark:text-ds-primary-fixed font-bold">
               {total}
             </span>
             <span>
@@ -91,7 +91,7 @@ export function ResultsGrid({
         <div className="flex items-center space-x-4 text-sm font-medium">
           <span className="text-muted-foreground">Ordenar por:</span>
           <Select value={sort} onValueChange={handleSortChange}>
-            <SelectTrigger className="border-none shadow-none bg-transparent hover:text-ds-primary dark:hover:text-ds-primary-fixed p-0 px-2 h-auto font-medium space-x-1 focus:ring-0">
+            <SelectTrigger className="border-none shadow-none bg-transparent hover:text-primary dark:hover:text-ds-primary-fixed p-0 px-2 h-auto font-medium space-x-1 focus:ring-0">
               <SelectValue placeholder="Relevancia" />
             </SelectTrigger>
             <SelectContent position="popper" align="end" className="w-45">

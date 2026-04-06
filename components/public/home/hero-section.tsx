@@ -49,7 +49,7 @@ export function HeroSection({ organizations }: { organizations: OrganizationOpti
             className="font-headline font-bold text-5xl md:text-7xl text-foreground tracking-tight leading-[1.1] mb-8"
           >
             Encuentra y apoya causas que{" "}
-            <span className="text-ds-primary dark:text-ds-primary-fixed italic">importan</span>.
+            <span className="text-primary dark:text-ds-primary-fixed italic">importan</span>.
           </motion.h1>
 
           {/* Search Bar */}

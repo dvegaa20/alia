@@ -65,74 +65,74 @@ export function OrgTabs({
       <Tabs defaultValue="sobre" className="mt-12">
         {/* Tab Navigation */}
         <TabsList className="bg-transparent border-b border-border/30 rounded-none w-full justify-start gap-10 h-auto p-0">
-        <TabsTrigger
-          value="sobre"
-          className="rounded-none border-0 border-b-4 border-transparent data-[state=active]:border-b-ds-primary data-[state=active]:text-ds-primary data-[state=active]:font-bold data-[state=active]:shadow-none text-muted-foreground font-medium tracking-tight pb-4 px-0 bg-transparent! dark:data-[state=active]:bg-transparent hover:text-ds-primary transition-colors cursor-pointer"
-        >
-          Sobre nosotros
-        </TabsTrigger>
-        <TabsTrigger
-          value="explorar"
-          className="rounded-none border-0 border-b-4 border-transparent data-[state=active]:border-b-ds-primary data-[state=active]:text-ds-primary data-[state=active]:font-bold data-[state=active]:shadow-none text-muted-foreground font-medium tracking-tight pb-4 px-0 bg-transparent! dark:data-[state=active]:bg-transparent hover:text-ds-primary transition-colors cursor-pointer"
-        >
-          Explorar
-        </TabsTrigger>
-        <TabsTrigger
-          value="impacto"
-          className="rounded-none border-0 border-b-4 border-transparent data-[state=active]:border-b-ds-primary data-[state=active]:text-ds-primary data-[state=active]:font-bold data-[state=active]:shadow-none text-muted-foreground font-medium tracking-tight pb-4 px-0 bg-transparent! dark:data-[state=active]:bg-transparent hover:text-ds-primary transition-colors cursor-pointer"
-        >
-          Impacto
-        </TabsTrigger>
-        <TabsTrigger
-          value="contacto"
-          className="rounded-none border-0 border-b-4 border-transparent data-[state=active]:border-b-ds-primary data-[state=active]:text-ds-primary data-[state=active]:font-bold data-[state=active]:shadow-none text-muted-foreground font-medium tracking-tight pb-4 px-0 bg-transparent! dark:data-[state=active]:bg-transparent hover:text-ds-primary transition-colors cursor-pointer"
-        >
-          Contacto
-        </TabsTrigger>
+          <TabsTrigger
+            value="sobre"
+            className="rounded-none border-0 border-b-4 border-transparent data-[state=active]:border-b-ds-primary data-[state=active]:text-primary data-[state=active]:font-bold data-[state=active]:shadow-none text-muted-foreground font-medium tracking-tight pb-4 px-0 bg-transparent! dark:data-[state=active]:bg-transparent hover:text-primary transition-colors cursor-pointer"
+          >
+            Sobre nosotros
+          </TabsTrigger>
+          <TabsTrigger
+            value="explorar"
+            className="rounded-none border-0 border-b-4 border-transparent data-[state=active]:border-b-ds-primary data-[state=active]:text-primary data-[state=active]:font-bold data-[state=active]:shadow-none text-muted-foreground font-medium tracking-tight pb-4 px-0 bg-transparent! dark:data-[state=active]:bg-transparent hover:text-primary transition-colors cursor-pointer"
+          >
+            Explorar
+          </TabsTrigger>
+          <TabsTrigger
+            value="impacto"
+            className="rounded-none border-0 border-b-4 border-transparent data-[state=active]:border-b-ds-primary data-[state=active]:text-primary data-[state=active]:font-bold data-[state=active]:shadow-none text-muted-foreground font-medium tracking-tight pb-4 px-0 bg-transparent! dark:data-[state=active]:bg-transparent hover:text-primary transition-colors cursor-pointer"
+          >
+            Impacto
+          </TabsTrigger>
+          <TabsTrigger
+            value="contacto"
+            className="rounded-none border-0 border-b-4 border-transparent data-[state=active]:border-b-ds-primary data-[state=active]:text-primary data-[state=active]:font-bold data-[state=active]:shadow-none text-muted-foreground font-medium tracking-tight pb-4 px-0 bg-transparent! dark:data-[state=active]:bg-transparent hover:text-primary transition-colors cursor-pointer"
+          >
+            Contacto
+          </TabsTrigger>
         </TabsList>
 
-      {/* Tab Content */}
-      <TabsContent value="sobre" className="mt-12">
-        <AboutTab
-          name={name}
-          fullDescription={fullDescription}
-          galleryImages={galleryImages}
-          email={email}
-          phone={phone}
-          website={website}
-          location={location}
-          impactCurrent={impactCurrent}
-          impactGoal={impactGoal}
-          impactType={impactType}
-        />
-      </TabsContent>
+        {/* Tab Content */}
+        <TabsContent value="sobre" className="mt-12">
+          <AboutTab
+            name={name}
+            fullDescription={fullDescription}
+            galleryImages={galleryImages}
+            email={email}
+            phone={phone}
+            website={website}
+            location={location}
+            impactCurrent={impactCurrent}
+            impactGoal={impactGoal}
+            impactType={impactType}
+          />
+        </TabsContent>
 
-      <TabsContent value="explorar" className="mt-12">
-        <ExploreTab relevantLinks={relevantLinks} />
-      </TabsContent>
+        <TabsContent value="explorar" className="mt-12">
+          <ExploreTab relevantLinks={relevantLinks} />
+        </TabsContent>
 
-      <TabsContent value="impacto" className="mt-12">
-        <ImpactTab
-          featuredFact={featuredFact}
-          secondaryFacts={secondaryFacts}
-          testimony={testimony}
-          milestone={milestone}
-          foundedYear={foundedYear}
-          verified={verified}
-        />
-      </TabsContent>
+        <TabsContent value="impacto" className="mt-12">
+          <ImpactTab
+            featuredFact={featuredFact}
+            secondaryFacts={secondaryFacts}
+            testimony={testimony}
+            milestone={milestone}
+            foundedYear={foundedYear}
+            verified={verified}
+          />
+        </TabsContent>
 
-      <TabsContent value="contacto" className="mt-12">
-        <ContactTab
-          email={email}
-          phone={phone}
-          location={location}
-          googleMapsUrl={googleMapsUrl}
-          officeHours={officeHours}
-        />
-      </TabsContent>
+        <TabsContent value="contacto" className="mt-12">
+          <ContactTab
+            email={email}
+            phone={phone}
+            location={location}
+            googleMapsUrl={googleMapsUrl}
+            officeHours={officeHours}
+          />
+        </TabsContent>
 
-    </Tabs>
+      </Tabs>
     </motion.div>
   );
 }

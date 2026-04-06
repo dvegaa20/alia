@@ -50,7 +50,7 @@ export function TrustSection() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <Card className="bg-muted border-none ring-0 rounded-xl py-0">
               <CardContent className="p-6">
-                <ShieldCheck className="size-8 text-ds-primary dark:text-ds-primary-fixed mb-3" />
+                <ShieldCheck className="size-8 text-primary dark:text-ds-primary-fixed mb-3" />
                 <h4 className="font-bold text-foreground mb-1 text-base">
                   Organizaciones Curadas
                 </h4>

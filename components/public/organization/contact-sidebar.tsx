@@ -41,7 +41,7 @@ export function ContactSidebar({
             {/* Location */}
             {location && (
               <div className="flex items-center gap-4 group">
-                <div className="w-10 h-10 rounded-full bg-ds-surface-container flex items-center justify-center text-ds-primary group-hover:bg-ds-primary group-hover:text-ds-on-primary transition-colors">
+                <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                   <MapPin className="size-5" />
                 </div>
                 <div>
@@ -55,7 +55,7 @@ export function ContactSidebar({
 
             {/* Email */}
             <div className="flex items-center gap-4 group">
-              <div className="w-10 h-10 rounded-full bg-ds-surface-container flex items-center justify-center text-ds-primary group-hover:bg-ds-primary group-hover:text-ds-on-primary transition-colors">
+              <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                 <Mail className="size-5" />
               </div>
               <div>
@@ -69,7 +69,7 @@ export function ContactSidebar({
             {/* Phone */}
             {phone && (
               <div className="flex items-center gap-4 group">
-                <div className="w-10 h-10 rounded-full bg-ds-surface-container flex items-center justify-center text-ds-primary group-hover:bg-ds-primary group-hover:text-ds-on-primary transition-colors">
+                <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                   <Phone className="size-5" />
                 </div>
                 <div>
@@ -88,7 +88,7 @@ export function ContactSidebar({
           {website && (
             <Button
               asChild
-              className="flex-1 py-4 h-auto bg-linear-to-r from-ds-primary to-ds-primary-container text-ds-on-primary font-bold rounded-xl shadow-lg shadow-ds-primary/20 hover:scale-[1.02] active:scale-95 transition-all"
+              className="flex-1 py-4 h-auto bg-linear-to-r from-ds-primary to-ds-primary-container text-primary-foreground font-bold rounded-xl shadow-lg shadow-ds-primary/20 hover:scale-[1.02] active:scale-95 transition-all"
             >
               <a href={website} target="_blank" rel="noopener noreferrer">
                 Ir al sitio web

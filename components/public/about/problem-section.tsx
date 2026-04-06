@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export function ProblemSection() {
   return (
-    <section className="px-8 py-20 bg-ds-surface-container-low overflow-hidden">
+    <section className="px-8 py-20 bg-muted/50 overflow-hidden">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-16 md:gap-24">
         {/* Text Column */}
         <motion.div
@@ -15,10 +15,10 @@ export function ProblemSection() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="flex-1 space-y-8"
         >
-          <h2 className="font-headline font-bold text-4xl text-ds-primary dark:text-ds-primary-fixed">
+          <h2 className="font-headline font-bold text-4xl text-primary dark:text-ds-primary-fixed">
             El problema que vimos
           </h2>
-          <div className="space-y-6 font-body text-lg text-ds-on-surface-variant leading-loose">
+          <div className="space-y-6 font-body text-lg text-muted-foreground leading-loose">
             <p>
               En un mundo saturado de información, encontrar organizaciones
               sociales honestas y locales se ha vuelto una tarea compleja. A
@@ -54,7 +54,7 @@ export function ProblemSection() {
             />
           </div>
           {/* Decorative element */}
-          <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-ds-secondary rounded-full opacity-20 blur-3xl" />
+          <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-accent rounded-full opacity-20 blur-3xl" />
         </motion.div>
       </div>
     </section>

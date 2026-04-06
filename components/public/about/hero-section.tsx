@@ -17,7 +17,7 @@ export function AboutHeroSection() {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-        className="font-body text-xl md:text-2xl text-ds-on-surface-variant max-w-3xl mx-auto leading-relaxed"
+        className="font-body text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed"
       >
         Una iniciativa familiar, sin fines de lucro, nacida del deseo de hacer
         el bien accesible a todos.

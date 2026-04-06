@@ -69,7 +69,7 @@ export function CategoriesSection({ categories = [] }: CategoriesSectionProps) {
                   variant="ghost"
                   onClick={() => setActiveCategoryId(cat.id)}
                   className={`px-6 py-3 h-auto rounded-full font-label font-medium flex items-center gap-2 transition-colors ${cat.id === activeCategoryId
-                    ? "bg-ds-primary-fixed text-ds-on-primary-fixed dark:bg-ds-primary-container dark:text-ds-on-primary hover:bg-ds-primary-fixed/80 dark:hover:bg-ds-primary-container/80"
+                    ? "bg-primary/20 text-primary dark:bg-primary/80 dark:text-primary-foreground hover:bg-ds-primary-fixed/80 dark:hover:bg-ds-primary-container/80"
                     : "bg-muted text-muted-foreground hover:bg-accent"
                     }`}
                 >

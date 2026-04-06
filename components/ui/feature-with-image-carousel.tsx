@@ -36,7 +36,7 @@ function Feature({ badge, title, description, items }: FeatureProps) {
       <div className="grid grid-cols-1 lg:grid-cols-2 items-start gap-10">
         {/* Left: Text Content */}
         <div className="flex gap-4 flex-col items-start">
-          <Badge className="bg-ds-tertiary-container text-ds-on-tertiary-container border-none px-3 py-1 h-auto rounded-full text-xs font-bold uppercase tracking-wider">
+          <Badge className="bg-ds-tertiary-container text-secondary-foreground border-none px-3 py-1 h-auto rounded-full text-xs font-bold uppercase tracking-wider">
             {badge}
           </Badge>
           <div className="flex gap-2 flex-col">
@@ -67,7 +67,7 @@ function Feature({ badge, title, description, items }: FeatureProps) {
                           height={300}
                         />
                         <div className="absolute top-4 left-4">
-                          <Badge className="bg-ds-tertiary-container text-ds-on-tertiary-container border-none px-3 py-1 h-auto rounded-full text-xs font-bold uppercase tracking-wider">
+                          <Badge className="bg-ds-tertiary-container text-secondary-foreground border-none px-3 py-1 h-auto rounded-full text-xs font-bold uppercase tracking-wider">
                             {item.tag}
                           </Badge>
                         </div>
@@ -100,7 +100,7 @@ function Feature({ badge, title, description, items }: FeatureProps) {
                           <MapPin className="size-3.5" />
                           {item.location}
                         </div>
-                        <Badge className="bg-ds-primary-fixed text-ds-on-primary-fixed-variant dark:bg-ds-primary-container dark:text-ds-on-primary border-none px-3 py-1 h-auto rounded-full text-[10px] font-bold">
+                        <Badge className="bg-primary/20 text-ds-on-primary-fixed-variant dark:bg-primary/80 dark:text-primary-foreground border-none px-3 py-1 h-auto rounded-full text-[10px] font-bold">
                           VERIFICADA
                         </Badge>
                       </CardFooter>

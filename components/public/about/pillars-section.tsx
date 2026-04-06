@@ -47,7 +47,7 @@ export function PillarsSection() {
         <h2 className="font-headline font-bold text-4xl text-foreground mb-4">
           Nuestros Pilares
         </h2>
-        <div className="w-20 h-1.5 bg-ds-secondary mx-auto rounded-full" />
+        <div className="w-20 h-1.5 bg-accent mx-auto rounded-full" />
       </motion.div>
 
       {/* Grid */}
@@ -81,7 +81,7 @@ export function PillarsSection() {
                 </h3>
 
                 {/* Description */}
-                <p className="font-body text-ds-on-surface-variant leading-relaxed">
+                <p className="font-body text-muted-foreground leading-relaxed">
                   {pillar.description}
                 </p>
               </CardContent>
