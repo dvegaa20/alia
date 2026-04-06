@@ -39,6 +39,7 @@ export function CategoriesSection({ categories = [] }: CategoriesSectionProps) {
     title: `Descubre más sobre ${activeCategory.name.toLowerCase()}`,
     description: activeCategory.description || "Explora las organizaciones que están haciendo la diferencia en esta categoría.",
     items: (activeCategory.organizations || []).map(org => ({
+      slug: org.slug,
       name: org.name,
       description: org.shortDescription,
       location: org.location ? `${org.location.city}, ${org.location.state}` : "Ubicación no especificada",

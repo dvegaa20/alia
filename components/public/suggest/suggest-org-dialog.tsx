@@ -53,10 +53,10 @@ type SubmitState = "idle" | "loading" | "success" | "error";
 
 /* ── Shared styles ──────────────────────────────────── */
 const labelCx =
-  "font-label text-[11px] font-medium uppercase tracking-wider text-ds-on-surface-variant";
+  "font-label text-[11px] font-medium uppercase tracking-wider text-muted-foreground";
 
 const inputCx =
-  "w-full bg-ds-surface-container-highest border-none rounded-lg px-4 py-3 h-auto focus-visible:ring-2 focus-visible:ring-ds-primary/20 focus-visible:bg-white dark:focus-visible:bg-card transition-all duration-300 font-body text-ds-on-surface placeholder:text-ds-on-surface-variant/50";
+  "w-full bg-muted border-none rounded-lg px-4 py-3 h-auto focus-visible:ring-2 focus-visible:ring-ring focus-visible:bg-background transition-all duration-300 font-body text-foreground placeholder:text-muted-foreground/50";
 
 /* ── Button content map ─────────────────────────────── */
 const BUTTON_STATES: Record<
@@ -67,13 +67,13 @@ const BUTTON_STATES: Record<
     text: "Enviar Sugerencia",
     icon: <Send className="size-4" />,
     className:
-      "bg-gradient-to-r from-ds-primary to-ds-primary-container text-ds-on-primary shadow-lg shadow-ds-primary/10 hover:shadow-ds-primary/20 hover:-translate-y-0.5",
+      "bg-primary text-primary-foreground shadow-lg shadow-primary/10 hover:shadow-primary/20 hover:-translate-y-0.5",
   },
   loading: {
     text: "Enviando...",
     icon: <Loader2 className="size-4 animate-spin" />,
     className:
-      "bg-gradient-to-r from-ds-primary to-ds-primary-container text-ds-on-primary opacity-90 cursor-wait",
+      "bg-primary text-primary-foreground opacity-90 cursor-wait",
   },
   success: {
     text: "¡Enviado con éxito!",
@@ -163,10 +163,10 @@ export function SuggestOrgDialog({
       >
         {/* ── Header ──────────────────────────────── */}
         <DialogHeader className="px-8 pt-8 pb-0 text-center">
-          <DialogTitle className="font-headline text-2xl md:text-3xl font-bold tracking-tight text-ds-primary">
+          <DialogTitle className="font-headline text-2xl md:text-3xl font-bold tracking-tight text-primary">
             Sugerir una Organización
           </DialogTitle>
-          <DialogDescription className="font-body text-ds-on-surface-variant text-sm max-w-md mx-auto leading-relaxed">
+          <DialogDescription className="font-body text-muted-foreground text-sm max-w-md mx-auto leading-relaxed">
             Ayúdanos a ampliar nuestra red conectando a más personas con causas
             que importan.
           </DialogDescription>
@@ -175,9 +175,9 @@ export function SuggestOrgDialog({
         {/* ── Body ────────────────────────────────── */}
         <div className="px-8 pb-8 space-y-6">
           {/* Info callout */}
-          <Alert className="rounded-xl border-none border-l-4 border-l-ds-primary/20 bg-ds-surface-container-low p-4">
-            <Info className="size-4 text-ds-primary mt-0.5" />
-            <AlertDescription className="font-body text-ds-on-surface-variant text-xs leading-relaxed">
+          <Alert className="rounded-xl border-none border-l-4 border-l-primary/20 bg-muted/50 p-4">
+            <Info className="size-4 text-primary mt-0.5" />
+            <AlertDescription className="font-body text-muted-foreground text-xs leading-relaxed">
               Todas las sugerencias son revisadas manualmente por nuestro equipo
               antes de ser publicadas para garantizar la calidad del directorio.
             </AlertDescription>
@@ -330,9 +330,9 @@ export function SuggestOrgDialog({
                     <FieldLabel htmlFor="url" className={labelCx}>
                       URL del sitio web o red social
                     </FieldLabel>
-                    <InputGroup className="bg-ds-surface-container-highest border-none rounded-lg h-auto focus-within:ring-2 focus-within:ring-ds-primary/20 focus-within:bg-white dark:focus-within:bg-card transition-all duration-300">
+                    <InputGroup className="bg-muted border-none rounded-lg h-auto focus-within:ring-2 focus-within:ring-ring focus-within:bg-background transition-all duration-300">
                       <InputGroupAddon align="inline-start">
-                        <LinkIcon className="size-4 text-ds-on-surface-variant/60" />
+                        <LinkIcon className="size-4 text-muted-foreground/60" />
                       </InputGroupAddon>
                       <InputGroupInput
                         {...field}
@@ -340,11 +340,11 @@ export function SuggestOrgDialog({
                         type="url"
                         aria-invalid={fieldState.invalid}
                         placeholder="https://www.organizacion.org"
-                        className="font-body text-ds-on-surface placeholder:text-ds-on-surface-variant/50 py-3"
+                        className="font-body text-foreground placeholder:text-muted-foreground/50 py-3"
                         disabled={submitState !== "idle"}
                       />
                     </InputGroup>
-                    <p className="font-label text-[10px] text-ds-on-surface-variant/70 italic mt-1">
+                    <p className="font-label text-[10px] text-muted-foreground/70 italic mt-1">
                       Utilizamos este enlace para verificar la autenticidad de
                       la ONG.
                     </p>
@@ -376,11 +376,11 @@ export function SuggestOrgDialog({
 
           {/* Secondary CTA */}
           <div className="text-center">
-            <p className="text-ds-on-surface-variant font-body text-xs">
+            <p className="text-muted-foreground font-body text-xs">
               ¿Tienes dudas sobre los criterios de inclusión?{" "}
               <a
                 href="#"
-                className="text-ds-primary font-semibold underline underline-offset-4 hover:text-ds-primary-container transition-colors"
+                className="text-primary font-semibold underline underline-offset-4 hover:text-primary/80 transition-colors"
               >
                 Consulta nuestras guías
               </a>

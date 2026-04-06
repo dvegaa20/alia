@@ -8,7 +8,6 @@ export { HeroSection } from './home/hero-section'
 export { CategoriesSection } from './home/categories-section'
 export { CategoryFilters } from './home/category-filters'
 export { CategoryCarousel } from './home/category-carousel'
-export { FeaturedSection } from './home/featured-section'
 export { FeaturedGrid } from './home/featured-grid'
 export { TrustSection } from './home/trust-section'
 

@@ -6,7 +6,6 @@ import {
   CategoryFilters,
   CategoryCarousel,
   FeaturedGrid,
-  FeaturedSection,
   TrustSection,
 } from "@/components/public";
 

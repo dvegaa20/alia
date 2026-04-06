@@ -11,6 +11,7 @@ export async function CategoryCarousel({ categorySlug, categoryName, categoryDes
   const { data: latestOrgs } = await getLatestByCategory(categorySlug);
 
   const items: CampaignItem[] = (latestOrgs || []).map((org) => ({
+    slug: org.slug,
     name: org.name,
     description: org.shortDescription || "",
     location: org.location ? `${org.location.city}, ${org.location.state}` : "Ubicación no especificada",
