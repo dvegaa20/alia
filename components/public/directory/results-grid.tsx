@@ -24,12 +24,13 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { MapViewPlaceholder } from "./map-view-placeholder";
+import { MapView, type MapPoint } from "./map-view";
 
 type ViewMode = "list" | "map";
 
 interface ResultsGridProps {
   organizations: OrganizationCardProps[];
+  mapPoints: MapPoint[];
   total: number;
   currentPage: number;
   totalPages: number;
@@ -48,6 +49,7 @@ function buildPageHref(page: number, searchQuery?: string, sort?: string) {
 
 export function ResultsGrid({
   organizations,
+  mapPoints,
   total,
   currentPage,
   totalPages,
@@ -165,7 +167,7 @@ export function ResultsGrid({
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3 }}
           >
-            <MapViewPlaceholder total={total} />
+            <MapView total={total} mapPoints={mapPoints} />
           </motion.div>
         ) : hasResults ? (
           <motion.div

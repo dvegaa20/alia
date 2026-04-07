@@ -829,6 +829,38 @@ export function OrganizationSheet({
                               <FieldError errors={[errors.location?.googleMapsUrl]} />
                             </FieldContent>
                           </Field>
+                          <Field>
+                            <FieldLabel className={labelCx}>Latitud</FieldLabel>
+                            <FieldContent>
+                              <Input
+                                className={inputCx}
+                                type="number"
+                                step="any"
+                                placeholder="Ej. 20.6597"
+                                {...register('location.latitude', { valueAsNumber: true })}
+                              />
+                              <FieldDescription className="text-[10px] text-muted-foreground/70">
+                                Coordenada para el mapa (-90 a 90)
+                              </FieldDescription>
+                              <FieldError errors={[errors.location?.latitude]} />
+                            </FieldContent>
+                          </Field>
+                          <Field>
+                            <FieldLabel className={labelCx}>Longitud</FieldLabel>
+                            <FieldContent>
+                              <Input
+                                className={inputCx}
+                                type="number"
+                                step="any"
+                                placeholder="Ej. -103.3496"
+                                {...register('location.longitude', { valueAsNumber: true })}
+                              />
+                              <FieldDescription className="text-[10px] text-muted-foreground/70">
+                                Coordenada para el mapa (-180 a 180)
+                              </FieldDescription>
+                              <FieldError errors={[errors.location?.longitude]} />
+                            </FieldContent>
+                          </Field>
                         </div>
                       </div>
 

@@ -125,6 +125,8 @@ export const LocationScalarFieldEnum = {
   city: 'city',
   state: 'state',
   googleMapsUrl: 'googleMapsUrl',
+  latitude: 'latitude',
+  longitude: 'longitude',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   organizationId: 'organizationId'

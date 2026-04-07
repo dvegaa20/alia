@@ -5,6 +5,8 @@ export const locationSchema = z.object({
   city: z.string().min(2, 'City is required'),
   state: z.string().min(2, 'State is required'),
   googleMapsUrl: z.url('Must be a valid URL').optional().or(z.literal('')),
+  latitude: z.number().min(-90).max(90).optional().nullable(),
+  longitude: z.number().min(-180).max(180).optional().nullable(),
 })
 
 export const socialLinkSchema = z.object({

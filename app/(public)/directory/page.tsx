@@ -3,8 +3,8 @@ import { getPublishedOrgs, getAllCategoriesWithCount } from "@/server/actions";
 import { SidebarFilters } from "@/components/public/directory/sidebar-filters";
 import { ResultsGrid } from "@/components/public/directory/results-grid";
 import type { OrganizationCardProps } from "@/components/public/directory/organization-card";
+import type { MapPoint } from "@/components/public/directory/map-view";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { Filter } from "lucide-react";
 
 export default async function DirectoryPage(props: {
   searchParams: Promise<{
@@ -57,6 +57,27 @@ export default async function DirectoryPage(props: {
     })
   );
 
+  // Build map points from organizations that have coordinates
+  const mapPoints: MapPoint[] = (result.data || [])
+    .filter(
+      (org) =>
+        org.location?.latitude != null && org.location?.longitude != null
+    )
+    .map((org) => ({
+      slug: org.slug,
+      name: org.name,
+      category: org.categories?.[0]?.name || "Organización",
+      location: org.location
+        ? `${org.location.city}, ${org.location.state}`
+        : "México",
+      coordinates: [org.location!.longitude!, org.location!.latitude!] as [
+        number,
+        number,
+      ],
+      logoImage: org.logoUrl || "/images/directorio/logo-forest.jpg",
+      verified: org.verified,
+    }));
+
   const meta = result.meta || { total: 0, page: 1, limit: 12, totalPages: 0 };
 
   return (
@@ -86,6 +107,7 @@ export default async function DirectoryPage(props: {
           </div>
           <ResultsGrid
             organizations={organizations}
+            mapPoints={mapPoints}
             total={meta.total}
             currentPage={meta.page}
             totalPages={meta.totalPages}

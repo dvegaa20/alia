@@ -942,6 +942,8 @@ export const LocationScalarFieldEnum = {
   city: 'city',
   state: 'state',
   googleMapsUrl: 'googleMapsUrl',
+  latitude: 'latitude',
+  longitude: 'longitude',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   organizationId: 'organizationId'
@@ -1114,6 +1116,20 @@ export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
 
 
 /**
+ * Reference to a field of type 'Float'
+ */
+export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+/**
+ * Reference to a field of type 'Float[]'
+ */
+export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+/**
  * Reference to a field of type 'SocialPlatform'
  */
 export type EnumSocialPlatformFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SocialPlatform'>
@@ -1138,20 +1154,6 @@ export type EnumSuggestionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<
  * Reference to a field of type 'SuggestionStatus[]'
  */
 export type ListEnumSuggestionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SuggestionStatus[]'>
-    
-
-
-/**
- * Reference to a field of type 'Float'
- */
-export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
-
-
-/**
- * Reference to a field of type 'Float[]'
- */
-export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
 
 /**
