@@ -3,7 +3,8 @@
 import * as React from 'react'
 import { useForm, useFieldArray, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Loader2, Plus, Trash2 } from 'lucide-react'
+import { Loader2, Plus, Trash2, CheckCircle2, AlertCircle } from 'lucide-react'
+import { toast } from 'sonner'
 import { orgFormSchema, type OrgFormValues } from '@/lib/schemas'
 import { MEXICO_STATES } from '@/lib/mexico-states'
 import { slugify } from '@/lib/utils'
@@ -78,6 +79,7 @@ export function OrganizationSheet({
   onSave,
 }: OrganizationSheetProps) {
   const [isPending, setIsPending] = React.useState(false)
+  const [savedSuccess, setSavedSuccess] = React.useState(false)
 
   const defaultValues: Partial<OrgFormValues> = React.useMemo(() => {
     if (!organization) {
@@ -94,6 +96,7 @@ export function OrganizationSheet({
         relevantLinks: [''],
         socialLinks: [],
         categoryIds: [],
+        needs: [],
         officeHours: DEFAULT_OFFICE_HOURS,
       }
     }
@@ -111,6 +114,7 @@ export function OrganizationSheet({
         ] // Ensure 4 inputs
         : ['', '', '', ''],
       relevantLinks: organization.relevantLinks?.length ? organization.relevantLinks : [''],
+      needs: organization.needs || [],
       officeHours: organization.officeHours || DEFAULT_OFFICE_HOURS,
     }
   }, [organization])
@@ -122,10 +126,11 @@ export function OrganizationSheet({
     watch,
     setValue,
     reset,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<OrgFormValues>({
     resolver: zodResolver(orgFormSchema) as any,
     defaultValues: defaultValues as any,
+    mode: 'onTouched',
   })
 
   // Auto-generate slug when creating
@@ -140,6 +145,7 @@ export function OrganizationSheet({
   React.useEffect(() => {
     if (open) {
       reset(defaultValues)
+      setSavedSuccess(false)
     }
   }, [open, defaultValues, reset])
 
@@ -170,8 +176,57 @@ export function OrganizationSheet({
     name: 'secondaryFacts' as any,
   })
 
+  const {
+    fields: needsFields,
+    append: appendNeed,
+    remove: removeNeed,
+  } = useFieldArray({
+    control,
+    name: 'needs' as any,
+  })
+
+  // Helper: map error field keys to tab names for feedback
+  const TAB_FIELD_MAP: Record<string, string> = {
+    name: 'sobre', slug: 'sobre', shortDescription: 'sobre', fullDescription: 'sobre',
+    logoUrl: 'sobre', coverImageUrl: 'sobre', foundedYear: 'sobre', status: 'sobre',
+    featured: 'sobre', verified: 'sobre', categoryIds: 'sobre', galleryImages: 'sobre',
+    relevantLinks: 'explorar',
+    needs: 'necesidades',
+    impactCurrent: 'impacto', impactGoal: 'impacto', impactType: 'impacto',
+    featuredFact: 'impacto', secondaryFacts: 'impacto', testimony: 'impacto', milestone: 'impacto',
+    email: 'contacto', phone: 'contacto', website: 'contacto', donationLink: 'contacto',
+    location: 'contacto', socialLinks: 'contacto', officeHours: 'contacto',
+  }
+
+  const TAB_LABELS: Record<string, string> = {
+    sobre: 'Sobre nosotros',
+    explorar: 'Explorar',
+    necesidades: 'Necesidades',
+    impacto: 'Impacto',
+    contacto: 'Contacto',
+  }
+
+  function onFormError(formErrors: Record<string, any>) {
+    // Group errors by tab
+    const tabsWithErrors = new Set<string>()
+    Object.keys(formErrors).forEach((key) => {
+      const tab = TAB_FIELD_MAP[key]
+      if (tab) tabsWithErrors.add(tab)
+    })
+
+    const tabNames = Array.from(tabsWithErrors).map((t) => TAB_LABELS[t] || t)
+
+    toast.error('Hay errores en el formulario', {
+      description: tabNames.length > 0
+        ? `Revisa los campos en: ${tabNames.join(', ')}`
+        : 'Revisa los campos marcados en rojo.',
+      duration: 5000,
+    })
+  }
+
   async function onSubmit(data: OrgFormValues) {
     setIsPending(true)
+    setSavedSuccess(false)
 
     // Clean up empty gallery images
     const cleanedData = {
@@ -184,11 +239,18 @@ export function OrganizationSheet({
     setIsPending(false)
 
     if (result.success) {
-      onOpenChange(false)
+      setSavedSuccess(true)
+      toast.success(organization ? 'Cambios guardados correctamente' : 'Organización creada correctamente', {
+        duration: 3000,
+      })
+      // Reset the success checkmark after 2.5s
+      setTimeout(() => setSavedSuccess(false), 2500)
     } else {
       console.error(result.error)
-      // Ideally show a toast here
-      alert(result.error || 'Algo salió mal')
+      toast.error('Error al guardar', {
+        description: result.error || 'Algo salió mal. Intenta de nuevo.',
+        duration: 5000,
+      })
     }
   }
 
@@ -221,7 +283,7 @@ export function OrganizationSheet({
 
         <form
           id="org-form"
-          onSubmit={handleSubmit(onSubmit as any)}
+          onSubmit={handleSubmit(onSubmit as any, onFormError)}
           className="flex-1 overflow-hidden flex flex-col min-h-0"
         >
           <div className="flex-1 overflow-y-auto">
@@ -264,32 +326,39 @@ export function OrganizationSheet({
             ) : (
               <div className="p-8">
                 <Tabs defaultValue="sobre" className="w-full">
-                  <TabsList className="mb-8 p-1 flex w-fit bg-muted/70 rounded-xl">
-                    <TabsTrigger
-                      value="sobre"
-                      className="rounded-lg px-4 py-2 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:text-foreground"
-                    >
-                      Sobre nosotros
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="explorar"
-                      className="rounded-lg px-4 py-2 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:text-foreground"
-                    >
-                      Explorar
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="impacto"
-                      className="rounded-lg px-4 py-2 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:text-foreground"
-                    >
-                      Impacto
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="contacto"
-                      className="rounded-lg px-4 py-2 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:text-foreground"
-                    >
-                      Contacto
-                    </TabsTrigger>
-                  </TabsList>
+                  {/* Compute error counts per tab */}
+                  {(() => {
+                    const errorKeys = Object.keys(errors)
+                    const tabErrors: Record<string, number> = { sobre: 0, explorar: 0, necesidades: 0, impacto: 0, contacto: 0 }
+                    errorKeys.forEach((key) => {
+                      const tab = TAB_FIELD_MAP[key]
+                      if (tab && tab in tabErrors) tabErrors[tab]++
+                    })
+                    return (
+                      <TabsList className="mb-8 p-1 flex w-fit bg-muted/70 rounded-xl">
+                        {([
+                          { value: 'sobre', label: 'Sobre nosotros' },
+                          { value: 'explorar', label: 'Explorar' },
+                          { value: 'necesidades', label: 'Necesidades' },
+                          { value: 'impacto', label: 'Impacto' },
+                          { value: 'contacto', label: 'Contacto' },
+                        ] as const).map((tab) => (
+                          <TabsTrigger
+                            key={tab.value}
+                            value={tab.value}
+                            className="relative rounded-lg px-4 py-2 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:text-foreground"
+                          >
+                            {tab.label}
+                            {tabErrors[tab.value] > 0 && (
+                              <span className="absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-destructive text-[10px] font-bold text-destructive-foreground px-1">
+                                {tabErrors[tab.value]}
+                              </span>
+                            )}
+                          </TabsTrigger>
+                        ))}
+                      </TabsList>
+                    )
+                  })()}
 
                   <div className="max-w-6xl">
                     {/* TAB 1: GENERAL (Sobre nosotros) + Galería */}
@@ -378,7 +447,7 @@ export function OrganizationSheet({
                               className={inputCx}
                               type="number"
                               placeholder="Ej. 1990"
-                              {...register('foundedYear', { valueAsNumber: true })}
+                              {...register('foundedYear')}
                             />
                             <FieldError errors={[errors.foundedYear]} />
                           </FieldContent>
@@ -545,7 +614,104 @@ export function OrganizationSheet({
                       </div>
                     </TabsContent>
 
-                    {/* TAB 3: IMPACTO */}
+                    {/* TAB 3: NECESIDADES */}
+                    <TabsContent value="necesidades" className="space-y-8 mt-0">
+                      <div>
+                        <h3 className="text-lg font-bold mb-4">Necesidades de la Organización</h3>
+                        <p className="text-sm text-muted-foreground mb-6">
+                          Registra materiales, recursos económicos, voluntariado o servicios que necesita la organización actualmente.
+                        </p>
+
+                        <div className="space-y-6">
+                          {needsFields.map((field, index) => (
+                            <div key={field.id} className="p-4 bg-muted/30 rounded-xl relative border space-y-4">
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="icon-sm"
+                                className="absolute top-2 right-2 text-muted-foreground hover:text-red-500 z-10"
+                                onClick={() => removeNeed(index)}
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <Field>
+                                  <FieldLabel>Categoría</FieldLabel>
+                                  <Controller
+                                    control={control}
+                                    name={`needs.${index}.category` as const}
+                                    render={({ field }) => (
+                                      <Select onValueChange={field.onChange} value={field.value || 'otro'}>
+                                        <SelectTrigger className={inputCx}>
+                                          <SelectValue placeholder="Selecciona..." />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                          <SelectItem value="material">Donación Material</SelectItem>
+                                          <SelectItem value="voluntariado">Voluntariado</SelectItem>
+                                          <SelectItem value="economica">Apoyo Económico</SelectItem>
+                                          <SelectItem value="alimentos">Alimentos</SelectItem>
+                                          <SelectItem value="servicios">Servicios Profesionales</SelectItem>
+                                          <SelectItem value="otro">Otro</SelectItem>
+                                        </SelectContent>
+                                      </Select>
+                                    )}
+                                  />
+                                </Field>
+
+                                <Field>
+                                  <FieldLabel>Urgencia</FieldLabel>
+                                  <Controller
+                                    control={control}
+                                    name={`needs.${index}.urgency` as const}
+                                    render={({ field }) => (
+                                      <Select onValueChange={field.onChange} value={field.value || 'media'}>
+                                        <SelectTrigger className={inputCx}>
+                                          <SelectValue placeholder="Selecciona..." />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                          <SelectItem value="alta">Alta</SelectItem>
+                                          <SelectItem value="media">Media</SelectItem>
+                                          <SelectItem value="baja">Baja</SelectItem>
+                                        </SelectContent>
+                                      </Select>
+                                    )}
+                                  />
+                                </Field>
+
+                                <Field className="md:col-span-2">
+                                  <FieldLabel>Título de la Necesidad</FieldLabel>
+                                  <Input className={inputCx} placeholder="Ej. Cobijas e insumos de invierno" {...register(`needs.${index}.title` as const)} />
+                                </Field>
+
+                                <Field className="md:col-span-2">
+                                  <FieldLabel>Descripción</FieldLabel>
+                                  <Textarea className={`${inputCx} min-h-24`} placeholder="Ej. Necesitamos 200 cobertores en buen estado para albergues..." {...register(`needs.${index}.description` as const)} />
+                                </Field>
+
+                                <Field className="md:col-span-2">
+                                  <FieldLabel>Cantidad Esperada (Opcional)</FieldLabel>
+                                  <Input className={inputCx} placeholder="Ej. 200 piezas / $10,000 MXN / 15 voluntarios" {...register(`needs.${index}.quantity` as const)} />
+                                </Field>
+                              </div>
+                            </div>
+                          ))}
+
+                          {needsFields.length < 6 && (
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="sm"
+                              onClick={() => appendNeed({ category: 'material', urgency: 'media', title: '', description: '', quantity: '' })}
+                            >
+                              <Plus className="mr-2 h-4 w-4" /> Agregar Necesidad
+                            </Button>
+                          )}
+                        </div>
+                      </div>
+                    </TabsContent>
+
+                    {/* TAB 4: IMPACTO */}
                     <TabsContent value="impacto" className="space-y-8 mt-0">
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <Field>
@@ -554,7 +720,7 @@ export function OrganizationSheet({
                             <Input
                               className={inputCx}
                               type="number"
-                              {...register('impactCurrent', { valueAsNumber: true })}
+                              {...register('impactCurrent')}
                             />
                           </FieldContent>
                         </Field>
@@ -564,7 +730,7 @@ export function OrganizationSheet({
                             <Input
                               className={inputCx}
                               type="number"
-                              {...register('impactGoal', { valueAsNumber: true })}
+                              {...register('impactGoal')}
                             />
                           </FieldContent>
                         </Field>
@@ -978,9 +1144,23 @@ export function OrganizationSheet({
             >
               Cancelar
             </Button>
-            <Button type="submit" disabled={isPending || isLoading} className="bg-primary hover:bg-primary/90">
+            <Button
+              type="submit"
+              disabled={isPending || isLoading}
+              className={`min-w-[180px] transition-all duration-300 ${savedSuccess
+                  ? 'bg-emerald-600 hover:bg-emerald-600 '
+                  : 'bg-primary hover:bg-primary/90'
+                }`}
+            >
               {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              {organization ? 'Guardar Cambios' : 'Crear Organización'}
+              {savedSuccess && <CheckCircle2 className="mr-2 h-4 w-4" />}
+              {isPending
+                ? 'Guardando...'
+                : savedSuccess
+                  ? '¡Guardado!'
+                  : organization
+                    ? 'Guardar Cambios'
+                    : 'Crear Organización'}
             </Button>
           </SheetFooter>
         </form>
