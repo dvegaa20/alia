@@ -3,7 +3,7 @@ import { Progress } from "@/components/ui/progress";
 import { MapPin, Mail, Phone, Share2 } from "lucide-react";
 
 interface ContactSidebarProps {
-  location?: string;
+  location?: string | null;
   email: string;
   phone?: string | null;
   website?: string | null;
@@ -31,7 +31,7 @@ export function ContactSidebar({
   return (
     <aside className="sticky top-32 space-y-6">
       {/* Contact Info Card */}
-      <div className="bg-background rounded-xl p-8 editorial-shadow space-y-8 border-t-4 border-ds-primary">
+      <div className="bg-slate-50/40 dark:bg-zinc-900/20 rounded-xl p-8 editorial-shadow space-y-8 border-t-4 border-ds-primary">
         <div className="space-y-6">
           <h3 className="text-xl font-bold font-headline text-foreground">
             Información de contacto

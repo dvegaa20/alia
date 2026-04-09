@@ -1,21 +1,23 @@
 "use client";
 
 import { useState } from "react";
-import { MapPin, Clock, Mail, Phone, Navigation, Send } from "lucide-react";
+import { MapPin, Clock, Mail, Phone, Navigation, Send, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Map, MapMarker, MarkerContent, MarkerPopup, MapControls, MapRoute } from "@/components/ui/map";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 export interface ContactTabProps {
   email: string;
   phone?: string | null;
-  location?: string;
+  location?: string | null;
   googleMapsUrl?: string | null;
+  coordinates?: { lat: number | null; lng: number | null } | null;
   officeHours?: any;
 }
 
@@ -29,7 +31,7 @@ const DAY_LABELS: Record<string, string> = {
   sunday: "Domingo",
 };
 
-export default function ContactTab({ email, phone, location, googleMapsUrl, officeHours }: ContactTabProps) {
+export default function ContactTab({ email, phone, location, googleMapsUrl, coordinates, officeHours }: ContactTabProps) {
   const [nombre, setNombre] = useState("");
   const [asunto, setAsunto] = useState("");
   const [mensaje, setMensaje] = useState("");
@@ -37,10 +39,10 @@ export default function ContactTab({ email, phone, location, googleMapsUrl, offi
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const finalSubject = asunto 
-      ? `${asunto} (vía Alia)` 
+    const finalSubject = asunto
+      ? `${asunto} (vía Alia)`
       : `Mensaje de ${nombre || "un usuario anónimo"} vía Alia`;
-      
+
     const subject = encodeURIComponent(finalSubject);
     const body = encodeURIComponent(
       `Hola,\n\nMi nombre es ${nombre}.\n\n${mensaje}\n\n---\nEnviado a través del directorio de Alia.`
@@ -76,7 +78,7 @@ export default function ContactTab({ email, phone, location, googleMapsUrl, offi
                     value={nombre}
                     onChange={(e) => setNombre(e.target.value)}
                     required
-                    className="bg-muted/50 border-transparent h-14 rounded-2xl px-5 focus-visible:ring-ds-primary shadow-none"
+                    className="border-transparent h-14 rounded-2xl px-5 focus-visible:ring-ds-primary shadow-none"
                   />
                 </div>
                 <div className="space-y-2">
@@ -89,7 +91,7 @@ export default function ContactTab({ email, phone, location, googleMapsUrl, offi
                     value={asunto}
                     onChange={(e) => setAsunto(e.target.value)}
                     required
-                    className="bg-muted/50 border-transparent h-14 rounded-2xl px-5 focus-visible:ring-ds-primary shadow-none"
+                    className="border-transparent h-14 rounded-2xl px-5 focus-visible:ring-ds-primary shadow-none"
                   />
                 </div>
               </div>
@@ -103,13 +105,13 @@ export default function ContactTab({ email, phone, location, googleMapsUrl, offi
                   value={mensaje}
                   onChange={(e) => setMensaje(e.target.value)}
                   required
-                  className="bg-muted/50 border-transparent flex-1 resize-none rounded-2xl p-5 focus-visible:ring-ds-primary shadow-none"
+                  className="border-transparent flex-1 resize-none rounded-2xl p-5 focus-visible:ring-ds-primary shadow-none"
                 />
               </div>
 
               <Button
                 type="submit"
-                className="w-full h-14 bg-[#1e4a23] hover:bg-[#153418] text-white rounded-2xl font-bold text-base shadow-md transition-all gap-2"
+                className="w-full h-14 bg-[#1e4a23] hover:bg-[#153418]  rounded-2xl font-bold text-base shadow-md transition-all gap-2"
               >
                 <Send className="size-4" />
                 Enviar Mensaje
@@ -122,13 +124,19 @@ export default function ContactTab({ email, phone, location, googleMapsUrl, offi
         {/* Right Column: Info & Map */}
         <div className="space-y-6">
 
-          {/* Map Card — clickable if googleMapsUrl is set */}
-          {googleMapsUrl ? (
+          {/* Map Card */}
+          {coordinates?.lat && coordinates?.lng ? (
+            <InteractiveMapCard
+              location={location || undefined}
+              coordinates={{ lat: coordinates.lat, lng: coordinates.lng }}
+              googleMapsUrl={googleMapsUrl}
+            />
+          ) : googleMapsUrl ? (
             <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer" className="block group/map">
-              <MapCardInner location={location} />
+              <MapCardInner location={location || undefined} />
             </a>
           ) : (
-            <MapCardInner location={location} />
+            <MapCardInner location={location || undefined} />
           )}
 
           {/* Office Hours & Contact Info Card */}
@@ -207,26 +215,126 @@ function MapCardInner({ location }: { location?: string }) {
 
         {/* Map Pin / Marker */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -mt-4">
-          <div className="w-12 h-12 bg-[#1e4a23] rounded-full flex items-center justify-center border-4 border-white dark:border-zinc-900 shadow-xl relative z-10">
-            <div className="w-2.5 h-2.5 bg-white rounded-full" />
+          <div className="w-6 h-6 bg-[#1e4a23] rounded-full flex items-center justify-center border-[3px] border-white dark:border-zinc-900 shadow-xl relative z-10">
+            <div className="w-2 h-2 bg-white rounded-full" />
           </div>
-          <div className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 w-4 h-2 bg-black/40 blur-[2px] rounded-full" />
+          <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-1.5 bg-black/40 blur-[2px] rounded-full" />
         </div>
 
         {/* Decorative secondary pins */}
         <div className="absolute top-[30%] right-[20%] w-6 h-6 bg-white/40 rounded-full flex items-center justify-center border-2 border-white/60">
-          <MapPin className="size-3 text-white" />
+          <MapPin className="size-3 " />
         </div>
         <div className="absolute bottom-[40%] left-[20%] w-5 h-5 bg-white/40 rounded-full flex items-center justify-center border border-white/60">
-          <MapPin className="size-2 text-white" />
+          <MapPin className="size-2 " />
         </div>
 
         {/* Location Pill */}
         <div className="relative bg-white dark:bg-zinc-900 rounded-xl py-3 px-4 flex items-center shadow-lg w-full z-20">
           <Navigation className="size-4 text-[#1e4a23] dark:text-ds-primary-fixed mr-3 shrink-0 fill-current" />
-          <span className="text-sm font-bold text-zinc-900 dark:text-white truncate">
+          <span className="text-sm font-bold text-zinc-900 dark: truncate">
             {location || "Ciudad de México"}
           </span>
+        </div>
+      </div>
+    </Card>
+  );
+}
+
+function InteractiveMapCard({
+  location,
+  coordinates,
+  googleMapsUrl
+}: {
+  location?: string;
+  coordinates: { lat: number; lng: number };
+  googleMapsUrl?: string | null;
+}) {
+  const [userLocation, setUserLocation] = useState<{ longitude: number; latitude: number } | null>(null);
+  const [routeCoords, setRouteCoords] = useState<[number, number][] | null>(null);
+
+  const fetchRoute = async (userLon: number, userLat: number) => {
+    try {
+      const res = await fetch(`https://router.project-osrm.org/route/v1/driving/${userLon},${userLat};${coordinates.lng},${coordinates.lat}?geometries=geojson`);
+      const data = await res.json();
+      if (data.routes && data.routes[0]) {
+        setRouteCoords(data.routes[0].geometry.coordinates);
+      }
+    } catch (error) {
+      console.error("Failed to fetch route", error);
+    }
+  };
+
+  const handleLocate = (coords: { longitude: number; latitude: number }) => {
+    setUserLocation(coords);
+    fetchRoute(coords.longitude, coords.latitude);
+  };
+
+  return (
+    <Card className="rounded-3xl py-3 px-3 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] border-border/50 transition-all duration-300">
+      <div className="relative w-full h-[280px] bg-zinc-300 dark:bg-zinc-800 rounded-2xl overflow-hidden flex flex-col justify-end p-4 group">
+        <Map
+          viewport={{
+            center: [coordinates.lng, coordinates.lat],
+            zoom: 14,
+          }}
+          className="absolute inset-0 z-0"
+        >
+          {/* Org Marker */}
+          <MapMarker longitude={coordinates.lng} latitude={coordinates.lat} offset={[0, -12]}>
+            <MarkerContent>
+              <div className="w-6 h-6 bg-[#1e4a23] rounded-full flex items-center justify-center border-2 border-white dark:border-zinc-900 shadow-lg relative z-10 transition-transform group-hover:scale-110 cursor-pointer">
+                <div className="w-1.5 h-1.5 bg-white rounded-full" />
+              </div>
+              <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-1 bg-black/40 blur-[1px] rounded-full" />
+            </MarkerContent>
+            <MarkerPopup className="text-sm font-medium w-48 text-center p-2 rounded-xl border-border bg-background shadow-lg text-foreground">
+              {location || "Organización"}
+              {googleMapsUrl && (
+                <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer" className="block text-primary mt-1 text-[11px] font-bold uppercase tracking-wider hover:underline">
+                  Ver indicaciones
+                </a>
+              )}
+            </MarkerPopup>
+          </MapMarker>
+
+          {/* User Marker */}
+          {userLocation && (
+            <MapMarker longitude={userLocation.longitude} latitude={userLocation.latitude} offset={[0, -12]}>
+              <MarkerContent>
+                <div className="relative cursor-pointer group/user">
+                  <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center border-2 border-white shadow-lg relative z-10 transition-transform group-hover/user:scale-110">
+                    <User className="size-3.5 " />
+                  </div>
+                  <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-1 bg-black/40 blur-[1px] rounded-full" />
+                </div>
+              </MarkerContent>
+              <MarkerPopup className="text-sm p-2 text-foreground font-bold whitespace-nowrap text-center shadow-lg border-border rounded-xl">
+                Tu ubicación
+              </MarkerPopup>
+            </MapMarker>
+          )}
+
+          {/* Route */}
+          {routeCoords && (
+            <MapRoute coordinates={routeCoords} color="#2563EB" width={4} opacity={0.7} dashArray={[2, 2]} />
+          )}
+
+          {/* Controls */}
+          <MapControls
+            position="bottom-right"
+            showZoom
+            showLocate
+            onLocate={handleLocate}
+          />
+        </Map>
+        <div className="absolute top-4 left-4 z-20 pointer-events-none">
+          <div className="bg-background/80 backdrop-blur-md rounded-xl py-2 px-3 flex items-center shadow-sm">
+            <Navigation className="size-3 text-[#1e4a23] dark:text-ds-primary-fixed mr-2 shrink-0 fill-current" />
+            <span className="text-xs font-bold text-foreground truncate select-none">
+              {location || "Ciudad de México"}
+            </span>
+          </div>
         </div>
       </div>
     </Card>

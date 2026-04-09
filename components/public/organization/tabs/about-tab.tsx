@@ -8,7 +8,7 @@ export interface AboutTabProps {
   email: string;
   phone?: string | null;
   website?: string | null;
-  location?: string;
+  location?: string | null;
   impactCurrent?: number | null;
   impactGoal?: number | null;
   impactType?: string | null;
@@ -42,7 +42,7 @@ export default function AboutTab({
           galleryImages={galleryImages}
         />
         <ContactSidebar
-          location={location}
+          location={location || undefined}
           email={email}
           phone={phone}
           website={website}

@@ -63,7 +63,7 @@ export function OrgHeader({ name, verified, categories, donationLink, orgId }: O
             {categories.map((cat) => (
               <Badge
                 key={cat.id}
-                className="bg-ds-tertiary-container text-secondary-foreground border-none px-4 py-1.5 rounded-full text-sm font-medium font-label h-auto"
+                className="bg-ds-tertiary-container border-none px-4 py-1.5 rounded-full text-sm font-medium font-label h-auto"
               >
                 {cat.name}
               </Badge>
@@ -81,7 +81,7 @@ export function OrgHeader({ name, verified, categories, donationLink, orgId }: O
             <Button
               asChild
               onClick={handleDonateClick}
-              className="bg-[#1e4a23] hover:bg-[#153418] text-white rounded-full px-8 h-12 font-bold text-sm shadow-lg shadow-[#1e4a23]/20 hover:shadow-[#1e4a23]/30 transition-all duration-300 hover:scale-105 gap-2"
+              className="bg-[#1e4a23] hover:bg-[#153418]  rounded-full px-8 h-12 font-bold text-sm shadow-lg shadow-[#1e4a23]/20 hover:shadow-[#1e4a23]/30 transition-all duration-300 hover:scale-105 gap-2"
             >
               <a href={donationLink} target="_blank" rel="noopener noreferrer">
                 <Heart className="size-4 fill-white" />

@@ -45,11 +45,13 @@ export default async function OrganizationProfilePage({ params }: PageProps) {
         phone={org.phone}
         website={org.website}
         location={locationString}
+        coordinates={org.location?.latitude && org.location?.longitude ? { lat: org.location.latitude, lng: org.location.longitude } : null}
         googleMapsUrl={org.location?.googleMapsUrl}
         impactCurrent={org.impactCurrent}
         impactGoal={org.impactGoal}
         impactType={org.impactType}
         relevantLinks={org.relevantLinks || []}
+        needs={org.needs as any}
         featuredFact={org.featuredFact}
         secondaryFacts={org.secondaryFacts}
         testimony={org.testimony}
