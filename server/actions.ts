@@ -3,7 +3,12 @@
 import { auth } from '@clerk/nextjs/server'
 import { revalidatePath } from 'next/cache'
 import prisma from '@/lib/prisma'
-import { orgFormSchema, suggestionSchema, type OrgFormValues, type SuggestionValues } from '@/lib/schemas'
+import {
+  orgFormSchema,
+  suggestionSchema,
+  type OrgFormValues,
+  type SuggestionValues,
+} from '@/lib/schemas'
 import { OrganizationStatus, SuggestionStatus } from '@/prisma/generated/client'
 import { slugify } from '@/lib/utils'
 
@@ -40,7 +45,17 @@ export async function getPublishedOrgs(filters?: {
   verified?: boolean
   sort?: string
 }) {
-  const { categorySlug, query, page = 1, limit = 10, featured, state, city, verified, sort } = filters || {}
+  const {
+    categorySlug,
+    query,
+    page = 1,
+    limit = 10,
+    featured,
+    state,
+    city,
+    verified,
+    sort,
+  } = filters || {}
   const skip = (page - 1) * limit
 
   try {
@@ -206,14 +221,11 @@ export async function getTopCategoriesWithOrgs() {
         },
         organizations: {
           where: { status: OrganizationStatus.PUBLISHED },
-          orderBy: [
-            { featured: 'desc' },
-            { createdAt: 'desc' }
-          ],
+          orderBy: [{ featured: 'desc' }, { createdAt: 'desc' }],
           take: 5,
           include: {
-            location: true
-          }
+            location: true,
+          },
         },
       },
     })
@@ -268,30 +280,6 @@ export async function getPublicCategories() {
   }
 }
 
-export async function getFeaturedOrganizations() {
-  try {
-    const orgs = await prisma.organization.findMany({
-      where: {
-        status: OrganizationStatus.PUBLISHED,
-        verified: true,
-        featured: true,
-      },
-      take: 5,
-      orderBy: {
-        updatedAt: 'desc',
-      },
-      include: {
-        location: true,
-        categories: true,
-      },
-    })
-    return { success: true, data: orgs }
-  } catch (error) {
-    console.error('[getFeaturedOrganizations] Error:', error)
-    return { success: false, error: 'Failed to fetch featured organizations' }
-  }
-}
-
 export async function getLatestByCategory(categorySlug: string) {
   try {
     const orgs = await prisma.organization.findMany({
@@ -299,8 +287,8 @@ export async function getLatestByCategory(categorySlug: string) {
         status: OrganizationStatus.PUBLISHED,
         verified: true,
         categories: {
-          some: { slug: categorySlug }
-        }
+          some: { slug: categorySlug },
+        },
       },
       take: 5,
       orderBy: {
@@ -618,7 +606,11 @@ export async function getAdminCategories() {
   }
 }
 
-export async function upsertAdminCategory(data: { name: string; description?: string; id?: string }) {
+export async function upsertAdminCategory(data: {
+  name: string
+  description?: string
+  id?: string
+}) {
   try {
     const { userId } = await auth()
     if (!userId) {
@@ -811,7 +803,7 @@ export async function approveSuggestion(id: string, adminNotes?: string) {
           shortDescription: suggestion.description.substring(0, 160),
           fullDescription: suggestion.description,
           status: OrganizationStatus.DRAFT,
-          email: '',  // Admin will fill this in
+          email: '', // Admin will fill this in
           website: suggestion.url,
           categories: {
             connect: [{ id: category.id }],

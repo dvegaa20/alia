@@ -13,7 +13,7 @@ export default clerkMiddleware(async (auth, req) => {
 
   // Only check auth for admin routes
   if (isProtectedRoute(req)) {
-    const { userId } = await auth()
+    const { userId, sessionId } = await auth()
 
     // Require authentication
     if (!userId) {
@@ -27,7 +27,20 @@ export default clerkMiddleware(async (auth, req) => {
 
     // Verify email allowlist
     if (!email || !ALLOWED_EMAILS.includes(email)) {
-      return NextResponse.redirect(new URL('/unauthorized', req.url))
+      // Revoke the active session so the user is signed out
+      if (sessionId) {
+        try {
+          await client.sessions.revokeSession(sessionId)
+        } catch (error) {
+          console.error('Failed to revoke session:', error)
+        }
+      }
+      
+      const response = NextResponse.redirect(new URL('/unauthorized', req.url))
+      // Explicitly clear cookies to ensure the frontend forgets the login state
+      response.cookies.delete('__session')
+      response.cookies.delete('__client_uat')
+      return response
     }
   }
 

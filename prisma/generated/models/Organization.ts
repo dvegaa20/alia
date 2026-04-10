@@ -103,6 +103,7 @@ export type OrganizationCountAggregateOutputType = {
   impactCurrent: number
   impactGoal: number
   impactType: number
+  needs: number
   relevantLinks: number
   featuredFact: number
   secondaryFacts: number
@@ -193,6 +194,7 @@ export type OrganizationCountAggregateInputType = {
   impactCurrent?: true
   impactGoal?: true
   impactType?: true
+  needs?: true
   relevantLinks?: true
   featuredFact?: true
   secondaryFacts?: true
@@ -310,6 +312,7 @@ export type OrganizationGroupByOutputType = {
   impactCurrent: number | null
   impactGoal: number | null
   impactType: string | null
+  needs: runtime.JsonValue | null
   relevantLinks: string[]
   featuredFact: runtime.JsonValue | null
   secondaryFacts: runtime.JsonValue | null
@@ -363,6 +366,7 @@ export type OrganizationWhereInput = {
   impactCurrent?: Prisma.IntNullableFilter<"Organization"> | number | null
   impactGoal?: Prisma.IntNullableFilter<"Organization"> | number | null
   impactType?: Prisma.StringNullableFilter<"Organization"> | string | null
+  needs?: Prisma.JsonNullableFilter<"Organization">
   relevantLinks?: Prisma.StringNullableListFilter<"Organization">
   featuredFact?: Prisma.JsonNullableFilter<"Organization">
   secondaryFacts?: Prisma.JsonNullableFilter<"Organization">
@@ -396,6 +400,7 @@ export type OrganizationOrderByWithRelationInput = {
   impactCurrent?: Prisma.SortOrderInput | Prisma.SortOrder
   impactGoal?: Prisma.SortOrderInput | Prisma.SortOrder
   impactType?: Prisma.SortOrderInput | Prisma.SortOrder
+  needs?: Prisma.SortOrderInput | Prisma.SortOrder
   relevantLinks?: Prisma.SortOrder
   featuredFact?: Prisma.SortOrderInput | Prisma.SortOrder
   secondaryFacts?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -432,6 +437,7 @@ export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
   impactCurrent?: Prisma.IntNullableFilter<"Organization"> | number | null
   impactGoal?: Prisma.IntNullableFilter<"Organization"> | number | null
   impactType?: Prisma.StringNullableFilter<"Organization"> | string | null
+  needs?: Prisma.JsonNullableFilter<"Organization">
   relevantLinks?: Prisma.StringNullableListFilter<"Organization">
   featuredFact?: Prisma.JsonNullableFilter<"Organization">
   secondaryFacts?: Prisma.JsonNullableFilter<"Organization">
@@ -465,6 +471,7 @@ export type OrganizationOrderByWithAggregationInput = {
   impactCurrent?: Prisma.SortOrderInput | Prisma.SortOrder
   impactGoal?: Prisma.SortOrderInput | Prisma.SortOrder
   impactType?: Prisma.SortOrderInput | Prisma.SortOrder
+  needs?: Prisma.SortOrderInput | Prisma.SortOrder
   relevantLinks?: Prisma.SortOrder
   featuredFact?: Prisma.SortOrderInput | Prisma.SortOrder
   secondaryFacts?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -503,6 +510,7 @@ export type OrganizationScalarWhereWithAggregatesInput = {
   impactCurrent?: Prisma.IntNullableWithAggregatesFilter<"Organization"> | number | null
   impactGoal?: Prisma.IntNullableWithAggregatesFilter<"Organization"> | number | null
   impactType?: Prisma.StringNullableWithAggregatesFilter<"Organization"> | string | null
+  needs?: Prisma.JsonNullableWithAggregatesFilter<"Organization">
   relevantLinks?: Prisma.StringNullableListFilter<"Organization">
   featuredFact?: Prisma.JsonNullableWithAggregatesFilter<"Organization">
   secondaryFacts?: Prisma.JsonNullableWithAggregatesFilter<"Organization">
@@ -533,6 +541,7 @@ export type OrganizationCreateInput = {
   impactCurrent?: number | null
   impactGoal?: number | null
   impactType?: string | null
+  needs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   relevantLinks?: Prisma.OrganizationCreaterelevantLinksInput | string[]
   featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -566,6 +575,7 @@ export type OrganizationUncheckedCreateInput = {
   impactCurrent?: number | null
   impactGoal?: number | null
   impactType?: string | null
+  needs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   relevantLinks?: Prisma.OrganizationCreaterelevantLinksInput | string[]
   featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -599,6 +609,7 @@ export type OrganizationUpdateInput = {
   impactCurrent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   impactGoal?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   impactType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  needs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   relevantLinks?: Prisma.OrganizationUpdaterelevantLinksInput | string[]
   featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -632,6 +643,7 @@ export type OrganizationUncheckedUpdateInput = {
   impactCurrent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   impactGoal?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   impactType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  needs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   relevantLinks?: Prisma.OrganizationUpdaterelevantLinksInput | string[]
   featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -665,6 +677,7 @@ export type OrganizationCreateManyInput = {
   impactCurrent?: number | null
   impactGoal?: number | null
   impactType?: string | null
+  needs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   relevantLinks?: Prisma.OrganizationCreaterelevantLinksInput | string[]
   featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -695,6 +708,7 @@ export type OrganizationUpdateManyMutationInput = {
   impactCurrent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   impactGoal?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   impactType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  needs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   relevantLinks?: Prisma.OrganizationUpdaterelevantLinksInput | string[]
   featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -725,6 +739,7 @@ export type OrganizationUncheckedUpdateManyInput = {
   impactCurrent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   impactGoal?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   impactType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  needs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   relevantLinks?: Prisma.OrganizationUpdaterelevantLinksInput | string[]
   featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -763,6 +778,7 @@ export type OrganizationCountOrderByAggregateInput = {
   impactCurrent?: Prisma.SortOrder
   impactGoal?: Prisma.SortOrder
   impactType?: Prisma.SortOrder
+  needs?: Prisma.SortOrder
   relevantLinks?: Prisma.SortOrder
   featuredFact?: Prisma.SortOrder
   secondaryFacts?: Prisma.SortOrder
@@ -978,6 +994,7 @@ export type OrganizationCreateWithoutCategoriesInput = {
   impactCurrent?: number | null
   impactGoal?: number | null
   impactType?: string | null
+  needs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   relevantLinks?: Prisma.OrganizationCreaterelevantLinksInput | string[]
   featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1010,6 +1027,7 @@ export type OrganizationUncheckedCreateWithoutCategoriesInput = {
   impactCurrent?: number | null
   impactGoal?: number | null
   impactType?: string | null
+  needs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   relevantLinks?: Prisma.OrganizationCreaterelevantLinksInput | string[]
   featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1066,6 +1084,7 @@ export type OrganizationScalarWhereInput = {
   impactCurrent?: Prisma.IntNullableFilter<"Organization"> | number | null
   impactGoal?: Prisma.IntNullableFilter<"Organization"> | number | null
   impactType?: Prisma.StringNullableFilter<"Organization"> | string | null
+  needs?: Prisma.JsonNullableFilter<"Organization">
   relevantLinks?: Prisma.StringNullableListFilter<"Organization">
   featuredFact?: Prisma.JsonNullableFilter<"Organization">
   secondaryFacts?: Prisma.JsonNullableFilter<"Organization">
@@ -1096,6 +1115,7 @@ export type OrganizationCreateWithoutLocationInput = {
   impactCurrent?: number | null
   impactGoal?: number | null
   impactType?: string | null
+  needs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   relevantLinks?: Prisma.OrganizationCreaterelevantLinksInput | string[]
   featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1128,6 +1148,7 @@ export type OrganizationUncheckedCreateWithoutLocationInput = {
   impactCurrent?: number | null
   impactGoal?: number | null
   impactType?: string | null
+  needs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   relevantLinks?: Prisma.OrganizationCreaterelevantLinksInput | string[]
   featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1176,6 +1197,7 @@ export type OrganizationUpdateWithoutLocationInput = {
   impactCurrent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   impactGoal?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   impactType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  needs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   relevantLinks?: Prisma.OrganizationUpdaterelevantLinksInput | string[]
   featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1208,6 +1230,7 @@ export type OrganizationUncheckedUpdateWithoutLocationInput = {
   impactCurrent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   impactGoal?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   impactType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  needs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   relevantLinks?: Prisma.OrganizationUpdaterelevantLinksInput | string[]
   featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1240,6 +1263,7 @@ export type OrganizationCreateWithoutSocialLinksInput = {
   impactCurrent?: number | null
   impactGoal?: number | null
   impactType?: string | null
+  needs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   relevantLinks?: Prisma.OrganizationCreaterelevantLinksInput | string[]
   featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1272,6 +1296,7 @@ export type OrganizationUncheckedCreateWithoutSocialLinksInput = {
   impactCurrent?: number | null
   impactGoal?: number | null
   impactType?: string | null
+  needs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   relevantLinks?: Prisma.OrganizationCreaterelevantLinksInput | string[]
   featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1320,6 +1345,7 @@ export type OrganizationUpdateWithoutSocialLinksInput = {
   impactCurrent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   impactGoal?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   impactType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  needs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   relevantLinks?: Prisma.OrganizationUpdaterelevantLinksInput | string[]
   featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1352,6 +1378,7 @@ export type OrganizationUncheckedUpdateWithoutSocialLinksInput = {
   impactCurrent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   impactGoal?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   impactType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  needs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   relevantLinks?: Prisma.OrganizationUpdaterelevantLinksInput | string[]
   featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1384,6 +1411,7 @@ export type OrganizationUpdateWithoutCategoriesInput = {
   impactCurrent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   impactGoal?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   impactType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  needs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   relevantLinks?: Prisma.OrganizationUpdaterelevantLinksInput | string[]
   featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1416,6 +1444,7 @@ export type OrganizationUncheckedUpdateWithoutCategoriesInput = {
   impactCurrent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   impactGoal?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   impactType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  needs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   relevantLinks?: Prisma.OrganizationUpdaterelevantLinksInput | string[]
   featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1448,6 +1477,7 @@ export type OrganizationUncheckedUpdateManyWithoutCategoriesInput = {
   impactCurrent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   impactGoal?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   impactType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  needs?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   relevantLinks?: Prisma.OrganizationUpdaterelevantLinksInput | string[]
   featuredFact?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   secondaryFacts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1518,6 +1548,7 @@ export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   impactCurrent?: boolean
   impactGoal?: boolean
   impactType?: boolean
+  needs?: boolean
   relevantLinks?: boolean
   featuredFact?: boolean
   secondaryFacts?: boolean
@@ -1552,6 +1583,7 @@ export type OrganizationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   impactCurrent?: boolean
   impactGoal?: boolean
   impactType?: boolean
+  needs?: boolean
   relevantLinks?: boolean
   featuredFact?: boolean
   secondaryFacts?: boolean
@@ -1582,6 +1614,7 @@ export type OrganizationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   impactCurrent?: boolean
   impactGoal?: boolean
   impactType?: boolean
+  needs?: boolean
   relevantLinks?: boolean
   featuredFact?: boolean
   secondaryFacts?: boolean
@@ -1612,6 +1645,7 @@ export type OrganizationSelectScalar = {
   impactCurrent?: boolean
   impactGoal?: boolean
   impactType?: boolean
+  needs?: boolean
   relevantLinks?: boolean
   featuredFact?: boolean
   secondaryFacts?: boolean
@@ -1623,7 +1657,7 @@ export type OrganizationSelectScalar = {
   updatedAt?: boolean
 }
 
-export type OrganizationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "name" | "shortDescription" | "fullDescription" | "logoUrl" | "coverImageUrl" | "status" | "featured" | "verified" | "website" | "email" | "phone" | "donationLink" | "galleryImages" | "impactCurrent" | "impactGoal" | "impactType" | "relevantLinks" | "featuredFact" | "secondaryFacts" | "testimony" | "milestone" | "officeHours" | "foundedYear" | "createdAt" | "updatedAt", ExtArgs["result"]["organization"]>
+export type OrganizationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "name" | "shortDescription" | "fullDescription" | "logoUrl" | "coverImageUrl" | "status" | "featured" | "verified" | "website" | "email" | "phone" | "donationLink" | "galleryImages" | "impactCurrent" | "impactGoal" | "impactType" | "needs" | "relevantLinks" | "featuredFact" | "secondaryFacts" | "testimony" | "milestone" | "officeHours" | "foundedYear" | "createdAt" | "updatedAt", ExtArgs["result"]["organization"]>
 export type OrganizationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   location?: boolean | Prisma.Organization$locationArgs<ExtArgs>
   socialLinks?: boolean | Prisma.Organization$socialLinksArgs<ExtArgs>
@@ -1659,6 +1693,7 @@ export type $OrganizationPayload<ExtArgs extends runtime.Types.Extensions.Intern
     impactCurrent: number | null
     impactGoal: number | null
     impactType: string | null
+    needs: runtime.JsonValue | null
     relevantLinks: string[]
     featuredFact: runtime.JsonValue | null
     secondaryFacts: runtime.JsonValue | null
@@ -2112,6 +2147,7 @@ export interface OrganizationFieldRefs {
   readonly impactCurrent: Prisma.FieldRef<"Organization", 'Int'>
   readonly impactGoal: Prisma.FieldRef<"Organization", 'Int'>
   readonly impactType: Prisma.FieldRef<"Organization", 'String'>
+  readonly needs: Prisma.FieldRef<"Organization", 'Json'>
   readonly relevantLinks: Prisma.FieldRef<"Organization", 'String[]'>
   readonly featuredFact: Prisma.FieldRef<"Organization", 'Json'>
   readonly secondaryFacts: Prisma.FieldRef<"Organization", 'Json'>

@@ -62,6 +62,9 @@ model Organization {
     impactGoal    Int?
     impactType    String?
 
+    // Needs tab
+    needs Json? // [{ category, title, description, urgency, quantity }]
+
     // Explore tab
     relevantLinks String[]
 

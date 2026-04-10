@@ -911,6 +911,7 @@ export const OrganizationScalarFieldEnum = {
   impactCurrent: 'impactCurrent',
   impactGoal: 'impactGoal',
   impactType: 'impactType',
+  needs: 'needs',
   relevantLinks: 'relevantLinks',
   featuredFact: 'featuredFact',
   secondaryFacts: 'secondaryFacts',

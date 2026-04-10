@@ -2,33 +2,33 @@ import * as z from 'zod'
 import { OrganizationStatus, SocialPlatform } from '@/prisma/generated/enums'
 
 export const locationSchema = z.object({
-  city: z.string().min(2, 'City is required'),
-  state: z.string().min(2, 'State is required'),
-  googleMapsUrl: z.url('Must be a valid URL').optional().or(z.literal('')),
-  latitude: z.number().min(-90).max(90).optional().nullable(),
-  longitude: z.number().min(-180).max(180).optional().nullable(),
+  city: z.string().min(2, 'La ciudad es obligatoria'),
+  state: z.string().min(2, 'El estado es obligatorio'),
+  googleMapsUrl: z.url('Debe ser una URL válida').optional().or(z.literal('')),
+  latitude: z.number().min(-90, 'Latitud mínima: -90').max(90, 'Latitud máxima: 90').optional().nullable(),
+  longitude: z.number().min(-180, 'Longitud mínima: -180').max(180, 'Longitud máxima: 180').optional().nullable(),
 })
 
 export const socialLinkSchema = z.object({
   platform: z.enum(
     Object.values(SocialPlatform) as [string, ...string[]]
   ) as z.ZodType<SocialPlatform>,
-  url: z.url('Must be a valid URL'),
+  url: z.url('Debe ser una URL válida'),
 })
 
 export const orgFormSchema = z.object({
   slug: z
     .string()
-    .min(2, 'Slug must be at least 2 characters')
-    .regex(/^[a-z0-9-]+$/, 'Slug must only contain lowercase letters, numbers, and hyphens'),
-  name: z.string().min(2, 'Name is required'),
+    .min(2, 'El slug debe tener al menos 2 caracteres')
+    .regex(/^[a-z0-9-]+$/, 'El slug solo puede contener letras minúsculas, números y guiones'),
+  name: z.string().min(2, 'El nombre es obligatorio'),
   shortDescription: z
     .string()
-    .min(10, 'Short description is required')
-    .max(160, 'Short description must be 160 characters or less'),
+    .min(10, 'La descripción corta debe tener al menos 10 caracteres')
+    .max(160, 'La descripción corta no puede exceder 160 caracteres'),
   fullDescription: z.string().optional(),
-  logoUrl: z.url().optional().or(z.literal('')),
-  coverImageUrl: z.url().optional().or(z.literal('')),
+  logoUrl: z.url('Debe ser una URL válida').optional().or(z.literal('')),
+  coverImageUrl: z.url('Debe ser una URL válida').optional().or(z.literal('')),
   status: (
     z.enum(
       Object.values(OrganizationStatus) as [string, ...string[]]
@@ -36,22 +36,34 @@ export const orgFormSchema = z.object({
   ).default('DRAFT'),
   featured: z.boolean().default(false),
   verified: z.boolean().default(false),
-  website: z.url().optional().or(z.literal('')),
-  email: z.email('Invalid email address'),
+  website: z.url('Debe ser una URL válida').optional().or(z.literal('')),
+  email: z.email('Ingresa un email válido'),
   phone: z.string().optional(),
-  donationLink: z.url().optional().or(z.literal('')),
-  foundedYear: z.number().int().optional(),
+  donationLink: z.url('Debe ser una URL válida').optional().or(z.literal('')),
+  foundedYear: z.preprocess(
+    (val) => (val === '' || val === undefined || val === null || Number.isNaN(val) ? undefined : Number(val)),
+    z.number().int('Debe ser un año válido').min(1800, 'El año debe ser mayor a 1800').max(new Date().getFullYear(), `El año no puede ser mayor a ${new Date().getFullYear()}`).optional()
+  ),
 
   // Gallery
   galleryImages: z.array(z.string()).default([]),
 
   // Impact sidebar
-  impactCurrent: z.number().int().optional(),
-  impactGoal: z.number().int().optional(),
+  impactCurrent: z.preprocess(
+    (val) => (val === '' || val === undefined || val === null || Number.isNaN(val) ? undefined : Number(val)),
+    z.number().int().optional()
+  ),
+  impactGoal: z.preprocess(
+    (val) => (val === '' || val === undefined || val === null || Number.isNaN(val) ? undefined : Number(val)),
+    z.number().int().optional()
+  ),
   impactType: z.string().optional(),
 
   // Explore tab
   relevantLinks: z.array(z.string()).default([]),
+  
+  // Needs tab (JSON)
+  needs: z.any().optional(),
 
   // Impact tab (JSON)
   featuredFact: z.any().optional(),
