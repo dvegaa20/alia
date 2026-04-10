@@ -681,7 +681,7 @@ export function SuggestionsTable({ suggestions, meta }: Props) {
                   Rechazar
                 </Button>
                 <Button
-                  className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white"
+                  className="flex-1 bg-emerald-600 hover:bg-emerald-700 "
                   onClick={() => setActionType("approve")}
                 >
                   <CheckCircle2 className="h-4 w-4 mr-2" />
@@ -702,8 +702,8 @@ export function SuggestionsTable({ suggestions, meta }: Props) {
                 </Button>
                 <Button
                   className={`flex-1 ${actionType === "approve"
-                    ? "bg-emerald-600 hover:bg-emerald-700 text-white"
-                    : "bg-red-600 hover:bg-red-700 text-white"
+                    ? "bg-emerald-600 hover:bg-emerald-700 "
+                    : "bg-red-600 hover:bg-red-700 "
                     }`}
                   onClick={handleAction}
                   disabled={isActionPending}

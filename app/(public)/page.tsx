@@ -2,10 +2,8 @@ import { getPublishedOrgs, getTopCategoriesWithOrgs } from "@/server/actions";
 import { HeroContainer } from "@/components/public/home/hero-container";
 import {
   HeroSection,
-  CategoriesSection,
   CategoryFilters,
   CategoryCarousel,
-  FeaturedGrid,
   TrustSection,
 } from "@/components/public";
 
@@ -62,9 +60,6 @@ export default async function Page(props: {
           </div>
         </div>
       </HeroContainer>
-
-      <FeaturedGrid />
-
       <TrustSection />
     </>
   );

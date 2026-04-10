@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
 import { SmoothScrolling } from "@/components/providers/smooth-scrolling";
 import "./globals.css";
 
@@ -49,6 +50,7 @@ export default function RootLayout({
           <SmoothScrolling>
             {children}
           </SmoothScrolling>
+          <Toaster position="bottom-right" richColors closeButton />
         </ThemeProvider>
       </body>
     </html>

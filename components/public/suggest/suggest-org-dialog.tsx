@@ -79,13 +79,13 @@ const BUTTON_STATES: Record<
     text: "¡Enviado con éxito!",
     icon: <Check className="size-4" />,
     className:
-      "bg-gradient-to-r from-emerald-500 to-emerald-600 text-white shadow-lg shadow-emerald-500/20",
+      "bg-gradient-to-r from-emerald-500 to-emerald-600  shadow-lg shadow-emerald-500/20",
   },
   error: {
     text: "Error al enviar",
     icon: <X className="size-4" />,
     className:
-      "bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg shadow-red-500/20",
+      "bg-gradient-to-r from-red-500 to-red-600  shadow-lg shadow-red-500/20",
   },
 };
 

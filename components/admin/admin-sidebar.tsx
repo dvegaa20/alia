@@ -71,7 +71,7 @@ export function AdminSidebar({ pendingCount = 0 }: { pendingCount?: number }) {
                   <route.icon className="h-5 w-5" />
                   <span className="flex-1">{route.label}</span>
                   {"badge" in route && route.badge !== undefined && route.badge > 0 && (
-                    <span className="ml-auto inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 bg-red-500 text-white text-[11px] font-bold rounded-full animate-pulse">
+                    <span className="ml-auto inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 bg-red-500 text-[11px] font-bold rounded-full animate-pulse">
                       {route.badge > 99 ? "99+" : route.badge}
                     </span>
                   )}

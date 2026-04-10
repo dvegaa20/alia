@@ -54,7 +54,7 @@ export default function NotFound() {
                             </div>
 
                             {/* Floating Badge */}
-                            <div className="absolute -bottom-4 -right-3 md:-right-6 bg-accent text-white px-4 py-1.5 md:py-2 rounded-full shadow-lg text-[10px] md:text-xs font-semibold flex items-center gap-1.5">
+                            <div className="absolute -bottom-4 -right-3 md:-right-6 bg-accent px-4 py-1.5 md:py-2 rounded-full shadow-lg text-[10px] md:text-xs font-semibold flex items-center gap-1.5">
                                 <MapPinOff className="w-3.5 h-3.5 md:w-4 md:h-4" />
                                 <span>Ruta no encontrada</span>
                             </div>
@@ -73,7 +73,7 @@ export default function NotFound() {
 
                         {/* Actions */}
                         <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
-                            <Button className="rounded-xl shadow-md hover:shadow-lg transition-all duration-300 group px-6 bg-linear-to-r from-ds-primary to-ds-primary-container text-white hover:from-ds-primary/90 hover:to-ds-primary-container/90" asChild>
+                            <Button className="rounded-xl shadow-md hover:shadow-lg transition-all duration-300 group px-6 bg-linear-to-r from-ds-primary to-ds-primary-container hover:from-ds-primary/90 hover:to-ds-primary-container/90" asChild>
                                 <Link href="/directory">
                                     <span className="relative z-10 flex items-center gap-2">
                                         Volver al Directorio

@@ -119,12 +119,12 @@ export function Footer() {
   const isHomePage = pathname === "/";
 
   return (
-    <footer className="relative w-full overflow-hidden">
+    <footer className="relative w-full overflow-hidden bg-base-950 dark:bg-base-1000">
       {isHomePage && <FooterCTA />}
 
       {/* ─── Main Footer Card ─── */}
-      <div className={`relative px-4 pb-4 sm:px-8 pb-0 ${isHomePage ? "-mt-36" : "pt-8"}`}>
-        <div className="max-w-360 mx-auto bg-slate-50/40 dark:bg-zinc-900/20 border border-border/60 rounded-[28px] sm:rounded-[32px] shadow-xl overflow-hidden">
+      <div className={`relative px-4 pb-4 sm:px-8 sm:pb-8 ${isHomePage ? "-mt-36" : "pt-8"}`}>
+        <div className="max-w-360 mx-auto bg-card border border-border/60 rounded-[28px] sm:rounded-[32px] shadow-xl overflow-hidden">
           <div className="p-8 sm:p-10 lg:p-14">
             <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_2fr] gap-12 lg:gap-16">
               {/* Left: Brand */}
@@ -149,7 +149,7 @@ export function Footer() {
                       key={social.label}
                       href={social.href}
                       aria-label={social.label}
-                      className="flex items-center justify-center w-9 h-9 rounded-lg bg-muted hover:bg-primary hover:text-white dark:hover:bg-primary/20 dark:hover:text-primary text-muted-foreground transition-all duration-200"
+                      className="flex items-center justify-center w-9 h-9 rounded-lg bg-muted hover:bg-primary hover: dark:hover:bg-primary/20 dark:hover:text-primary text-muted-foreground transition-all duration-200"
                     >
                       <social.icon className="h-4 w-4" />
                     </Link>

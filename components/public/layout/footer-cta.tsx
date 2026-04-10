@@ -4,18 +4,18 @@ import { ArrowRight } from "lucide-react";
 
 export function FooterCTA() {
   return (
-    <div className="relative bg-base-950 dark:bg-base-1000 pt-24 pb-56 px-8">
+    <div className="relative pt-24 pb-56 px-8">
       {/* Radial gradient overlay */}
       <div
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(188,240,174,0.08) 0%, transparent 70%)",
+            "radial-gradient(ellipse 80% 60% at 50% 0%, color-mix(in srgb, var(--primary) 15%, transparent) 0%, transparent 70%)",
         }}
       />
 
       <div className="relative z-10 max-w-360 mx-auto text-center space-y-6">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white font-headline leading-tight tracking-tight">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold  font-headline leading-tight tracking-tight">
           ¿Listo para hacer una verdadera diferencia?
         </h2>
         <p className="text-base-400 text-base sm:text-lg max-w-2xl mx-auto font-body leading-relaxed">

@@ -49,8 +49,10 @@ export function Navbar() {
 
         <div className="flex justify-end items-center space-x-4">
           <SuggestOrgDialog>
-            <Button className="bg-gradient-to-r from-primary to-primary/30 text-primary-foreground px-6 py-3 h-auto rounded-xl font-semibold active:scale-95 transition-transform">
-              Sugerir ONG
+            <Button className="rounded-xl shadow-md hover:shadow-lg transition-all duration-300 group px-6 bg-linear-to-r from-ds-primary to-ds-primary-container hover:from-ds-primary/90 hover:to-ds-primary-container/90" asChild>
+              <span className="relative z-10 flex items-center gap-2">
+                Sugerir ONG
+              </span>
             </Button>
           </SuggestOrgDialog>
           <ModeToggle />
