@@ -1,10 +1,17 @@
 import { Suspense } from "react";
+import { type Metadata } from "next";
 import { getPublishedOrgs, getAllCategoriesWithCount } from "@/server/actions";
 import { SidebarFilters } from "@/components/public/directory/sidebar-filters";
 import { ResultsGrid } from "@/components/public/directory/results-grid";
 import type { OrganizationCardProps } from "@/components/public/directory/organization-card";
 import type { MapPoint } from "@/components/public/directory/map-view";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+
+export const metadata: Metadata = {
+  title: 'Directorio de Organizaciones',
+  description: 'Explora el directorio completo de organizaciones sociales verificadas. Filtra por categoría, estado y ciudad.',
+  alternates: { canonical: '/directory' },
+};
 
 export default async function DirectoryPage(props: {
   searchParams: Promise<{

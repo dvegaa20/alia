@@ -1,3 +1,4 @@
+import { type Metadata } from "next";
 import { getPublishedOrgs, getTopCategoriesWithOrgs } from "@/server/actions";
 import { HeroContainer } from "@/components/public/home/hero-container";
 import {
@@ -6,6 +7,12 @@ import {
   CategoryCarousel,
   TrustSection,
 } from "@/components/public";
+
+export const metadata: Metadata = {
+  title: 'Inicio',
+  description: 'Encuentra y apoya organizaciones sociales verificadas en México. Explora por categorías como medio ambiente, educación, salud y más.',
+  alternates: { canonical: '/' },
+};
 
 // Fallback emojis by category slug
 const fallbackIcons: Record<string, string> = {
