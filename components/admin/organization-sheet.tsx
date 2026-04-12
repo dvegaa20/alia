@@ -3,7 +3,7 @@
 import * as React from 'react'
 import { useForm, useFieldArray, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Loader2, Plus, Trash2, CheckCircle2, AlertCircle } from 'lucide-react'
+import { Loader2, Plus, Trash2, CheckCircle2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { orgFormSchema, type OrgFormValues } from '@/lib/schemas'
 import { MEXICO_STATES } from '@/lib/mexico-states'
@@ -42,16 +42,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import type { OrgWithAllRelations, OrganizationSheetProps } from '@/types'
 export type { OrgWithAllRelations }
 
-const DEFAULT_OFFICE_HOURS = {
-  monday: { open: '09:00', close: '18:00' },
-  tuesday: { open: '09:00', close: '18:00' },
-  wednesday: { open: '09:00', close: '18:00' },
-  thursday: { open: '09:00', close: '18:00' },
-  friday: { open: '09:00', close: '18:00' },
-  saturday: null,
-  sunday: null,
-}
-
+import { DEFAULT_OFFICE_HOURS, TAB_FIELD_MAP, TAB_LABELS, DAYS } from '@/lib/constants'
 import { LABEL_CX, INPUT_CX, TAB_TRIGGER_CX } from '@/lib/styles'
 
 export function OrganizationSheet({
@@ -215,46 +206,6 @@ export function OrganizationSheet({
     name: 'needs' as any,
   })
 
-  // Helper: map error field keys to tab names for feedback
-  const TAB_FIELD_MAP: Record<string, string> = {
-    name: 'sobre',
-    slug: 'sobre',
-    shortDescription: 'sobre',
-    fullDescription: 'sobre',
-    logoUrl: 'sobre',
-    coverImageUrl: 'sobre',
-    foundedYear: 'sobre',
-    status: 'sobre',
-    featured: 'sobre',
-    verified: 'sobre',
-    categoryIds: 'sobre',
-    galleryImages: 'sobre',
-    relevantLinks: 'explorar',
-    needs: 'necesidades',
-    impactCurrent: 'impacto',
-    impactGoal: 'impacto',
-    impactType: 'impacto',
-    featuredFact: 'impacto',
-    secondaryFacts: 'impacto',
-    testimony: 'impacto',
-    milestone: 'impacto',
-    email: 'contacto',
-    phone: 'contacto',
-    website: 'contacto',
-    donationLink: 'contacto',
-    location: 'contacto',
-    socialLinks: 'contacto',
-    officeHours: 'contacto',
-  }
-
-  const TAB_LABELS: Record<string, string> = {
-    sobre: 'Sobre nosotros',
-    explorar: 'Explorar',
-    necesidades: 'Necesidades',
-    impacto: 'Impacto',
-    contacto: 'Contacto',
-  }
-
   function onFormError(formErrors: Record<string, any>) {
     // Group errors by tab
     const tabsWithErrors = new Set<string>()
@@ -308,16 +259,6 @@ export function OrganizationSheet({
   }
 
   const officeHoursWatch = watch('officeHours') || {}
-
-  const DAYS = [
-    { key: 'monday', label: 'Lunes' },
-    { key: 'tuesday', label: 'Martes' },
-    { key: 'wednesday', label: 'Miércoles' },
-    { key: 'thursday', label: 'Jueves' },
-    { key: 'friday', label: 'Viernes' },
-    { key: 'saturday', label: 'Sábado' },
-    { key: 'sunday', label: 'Domingo' },
-  ]
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>

@@ -3,13 +3,7 @@
 import { Button } from '@/components/ui/button'
 import { AlertTriangle, RotateCcw } from 'lucide-react'
 
-export default function AdminError({
-  error,
-  reset,
-}: {
-  error: Error & { digest?: string }
-  reset: () => void
-}) {
+export default function AdminError({ reset }: { reset: () => void }) {
   return (
     <div className="min-h-[60vh] flex items-center justify-center px-4">
       <div className="text-center space-y-6 max-w-md">
