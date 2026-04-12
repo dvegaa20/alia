@@ -1,14 +1,14 @@
-"use client";
+'use client'
 
-import { motion } from "framer-motion";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { AboutTab } from "./tabs/about-tab";
-import { ExploreTab } from "./tabs/explore-tab";
-import { NeedsTab } from "./tabs/needs-tab";
-import { ImpactTab } from "./tabs/impact-tab";
-import { ContactTab } from "./tabs/contact-tab";
+import { motion } from 'framer-motion'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { AboutTab } from './tabs/about-tab'
+import { ExploreTab } from './tabs/explore-tab'
+import { NeedsTab } from './tabs/needs-tab'
+import { ImpactTab } from './tabs/impact-tab'
+import { ContactTab } from './tabs/contact-tab'
 
-import { TAB_TRIGGER_CX } from '@/lib/styles';
+import { TAB_TRIGGER_CX } from '@/lib/styles'
 import type { OrgTabsProps } from '@/types'
 
 export function OrgTabs({
@@ -43,34 +43,19 @@ export function OrgTabs({
       <Tabs defaultValue="sobre" className="mt-12">
         {/* Tab Navigation */}
         <TabsList className="bg-transparent border-b border-border/30 rounded-none w-full justify-start gap-10 h-auto p-0">
-          <TabsTrigger
-            value="sobre"
-            className={TAB_TRIGGER_CX}
-          >
+          <TabsTrigger value="sobre" className={TAB_TRIGGER_CX}>
             Sobre nosotros
           </TabsTrigger>
-          <TabsTrigger
-            value="explorar"
-            className={TAB_TRIGGER_CX}
-          >
+          <TabsTrigger value="explorar" className={TAB_TRIGGER_CX}>
             Explorar
           </TabsTrigger>
-          <TabsTrigger
-            value="necesidades"
-            className={TAB_TRIGGER_CX}
-          >
+          <TabsTrigger value="necesidades" className={TAB_TRIGGER_CX}>
             Necesidades
           </TabsTrigger>
-          <TabsTrigger
-            value="impacto"
-            className={TAB_TRIGGER_CX}
-          >
+          <TabsTrigger value="impacto" className={TAB_TRIGGER_CX}>
             Impacto
           </TabsTrigger>
-          <TabsTrigger
-            value="contacto"
-            className={TAB_TRIGGER_CX}
-          >
+          <TabsTrigger value="contacto" className={TAB_TRIGGER_CX}>
             Contacto
           </TabsTrigger>
         </TabsList>
@@ -120,8 +105,7 @@ export function OrgTabs({
             officeHours={officeHours}
           />
         </TabsContent>
-
       </Tabs>
     </motion.div>
-  );
+  )
 }

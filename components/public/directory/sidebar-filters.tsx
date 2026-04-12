@@ -1,23 +1,23 @@
-"use client";
+'use client'
 
-import { useState, useEffect, useCallback, useTransition } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { motion } from "framer-motion";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { Search, Grid2x2, GraduationCap, TreePine, Stethoscope, Hash } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { MEXICO_STATES } from "@/lib/mexico-states";
-import { getAvailableCities } from "@/server/actions";
+import { useState, useEffect, useCallback, useTransition } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { motion } from 'framer-motion'
+import { useIsMobile } from '@/hooks/use-mobile'
+import { Search, Grid2x2, GraduationCap, TreePine, Stethoscope, Hash } from 'lucide-react'
+import { cn } from '@/lib/utils'
+import { MEXICO_STATES } from '@/lib/mexico-states'
+import { getAvailableCities } from '@/server/actions'
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
+} from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import { Switch } from '@/components/ui/switch'
+import { Label } from '@/components/ui/label'
 import {
   Select,
   SelectContent,
@@ -25,7 +25,7 @@ import {
   SelectTrigger,
   SelectValue,
   SelectGroup,
-} from "@/components/ui/select";
+} from '@/components/ui/select'
 import {
   SidebarProvider,
   Sidebar,
@@ -36,112 +36,111 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
-} from "@/components/ui/sidebar";
+} from '@/components/ui/sidebar'
 
 import type { CategoryData, SidebarFiltersProps } from '@/types'
 
 const iconMap: Record<string, React.ElementType> = {
-  "educacion": GraduationCap,
-  "medio-ambiente": TreePine,
-  "salud": Stethoscope,
-};
+  educacion: GraduationCap,
+  'medio-ambiente': TreePine,
+  salud: Stethoscope,
+}
 
 export function SidebarFilters({
-  searchQuery = "",
+  searchQuery = '',
   categories = [],
-  activeCategorySlug = "",
+  activeCategorySlug = '',
   activeState,
   activeCity,
   activeVerified,
 }: SidebarFiltersProps) {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const [inputValue, setInputValue] = useState(searchQuery);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [availableCities, setAvailableCities] = useState<string[]>([]);
-  const [isCitiesLoading, startCitiesTransition] = useTransition();
-  const isMobile = useIsMobile();
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const [inputValue, setInputValue] = useState(searchQuery)
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [availableCities, setAvailableCities] = useState<string[]>([])
+  const [isCitiesLoading, startCitiesTransition] = useTransition()
+  const isMobile = useIsMobile()
 
   // Fetch available cities when state changes
   useEffect(() => {
     if (activeState) {
       startCitiesTransition(async () => {
-        const result = await getAvailableCities(activeState);
-        setAvailableCities(result.data || []);
-      });
+        const result = await getAvailableCities(activeState)
+        setAvailableCities(result.data || [])
+      })
     } else {
-      setAvailableCities([]);
+      setAvailableCities([])
     }
-  }, [activeState]);
+  }, [activeState])
 
   // Sync input when URL changes externally (e.g. browser back/forward)
   useEffect(() => {
-    setInputValue(searchQuery);
-  }, [searchQuery]);
+    setInputValue(searchQuery)
+  }, [searchQuery])
 
   // Debounced URL update
   const updateSearch = useCallback(
     (value: string) => {
-      const params = new URLSearchParams(searchParams.toString());
+      const params = new URLSearchParams(searchParams.toString())
 
       if (value.trim()) {
-        params.set("q", value.trim());
+        params.set('q', value.trim())
       } else {
-        params.delete("q");
+        params.delete('q')
       }
 
       // Reset to page 1 on new search
-      params.delete("page");
+      params.delete('page')
 
-      const qs = params.toString();
-      router.push(`/directory${qs ? `?${qs}` : ""}`, { scroll: false });
+      const qs = params.toString()
+      router.push(`/directory${qs ? `?${qs}` : ''}`, { scroll: false })
     },
     [router, searchParams]
-  );
+  )
 
   const handleCategoryClick = (e: React.MouseEvent, slug: string | null) => {
-    e.preventDefault();
-    const params = new URLSearchParams(searchParams.toString());
+    e.preventDefault()
+    const params = new URLSearchParams(searchParams.toString())
 
     if (slug) {
-      params.set("category", slug);
+      params.set('category', slug)
     } else {
-      params.delete("category");
+      params.delete('category')
     }
 
-    params.delete("page");
-    const qs = params.toString();
-    router.push(`/directory${qs ? `?${qs}` : ""}`, { scroll: false });
-    setIsDialogOpen(false);
-  };
+    params.delete('page')
+    const qs = params.toString()
+    router.push(`/directory${qs ? `?${qs}` : ''}`, { scroll: false })
+    setIsDialogOpen(false)
+  }
 
   useEffect(() => {
     const timer = setTimeout(() => {
       // Only push if value actually changed from current URL
       if (inputValue !== searchQuery) {
-        updateSearch(inputValue);
+        updateSearch(inputValue)
       }
-    }, 200);
+    }, 200)
 
-    return () => clearTimeout(timer);
-  }, [inputValue, searchQuery, updateSearch]);
+    return () => clearTimeout(timer)
+  }, [inputValue, searchQuery, updateSearch])
 
   return (
     <motion.aside
       initial={{ x: -30, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
+      transition={{ duration: 0.5, ease: 'easeOut' }}
       className="hidden lg:block w-64 h-[calc(100vh-8rem)] sticky top-28"
     >
-      <Sidebar collapsible={isMobile ? "offcanvas" : "none"} className="w-full h-full bg-transparent border-none">
+      <Sidebar
+        collapsible={isMobile ? 'offcanvas' : 'none'}
+        className="w-full h-full bg-transparent border-none"
+      >
         <SidebarHeader className="px-0 pt-0 pb-4">
           <div>
-            <h2 className="text-lg font-bold text-foreground font-headline">
-              Filtros
-            </h2>
-            <p className="text-muted-foreground text-sm font-medium">
-              Explorar por categoría
-            </p>
+            <h2 className="text-lg font-bold text-foreground font-headline">Filtros</h2>
+            <p className="text-muted-foreground text-sm font-medium">Explorar por categoría</p>
           </div>
 
           <div className="relative mt-4">
@@ -170,21 +169,17 @@ export function SidebarFilters({
                     <a href="#" onClick={(e) => handleCategoryClick(e, null)}>
                       <Grid2x2
                         className="size-5"
-                        {...(!activeCategorySlug
-                          ? { fill: "currentColor", strokeWidth: 0 }
-                          : {})}
+                        {...(!activeCategorySlug ? { fill: 'currentColor', strokeWidth: 0 } : {})}
                       />
-                      <span className="font-headline text-sm font-medium">
-                        Todas las causas
-                      </span>
+                      <span className="font-headline text-sm font-medium">Todas las causas</span>
                     </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
 
                 {/* Dynamic Categories */}
                 {categories.slice(0, 4).map((category) => {
-                  const Icon = iconMap[category.slug] || Hash;
-                  const isActive = activeCategorySlug === category.slug;
+                  const Icon = iconMap[category.slug] || Hash
+                  const isActive = activeCategorySlug === category.slug
 
                   return (
                     <SidebarMenuItem key={category.id}>
@@ -196,9 +191,7 @@ export function SidebarFilters({
                         <a href="#" onClick={(e) => handleCategoryClick(e, category.slug)}>
                           <Icon
                             className="size-5"
-                            {...(isActive
-                              ? { fill: "currentColor", strokeWidth: 0 }
-                              : {})}
+                            {...(isActive ? { fill: 'currentColor', strokeWidth: 0 } : {})}
                           />
                           <span className="font-headline text-sm font-medium flex-1">
                             {category.name}
@@ -209,7 +202,7 @@ export function SidebarFilters({
                         </a>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
-                  );
+                  )
                 })}
 
                 {/* Show More Button */}
@@ -226,7 +219,10 @@ export function SidebarFilters({
                       </DialogTrigger>
                     </SidebarMenuItem>
 
-                    <DialogContent className="sm:max-w-[700px] gap-6 px-8 py-10 rounded-3xl max-h-[90vh] overflow-y-auto" data-lenis-prevent>
+                    <DialogContent
+                      className="sm:max-w-[700px] gap-6 px-8 py-10 rounded-3xl max-h-[90vh] overflow-y-auto"
+                      data-lenis-prevent
+                    >
                       <DialogHeader>
                         <DialogTitle className="text-2xl font-headline font-bold text-center mb-4">
                           Todas las causas
@@ -234,18 +230,18 @@ export function SidebarFilters({
                       </DialogHeader>
                       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
                         {categories.map((category) => {
-                          const Icon = iconMap[category.slug] || Hash;
-                          const isActive = activeCategorySlug === category.slug;
+                          const Icon = iconMap[category.slug] || Hash
+                          const isActive = activeCategorySlug === category.slug
 
                           return (
                             <button
                               key={`dialog-${category.id}`}
                               onClick={(e) => handleCategoryClick(e, category.slug)}
                               className={cn(
-                                "flex flex-col items-center justify-center p-6 rounded-2xl border text-center transition-all duration-200 hover:shadow-md hover:-translate-y-1",
+                                'flex flex-col items-center justify-center p-6 rounded-2xl border text-center transition-all duration-200 hover:shadow-md hover:-translate-y-1',
                                 isActive
-                                  ? "bg-ds-primary/10 border-ds-primary text-ds-primary dark:bg-ds-primary-fixed/20 dark:text-ds-primary-fixed dark:border-ds-primary-fixed"
-                                  : "bg-background border-border hover:border-border/80"
+                                  ? 'bg-ds-primary/10 border-ds-primary text-ds-primary dark:bg-ds-primary-fixed/20 dark:text-ds-primary-fixed dark:border-ds-primary-fixed'
+                                  : 'bg-background border-border hover:border-border/80'
                               )}
                             >
                               <Icon className="size-8 mb-3 opacity-80" />
@@ -253,10 +249,11 @@ export function SidebarFilters({
                                 {category.name}
                               </span>
                               <span className="text-xs text-muted-foreground font-medium">
-                                {category._count.organizations} ONG{category._count.organizations !== 1 && "s"} activas
+                                {category._count.organizations} ONG
+                                {category._count.organizations !== 1 && 's'} activas
                               </span>
                             </button>
-                          );
+                          )
                         })}
                       </div>
                     </DialogContent>
@@ -274,18 +271,18 @@ export function SidebarFilters({
                   Estado
                 </Label>
                 <Select
-                  value={activeState || "all"}
+                  value={activeState || 'all'}
                   onValueChange={(value) => {
-                    const params = new URLSearchParams(searchParams.toString());
-                    if (value && value !== "all") {
-                      params.set("state", value);
+                    const params = new URLSearchParams(searchParams.toString())
+                    if (value && value !== 'all') {
+                      params.set('state', value)
                     } else {
-                      params.delete("state");
+                      params.delete('state')
                     }
-                    params.delete("city");
-                    params.delete("page");
-                    const qs = params.toString();
-                    router.push(`/directory${qs ? `?${qs}` : ""}`, { scroll: false });
+                    params.delete('city')
+                    params.delete('page')
+                    const qs = params.toString()
+                    router.push(`/directory${qs ? `?${qs}` : ''}`, { scroll: false })
                   }}
                 >
                   <SelectTrigger className="w-full bg-muted/30 border-none rounded-lg text-sm font-medium">
@@ -311,21 +308,23 @@ export function SidebarFilters({
                     Municipio
                   </Label>
                   <Select
-                    value={activeCity || "all"}
+                    value={activeCity || 'all'}
                     onValueChange={(value) => {
-                      const params = new URLSearchParams(searchParams.toString());
-                      if (value && value !== "all") {
-                        params.set("city", value);
+                      const params = new URLSearchParams(searchParams.toString())
+                      if (value && value !== 'all') {
+                        params.set('city', value)
                       } else {
-                        params.delete("city");
+                        params.delete('city')
                       }
-                      params.delete("page");
-                      const qs = params.toString();
-                      router.push(`/directory${qs ? `?${qs}` : ""}`, { scroll: false });
+                      params.delete('page')
+                      const qs = params.toString()
+                      router.push(`/directory${qs ? `?${qs}` : ''}`, { scroll: false })
                     }}
                   >
                     <SelectTrigger className="w-full bg-muted/30 border-none rounded-lg text-sm font-medium">
-                      <SelectValue placeholder={isCitiesLoading ? "Cargando..." : "Todos los municipios"} />
+                      <SelectValue
+                        placeholder={isCitiesLoading ? 'Cargando...' : 'Todos los municipios'}
+                      />
                     </SelectTrigger>
                     <SelectContent position="popper" className="max-h-72" data-lenis-prevent>
                       <SelectGroup>
@@ -353,15 +352,15 @@ export function SidebarFilters({
                   id="verified-toggle"
                   checked={activeVerified === true}
                   onCheckedChange={(checked) => {
-                    const params = new URLSearchParams(searchParams.toString());
+                    const params = new URLSearchParams(searchParams.toString())
                     if (checked) {
-                      params.set("verified", "true");
+                      params.set('verified', 'true')
                     } else {
-                      params.delete("verified");
+                      params.delete('verified')
                     }
-                    params.delete("page");
-                    const qs = params.toString();
-                    router.push(`/directory${qs ? `?${qs}` : ""}`, { scroll: false });
+                    params.delete('page')
+                    const qs = params.toString()
+                    router.push(`/directory${qs ? `?${qs}` : ''}`, { scroll: false })
                   }}
                 />
               </div>
@@ -370,5 +369,5 @@ export function SidebarFilters({
         </SidebarContent>
       </Sidebar>
     </motion.aside>
-  );
+  )
 }

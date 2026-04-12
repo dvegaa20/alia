@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import { useRouter, usePathname, useSearchParams } from "next/navigation"
-import type { PaginationMeta } from "@/types"
+import { useRouter, usePathname, useSearchParams } from 'next/navigation'
+import type { PaginationMeta } from '@/types'
 
 interface AdminPaginationProps {
   meta: PaginationMeta
@@ -14,7 +14,7 @@ export function AdminPagination({ meta, onPageChange }: AdminPaginationProps) {
   const searchParams = useSearchParams()
 
   const { page, totalPages, total, limit } = meta
-  
+
   if (total <= 0) return null
 
   const start = (page - 1) * limit + 1
@@ -53,8 +53,8 @@ export function AdminPagination({ meta, onPageChange }: AdminPaginationProps) {
             onClick={() => pushParams({ page: String(p) })}
             className={`px-3 py-1 rounded border-none transition-colors text-xs ${
               p === page
-                ? "bg-muted text-foreground font-bold"
-                : "text-muted-foreground hover:bg-muted"
+                ? 'bg-muted text-foreground font-bold'
+                : 'text-muted-foreground hover:bg-muted'
             }`}
           >
             {p}

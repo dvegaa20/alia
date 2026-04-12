@@ -1,12 +1,12 @@
-"use client";
+'use client'
 
-import { useEffect, useState, useId, useMemo, useCallback } from "react";
-import { Map, MapPopup, MapControls, useMap } from "@/components/ui/map";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { BadgeCheck, MapPin, ArrowRight } from "lucide-react";
-import Link from "next/link";
-import Image from "next/image";
+import { useEffect, useState, useId, useMemo, useCallback } from 'react'
+import { Map, MapPopup, MapControls, useMap } from '@/components/ui/map'
+import { Card } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { BadgeCheck, MapPin, ArrowRight } from 'lucide-react'
+import Link from 'next/link'
+import Image from 'next/image'
 
 import type { MapPoint, MapViewProps } from '@/types'
 export type { MapPoint }
@@ -16,9 +16,9 @@ type SelectedOrg = MapPoint
 // Convert MapPoints to GeoJSON FeatureCollection
 function toGeoJSON(points: MapPoint[]): GeoJSON.FeatureCollection {
   return {
-    type: "FeatureCollection",
+    type: 'FeatureCollection',
     features: points.map((point) => ({
-      type: "Feature" as const,
+      type: 'Feature' as const,
       properties: {
         slug: point.slug,
         name: point.name,
@@ -28,47 +28,47 @@ function toGeoJSON(points: MapPoint[]): GeoJSON.FeatureCollection {
         verified: point.verified,
       },
       geometry: {
-        type: "Point" as const,
+        type: 'Point' as const,
         coordinates: point.coordinates,
       },
     })),
-  };
+  }
 }
 
 function OrganizationsLayer({ mapPoints }: { mapPoints: MapPoint[] }) {
-  const { map, isLoaded } = useMap();
-  const id = useId();
-  const sourceId = `orgs-source-${id}`;
-  const layerId = `orgs-layer-${id}`;
-  const [selectedOrg, setSelectedOrg] = useState<SelectedOrg | null>(null);
+  const { map, isLoaded } = useMap()
+  const id = useId()
+  const sourceId = `orgs-source-${id}`
+  const layerId = `orgs-layer-${id}`
+  const [selectedOrg, setSelectedOrg] = useState<SelectedOrg | null>(null)
 
-  const geojsonData = useMemo(() => toGeoJSON(mapPoints), [mapPoints]);
+  const geojsonData = useMemo(() => toGeoJSON(mapPoints), [mapPoints])
 
   // Auto-fit bounds when points change
   useEffect(() => {
-    if (!map || !isLoaded || mapPoints.length === 0) return;
+    if (!map || !isLoaded || mapPoints.length === 0) return
 
     if (mapPoints.length === 1) {
       map.flyTo({
         center: mapPoints[0].coordinates,
         zoom: 12,
         duration: 1000,
-      });
-      return;
+      })
+      return
     }
 
     // Calculate bounding box
     let minLng = Infinity,
       minLat = Infinity,
       maxLng = -Infinity,
-      maxLat = -Infinity;
+      maxLat = -Infinity
 
     for (const point of mapPoints) {
-      const [lng, lat] = point.coordinates;
-      if (lng < minLng) minLng = lng;
-      if (lat < minLat) minLat = lat;
-      if (lng > maxLng) maxLng = lng;
-      if (lat > maxLat) maxLat = lat;
+      const [lng, lat] = point.coordinates
+      if (lng < minLng) minLng = lng
+      if (lat < minLat) minLat = lat
+      if (lng > maxLng) maxLng = lng
+      if (lat > maxLat) maxLat = lat
     }
 
     map.fitBounds(
@@ -81,44 +81,41 @@ function OrganizationsLayer({ mapPoints }: { mapPoints: MapPoint[] }) {
         maxZoom: 14,
         duration: 1000,
       }
-    );
-  }, [map, isLoaded, mapPoints]);
+    )
+  }, [map, isLoaded, mapPoints])
 
   // Add GeoJSON source + circle layer
   useEffect(() => {
-    if (!map || !isLoaded) return;
+    if (!map || !isLoaded) return
 
     map.addSource(sourceId, {
-      type: "geojson",
+      type: 'geojson',
       data: geojsonData,
-    });
+    })
 
     map.addLayer({
       id: layerId,
-      type: "circle",
+      type: 'circle',
       source: sourceId,
       paint: {
-        "circle-radius": 8,
-        "circle-color": "#16a34a", // Primary green — matches your design system
-        "circle-stroke-width": 3,
-        "circle-stroke-color": "#ffffff",
-        "circle-opacity": 0.9,
+        'circle-radius': 8,
+        'circle-color': '#16a34a', // Primary green — matches your design system
+        'circle-stroke-width': 3,
+        'circle-stroke-color': '#ffffff',
+        'circle-opacity': 0.9,
       },
-    });
+    })
 
     // Click handler
     const handleClick = (
       e: maplibregl.MapMouseEvent & {
-        features?: maplibregl.MapGeoJSONFeature[];
+        features?: maplibregl.MapGeoJSONFeature[]
       }
     ) => {
-      if (!e.features?.length) return;
+      if (!e.features?.length) return
 
-      const feature = e.features[0];
-      const coords = (feature.geometry as GeoJSON.Point).coordinates as [
-        number,
-        number,
-      ];
+      const feature = e.features[0]
+      const coords = (feature.geometry as GeoJSON.Point).coordinates as [number, number]
 
       setSelectedOrg({
         slug: feature.properties?.slug,
@@ -127,37 +124,37 @@ function OrganizationsLayer({ mapPoints }: { mapPoints: MapPoint[] }) {
         location: feature.properties?.location,
         coordinates: coords,
         logoImage: feature.properties?.logoImage,
-        verified: feature.properties?.verified === true || feature.properties?.verified === "true",
-      });
-    };
+        verified: feature.properties?.verified === true || feature.properties?.verified === 'true',
+      })
+    }
 
     const handleMouseEnter = () => {
-      map.getCanvas().style.cursor = "pointer";
-    };
+      map.getCanvas().style.cursor = 'pointer'
+    }
 
     const handleMouseLeave = () => {
-      map.getCanvas().style.cursor = "";
-    };
+      map.getCanvas().style.cursor = ''
+    }
 
-    map.on("click", layerId, handleClick);
-    map.on("mouseenter", layerId, handleMouseEnter);
-    map.on("mouseleave", layerId, handleMouseLeave);
+    map.on('click', layerId, handleClick)
+    map.on('mouseenter', layerId, handleMouseEnter)
+    map.on('mouseleave', layerId, handleMouseLeave)
 
     return () => {
-      map.off("click", layerId, handleClick);
-      map.off("mouseenter", layerId, handleMouseEnter);
-      map.off("mouseleave", layerId, handleMouseLeave);
+      map.off('click', layerId, handleClick)
+      map.off('mouseenter', layerId, handleMouseEnter)
+      map.off('mouseleave', layerId, handleMouseLeave)
 
       try {
-        if (map.getLayer(layerId)) map.removeLayer(layerId);
-        if (map.getSource(sourceId)) map.removeSource(sourceId);
+        if (map.getLayer(layerId)) map.removeLayer(layerId)
+        if (map.getSource(sourceId)) map.removeSource(sourceId)
       } catch {
         // ignore cleanup errors
       }
-    };
-  }, [map, isLoaded, sourceId, layerId, geojsonData]);
+    }
+  }, [map, isLoaded, sourceId, layerId, geojsonData])
 
-  const handleClosePopup = useCallback(() => setSelectedOrg(null), []);
+  const handleClosePopup = useCallback(() => setSelectedOrg(null), [])
 
   return (
     <>
@@ -216,25 +213,19 @@ function OrganizationsLayer({ mapPoints }: { mapPoints: MapPoint[] }) {
         </MapPopup>
       )}
     </>
-  );
+  )
 }
 
 export function MapView({ total, mapPoints }: MapViewProps) {
   // Default center: Mexico
-  const mexicoCenter: [number, number] = [-102.5528, 23.6345];
+  const mexicoCenter: [number, number] = [-102.5528, 23.6345]
 
   return (
     <Card className="h-125 p-0 overflow-hidden w-full rounded-3xl border-border/30 shadow-none">
       <Map center={mexicoCenter} zoom={5}>
-        <MapControls
-          position="bottom-right"
-          showZoom
-          showCompass
-          showLocate
-          showFullscreen
-        />
+        <MapControls position="bottom-right" showZoom showCompass showLocate showFullscreen />
         {mapPoints.length > 0 && <OrganizationsLayer mapPoints={mapPoints} />}
       </Map>
     </Card>
-  );
+  )
 }

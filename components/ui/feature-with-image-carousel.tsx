@@ -1,33 +1,33 @@
-"use client";
+'use client'
 
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { MapPin } from "lucide-react";
+import { Badge } from '@/components/ui/badge'
+import { Card, CardContent, CardFooter } from '@/components/ui/card'
+import { MapPin } from 'lucide-react'
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel";
-import Image from "next/image";
-import Link from "next/link";
+} from '@/components/ui/carousel'
+import Image from 'next/image'
+import Link from 'next/link'
 
 export interface CampaignItem {
-  slug: string;
-  name: string;
-  description: string;
-  location: string;
-  tag: string;
-  image: string;
-  logo: string;
+  slug: string
+  name: string
+  description: string
+  location: string
+  tag: string
+  image: string
+  logo: string
 }
 
 interface FeatureProps {
-  badge: string;
-  title: string;
-  description: string;
-  items: CampaignItem[];
+  badge: string
+  title: string
+  description: string
+  items: CampaignItem[]
 }
 
 function Feature({ badge, title, description, items }: FeatureProps) {
@@ -115,7 +115,7 @@ function Feature({ badge, title, description, items }: FeatureProps) {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export { Feature };
+export { Feature }

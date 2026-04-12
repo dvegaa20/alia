@@ -35,7 +35,7 @@ export default clerkMiddleware(async (auth, req) => {
           console.error('Failed to revoke session:', error)
         }
       }
-      
+
       const response = NextResponse.redirect(new URL('/unauthorized', req.url))
       // Explicitly clear cookies to ensure the frontend forgets the login state
       response.cookies.delete('__session')

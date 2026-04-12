@@ -1,7 +1,7 @@
-import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
-import { MapPin, BadgeCheck, Users, ArrowRight } from "lucide-react";
-import Image from "next/image";
+import Link from 'next/link'
+import { Badge } from '@/components/ui/badge'
+import { MapPin, BadgeCheck, Users, ArrowRight } from 'lucide-react'
+import Image from 'next/image'
 
 import type { OrganizationCardProps } from '@/types'
 export type { OrganizationCardProps }
@@ -94,5 +94,5 @@ export function OrganizationCard({
         </div>
       </article>
     </Link>
-  );
+  )
 }

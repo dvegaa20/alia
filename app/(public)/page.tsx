@@ -1,48 +1,43 @@
-import { type Metadata } from "next";
-import { getPublishedOrgs, getTopCategoriesWithOrgs } from "@/server/actions";
-import { HeroContainer } from "@/components/public/home/hero-container";
-import {
-  HeroSection,
-  CategoryFilters,
-  CategoryCarousel,
-  TrustSection,
-} from "@/components/public";
+import { type Metadata } from 'next'
+import { getPublishedOrgs, getTopCategoriesWithOrgs } from '@/server/actions'
+import { HeroContainer } from '@/components/public/home/hero-container'
+import { HeroSection, CategoryFilters, CategoryCarousel, TrustSection } from '@/components/public'
 
 export const metadata: Metadata = {
   title: 'Inicio',
-  description: 'Encuentra y apoya organizaciones sociales verificadas en México. Explora por categorías como medio ambiente, educación, salud y más.',
+  description:
+    'Encuentra y apoya organizaciones sociales verificadas en México. Explora por categorías como medio ambiente, educación, salud y más.',
   alternates: { canonical: '/' },
-};
+}
 
 // Fallback emojis by category slug
 const fallbackIcons: Record<string, string> = {
   'medio-ambiente': '🌍',
-  'educacion': '📚',
-  'salud': '🏥',
-  'vivienda': '🏠',
+  educacion: '📚',
+  salud: '🏥',
+  vivienda: '🏠',
   'derechos-humanos': '⚖️',
-  'infancia': '👶',
+  infancia: '👶',
 }
 
-export default async function Page(props: {
-  searchParams: Promise<{ category?: string }>
-}) {
-  const searchParams = await props.searchParams;
+export default async function Page(props: { searchParams: Promise<{ category?: string }> }) {
+  const searchParams = await props.searchParams
 
   const [{ data: orgs }, { data: topCategories }] = await Promise.all([
     getPublishedOrgs({ limit: 100 }),
     getTopCategoriesWithOrgs(),
-  ]);
+  ])
 
-  const formattedOrgs = (orgs || []).map(org => ({
+  const formattedOrgs = (orgs || []).map((org) => ({
     slug: org.slug,
     name: org.name,
     category: org.categories[0]?.name || 'Organización',
-    logo: org.logoUrl || fallbackIcons[org.categories[0]?.slug] || '🤝'
-  }));
+    logo: org.logoUrl || fallbackIcons[org.categories[0]?.slug] || '🤝',
+  }))
 
-  const activeCategorySlug = searchParams?.category || topCategories?.[0]?.slug || '';
-  const activeCategoryData = topCategories?.find(c => c.slug === activeCategorySlug) || topCategories?.[0];
+  const activeCategorySlug = searchParams?.category || topCategories?.[0]?.slug || ''
+  const activeCategoryData =
+    topCategories?.find((c) => c.slug === activeCategorySlug) || topCategories?.[0]
 
   return (
     <>
@@ -69,5 +64,5 @@ export default async function Page(props: {
       </HeroContainer>
       <TrustSection />
     </>
-  );
+  )
 }

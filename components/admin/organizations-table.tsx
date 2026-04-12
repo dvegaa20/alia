@@ -1,9 +1,9 @@
-"use client"
+'use client'
 
-import { useState, useTransition, useEffect, useRef, useCallback } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
-import Image from "next/image"
-import Link from "next/link"
+import { useState, useTransition, useEffect, useRef, useCallback } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import Image from 'next/image'
+import Link from 'next/link'
 import {
   Search,
   MoreVertical,
@@ -18,7 +18,7 @@ import {
   Loader2,
   ArrowDownNarrowWide,
   ArrowUpNarrowWide,
-} from "lucide-react"
+} from 'lucide-react'
 import {
   Table,
   TableBody,
@@ -26,16 +26,16 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+} from '@/components/ui/table'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from '@/components/ui/dropdown-menu'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -45,19 +45,29 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
+} from '@/components/ui/alert-dialog'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { toggleOrgStatus, toggleOrgFeatured, deleteOrganization, getOrganizationById, upsertOrganization } from "@/server/actions"
-import type { OrganizationStatus } from "@/prisma/generated/enums"
-import { OrganizationSheet } from "./organization-sheet"
-import { AdminPagination } from "./admin-pagination"
-import type { OrgWithAllRelations, OrgWithRelations, OrganizationsTableProps as Props } from '@/types'
+} from '@/components/ui/select'
+import {
+  toggleOrgStatus,
+  toggleOrgFeatured,
+  deleteOrganization,
+  getOrganizationById,
+  upsertOrganization,
+} from '@/server/actions'
+import type { OrganizationStatus } from '@/prisma/generated/enums'
+import { OrganizationSheet } from './organization-sheet'
+import { AdminPagination } from './admin-pagination'
+import type {
+  OrgWithAllRelations,
+  OrgWithRelations,
+  OrganizationsTableProps as Props,
+} from '@/types'
 
 import { ORG_STATUS_CONFIG } from '@/lib/constants'
 
@@ -72,7 +82,7 @@ export function OrganizationsTable({ organizations, meta, categories }: Props) {
   const [isFilteringStatus, startFilteringStatus] = useTransition()
 
   // Local state for search input (debounced push to URL)
-  const [searchInput, setSearchInput] = useState(searchParams.get("q") ?? "")
+  const [searchInput, setSearchInput] = useState(searchParams.get('q') ?? '')
   const [isDebouncing, setIsDebouncing] = useState(false)
   const initialMount = useRef(true)
 
@@ -90,12 +100,12 @@ export function OrganizationsTable({ organizations, meta, categories }: Props) {
   const [editingOrg, setEditingOrg] = useState<OrgWithAllRelations | null>(null)
 
   useEffect(() => {
-    if (searchParams.get("action") === "new-org") {
+    if (searchParams.get('action') === 'new-org') {
       setEditingOrg(null)
       setIsLoadingOrg(false)
       setSheetOpen(true)
       const sp = new URLSearchParams(searchParams.toString())
-      sp.delete("action")
+      sp.delete('action')
       router.replace(`?${sp.toString()}`, { scroll: false })
     }
   }, [searchParams, router])
@@ -125,14 +135,14 @@ export function OrganizationsTable({ organizations, meta, categories }: Props) {
         }
       })
       // Always reset to page 1 when filters change (except when changing page itself)
-      if (!("page" in params)) {
-        sp.delete("page")
+      if (!('page' in params)) {
+        sp.delete('page')
       }
       startTransition(() => {
         router.push(`?${sp.toString()}`)
       })
     },
-    [router, searchParams],
+    [router, searchParams]
   )
 
   // Debounced search
@@ -156,14 +166,14 @@ export function OrganizationsTable({ organizations, meta, categories }: Props) {
     pushParams({ q: searchInput || undefined })
   }
 
-  const currentStatus = searchParams.get("status") ?? "ALL"
-  const currentSort = searchParams.get("sort") ?? "createdAt"
-  const currentOrder = (searchParams.get("order") as "asc" | "desc") ?? "desc"
+  const currentStatus = searchParams.get('status') ?? 'ALL'
+  const currentSort = searchParams.get('sort') ?? 'createdAt'
+  const currentOrder = (searchParams.get('order') as 'asc' | 'desc') ?? 'desc'
 
   function toggleOrder() {
     const sp = new URLSearchParams(searchParams.toString())
-    sp.set("order", currentOrder === "desc" ? "asc" : "desc")
-    sp.delete("page")
+    sp.set('order', currentOrder === 'desc' ? 'asc' : 'desc')
+    sp.delete('page')
     startFilteringStatus(() => {
       router.push(`?${sp.toString()}`)
     })
@@ -199,9 +209,7 @@ export function OrganizationsTable({ organizations, meta, categories }: Props) {
         {/* Header */}
         <div className="px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b bg-transparent">
           <div className="space-y-1">
-            <h2 className="text-xl font-bold text-card-foreground">
-              Gestión de Organizaciones
-            </h2>
+            <h2 className="text-xl font-bold text-card-foreground">Gestión de Organizaciones</h2>
             <p className="text-sm text-muted-foreground">
               Visualiza y administra el directorio de ONGs.
             </p>
@@ -226,12 +234,12 @@ export function OrganizationsTable({ organizations, meta, categories }: Props) {
               value={currentStatus}
               onValueChange={(value) => {
                 const sp = new URLSearchParams(searchParams.toString())
-                if (value === "ALL") {
-                  sp.delete("status")
+                if (value === 'ALL') {
+                  sp.delete('status')
                 } else {
-                  sp.set("status", value)
+                  sp.set('status', value)
                 }
-                sp.delete("page")
+                sp.delete('page')
                 startFilteringStatus(() => {
                   router.push(`?${sp.toString()}`)
                 })
@@ -254,8 +262,8 @@ export function OrganizationsTable({ organizations, meta, categories }: Props) {
                 value={currentSort}
                 onValueChange={(value) => {
                   const sp = new URLSearchParams(searchParams.toString())
-                  sp.set("sort", value)
-                  sp.delete("page")
+                  sp.set('sort', value)
+                  sp.delete('page')
                   startFilteringStatus(() => {
                     router.push(`?${sp.toString()}`)
                   })
@@ -275,9 +283,9 @@ export function OrganizationsTable({ organizations, meta, categories }: Props) {
                 size="icon"
                 onClick={toggleOrder}
                 className="h-9 w-9 border-none bg-muted hover:bg-muted/80 shrink-0"
-                title={currentOrder === "desc" ? "Orden Descendente" : "Orden Ascendente"}
+                title={currentOrder === 'desc' ? 'Orden Descendente' : 'Orden Ascendente'}
               >
-                {currentOrder === "desc" ? (
+                {currentOrder === 'desc' ? (
                   <ArrowDownNarrowWide className="h-4 w-4 text-muted-foreground" />
                 ) : (
                   <ArrowUpNarrowWide className="h-4 w-4 text-muted-foreground" />
@@ -317,22 +325,17 @@ export function OrganizationsTable({ organizations, meta, categories }: Props) {
             <TableBody>
               {organizations.length === 0 ? (
                 <TableRow>
-                  <TableCell
-                    colSpan={5}
-                    className="px-8 py-16 text-center text-muted-foreground"
-                  >
+                  <TableCell colSpan={5} className="px-8 py-16 text-center text-muted-foreground">
                     <div className="flex flex-col items-center gap-2">
                       <Building2 className="h-8 w-8 opacity-40" />
-                      <p className="text-sm font-medium">
-                        No se encontraron organizaciones
-                      </p>
+                      <p className="text-sm font-medium">No se encontraron organizaciones</p>
                     </div>
                   </TableCell>
                 </TableRow>
               ) : (
                 organizations.map((org) => {
                   const statusCfg = ORG_STATUS_CONFIG[org.status] ?? ORG_STATUS_CONFIG.DRAFT
-                  const isPublished = org.status === "PUBLISHED"
+                  const isPublished = org.status === 'PUBLISHED'
 
                   return (
                     <TableRow key={org.id} className="group">
@@ -384,21 +387,15 @@ export function OrganizationsTable({ organizations, meta, categories }: Props) {
                       {/* Location */}
                       <TableCell className="px-8 py-5">
                         <span className="text-sm text-muted-foreground">
-                          {org.location
-                            ? `${org.location.city}, ${org.location.state}`
-                            : "—"}
+                          {org.location ? `${org.location.city}, ${org.location.state}` : '—'}
                         </span>
                       </TableCell>
 
                       {/* Status */}
                       <TableCell className="px-8 py-5">
                         <div className="flex items-center gap-2">
-                          <span
-                            className={`h-2 w-2 rounded-full ${statusCfg.dotColor}`}
-                          />
-                          <span
-                            className={`text-sm font-medium ${statusCfg.textColor}`}
-                          >
+                          <span className={`h-2 w-2 rounded-full ${statusCfg.dotColor}`} />
+                          <span className={`text-sm font-medium ${statusCfg.textColor}`}>
                             {statusCfg.label}
                           </span>
                         </div>
@@ -424,9 +421,7 @@ export function OrganizationsTable({ organizations, meta, categories }: Props) {
                             </DropdownMenuItem>
 
                             {/* Toggle Featured */}
-                            <DropdownMenuItem
-                              onClick={() => handleToggleFeatured(org.id)}
-                            >
+                            <DropdownMenuItem onClick={() => handleToggleFeatured(org.id)}>
                               {org.featured ? (
                                 <>
                                   <StarOff className="h-4 w-4 mr-2" />
@@ -458,7 +453,7 @@ export function OrganizationsTable({ organizations, meta, categories }: Props) {
                             {!isPublished && (
                               <DropdownMenuItem
                                 onClick={() =>
-                                  handleChangeStatus(org.id, "PUBLISHED" as OrganizationStatus)
+                                  handleChangeStatus(org.id, 'PUBLISHED' as OrganizationStatus)
                                 }
                               >
                                 <CheckCircle2 className="h-4 w-4 mr-2 text-emerald-600" />
@@ -469,7 +464,7 @@ export function OrganizationsTable({ organizations, meta, categories }: Props) {
                             {isPublished && (
                               <DropdownMenuItem
                                 onClick={() =>
-                                  handleChangeStatus(org.id, "DRAFT" as OrganizationStatus)
+                                  handleChangeStatus(org.id, 'DRAFT' as OrganizationStatus)
                                 }
                               >
                                 <EyeOff className="h-4 w-4 mr-2" />
@@ -482,9 +477,7 @@ export function OrganizationsTable({ organizations, meta, categories }: Props) {
                             {/* Soft Delete */}
                             <DropdownMenuItem
                               className="text-red-600 focus:text-red-600"
-                              onClick={() =>
-                                setDeleteTarget({ id: org.id, name: org.name })
-                              }
+                              onClick={() => setDeleteTarget({ id: org.id, name: org.name })}
                             >
                               <Trash2 className="h-4 w-4 mr-2" />
                               Eliminar
@@ -505,29 +498,21 @@ export function OrganizationsTable({ organizations, meta, categories }: Props) {
       </section>
 
       {/* Delete Confirmation Dialog */}
-      <AlertDialog
-        open={!!deleteTarget}
-        onOpenChange={(open) => !open && setDeleteTarget(null)}
-      >
+      <AlertDialog open={!!deleteTarget} onOpenChange={(open) => !open && setDeleteTarget(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>¿Eliminar organización?</AlertDialogTitle>
             <AlertDialogDescription>
-              La organización{" "}
-              <span className="font-semibold text-foreground">
-                {deleteTarget?.name}
-              </span>{" "}
-              será archivada y eliminada de las tablas principales. No aparecerá en el directorio
-              público pero se conservará en la base de datos.
+              La organización{' '}
+              <span className="font-semibold text-foreground">{deleteTarget?.name}</span> será
+              archivada y eliminada de las tablas principales. No aparecerá en el directorio público
+              pero se conservará en la base de datos.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancelar</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleDelete}
-              className="bg-red-600 hover:bg-red-700 "
-            >
-              {isPending ? "Eliminando..." : "Eliminar"}
+            <AlertDialogAction onClick={handleDelete} className="bg-red-600 hover:bg-red-700 ">
+              {isPending ? 'Eliminando...' : 'Eliminar'}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

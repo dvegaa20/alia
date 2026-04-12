@@ -1,27 +1,26 @@
-import Image from "next/image";
+import Image from 'next/image'
 
 interface AboutContentProps {
-  name: string;
-  fullDescription: string | null;
-  galleryImages?: string[];
+  name: string
+  fullDescription: string | null
+  galleryImages?: string[]
 }
 
-export function AboutContent({
-  name,
-  fullDescription,
-  galleryImages = [],
-}: AboutContentProps) {
+export function AboutContent({ name, fullDescription, galleryImages = [] }: AboutContentProps) {
   return (
     <div className="space-y-12">
       {/* Description Prose */}
       <div className="space-y-6">
-        <h2 className="text-2xl font-bold font-headline text-foreground sr-only">
-          Sobre nosotros
-        </h2>
+        <h2 className="text-2xl font-bold font-headline text-foreground sr-only">Sobre nosotros</h2>
         <div className="prose prose-stone prose-lg max-w-none text-muted-foreground font-body leading-relaxed space-y-4 dark:prose-invert">
           {fullDescription ? (
-            fullDescription.split("\n").map((paragraph, i) => (
-              <p key={i} dangerouslySetInnerHTML={{ __html: paragraph.replace(name, `<strong>${name}</strong>`) }} />
+            fullDescription.split('\n').map((paragraph, i) => (
+              <p
+                key={i}
+                dangerouslySetInnerHTML={{
+                  __html: paragraph.replace(name, `<strong>${name}</strong>`),
+                }}
+              />
             ))
           ) : (
             <p className="italic text-muted-foreground/60">
@@ -81,5 +80,5 @@ export function AboutContent({
         </div>
       )}
     </div>
-  );
+  )
 }

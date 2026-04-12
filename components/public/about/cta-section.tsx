@@ -1,8 +1,8 @@
-"use client";
+'use client'
 
-import Link from "next/link";
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
+import Link from 'next/link'
+import { motion } from 'framer-motion'
+import { Button } from '@/components/ui/button'
 
 export function CtaSection() {
   return (
@@ -10,8 +10,8 @@ export function CtaSection() {
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        viewport={{ once: true, margin: '-100px' }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
         className="max-w-7xl mx-auto bg-primary rounded-xl overflow-hidden relative"
       >
         {/* Background Decorations */}
@@ -24,8 +24,8 @@ export function CtaSection() {
             Ayúdanos a crecer
           </h2>
           <p className="font-body text-xl text-ds-primary-fixed leading-relaxed">
-            ¿Conoces una organización que debería estar aquí? Ayúdanos a mapear
-            el impacto social y hacer este directorio cada vez más grande.
+            ¿Conoces una organización que debería estar aquí? Ayúdanos a mapear el impacto social y
+            hacer este directorio cada vez más grande.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -47,5 +47,5 @@ export function CtaSection() {
         </div>
       </motion.div>
     </section>
-  );
+  )
 }

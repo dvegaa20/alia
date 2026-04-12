@@ -1,19 +1,19 @@
-"use client";
+'use client'
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { ModeToggle } from "@/components/ui/mode-toggle";
-import { SuggestOrgDialog } from "@/components/public/suggest/suggest-org-dialog";
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { Button } from '@/components/ui/button'
+import { ModeToggle } from '@/components/ui/mode-toggle'
+import { SuggestOrgDialog } from '@/components/public/suggest/suggest-org-dialog'
 
 const navLinks = [
-  { href: "/", label: "Inicio" },
-  { href: "/directory", label: "Todas las causas" },
-  { href: "/about", label: "Sobre el proyecto" },
-];
+  { href: '/', label: 'Inicio' },
+  { href: '/directory', label: 'Todas las causas' },
+  { href: '/about', label: 'Sobre el proyecto' },
+]
 
 export function Navbar() {
-  const pathname = usePathname();
+  const pathname = usePathname()
 
   return (
     <nav className="sticky top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
@@ -29,7 +29,7 @@ export function Navbar() {
 
         <div className="hidden md:flex justify-center items-center space-x-10">
           {navLinks.map((link) => {
-            const isActive = pathname === link.href;
+            const isActive = pathname === link.href
 
             return (
               <Link
@@ -37,27 +37,28 @@ export function Navbar() {
                 href={link.href}
                 className={
                   isActive
-                    ? "text-primary dark:text-ds-primary-fixed font-bold border-b-2 border-ds-primary dark:border-ds-primary-fixed pb-1 font-headline text-base transition-all duration-300"
-                    : "text-muted-foreground font-medium font-headline text-base hover:text-primary dark:hover:text-ds-primary-fixed transition-all duration-300"
+                    ? 'text-primary dark:text-ds-primary-fixed font-bold border-b-2 border-ds-primary dark:border-ds-primary-fixed pb-1 font-headline text-base transition-all duration-300'
+                    : 'text-muted-foreground font-medium font-headline text-base hover:text-primary dark:hover:text-ds-primary-fixed transition-all duration-300'
                 }
               >
                 {link.label}
               </Link>
-            );
+            )
           })}
         </div>
 
         <div className="flex justify-end items-center space-x-4">
           <SuggestOrgDialog>
-            <Button className="rounded-xl shadow-md hover:shadow-lg transition-all duration-300 group px-6 bg-linear-to-r from-ds-primary to-ds-primary-container hover:from-ds-primary/90 hover:to-ds-primary-container/90" asChild>
-              <span className="relative z-10 flex items-center gap-2">
-                Sugerir ONG
-              </span>
+            <Button
+              className="rounded-xl shadow-md hover:shadow-lg transition-all duration-300 group px-6 bg-linear-to-r from-ds-primary to-ds-primary-container hover:from-ds-primary/90 hover:to-ds-primary-container/90"
+              asChild
+            >
+              <span className="relative z-10 flex items-center gap-2">Sugerir ONG</span>
             </Button>
           </SuggestOrgDialog>
           <ModeToggle />
         </div>
       </div>
     </nav>
-  );
+  )
 }

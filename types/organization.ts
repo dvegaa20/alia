@@ -1,4 +1,10 @@
-import type { Organization, Category, Location, SocialLink, OrganizationStatus } from '@/prisma/generated/client'
+import type {
+  Organization,
+  Category,
+  Location,
+  SocialLink,
+  OrganizationStatus,
+} from '@/prisma/generated/client'
 
 // ============================================================================
 // JSON Field Interfaces (typed replacements for `any` in Prisma JSON fields)

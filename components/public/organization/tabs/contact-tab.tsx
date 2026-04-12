@@ -1,51 +1,64 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import { MapPin, Clock, Mail, Phone, Navigation, Send, User } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Map, MapMarker, MarkerContent, MarkerPopup, MapControls, MapRoute } from "@/components/ui/map";
+import { useState } from 'react'
+import { MapPin, Clock, Mail, Phone, Navigation, Send, User } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { Label } from '@/components/ui/label'
+import { Separator } from '@/components/ui/separator'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Map,
+  MapMarker,
+  MarkerContent,
+  MarkerPopup,
+  MapControls,
+  MapRoute,
+} from '@/components/ui/map'
 
 import type { ContactTabProps } from '@/types'
 
 const DAY_LABELS: Record<string, string> = {
-  monday: "Lunes",
-  tuesday: "Martes",
-  wednesday: "Miércoles",
-  thursday: "Jueves",
-  friday: "Viernes",
-  saturday: "Sábado",
-  sunday: "Domingo",
-};
+  monday: 'Lunes',
+  tuesday: 'Martes',
+  wednesday: 'Miércoles',
+  thursday: 'Jueves',
+  friday: 'Viernes',
+  saturday: 'Sábado',
+  sunday: 'Domingo',
+}
 
-export function ContactTab({ email, phone, location, googleMapsUrl, coordinates, officeHours }: ContactTabProps) {
-  const [nombre, setNombre] = useState("");
-  const [asunto, setAsunto] = useState("");
-  const [mensaje, setMensaje] = useState("");
+export function ContactTab({
+  email,
+  phone,
+  location,
+  googleMapsUrl,
+  coordinates,
+  officeHours,
+}: ContactTabProps) {
+  const [nombre, setNombre] = useState('')
+  const [asunto, setAsunto] = useState('')
+  const [mensaje, setMensaje] = useState('')
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
 
     const finalSubject = asunto
       ? `${asunto} (vía Alia)`
-      : `Mensaje de ${nombre || "un usuario anónimo"} vía Alia`;
+      : `Mensaje de ${nombre || 'un usuario anónimo'} vía Alia`
 
-    const subject = encodeURIComponent(finalSubject);
+    const subject = encodeURIComponent(finalSubject)
     const body = encodeURIComponent(
       `Hola,\n\nMi nombre es ${nombre}.\n\n${mensaje}\n\n---\nEnviado a través del directorio de Alia.`
-    );
+    )
 
-    window.open(`mailto:${email}?subject=${subject}&body=${body}`, "_self");
-  };
+    window.open(`mailto:${email}?subject=${subject}&body=${body}`, '_self')
+  }
 
   return (
     <div className="py-2 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-8 items-stretch">
-
         {/* Left Column: Form */}
         <Card className="rounded-3xl py-0 overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] border-border/50 h-full flex flex-col">
           <CardHeader className="px-8 md:px-10 pt-8 md:pt-10 pb-0">
@@ -111,10 +124,8 @@ export function ContactTab({ email, phone, location, googleMapsUrl, coordinates,
           </CardContent>
         </Card>
 
-
         {/* Right Column: Info & Map */}
         <div className="space-y-6">
-
           {/* Map Card */}
           {coordinates?.lat && coordinates?.lng ? (
             <InteractiveMapCard
@@ -123,7 +134,12 @@ export function ContactTab({ email, phone, location, googleMapsUrl, coordinates,
               googleMapsUrl={googleMapsUrl}
             />
           ) : googleMapsUrl ? (
-            <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer" className="block group/map">
+            <a
+              href={googleMapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block group/map"
+            >
               <MapCardInner location={location || undefined} />
             </a>
           ) : (
@@ -143,17 +159,21 @@ export function ContactTab({ email, phone, location, googleMapsUrl, coordinates,
               <div className="space-y-3">
                 {officeHours ? (
                   Object.entries(DAY_LABELS).map(([key, label]) => {
-                    const dayData = officeHours[key];
+                    const dayData = officeHours[key]
                     return (
                       <div key={key} className="flex justify-between items-center text-sm">
                         <span className="text-muted-foreground font-medium">{label}</span>
                         {dayData ? (
-                          <span className="font-bold text-foreground">{dayData.open} - {dayData.close}</span>
+                          <span className="font-bold text-foreground">
+                            {dayData.open} - {dayData.close}
+                          </span>
                         ) : (
-                          <span className="font-bold text-muted-foreground opacity-60">Cerrado</span>
+                          <span className="font-bold text-muted-foreground opacity-60">
+                            Cerrado
+                          </span>
                         )}
                       </div>
-                    );
+                    )
                   })
                 ) : (
                   <p className="text-sm text-muted-foreground">Horarios no disponibles</p>
@@ -169,7 +189,9 @@ export function ContactTab({ email, phone, location, googleMapsUrl, coordinates,
                     <Mail className="size-4 text-blue-600 dark:text-blue-400" />
                   </div>
                   <div className="overflow-hidden">
-                    <p className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground mb-1">EMAIL</p>
+                    <p className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground mb-1">
+                      EMAIL
+                    </p>
                     <p className="text-sm font-bold text-foreground truncate">{email}</p>
                   </div>
                 </div>
@@ -179,18 +201,21 @@ export function ContactTab({ email, phone, location, googleMapsUrl, coordinates,
                     <Phone className="size-4 text-blue-600 dark:text-blue-400" />
                   </div>
                   <div className="overflow-hidden">
-                    <p className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground mb-1">TELÉFONO</p>
-                    <p className="text-sm font-bold text-foreground">{phone || "+52 55 1234 5678"}</p>
+                    <p className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground mb-1">
+                      TELÉFONO
+                    </p>
+                    <p className="text-sm font-bold text-foreground">
+                      {phone || '+52 55 1234 5678'}
+                    </p>
                   </div>
                 </div>
               </div>
             </CardContent>
           </Card>
-
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 // Extracted to avoid duplicating the map markup for clickable vs non-clickable variants
@@ -199,10 +224,22 @@ function MapCardInner({ location }: { location?: string }) {
     <Card className="rounded-3xl py-3 px-3 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] border-border/50 transition-all duration-300 group-hover/map:shadow-[0_12px_40px_rgb(0,0,0,0.10)] dark:group-hover/map:shadow-[0_12px_40px_rgb(0,0,0,0.35)] group-hover/map:-translate-y-1">
       <div className="relative w-full h-55 bg-zinc-300 dark:bg-zinc-800 rounded-2xl overflow-hidden flex flex-col justify-end p-4">
         {/* Map Background Pattern (Simulated) */}
-        <div className="absolute inset-0 opacity-20 dark:opacity-10 pointer-events-none"
-          style={{ backgroundImage: 'radial-gradient(circle at center, #ffffff 2px, transparent 2px)', backgroundSize: '24px 24px' }} />
-        <div className="absolute inset-0 opacity-10 dark:opacity-5 pointer-events-none mix-blend-overlay"
-          style={{ backgroundImage: 'linear-gradient(45deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000), linear-gradient(45deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000)', backgroundSize: '60px 60px', backgroundPosition: '0 0, 30px 30px' }} />
+        <div
+          className="absolute inset-0 opacity-20 dark:opacity-10 pointer-events-none"
+          style={{
+            backgroundImage: 'radial-gradient(circle at center, #ffffff 2px, transparent 2px)',
+            backgroundSize: '24px 24px',
+          }}
+        />
+        <div
+          className="absolute inset-0 opacity-10 dark:opacity-5 pointer-events-none mix-blend-overlay"
+          style={{
+            backgroundImage:
+              'linear-gradient(45deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000), linear-gradient(45deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000)',
+            backgroundSize: '60px 60px',
+            backgroundPosition: '0 0, 30px 30px',
+          }}
+        />
 
         {/* Map Pin / Marker */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -mt-4">
@@ -224,42 +261,46 @@ function MapCardInner({ location }: { location?: string }) {
         <div className="relative bg-white dark:bg-zinc-900 rounded-xl py-3 px-4 flex items-center shadow-lg w-full z-20">
           <Navigation className="size-4 text-[#1e4a23] dark:text-ds-primary-fixed mr-3 shrink-0 fill-current" />
           <span className="text-sm font-bold text-zinc-900 dark: truncate">
-            {location || "Ciudad de México"}
+            {location || 'Ciudad de México'}
           </span>
         </div>
       </div>
     </Card>
-  );
+  )
 }
 
 function InteractiveMapCard({
   location,
   coordinates,
-  googleMapsUrl
+  googleMapsUrl,
 }: {
-  location?: string;
-  coordinates: { lat: number; lng: number };
-  googleMapsUrl?: string | null;
+  location?: string
+  coordinates: { lat: number; lng: number }
+  googleMapsUrl?: string | null
 }) {
-  const [userLocation, setUserLocation] = useState<{ longitude: number; latitude: number } | null>(null);
-  const [routeCoords, setRouteCoords] = useState<[number, number][] | null>(null);
+  const [userLocation, setUserLocation] = useState<{ longitude: number; latitude: number } | null>(
+    null
+  )
+  const [routeCoords, setRouteCoords] = useState<[number, number][] | null>(null)
 
   const fetchRoute = async (userLon: number, userLat: number) => {
     try {
-      const res = await fetch(`https://router.project-osrm.org/route/v1/driving/${userLon},${userLat};${coordinates.lng},${coordinates.lat}?geometries=geojson`);
-      const data = await res.json();
+      const res = await fetch(
+        `https://router.project-osrm.org/route/v1/driving/${userLon},${userLat};${coordinates.lng},${coordinates.lat}?geometries=geojson`
+      )
+      const data = await res.json()
       if (data.routes && data.routes[0]) {
-        setRouteCoords(data.routes[0].geometry.coordinates);
+        setRouteCoords(data.routes[0].geometry.coordinates)
       }
     } catch (error) {
-      console.error("Failed to fetch route", error);
+      console.error('Failed to fetch route', error)
     }
-  };
+  }
 
   const handleLocate = (coords: { longitude: number; latitude: number }) => {
-    setUserLocation(coords);
-    fetchRoute(coords.longitude, coords.latitude);
-  };
+    setUserLocation(coords)
+    fetchRoute(coords.longitude, coords.latitude)
+  }
 
   return (
     <Card className="rounded-3xl py-3 px-3 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] border-border/50 transition-all duration-300">
@@ -280,9 +321,14 @@ function InteractiveMapCard({
               <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-1 bg-black/40 blur-[1px] rounded-full" />
             </MarkerContent>
             <MarkerPopup className="text-sm font-medium w-48 text-center p-2 rounded-xl border-border bg-background shadow-lg text-foreground">
-              {location || "Organización"}
+              {location || 'Organización'}
               {googleMapsUrl && (
-                <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer" className="block text-primary mt-1 text-[11px] font-bold uppercase tracking-wider hover:underline">
+                <a
+                  href={googleMapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-primary mt-1 text-[11px] font-bold uppercase tracking-wider hover:underline"
+                >
                   Ver indicaciones
                 </a>
               )}
@@ -291,7 +337,11 @@ function InteractiveMapCard({
 
           {/* User Marker */}
           {userLocation && (
-            <MapMarker longitude={userLocation.longitude} latitude={userLocation.latitude} offset={[0, -12]}>
+            <MapMarker
+              longitude={userLocation.longitude}
+              latitude={userLocation.latitude}
+              offset={[0, -12]}
+            >
               <MarkerContent>
                 <div className="relative cursor-pointer group/user">
                   <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center border-2 border-white shadow-lg relative z-10 transition-transform group-hover/user:scale-110">
@@ -308,27 +358,27 @@ function InteractiveMapCard({
 
           {/* Route */}
           {routeCoords && (
-            <MapRoute coordinates={routeCoords} color="#2563EB" width={4} opacity={0.7} dashArray={[2, 2]} />
+            <MapRoute
+              coordinates={routeCoords}
+              color="#2563EB"
+              width={4}
+              opacity={0.7}
+              dashArray={[2, 2]}
+            />
           )}
 
           {/* Controls */}
-          <MapControls
-            position="bottom-right"
-            showZoom
-            showLocate
-            onLocate={handleLocate}
-          />
+          <MapControls position="bottom-right" showZoom showLocate onLocate={handleLocate} />
         </Map>
         <div className="absolute top-4 left-4 z-20 pointer-events-none">
           <div className="bg-background/80 backdrop-blur-md rounded-xl py-2 px-3 flex items-center shadow-sm">
             <Navigation className="size-3 text-[#1e4a23] dark:text-ds-primary-fixed mr-2 shrink-0 fill-current" />
             <span className="text-xs font-bold text-foreground truncate select-none">
-              {location || "Ciudad de México"}
+              {location || 'Ciudad de México'}
             </span>
           </div>
         </div>
       </div>
     </Card>
-  );
+  )
 }
-

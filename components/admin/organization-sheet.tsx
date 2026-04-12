@@ -87,11 +87,30 @@ export function OrganizationSheet({
 
     // Map organization to form values — destructure nullable fields for null → undefined conversion
     const {
-      location, socialLinks, categories, galleryImages, relevantLinks, needs, officeHours,
-      fullDescription, logoUrl, coverImageUrl, website, phone, donationLink,
-      foundedYear, impactCurrent, impactGoal, impactType,
-      featuredFact, secondaryFacts, testimony, milestone,
-      id: _id, createdAt: _createdAt, updatedAt: _updatedAt,
+      location,
+      socialLinks,
+      categories,
+      galleryImages,
+      relevantLinks,
+      needs,
+      officeHours,
+      fullDescription,
+      logoUrl,
+      coverImageUrl,
+      website,
+      phone,
+      donationLink,
+      foundedYear,
+      impactCurrent,
+      impactGoal,
+      impactType,
+      featuredFact,
+      secondaryFacts,
+      testimony,
+      milestone,
+      id: _id,
+      createdAt: _createdAt,
+      updatedAt: _updatedAt,
       ...rest
     } = organization
     return {
@@ -113,19 +132,16 @@ export function OrganizationSheet({
       categoryIds: categories?.map((c: { id: string }) => c.id) || [],
       location: location
         ? {
-          city: location.city,
-          state: location.state,
-          googleMapsUrl: location.googleMapsUrl ?? undefined,
-          latitude: location.latitude,
-          longitude: location.longitude,
-        }
+            city: location.city,
+            state: location.state,
+            googleMapsUrl: location.googleMapsUrl ?? undefined,
+            latitude: location.latitude,
+            longitude: location.longitude,
+          }
         : undefined,
       socialLinks: socialLinks || [],
       galleryImages: galleryImages?.length
-        ? [
-          ...galleryImages,
-          ...Array(Math.max(0, 4 - galleryImages.length)).fill(''),
-        ] // Ensure 4 inputs
+        ? [...galleryImages, ...Array(Math.max(0, 4 - galleryImages.length)).fill('')] // Ensure 4 inputs
         : ['', '', '', ''],
       relevantLinks: relevantLinks?.length ? relevantLinks : [''],
       needs: needs || [],
@@ -201,15 +217,34 @@ export function OrganizationSheet({
 
   // Helper: map error field keys to tab names for feedback
   const TAB_FIELD_MAP: Record<string, string> = {
-    name: 'sobre', slug: 'sobre', shortDescription: 'sobre', fullDescription: 'sobre',
-    logoUrl: 'sobre', coverImageUrl: 'sobre', foundedYear: 'sobre', status: 'sobre',
-    featured: 'sobre', verified: 'sobre', categoryIds: 'sobre', galleryImages: 'sobre',
+    name: 'sobre',
+    slug: 'sobre',
+    shortDescription: 'sobre',
+    fullDescription: 'sobre',
+    logoUrl: 'sobre',
+    coverImageUrl: 'sobre',
+    foundedYear: 'sobre',
+    status: 'sobre',
+    featured: 'sobre',
+    verified: 'sobre',
+    categoryIds: 'sobre',
+    galleryImages: 'sobre',
     relevantLinks: 'explorar',
     needs: 'necesidades',
-    impactCurrent: 'impacto', impactGoal: 'impacto', impactType: 'impacto',
-    featuredFact: 'impacto', secondaryFacts: 'impacto', testimony: 'impacto', milestone: 'impacto',
-    email: 'contacto', phone: 'contacto', website: 'contacto', donationLink: 'contacto',
-    location: 'contacto', socialLinks: 'contacto', officeHours: 'contacto',
+    impactCurrent: 'impacto',
+    impactGoal: 'impacto',
+    impactType: 'impacto',
+    featuredFact: 'impacto',
+    secondaryFacts: 'impacto',
+    testimony: 'impacto',
+    milestone: 'impacto',
+    email: 'contacto',
+    phone: 'contacto',
+    website: 'contacto',
+    donationLink: 'contacto',
+    location: 'contacto',
+    socialLinks: 'contacto',
+    officeHours: 'contacto',
   }
 
   const TAB_LABELS: Record<string, string> = {
@@ -231,9 +266,10 @@ export function OrganizationSheet({
     const tabNames = Array.from(tabsWithErrors).map((t) => TAB_LABELS[t] || t)
 
     toast.error('Hay errores en el formulario', {
-      description: tabNames.length > 0
-        ? `Revisa los campos en: ${tabNames.join(', ')}`
-        : 'Revisa los campos marcados en rojo.',
+      description:
+        tabNames.length > 0
+          ? `Revisa los campos en: ${tabNames.join(', ')}`
+          : 'Revisa los campos marcados en rojo.',
       duration: 5000,
     })
   }
@@ -254,9 +290,12 @@ export function OrganizationSheet({
 
     if (result.success) {
       setSavedSuccess(true)
-      toast.success(organization ? 'Cambios guardados correctamente' : 'Organización creada correctamente', {
-        duration: 3000,
-      })
+      toast.success(
+        organization ? 'Cambios guardados correctamente' : 'Organización creada correctamente',
+        {
+          duration: 3000,
+        }
+      )
       // Reset the success checkmark after 2.5s
       setTimeout(() => setSavedSuccess(false), 2500)
     } else {
@@ -282,10 +321,7 @@ export function OrganizationSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        data-lenis-prevent
-        className="w-full sm:max-w-4xl h-full flex flex-col p-0"
-      >
+      <SheetContent data-lenis-prevent className="w-full sm:max-w-4xl h-full flex flex-col p-0">
         <SheetHeader className="px-8 py-6 border-b shrink-0">
           <SheetTitle>{organization ? 'Editar Organización' : 'Nueva Organización'}</SheetTitle>
           <SheetDescription>
@@ -343,20 +379,28 @@ export function OrganizationSheet({
                   {/* Compute error counts per tab */}
                   {(() => {
                     const errorKeys = Object.keys(errors)
-                    const tabErrors: Record<string, number> = { sobre: 0, explorar: 0, necesidades: 0, impacto: 0, contacto: 0 }
+                    const tabErrors: Record<string, number> = {
+                      sobre: 0,
+                      explorar: 0,
+                      necesidades: 0,
+                      impacto: 0,
+                      contacto: 0,
+                    }
                     errorKeys.forEach((key) => {
                       const tab = TAB_FIELD_MAP[key]
                       if (tab && tab in tabErrors) tabErrors[tab]++
                     })
                     return (
                       <TabsList className="mb-8 p-1 flex w-fit bg-muted/70 rounded-xl">
-                        {([
-                          { value: 'sobre', label: 'Sobre nosotros' },
-                          { value: 'explorar', label: 'Explorar' },
-                          { value: 'necesidades', label: 'Necesidades' },
-                          { value: 'impacto', label: 'Impacto' },
-                          { value: 'contacto', label: 'Contacto' },
-                        ] as const).map((tab) => (
+                        {(
+                          [
+                            { value: 'sobre', label: 'Sobre nosotros' },
+                            { value: 'explorar', label: 'Explorar' },
+                            { value: 'necesidades', label: 'Necesidades' },
+                            { value: 'impacto', label: 'Impacto' },
+                            { value: 'contacto', label: 'Contacto' },
+                          ] as const
+                        ).map((tab) => (
                           <TabsTrigger
                             key={tab.value}
                             value={tab.value}
@@ -491,7 +535,10 @@ export function OrganizationSheet({
                           </FieldContent>
                         </Field>
 
-                        <Field orientation="horizontal" className="bg-muted/30 p-4 rounded-xl border">
+                        <Field
+                          orientation="horizontal"
+                          className="bg-muted/30 p-4 rounded-xl border"
+                        >
                           <FieldContent>
                             <FieldLabel className="pointer-events-none p-0 border-none bg-transparent gap-1.5 flex-row items-center font-bold text-sm">
                               Destacado
@@ -509,7 +556,10 @@ export function OrganizationSheet({
                           />
                         </Field>
 
-                        <Field orientation="horizontal" className="bg-muted/30 p-4 rounded-xl border">
+                        <Field
+                          orientation="horizontal"
+                          className="bg-muted/30 p-4 rounded-xl border"
+                        >
                           <FieldContent>
                             <FieldLabel className="pointer-events-none p-0 border-none bg-transparent gap-1.5 flex-row items-center font-bold text-sm">
                               Verificado
@@ -591,8 +641,8 @@ export function OrganizationSheet({
                       <div>
                         <h3 className="text-lg font-bold mb-4">Links Relevantes</h3>
                         <p className="text-sm text-muted-foreground mb-4">
-                          Enlaces atractivos que aparecen en la pestaña Explorar (Ej. "Conoce nuestro
-                          informe 2024", "Regístrate como voluntario").
+                          Enlaces atractivos que aparecen en la pestaña Explorar (Ej. "Conoce
+                          nuestro informe 2024", "Regístrate como voluntario").
                         </p>
 
                         <div className="space-y-4">
@@ -633,12 +683,16 @@ export function OrganizationSheet({
                       <div>
                         <h3 className="text-lg font-bold mb-4">Necesidades de la Organización</h3>
                         <p className="text-sm text-muted-foreground mb-6">
-                          Registra materiales, recursos económicos, voluntariado o servicios que necesita la organización actualmente.
+                          Registra materiales, recursos económicos, voluntariado o servicios que
+                          necesita la organización actualmente.
                         </p>
 
                         <div className="space-y-6">
                           {needsFields.map((field, index) => (
-                            <div key={field.id} className="p-4 bg-muted/30 rounded-xl relative border space-y-4">
+                            <div
+                              key={field.id}
+                              className="p-4 bg-muted/30 rounded-xl relative border space-y-4"
+                            >
                               <Button
                                 type="button"
                                 variant="ghost"
@@ -656,16 +710,23 @@ export function OrganizationSheet({
                                     control={control}
                                     name={`needs.${index}.category` as const}
                                     render={({ field }) => (
-                                      <Select onValueChange={field.onChange} value={field.value || 'otro'}>
+                                      <Select
+                                        onValueChange={field.onChange}
+                                        value={field.value || 'otro'}
+                                      >
                                         <SelectTrigger className={INPUT_CX}>
                                           <SelectValue placeholder="Selecciona..." />
                                         </SelectTrigger>
                                         <SelectContent>
-                                          <SelectItem value="material">Donación Material</SelectItem>
+                                          <SelectItem value="material">
+                                            Donación Material
+                                          </SelectItem>
                                           <SelectItem value="voluntariado">Voluntariado</SelectItem>
                                           <SelectItem value="economica">Apoyo Económico</SelectItem>
                                           <SelectItem value="alimentos">Alimentos</SelectItem>
-                                          <SelectItem value="servicios">Servicios Profesionales</SelectItem>
+                                          <SelectItem value="servicios">
+                                            Servicios Profesionales
+                                          </SelectItem>
                                           <SelectItem value="otro">Otro</SelectItem>
                                         </SelectContent>
                                       </Select>
@@ -679,7 +740,10 @@ export function OrganizationSheet({
                                     control={control}
                                     name={`needs.${index}.urgency` as const}
                                     render={({ field }) => (
-                                      <Select onValueChange={field.onChange} value={field.value || 'media'}>
+                                      <Select
+                                        onValueChange={field.onChange}
+                                        value={field.value || 'media'}
+                                      >
                                         <SelectTrigger className={INPUT_CX}>
                                           <SelectValue placeholder="Selecciona..." />
                                         </SelectTrigger>
@@ -695,17 +759,29 @@ export function OrganizationSheet({
 
                                 <Field className="md:col-span-2">
                                   <FieldLabel>Título de la Necesidad</FieldLabel>
-                                  <Input className={INPUT_CX} placeholder="Ej. Cobijas e insumos de invierno" {...register(`needs.${index}.title` as const)} />
+                                  <Input
+                                    className={INPUT_CX}
+                                    placeholder="Ej. Cobijas e insumos de invierno"
+                                    {...register(`needs.${index}.title` as const)}
+                                  />
                                 </Field>
 
                                 <Field className="md:col-span-2">
                                   <FieldLabel>Descripción</FieldLabel>
-                                  <Textarea className={`${INPUT_CX} min-h-24`} placeholder="Ej. Necesitamos 200 cobertores en buen estado para albergues..." {...register(`needs.${index}.description` as const)} />
+                                  <Textarea
+                                    className={`${INPUT_CX} min-h-24`}
+                                    placeholder="Ej. Necesitamos 200 cobertores en buen estado para albergues..."
+                                    {...register(`needs.${index}.description` as const)}
+                                  />
                                 </Field>
 
                                 <Field className="md:col-span-2">
                                   <FieldLabel>Cantidad Esperada (Opcional)</FieldLabel>
-                                  <Input className={INPUT_CX} placeholder="Ej. 200 piezas / $10,000 MXN / 15 voluntarios" {...register(`needs.${index}.quantity` as const)} />
+                                  <Input
+                                    className={INPUT_CX}
+                                    placeholder="Ej. 200 piezas / $10,000 MXN / 15 voluntarios"
+                                    {...register(`needs.${index}.quantity` as const)}
+                                  />
                                 </Field>
                               </div>
                             </div>
@@ -716,7 +792,15 @@ export function OrganizationSheet({
                               type="button"
                               variant="outline"
                               size="sm"
-                              onClick={() => appendNeed({ category: 'material', urgency: 'media', title: '', description: '', quantity: '' })}
+                              onClick={() =>
+                                appendNeed({
+                                  category: 'material',
+                                  urgency: 'media',
+                                  title: '',
+                                  description: '',
+                                  quantity: '',
+                                })
+                              }
                             >
                               <Plus className="mr-2 h-4 w-4" /> Agregar Necesidad
                             </Button>
@@ -741,11 +825,7 @@ export function OrganizationSheet({
                         <Field>
                           <FieldLabel className={LABEL_CX}>Impacto Meta (Goal)</FieldLabel>
                           <FieldContent>
-                            <Input
-                              className={INPUT_CX}
-                              type="number"
-                              {...register('impactGoal')}
-                            />
+                            <Input className={INPUT_CX} type="number" {...register('impactGoal')} />
                           </FieldContent>
                         </Field>
                         <Field>
@@ -785,7 +865,9 @@ export function OrganizationSheet({
                             />
                           </Field>
                           <Field>
-                            <FieldLabel className={LABEL_CX}>Badge (Ej. Logro principal)</FieldLabel>
+                            <FieldLabel className={LABEL_CX}>
+                              Badge (Ej. Logro principal)
+                            </FieldLabel>
                             <Input className={INPUT_CX} {...register('featuredFact.badge')} />
                           </Field>
                         </div>
@@ -874,7 +956,9 @@ export function OrganizationSheet({
                         </div>
 
                         <div>
-                          <h3 className="text-lg font-bold mb-4">Milestone (Hito de trayectoria)</h3>
+                          <h3 className="text-lg font-bold mb-4">
+                            Milestone (Hito de trayectoria)
+                          </h3>
                           <div className="space-y-4">
                             <Field>
                               <FieldLabel className={LABEL_CX}>
@@ -888,7 +972,9 @@ export function OrganizationSheet({
                               </FieldLabel>
                               <Input className={INPUT_CX} {...register('milestone.tagline')} />
                             </Field>
-                            <p className="font-semibold text-sm mt-4 text-muted-foreground">Stat 1</p>
+                            <p className="font-semibold text-sm mt-4 text-muted-foreground">
+                              Stat 1
+                            </p>
                             <div className="grid grid-cols-2 gap-2">
                               <Input
                                 className={INPUT_CX}
@@ -901,7 +987,9 @@ export function OrganizationSheet({
                                 {...register('milestone.stats.0.value')}
                               />
                             </div>
-                            <p className="font-semibold text-sm mt-2 text-muted-foreground">Stat 2</p>
+                            <p className="font-semibold text-sm mt-2 text-muted-foreground">
+                              Stat 2
+                            </p>
                             <div className="grid grid-cols-2 gap-2">
                               <Input
                                 className={INPUT_CX}
@@ -937,7 +1025,11 @@ export function OrganizationSheet({
                         <Field>
                           <FieldLabel className={LABEL_CX}>Teléfono</FieldLabel>
                           <FieldContent>
-                            <Input className={INPUT_CX} placeholder="+52..." {...register('phone')} />
+                            <Input
+                              className={INPUT_CX}
+                              placeholder="+52..."
+                              {...register('phone')}
+                            />
                           </FieldContent>
                         </Field>
                         <Field>
@@ -1146,7 +1238,8 @@ export function OrganizationSheet({
                   </div>
                 </Tabs>
               </div>
-            )} {/* end !isLoading */}
+            )}{' '}
+            {/* end !isLoading */}
           </div>
 
           <SheetFooter className="flex-row items-center justify-end gap-3 px-8 py-4 border-t shrink-0 bg-background/50">
@@ -1161,10 +1254,11 @@ export function OrganizationSheet({
             <Button
               type="submit"
               disabled={isPending || isLoading}
-              className={`min-w-[180px] transition-all duration-300 ${savedSuccess
+              className={`min-w-[180px] transition-all duration-300 ${
+                savedSuccess
                   ? 'bg-emerald-600 hover:bg-emerald-600 '
                   : 'bg-primary hover:bg-primary/90'
-                }`}
+              }`}
             >
               {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               {savedSuccess && <CheckCircle2 className="mr-2 h-4 w-4" />}

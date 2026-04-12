@@ -1,9 +1,9 @@
-"use client";
+'use client'
 
-import { motion } from "framer-motion";
-import { Card, CardContent } from "@/components/ui/card";
-import { ShieldCheck, HeartHandshake } from "lucide-react";
-import Image from "next/image";
+import { motion } from 'framer-motion'
+import { Card, CardContent } from '@/components/ui/card'
+import { ShieldCheck, HeartHandshake } from 'lucide-react'
+import Image from 'next/image'
 
 export function TrustSection() {
   return (
@@ -13,7 +13,7 @@ export function TrustSection() {
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7 }}
           className="lg:w-1/2 relative"
         >
@@ -33,7 +33,7 @@ export function TrustSection() {
         <motion.div
           initial={{ opacity: 0, x: 50 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7 }}
           className="lg:w-1/2"
         >
@@ -41,9 +41,9 @@ export function TrustSection() {
             Por un ecosistema social transparente y accesible.
           </h2>
           <p className="font-body text-lg text-muted-foreground mb-8 leading-relaxed">
-            No somos una plataforma de recaudación, somos un puente. Creemos que
-            la transformación social ocurre cuando las personas saben exactamente
-            dónde y cómo su ayuda puede tener el mayor impacto.
+            No somos una plataforma de recaudación, somos un puente. Creemos que la transformación
+            social ocurre cuando las personas saben exactamente dónde y cómo su ayuda puede tener el
+            mayor impacto.
           </p>
 
           {/* Feature Cards */}
@@ -51,12 +51,9 @@ export function TrustSection() {
             <Card className="bg-muted border-none ring-0 rounded-xl py-0">
               <CardContent className="p-6">
                 <ShieldCheck className="size-8 text-primary dark:text-ds-primary-fixed mb-3" />
-                <h4 className="font-bold text-foreground mb-1 text-base">
-                  Organizaciones Curadas
-                </h4>
+                <h4 className="font-bold text-foreground mb-1 text-base">Organizaciones Curadas</h4>
                 <p className="text-sm text-muted-foreground">
-                  Verificamos la existencia y legalidad de cada ONG antes de
-                  listarla.
+                  Verificamos la existencia y legalidad de cada ONG antes de listarla.
                 </p>
               </CardContent>
             </Card>
@@ -64,12 +61,9 @@ export function TrustSection() {
             <Card className="bg-muted border-none ring-0 rounded-xl py-0">
               <CardContent className="p-6">
                 <HeartHandshake className="size-8 text-ds-secondary dark:text-ds-secondary-fixed mb-3" />
-                <h4 className="font-bold text-foreground mb-1 text-base">
-                  Impacto Real
-                </h4>
+                <h4 className="font-bold text-foreground mb-1 text-base">Impacto Real</h4>
                 <p className="text-sm text-muted-foreground">
-                  Conecta directamente con los líderes de cada proyecto sin
-                  intermediarios.
+                  Conecta directamente con los líderes de cada proyecto sin intermediarios.
                 </p>
               </CardContent>
             </Card>
@@ -77,5 +71,5 @@ export function TrustSection() {
         </motion.div>
       </div>
     </section>
-  );
+  )
 }

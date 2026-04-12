@@ -1,25 +1,25 @@
-"use client";
+'use client'
 
-import Link from "next/link";
-import { motion } from "framer-motion";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, BadgeCheck, Heart } from "lucide-react";
-import { trackDonationClick } from "@/server/actions";
+import Link from 'next/link'
+import { motion } from 'framer-motion'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { ArrowLeft, BadgeCheck, Heart } from 'lucide-react'
+import { trackDonationClick } from '@/server/actions'
 
 interface OrgHeaderProps {
-  name: string;
-  verified: boolean;
-  categories: { id: string; name: string }[];
-  donationLink?: string | null;
-  orgId: string;
+  name: string
+  verified: boolean
+  categories: { id: string; name: string }[]
+  donationLink?: string | null
+  orgId: string
 }
 
 export function OrgHeader({ name, verified, categories, donationLink, orgId }: OrgHeaderProps) {
   const handleDonateClick = async () => {
     // Fire-and-forget tracking — don't block navigation
-    trackDonationClick(orgId).catch(() => { });
-  };
+    trackDonationClick(orgId).catch(() => {})
+  }
 
   return (
     <section className="mt-20 space-y-4">
@@ -92,5 +92,5 @@ export function OrgHeader({ name, verified, categories, donationLink, orgId }: O
         )}
       </motion.div>
     </section>
-  );
+  )
 }

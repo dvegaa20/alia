@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+import { ArrowRight } from 'lucide-react'
 
 export function FooterCTA() {
   return (
@@ -10,7 +10,7 @@ export function FooterCTA() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 80% 60% at 50% 0%, color-mix(in srgb, var(--primary) 15%, transparent) 0%, transparent 70%)",
+            'radial-gradient(ellipse 80% 60% at 50% 0%, color-mix(in srgb, var(--primary) 15%, transparent) 0%, transparent 70%)',
         }}
       />
 
@@ -19,9 +19,8 @@ export function FooterCTA() {
           ¿Listo para hacer una verdadera diferencia?
         </h2>
         <p className="text-base-400 text-base sm:text-lg max-w-2xl mx-auto font-body leading-relaxed">
-          Explora nuestro directorio verificado de organizaciones sociales y
-          encuentra el proyecto perfecto para apoyar con tu tiempo o tus
-          recursos.
+          Explora nuestro directorio verificado de organizaciones sociales y encuentra el proyecto
+          perfecto para apoyar con tu tiempo o tus recursos.
         </p>
         <div className="pt-2">
           <Button
@@ -37,5 +36,5 @@ export function FooterCTA() {
         </div>
       </div>
     </div>
-  );
+  )
 }

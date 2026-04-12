@@ -1,8 +1,8 @@
-import { getAdminCategories } from "@/server/actions"
-import { CategoriesTable } from "@/components/admin/categories-table"
+import { getAdminCategories } from '@/server/actions'
+import { CategoriesTable } from '@/components/admin/categories-table'
 
 export const metadata = {
-  title: "Categorías | Admin Panel",
+  title: 'Categorías | Admin Panel',
 }
 
 export default async function CategoriesPage() {

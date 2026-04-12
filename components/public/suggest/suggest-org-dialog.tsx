@@ -1,15 +1,15 @@
-"use client";
+'use client'
 
-import { useState, useEffect } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
-import { z } from "zod";
-import { Info, Link as LinkIcon, Send, Loader2, Check, X } from "lucide-react";
-import { submitSuggestion, getPublicCategories } from "@/server/actions";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useState, useEffect } from 'react'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Controller, useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { Info, Link as LinkIcon, Send, Loader2, Check, X } from 'lucide-react'
+import { submitSuggestion, getPublicCategories } from '@/server/actions'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { Alert, AlertDescription } from '@/components/ui/alert'
 import {
   Dialog,
   DialogContent,
@@ -17,37 +17,28 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from '@/components/ui/dialog'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "@/components/ui/input-group";
-import {
-  Field,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field";
-import { MEXICO_STATES } from "@/lib/mexico-states";
+} from '@/components/ui/select'
+import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group'
+import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'
+import { MEXICO_STATES } from '@/lib/mexico-states'
 
 /* ── Zod schema ─────────────────────────────────────── */
 const suggestSchema = z.object({
-  orgName: z.string().min(2, "El nombre es obligatorio."),
-  category: z.string().min(1, "Selecciona una categoría."),
-  location: z.string().min(2, "La ubicación es obligatoria."),
-  description: z.string().min(10, "Escribe al menos 10 caracteres."),
-  url: z.string().url("Introduce una URL válida."),
-});
+  orgName: z.string().min(2, 'El nombre es obligatorio.'),
+  category: z.string().min(1, 'Selecciona una categoría.'),
+  location: z.string().min(2, 'La ubicación es obligatoria.'),
+  description: z.string().min(10, 'Escribe al menos 10 caracteres.'),
+  url: z.string().url('Introduce una URL válida.'),
+})
 
-type SuggestValues = z.infer<typeof suggestSchema>;
+type SuggestValues = z.infer<typeof suggestSchema>
 
 import type { SubmitState } from '@/types'
 import { LABEL_CX, INPUT_CX } from '@/lib/styles'
@@ -58,94 +49,87 @@ const BUTTON_STATES: Record<
   { text: string; icon: React.ReactNode; className: string }
 > = {
   idle: {
-    text: "Enviar Sugerencia",
+    text: 'Enviar Sugerencia',
     icon: <Send className="size-4" />,
     className:
-      "bg-primary text-primary-foreground shadow-lg shadow-primary/10 hover:shadow-primary/20 hover:-translate-y-0.5",
+      'bg-primary text-primary-foreground shadow-lg shadow-primary/10 hover:shadow-primary/20 hover:-translate-y-0.5',
   },
   loading: {
-    text: "Enviando...",
+    text: 'Enviando...',
     icon: <Loader2 className="size-4 animate-spin" />,
-    className:
-      "bg-primary text-primary-foreground opacity-90 cursor-wait",
+    className: 'bg-primary text-primary-foreground opacity-90 cursor-wait',
   },
   success: {
-    text: "¡Enviado con éxito!",
+    text: '¡Enviado con éxito!',
     icon: <Check className="size-4" />,
-    className:
-      "bg-gradient-to-r from-emerald-500 to-emerald-600  shadow-lg shadow-emerald-500/20",
+    className: 'bg-gradient-to-r from-emerald-500 to-emerald-600  shadow-lg shadow-emerald-500/20',
   },
   error: {
-    text: "Error al enviar",
+    text: 'Error al enviar',
     icon: <X className="size-4" />,
-    className:
-      "bg-gradient-to-r from-red-500 to-red-600  shadow-lg shadow-red-500/20",
+    className: 'bg-gradient-to-r from-red-500 to-red-600  shadow-lg shadow-red-500/20',
   },
-};
+}
 
 /* ── Component ──────────────────────────────────────── */
-export function SuggestOrgDialog({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const [open, setOpen] = useState(false);
-  const [submitState, setSubmitState] = useState<SubmitState>("idle");
-  const [categories, setCategories] = useState<{ id: string; name: string }[]>([]);
+export function SuggestOrgDialog({ children }: { children: React.ReactNode }) {
+  const [open, setOpen] = useState(false)
+  const [submitState, setSubmitState] = useState<SubmitState>('idle')
+  const [categories, setCategories] = useState<{ id: string; name: string }[]>([])
 
   // Fetch categories when dialog opens
   useEffect(() => {
     if (open && categories.length === 0) {
       getPublicCategories().then((res) => {
         if (res.success && res.data) {
-          setCategories(res.data);
+          setCategories(res.data)
         }
-      });
+      })
     }
-  }, [open, categories.length]);
+  }, [open, categories.length])
 
   const form = useForm<SuggestValues>({
     resolver: zodResolver(suggestSchema),
     defaultValues: {
-      orgName: "",
-      category: "",
-      location: "",
-      description: "",
-      url: "",
+      orgName: '',
+      category: '',
+      location: '',
+      description: '',
+      url: '',
     },
-  });
+  })
 
   // Reset state when dialog opens/closes
   useEffect(() => {
     if (open) {
-      setSubmitState("idle");
-      form.reset();
+      setSubmitState('idle')
+      form.reset()
     }
-  }, [open, form]);
+  }, [open, form])
 
   async function onSubmit(data: SuggestValues) {
-    setSubmitState("loading");
+    setSubmitState('loading')
 
     try {
-      const result = await submitSuggestion(data);
+      const result = await submitSuggestion(data)
 
       if (result.success) {
-        setSubmitState("success");
+        setSubmitState('success')
         // Close dialog after showing success
         setTimeout(() => {
-          setOpen(false);
-        }, 1500);
+          setOpen(false)
+        }, 1500)
       } else {
-        setSubmitState("error");
-        setTimeout(() => setSubmitState("idle"), 2500);
+        setSubmitState('error')
+        setTimeout(() => setSubmitState('idle'), 2500)
       }
     } catch {
-      setSubmitState("error");
-      setTimeout(() => setSubmitState("idle"), 2500);
+      setSubmitState('error')
+      setTimeout(() => setSubmitState('idle'), 2500)
     }
   }
 
-  const btnState = BUTTON_STATES[submitState];
+  const btnState = BUTTON_STATES[submitState]
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -161,8 +145,7 @@ export function SuggestOrgDialog({
             Sugerir una Organización
           </DialogTitle>
           <DialogDescription className="font-body text-muted-foreground text-sm max-w-md mx-auto leading-relaxed">
-            Ayúdanos a ampliar nuestra red conectando a más personas con causas
-            que importan.
+            Ayúdanos a ampliar nuestra red conectando a más personas con causas que importan.
           </DialogDescription>
         </DialogHeader>
 
@@ -172,17 +155,13 @@ export function SuggestOrgDialog({
           <Alert className="rounded-xl border-none border-l-4 border-l-primary/20 bg-muted/50 p-4">
             <Info className="size-4 text-primary mt-0.5" />
             <AlertDescription className="font-body text-muted-foreground text-xs leading-relaxed">
-              Todas las sugerencias son revisadas manualmente por nuestro equipo
-              antes de ser publicadas para garantizar la calidad del directorio.
+              Todas las sugerencias son revisadas manualmente por nuestro equipo antes de ser
+              publicadas para garantizar la calidad del directorio.
             </AlertDescription>
           </Alert>
 
           {/* Form */}
-          <form
-            id="suggest-org-form"
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-6"
-          >
+          <form id="suggest-org-form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <FieldGroup>
               {/* Nombre de la Organización */}
               <Controller
@@ -200,11 +179,9 @@ export function SuggestOrgDialog({
                       placeholder="Ej. Fundación Vida Verde"
                       autoComplete="off"
                       className={INPUT_CX}
-                      disabled={submitState !== "idle"}
+                      disabled={submitState !== 'idle'}
                     />
-                    {fieldState.invalid && (
-                      <FieldError errors={[fieldState.error]} />
-                    )}
+                    {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
                   </Field>
                 )}
               />
@@ -223,7 +200,7 @@ export function SuggestOrgDialog({
                       <Select
                         onValueChange={field.onChange}
                         defaultValue={field.value}
-                        disabled={submitState !== "idle"}
+                        disabled={submitState !== 'idle'}
                       >
                         <SelectTrigger
                           id="category"
@@ -246,9 +223,7 @@ export function SuggestOrgDialog({
                           )}
                         </SelectContent>
                       </Select>
-                      {fieldState.invalid && (
-                        <FieldError errors={[fieldState.error]} />
-                      )}
+                      {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
                     </Field>
                   )}
                 />
@@ -265,7 +240,7 @@ export function SuggestOrgDialog({
                       <Select
                         onValueChange={field.onChange}
                         defaultValue={field.value}
-                        disabled={submitState !== "idle"}
+                        disabled={submitState !== 'idle'}
                       >
                         <SelectTrigger
                           id="location"
@@ -282,9 +257,7 @@ export function SuggestOrgDialog({
                           ))}
                         </SelectContent>
                       </Select>
-                      {fieldState.invalid && (
-                        <FieldError errors={[fieldState.error]} />
-                      )}
+                      {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
                     </Field>
                   )}
                 />
@@ -306,11 +279,9 @@ export function SuggestOrgDialog({
                       aria-invalid={fieldState.invalid}
                       placeholder="¿Qué hace esta organización por su comunidad?"
                       className={`${INPUT_CX} min-h-[100px]`}
-                      disabled={submitState !== "idle"}
+                      disabled={submitState !== 'idle'}
                     />
-                    {fieldState.invalid && (
-                      <FieldError errors={[fieldState.error]} />
-                    )}
+                    {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
                   </Field>
                 )}
               />
@@ -335,16 +306,13 @@ export function SuggestOrgDialog({
                         aria-invalid={fieldState.invalid}
                         placeholder="https://www.organizacion.org"
                         className="font-body text-foreground placeholder:text-muted-foreground/50 py-3"
-                        disabled={submitState !== "idle"}
+                        disabled={submitState !== 'idle'}
                       />
                     </InputGroup>
                     <p className="font-label text-[10px] text-muted-foreground/70 italic mt-1">
-                      Utilizamos este enlace para verificar la autenticidad de
-                      la ONG.
+                      Utilizamos este enlace para verificar la autenticidad de la ONG.
                     </p>
-                    {fieldState.invalid && (
-                      <FieldError errors={[fieldState.error]} />
-                    )}
+                    {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
                   </Field>
                 )}
               />
@@ -354,7 +322,7 @@ export function SuggestOrgDialog({
             <div className="pt-2">
               <Button
                 type="submit"
-                disabled={submitState === "loading" || submitState === "success"}
+                disabled={submitState === 'loading' || submitState === 'success'}
                 className={`w-full font-headline font-bold py-4 h-auto rounded-lg active:scale-[0.98] transition-all duration-500 text-base border-none ${btnState.className}`}
               >
                 <span
@@ -371,7 +339,7 @@ export function SuggestOrgDialog({
           {/* Secondary CTA */}
           <div className="text-center">
             <p className="text-muted-foreground font-body text-xs">
-              ¿Tienes dudas sobre los criterios de inclusión?{" "}
+              ¿Tienes dudas sobre los criterios de inclusión?{' '}
               <a
                 href="#"
                 className="text-primary font-semibold underline underline-offset-4 hover:text-primary/80 transition-colors"
@@ -383,5 +351,5 @@ export function SuggestOrgDialog({
         </div>
       </DialogContent>
     </Dialog>
-  );
+  )
 }

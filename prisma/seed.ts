@@ -85,12 +85,19 @@ async function main() {
         badge: 'Logro principal',
       },
       secondaryFacts: [
-        { value: '120k', unit: 'Voluntarios', label: 'movilizados', icon: 'users', color: 'violet' },
+        {
+          value: '120k',
+          unit: 'Voluntarios',
+          label: 'movilizados',
+          icon: 'users',
+          color: 'violet',
+        },
         { value: '19', unit: 'Países', label: 'con presencia', icon: 'globe', color: 'emerald' },
         { value: '450', unit: 'Comunidades', label: 'atendidas', icon: 'home', color: 'sky' },
       ],
       testimony: {
-        quote: 'Gracias a TECHO, mi familia tiene un lugar seguro donde vivir. Mis hijos ya no enferman por la humedad.',
+        quote:
+          'Gracias a TECHO, mi familia tiene un lugar seguro donde vivir. Mis hijos ya no enferman por la humedad.',
         author: 'María González',
         role: 'Beneficiaria en Ecatepec',
         avatarUrl: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Maria&backgroundColor=b6e3f4',
@@ -157,7 +164,13 @@ async function main() {
       },
       secondaryFacts: [
         { value: '45k', unit: 'Litros', label: 'de agua filtrada', icon: 'droplet', color: 'sky' },
-        { value: '850', unit: 'Voluntarios', label: 'miembros activos', icon: 'users', color: 'violet' },
+        {
+          value: '850',
+          unit: 'Voluntarios',
+          label: 'miembros activos',
+          icon: 'users',
+          color: 'violet',
+        },
         { value: '12', unit: 'Zonas', label: 'reforestadas', icon: 'globe', color: 'emerald' },
       ],
       testimony: {
@@ -213,9 +226,7 @@ async function main() {
       impactCurrent: 950000,
       impactGoal: 1000000,
       impactType: 'Personas atendidas',
-      relevantLinks: [
-        'https://www.cruzrojamexicana.org.mx/que-hacemos',
-      ],
+      relevantLinks: ['https://www.cruzrojamexicana.org.mx/que-hacemos'],
       featuredFact: {
         value: '950k',
         unit: 'personas',
@@ -352,9 +363,7 @@ async function main() {
       impactCurrent: 8500,
       impactGoal: 10000,
       impactType: 'Acciones urgentes enviadas',
-      relevantLinks: [
-        'https://amnistia.org.mx/contenido/que-hacemos/',
-      ],
+      relevantLinks: ['https://amnistia.org.mx/contenido/que-hacemos/'],
       featuredFact: {
         value: '10M+',
         unit: 'personas',
@@ -364,16 +373,29 @@ async function main() {
         badge: 'Presencia global',
       },
       secondaryFacts: [
-        { value: '8.5k', unit: 'Acciones', label: 'urgentes enviadas', icon: 'megaphone', color: 'rose' },
+        {
+          value: '8.5k',
+          unit: 'Acciones',
+          label: 'urgentes enviadas',
+          icon: 'megaphone',
+          color: 'rose',
+        },
         { value: '150+', unit: 'Países', label: 'con presencia', icon: 'globe', color: 'emerald' },
-        { value: '48', unit: 'Informes', label: 'publicados este año', icon: 'file-text', color: 'sky' },
+        {
+          value: '48',
+          unit: 'Informes',
+          label: 'publicados este año',
+          icon: 'file-text',
+          color: 'sky',
+        },
       ],
       testimony: {
         quote:
           'Amnistía amplificó la voz de nuestra comunidad cuando más peligroso era hablar. Cada firma cuenta.',
         author: 'Daniela Torres',
         role: 'Activista comunitaria',
-        avatarUrl: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Daniela&backgroundColor=d1d4f9',
+        avatarUrl:
+          'https://api.dicebear.com/9.x/adventurer/svg?seed=Daniela&backgroundColor=d1d4f9',
       },
       milestone: {
         category: 'Derechos Humanos',
@@ -421,10 +443,7 @@ async function main() {
       impactCurrent: 4200,
       impactGoal: 5000,
       impactType: 'Hectáreas conservadas',
-      relevantLinks: [
-        'https://www.wwf.org.mx/que_hacemos/',
-        'https://www.worldwildlife.org/',
-      ],
+      relevantLinks: ['https://www.wwf.org.mx/que_hacemos/', 'https://www.worldwildlife.org/'],
       featuredFact: {
         value: '4,200',
         unit: 'hectáreas',
@@ -443,7 +462,8 @@ async function main() {
           'Con WWF aprendimos a producir sin destruir. Ahora nuestro café es orgánico y nuestro bosque sigue en pie.',
         author: 'Roberto Sánchez',
         role: 'Productor en Chiapas',
-        avatarUrl: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Roberto&backgroundColor=ffdfbf',
+        avatarUrl:
+          'https://api.dicebear.com/9.x/adventurer/svg?seed=Roberto&backgroundColor=ffdfbf',
       },
       milestone: {
         category: 'Medio ambiente',

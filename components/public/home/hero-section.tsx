@@ -1,37 +1,37 @@
-"use client";
+'use client'
 
-import { useState, useRef } from "react";
-import { useRouter } from "next/navigation";
-import { Combobox as ComboboxPrimitive } from "@base-ui/react";
-import { motion } from "framer-motion";
-import { Search } from "lucide-react";
-import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
+import { useState, useRef } from 'react'
+import { useRouter } from 'next/navigation'
+import { Combobox as ComboboxPrimitive } from '@base-ui/react'
+import { motion } from 'framer-motion'
+import { Search } from 'lucide-react'
+import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group'
 import {
   ComboboxContent,
   ComboboxList,
   ComboboxItem,
   ComboboxEmpty,
-} from "@/components/ui/combobox";
-import { cn } from "@/lib/utils";
-import Image from "next/image";
+} from '@/components/ui/combobox'
+import { cn } from '@/lib/utils'
+import Image from 'next/image'
 
 import type { OrganizationOption } from '@/types'
 
 export function HeroSection({ organizations }: { organizations: OrganizationOption[] }) {
-  const router = useRouter();
-  const [inputValue, setInputValue] = useState("");
-  const anchorRef = useRef<HTMLDivElement>(null);
+  const router = useRouter()
+  const [inputValue, setInputValue] = useState('')
+  const anchorRef = useRef<HTMLDivElement>(null)
 
   const filteredOrgs =
-    inputValue === ""
+    inputValue === ''
       ? []
       : organizations.filter(
-        (org) =>
-          org.name.toLowerCase().includes(inputValue.toLowerCase()) ||
-          org.category.toLowerCase().includes(inputValue.toLowerCase())
-      );
+          (org) =>
+            org.name.toLowerCase().includes(inputValue.toLowerCase()) ||
+            org.category.toLowerCase().includes(inputValue.toLowerCase())
+        )
 
-  const isOpen = inputValue.length > 0;
+  const isOpen = inputValue.length > 0
 
   return (
     <section className="relative px-8 pt-20 pb-16 overflow-hidden bg-background">
@@ -40,10 +40,10 @@ export function HeroSection({ organizations }: { organizations: OrganizationOpti
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
             className="font-headline font-bold text-5xl md:text-7xl text-foreground tracking-tight leading-[1.1] mb-8"
           >
-            Encuentra y apoya causas que{" "}
+            Encuentra y apoya causas que{' '}
             <span className="text-primary dark:text-ds-primary-fixed italic">importan</span>.
           </motion.h1>
 
@@ -51,27 +51,33 @@ export function HeroSection({ organizations }: { organizations: OrganizationOpti
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
             className="relative max-w-2xl"
           >
             <ComboboxPrimitive.Root
               open={isOpen}
               onOpenChange={(open) => {
-                if (!open) setInputValue("");
+                if (!open) setInputValue('')
               }}
               onValueChange={(val) => {
                 if (val) {
-                  router.push(`/directory/${val}`);
+                  router.push(`/directory/${val}`)
                 }
               }}
             >
-              <div ref={anchorRef} className={cn("relative w-full z-50", isOpen ? "editorial-shadow-sm rounded-t-xl" : "")}>
+              <div
+                ref={anchorRef}
+                className={cn(
+                  'relative w-full z-50',
+                  isOpen ? 'editorial-shadow-sm rounded-t-xl' : ''
+                )}
+              >
                 <InputGroup
                   className={cn(
-                    "h-16 border-none! ring-0! outline-none! transition-all duration-300",
+                    'h-16 border-none! ring-0! outline-none! transition-all duration-300',
                     isOpen
-                      ? "rounded-t-xl rounded-b-none bg-muted shadow-none relative has-[[data-slot=input-group-control]:focus-visible]:ring-0! has-[[data-slot=input-group-control]:focus-visible]:border-none!"
-                      : "rounded-xl bg-muted editorial-shadow has-[[data-slot=input-group-control]:focus-visible]:ring-0! has-[[data-slot=input-group-control]:focus-visible]:border-none!"
+                      ? 'rounded-t-xl rounded-b-none bg-muted shadow-none relative has-[[data-slot=input-group-control]:focus-visible]:ring-0! has-[[data-slot=input-group-control]:focus-visible]:border-none!'
+                      : 'rounded-xl bg-muted editorial-shadow has-[[data-slot=input-group-control]:focus-visible]:ring-0! has-[[data-slot=input-group-control]:focus-visible]:border-none!'
                   )}
                 >
                   <InputGroupAddon align="inline-start" className="pl-6">
@@ -126,7 +132,7 @@ export function HeroSection({ organizations }: { organizations: OrganizationOpti
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1.2, ease: "easeOut" }}
+        transition={{ duration: 1.2, ease: 'easeOut' }}
         className="absolute right-0 top-0 w-1/2 h-full hidden lg:block"
       >
         <div className="w-full h-full bg-linear-to-l from-transparent via-background to-background absolute inset-0 z-0" />
@@ -139,5 +145,5 @@ export function HeroSection({ organizations }: { organizations: OrganizationOpti
         />
       </motion.div>
     </section>
-  );
+  )
 }

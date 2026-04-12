@@ -1,6 +1,6 @@
-"use client"
+'use client'
 
-import { useState, useTransition, useEffect } from "react"
+import { useState, useTransition, useEffect } from 'react'
 import {
   MoreVertical,
   Pencil,
@@ -9,7 +9,7 @@ import {
   Search,
   ArrowDownNarrowWide,
   ArrowUpNarrowWide,
-} from "lucide-react"
+} from 'lucide-react'
 import {
   Table,
   TableBody,
@@ -17,22 +17,22 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+} from '@/components/ui/table'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from '@/components/ui/select'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from '@/components/ui/dropdown-menu'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -42,19 +42,19 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
-import { deleteAdminCategory } from "@/server/actions"
-import { CategoryFormDialog } from "./category-form-dialog"
-import { AdminPagination } from "./admin-pagination"
+} from '@/components/ui/alert-dialog'
+import { deleteAdminCategory } from '@/server/actions'
+import { CategoryFormDialog } from './category-form-dialog'
+import { AdminPagination } from './admin-pagination'
 import type { CategoryWithCount, CategoriesTableProps as Props } from '@/types'
 
 export function CategoriesTable({ categories }: Props) {
   const [isPending, startTransition] = useTransition()
 
   // Filter state
-  const [search, setSearch] = useState("")
-  const [sortField, setSortField] = useState<"name" | "count">("name")
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc")
+  const [search, setSearch] = useState('')
+  const [sortField, setSortField] = useState<'name' | 'count'>('name')
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc')
 
   // Pagination state
   const [page, setPage] = useState(1)
@@ -70,17 +70,17 @@ export function CategoriesTable({ categories }: Props) {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [deleteTarget, setDeleteTarget] = useState<{ id: string; name: string } | null>(null)
 
-  const filteredCategories = categories.filter((c) =>
-    c.name.toLowerCase().includes(search.toLowerCase())
-  ).sort((a, b) => {
-    let comparison = 0
-    if (sortField === "name") {
-      comparison = a.name.localeCompare(b.name)
-    } else if (sortField === "count") {
-      comparison = a._count.organizations - b._count.organizations
-    }
-    return sortOrder === "asc" ? comparison : -comparison
-  })
+  const filteredCategories = categories
+    .filter((c) => c.name.toLowerCase().includes(search.toLowerCase()))
+    .sort((a, b) => {
+      let comparison = 0
+      if (sortField === 'name') {
+        comparison = a.name.localeCompare(b.name)
+      } else if (sortField === 'count') {
+        comparison = a._count.organizations - b._count.organizations
+      }
+      return sortOrder === 'asc' ? comparison : -comparison
+    })
 
   // Pagination calculations
   const total = filteredCategories.length
@@ -102,9 +102,7 @@ export function CategoriesTable({ categories }: Props) {
         {/* Header */}
         <div className="px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b bg-transparent">
           <div className="space-y-1">
-            <h2 className="text-xl font-bold text-card-foreground">
-              Directorio de Categorías
-            </h2>
+            <h2 className="text-xl font-bold text-card-foreground">Directorio de Categorías</h2>
             <p className="text-sm text-muted-foreground">
               Administra las áreas en las que operan las organizaciones.
             </p>
@@ -121,10 +119,7 @@ export function CategoriesTable({ categories }: Props) {
             </div>
 
             <div className="flex items-center gap-1">
-              <Select
-                value={sortField}
-                onValueChange={(v) => setSortField(v as "name" | "count")}
-              >
+              <Select value={sortField} onValueChange={(v) => setSortField(v as 'name' | 'count')}>
                 <SelectTrigger className="w-32 bg-muted border-none text-sm">
                   <SelectValue placeholder="Ordenar" />
                 </SelectTrigger>
@@ -136,11 +131,11 @@ export function CategoriesTable({ categories }: Props) {
               <Button
                 variant="outline"
                 size="icon"
-                onClick={() => setSortOrder(prev => prev === "desc" ? "asc" : "desc")}
+                onClick={() => setSortOrder((prev) => (prev === 'desc' ? 'asc' : 'desc'))}
                 className="h-9 w-9 border-none bg-muted hover:bg-muted/80 shrink-0"
-                title={sortOrder === "desc" ? "Orden Descendente" : "Orden Ascendente"}
+                title={sortOrder === 'desc' ? 'Orden Descendente' : 'Orden Ascendente'}
               >
-                {sortOrder === "desc" ? (
+                {sortOrder === 'desc' ? (
                   <ArrowDownNarrowWide className="h-4 w-4 text-muted-foreground" />
                 ) : (
                   <ArrowUpNarrowWide className="h-4 w-4 text-muted-foreground" />
@@ -148,13 +143,14 @@ export function CategoriesTable({ categories }: Props) {
               </Button>
             </div>
 
-            <Button onClick={() => {
-              setEditCategory(null)
-              setIsEditDialogOpen(true)
-            }}>
+            <Button
+              onClick={() => {
+                setEditCategory(null)
+                setIsEditDialogOpen(true)
+              }}
+            >
               Nueva Categoría
             </Button>
-
           </div>
         </div>
 
@@ -183,15 +179,10 @@ export function CategoriesTable({ categories }: Props) {
             <TableBody>
               {filteredCategories.length === 0 ? (
                 <TableRow>
-                  <TableCell
-                    colSpan={5}
-                    className="px-8 py-16 text-center text-muted-foreground"
-                  >
+                  <TableCell colSpan={5} className="px-8 py-16 text-center text-muted-foreground">
                     <div className="flex flex-col items-center gap-2">
                       <Tags className="h-8 w-8 opacity-40" />
-                      <p className="text-sm font-medium">
-                        No se encontraron categorías
-                      </p>
+                      <p className="text-sm font-medium">No se encontraron categorías</p>
                     </div>
                   </TableCell>
                 </TableRow>
@@ -213,7 +204,7 @@ export function CategoriesTable({ categories }: Props) {
                     {/* Description */}
                     <TableCell className="px-8 py-5">
                       <span className="text-sm text-muted-foreground line-clamp-1 max-w-sm">
-                        {cat.description || "—"}
+                        {cat.description || '—'}
                       </span>
                     </TableCell>
 
@@ -221,7 +212,7 @@ export function CategoriesTable({ categories }: Props) {
                     <TableCell className="px-8 py-5 text-sm text-muted-foreground">
                       <span className="font-semibold text-foreground">
                         {cat._count.organizations}
-                      </span>{" "}
+                      </span>{' '}
                       asignadas
                     </TableCell>
 
@@ -250,9 +241,7 @@ export function CategoriesTable({ categories }: Props) {
 
                           <DropdownMenuItem
                             className="text-red-600 focus:text-red-600"
-                            onClick={() =>
-                              setDeleteTarget({ id: cat.id, name: cat.name })
-                            }
+                            onClick={() => setDeleteTarget({ id: cat.id, name: cat.name })}
                           >
                             <Trash2 className="h-4 w-4 mr-2" />
                             Eliminar
@@ -268,10 +257,7 @@ export function CategoriesTable({ categories }: Props) {
         </div>
 
         {/* Pagination */}
-        <AdminPagination 
-          meta={{ page, limit, total, totalPages }} 
-          onPageChange={setPage} 
-        />
+        <AdminPagination meta={{ page, limit, total, totalPages }} onPageChange={setPage} />
       </section>
 
       {/* Forms and Dialogs */}
@@ -281,36 +267,29 @@ export function CategoriesTable({ categories }: Props) {
         initialData={
           editCategory
             ? {
-              id: editCategory.id,
-              name: editCategory.name,
-              description: editCategory.description || undefined,
-            }
+                id: editCategory.id,
+                name: editCategory.name,
+                description: editCategory.description || undefined,
+              }
             : null
         }
       />
 
-      <AlertDialog
-        open={!!deleteTarget}
-        onOpenChange={(open) => !open && setDeleteTarget(null)}
-      >
+      <AlertDialog open={!!deleteTarget} onOpenChange={(open) => !open && setDeleteTarget(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>¿Eliminar categoría?</AlertDialogTitle>
             <AlertDialogDescription>
-              La categoría{" "}
-              <span className="font-semibold text-foreground">
-                {deleteTarget?.name}
-              </span>{" "}
-              será eliminada permanentemente. Las organizaciones asociadas perderán esta clasificación pero no serán borradas.
+              La categoría{' '}
+              <span className="font-semibold text-foreground">{deleteTarget?.name}</span> será
+              eliminada permanentemente. Las organizaciones asociadas perderán esta clasificación
+              pero no serán borradas.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancelar</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleDelete}
-              className="bg-red-600 hover:bg-red-700"
-            >
-              {isPending ? "Eliminando..." : "Eliminar"}
+            <AlertDialogAction onClick={handleDelete} className="bg-red-600 hover:bg-red-700">
+              {isPending ? 'Eliminando...' : 'Eliminar'}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

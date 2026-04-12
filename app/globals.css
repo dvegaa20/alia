@@ -175,18 +175,18 @@
   --color-ds-on-surface: var(--foreground);
   --color-ds-on-surface-variant: var(--muted-foreground);
   --color-ds-outline: var(--input);
-  
+
   --color-ds-primary: var(--primary);
   --color-ds-primary-container: var(--primary-300);
   --color-ds-on-primary: var(--primary-foreground);
   --color-ds-primary-fixed: var(--primary-200);
   --color-ds-on-primary-fixed: var(--primary-foreground);
   --color-ds-on-primary-fixed-variant: var(--primary-800);
-  
+
   --color-ds-secondary: var(--secondary-foreground);
   --color-ds-secondary-container: var(--secondary);
   --color-ds-secondary-fixed: var(--muted);
-  
+
   --color-ds-tertiary: var(--chart-1);
   --color-ds-tertiary-container: var(--chart-2);
   --color-ds-on-tertiary-container: var(--primary-foreground);

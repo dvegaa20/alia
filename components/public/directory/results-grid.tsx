@@ -1,20 +1,17 @@
-"use client";
+'use client'
 
-import { useRouter, useSearchParams } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
-import { SearchX, LayoutGrid, MapPin } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { useRouter, useSearchParams } from 'next/navigation'
+import { motion, AnimatePresence } from 'framer-motion'
+import { SearchX, LayoutGrid, MapPin } from 'lucide-react'
+import { cn } from '@/lib/utils'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import {
-  OrganizationCard,
-  type OrganizationCardProps,
-} from "./organization-card";
+} from '@/components/ui/select'
+import { OrganizationCard, type OrganizationCardProps } from './organization-card'
 import {
   Pagination,
   PaginationContent,
@@ -23,17 +20,17 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination";
-import { MapView } from "./map-view";
+} from '@/components/ui/pagination'
+import { MapView } from './map-view'
 import type { ViewMode, ResultsGridProps, MapPoint } from '@/types'
 
 function buildPageHref(page: number, searchQuery?: string, sort?: string) {
-  const params = new URLSearchParams();
-  if (searchQuery) params.set("q", searchQuery);
-  if (sort) params.set("sort", sort);
-  if (page > 1) params.set("page", String(page));
-  const qs = params.toString();
-  return `/directory${qs ? `?${qs}` : ""}`;
+  const params = new URLSearchParams()
+  if (searchQuery) params.set('q', searchQuery)
+  if (sort) params.set('sort', sort)
+  if (page > 1) params.set('page', String(page))
+  const qs = params.toString()
+  return `/directory${qs ? `?${qs}` : ''}`
 }
 
 export function ResultsGrid({
@@ -43,34 +40,33 @@ export function ResultsGrid({
   currentPage,
   totalPages,
   searchQuery,
-  sort = "relevance",
+  sort = 'relevance',
 }: ResultsGridProps) {
-  const router = useRouter();
-  const searchParams = useSearchParams();
+  const router = useRouter()
+  const searchParams = useSearchParams()
 
-  const currentView: ViewMode =
-    (searchParams.get("view") as ViewMode) || "list";
+  const currentView: ViewMode = (searchParams.get('view') as ViewMode) || 'list'
 
   const handleViewChange = (view: ViewMode) => {
-    const params = new URLSearchParams(searchParams.toString());
-    if (view === "list") {
-      params.delete("view");
+    const params = new URLSearchParams(searchParams.toString())
+    if (view === 'list') {
+      params.delete('view')
     } else {
-      params.set("view", view);
+      params.set('view', view)
     }
-    const qs = params.toString();
-    router.push(`/directory${qs ? `?${qs}` : ""}`, { scroll: false });
-  };
+    const qs = params.toString()
+    router.push(`/directory${qs ? `?${qs}` : ''}`, { scroll: false })
+  }
 
   const handleSortChange = (value: string) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("sort", value);
+    const params = new URLSearchParams(searchParams.toString())
+    params.set('sort', value)
     // Reset to page 1 on sort to prevent empty pages
-    params.delete("page");
-    const qs = params.toString();
-    router.push(`/directory${qs ? `?${qs}` : ""}`, { scroll: false });
-  };
-  const hasResults = organizations.length > 0;
+    params.delete('page')
+    const qs = params.toString()
+    router.push(`/directory${qs ? `?${qs}` : ''}`, { scroll: false })
+  }
+  const hasResults = organizations.length > 0
 
   return (
     <section className="flex-1 min-w-0 bg-slate-50/40 dark:bg-zinc-900/20 p-6 md:p-8 rounded-3xl border border-border/30">
@@ -86,20 +82,14 @@ export function ResultsGrid({
             Resultados
           </h1>
           <div className="flex items-center space-x-2 text-muted-foreground font-medium">
-            <span className="text-primary dark:text-ds-primary-fixed font-bold">
-              {total}
-            </span>
-            <span>
-              {total === 1
-                ? "organización encontrada"
-                : "organizaciones encontradas"}
-            </span>
+            <span className="text-primary dark:text-ds-primary-fixed font-bold">{total}</span>
+            <span>{total === 1 ? 'organización encontrada' : 'organizaciones encontradas'}</span>
           </div>
         </div>
 
         <div className="flex items-center gap-4">
           {/* Sort — only visible in list view */}
-          {currentView === "list" && (
+          {currentView === 'list' && (
             <div className="flex items-center space-x-4 text-sm font-medium">
               <span className="text-muted-foreground">Ordenar por:</span>
               <Select value={sort} onValueChange={handleSortChange}>
@@ -119,24 +109,24 @@ export function ResultsGrid({
           {/* View Toggle */}
           <div className="flex items-center bg-muted rounded-xl p-1 gap-0.5">
             <button
-              onClick={() => handleViewChange("list")}
+              onClick={() => handleViewChange('list')}
               className={cn(
-                "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200",
-                currentView === "list"
-                  ? "bg-background text-foreground shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
+                'flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200',
+                currentView === 'list'
+                  ? 'bg-background text-foreground shadow-sm'
+                  : 'text-muted-foreground hover:text-foreground'
               )}
             >
               <LayoutGrid className="size-4" />
               <span className="hidden sm:inline">Lista</span>
             </button>
             <button
-              onClick={() => handleViewChange("map")}
+              onClick={() => handleViewChange('map')}
               className={cn(
-                "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200",
-                currentView === "map"
-                  ? "bg-background text-foreground shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
+                'flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200',
+                currentView === 'map'
+                  ? 'bg-background text-foreground shadow-sm'
+                  : 'text-muted-foreground hover:text-foreground'
               )}
             >
               <MapPin className="size-4" />
@@ -148,7 +138,7 @@ export function ResultsGrid({
 
       {/* Content: List View or Map View */}
       <AnimatePresence mode="wait">
-        {currentView === "map" ? (
+        {currentView === 'map' ? (
           <motion.div
             key="map-view"
             initial={{ opacity: 0, y: 20 }}
@@ -196,14 +186,14 @@ export function ResultsGrid({
             <p className="text-muted-foreground font-medium max-w-sm">
               {searchQuery
                 ? `No encontramos organizaciones para "${searchQuery}". Intenta con otro término.`
-                : "No hay organizaciones disponibles en este momento."}
+                : 'No hay organizaciones disponibles en este momento.'}
             </p>
           </motion.div>
         )}
       </AnimatePresence>
 
       {/* Pagination — only in list view */}
-      {currentView === "list" && totalPages > 1 && (
+      {currentView === 'list' && totalPages > 1 && (
         <motion.footer
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -225,19 +215,19 @@ export function ResultsGrid({
               {Array.from({ length: totalPages }, (_, i) => i + 1)
                 .filter((page) => {
                   // Show first, last, current, and neighbors
-                  if (page === 1 || page === totalPages) return true;
-                  if (Math.abs(page - currentPage) <= 1) return true;
-                  return false;
+                  if (page === 1 || page === totalPages) return true
+                  if (Math.abs(page - currentPage) <= 1) return true
+                  return false
                 })
-                .reduce<(number | "ellipsis")[]>((acc, page, idx, arr) => {
+                .reduce<(number | 'ellipsis')[]>((acc, page, idx, arr) => {
                   if (idx > 0 && page - (arr[idx - 1] as number) > 1) {
-                    acc.push("ellipsis");
+                    acc.push('ellipsis')
                   }
-                  acc.push(page);
-                  return acc;
+                  acc.push(page)
+                  return acc
                 }, [])
                 .map((item, idx) =>
-                  item === "ellipsis" ? (
+                  item === 'ellipsis' ? (
                     <PaginationItem key={`ellipsis-${idx}`}>
                       <PaginationEllipsis />
                     </PaginationItem>
@@ -266,5 +256,5 @@ export function ResultsGrid({
         </motion.footer>
       )}
     </section>
-  );
+  )
 }

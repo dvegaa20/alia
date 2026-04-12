@@ -1,12 +1,12 @@
-"use client";
+'use client'
 
-import { motion } from "framer-motion";
-import Image from "next/image";
+import { motion } from 'framer-motion'
+import Image from 'next/image'
 
 interface HeroCoverProps {
-  coverImageUrl: string;
-  logoUrl: string;
-  name: string;
+  coverImageUrl: string
+  logoUrl: string
+  name: string
 }
 
 export function HeroCover({ coverImageUrl, logoUrl, name }: HeroCoverProps) {
@@ -33,7 +33,7 @@ export function HeroCover({ coverImageUrl, logoUrl, name }: HeroCoverProps) {
       <motion.div
         initial={{ scale: 0.8, y: 20, opacity: 0 }}
         animate={{ scale: 1, y: 0, opacity: 1 }}
-        transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.3 }}
+        transition={{ type: 'spring', stiffness: 200, damping: 20, delay: 0.3 }}
         className="absolute -bottom-16 left-6 md:left-12"
       >
         <div className="w-28 h-28 md:w-32 md:h-32 rounded-full bg-background p-1 shadow-lg overflow-hidden border-4 border-background">
@@ -47,5 +47,5 @@ export function HeroCover({ coverImageUrl, logoUrl, name }: HeroCoverProps) {
         </div>
       </motion.div>
     </section>
-  );
+  )
 }

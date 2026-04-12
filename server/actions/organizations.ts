@@ -331,7 +331,14 @@ export async function getAdminOrganizations(filters?: {
   order?: 'asc' | 'desc'
 }) {
   return withAuth(async () => {
-    const { query, status, page = 1, limit = 10, sort = 'createdAt', order = 'desc' } = filters || {}
+    const {
+      query,
+      status,
+      page = 1,
+      limit = 10,
+      sort = 'createdAt',
+      order = 'desc',
+    } = filters || {}
     const skip = (page - 1) * limit
 
     try {
@@ -388,7 +395,10 @@ export async function getAdminOrganizations(filters?: {
 export async function toggleOrgFeatured(id: string) {
   return withAuth(async () => {
     try {
-      const org = await prisma.organization.findUnique({ where: { id }, select: { featured: true } })
+      const org = await prisma.organization.findUnique({
+        where: { id },
+        select: { featured: true },
+      })
       if (!org) {
         return { success: false, error: 'Organization not found' }
       }

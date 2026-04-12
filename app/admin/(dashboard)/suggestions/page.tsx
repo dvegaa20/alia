@@ -1,8 +1,8 @@
-import { getAdminSuggestions } from "@/server/actions"
-import { SuggestionsTable } from "@/components/admin/suggestions-table"
+import { getAdminSuggestions } from '@/server/actions'
+import { SuggestionsTable } from '@/components/admin/suggestions-table'
 
 export const metadata = {
-  title: "Sugerencias | Admin Panel",
+  title: 'Sugerencias | Admin Panel',
 }
 
 type SearchParams = Promise<{
@@ -11,11 +11,7 @@ type SearchParams = Promise<{
   page?: string
 }>
 
-export default async function SuggestionsPage({
-  searchParams,
-}: {
-  searchParams: SearchParams
-}) {
+export default async function SuggestionsPage({ searchParams }: { searchParams: SearchParams }) {
   const params = await searchParams
 
   const result = await getAdminSuggestions({

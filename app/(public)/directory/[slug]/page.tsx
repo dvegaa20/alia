@@ -1,29 +1,34 @@
-import { notFound } from "next/navigation";
-import { type Metadata } from "next";
-import { cache } from "react";
-import { HeroCover, OrgHeader, OrgTabs } from "@/components/public";
-import { OrganizationProfileJsonLd } from "@/components/seo/json-ld";
-import { getOrgBySlug } from "@/server/actions";
-import type { NeedItem, FeaturedFact, SecondaryFact, Testimony, Milestone, OfficeHours } from '@/types'
+import { notFound } from 'next/navigation'
+import { type Metadata } from 'next'
+import { cache } from 'react'
+import { HeroCover, OrgHeader, OrgTabs } from '@/components/public'
+import { OrganizationProfileJsonLd } from '@/components/seo/json-ld'
+import { getOrgBySlug } from '@/server/actions'
+import type {
+  NeedItem,
+  FeaturedFact,
+  SecondaryFact,
+  Testimony,
+  Milestone,
+  OfficeHours,
+} from '@/types'
 
 interface PageProps {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string }>
 }
 
 const getCachedOrg = cache(async (slug: string) => {
-  const result = await getOrgBySlug(slug);
-  return result.success ? result.data : null;
-});
+  const result = await getOrgBySlug(slug)
+  return result.success ? result.data : null
+})
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const org = await getCachedOrg(slug);
+  const { slug } = await params
+  const org = await getCachedOrg(slug)
 
-  if (!org) return { title: 'Organización no encontrada' };
+  if (!org) return { title: 'Organización no encontrada' }
 
-  const location = org.location
-    ? `${org.location.city}, ${org.location.state}`
-    : 'México';
+  const location = org.location ? `${org.location.city}, ${org.location.state}` : 'México'
 
   return {
     title: org.name,
@@ -32,31 +37,31 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     openGraph: {
       title: org.name,
       description: org.shortDescription || undefined,
-      images: org.coverImageUrl ? [{ url: org.coverImageUrl, width: 1200, height: 630, alt: org.name }] : undefined,
+      images: org.coverImageUrl
+        ? [{ url: org.coverImageUrl, width: 1200, height: 630, alt: org.name }]
+        : undefined,
       type: 'profile',
     },
-  };
+  }
 }
 
 export default async function OrganizationProfilePage({ params }: PageProps) {
-  const { slug } = await params;
+  const { slug } = await params
 
-  const org = await getCachedOrg(slug);
+  const org = await getCachedOrg(slug)
 
   if (!org) {
-    notFound();
+    notFound()
   }
-  
-  const locationString = org.location
-    ? `${org.location.city}, ${org.location.state}`
-    : "México";
+
+  const locationString = org.location ? `${org.location.city}, ${org.location.state}` : 'México'
 
   return (
     <div className="pt-4 pb-20 max-w-7xl mx-auto px-6 lg:px-8">
       <OrganizationProfileJsonLd org={org} />
       <HeroCover
-        coverImageUrl={org.coverImageUrl || "/images/directorio/card-forest.jpg"}
-        logoUrl={org.logoUrl || "/images/directorio/logo-forest.jpg"}
+        coverImageUrl={org.coverImageUrl || '/images/directorio/card-forest.jpg'}
+        logoUrl={org.logoUrl || '/images/directorio/logo-forest.jpg'}
         name={org.name}
       />
 
@@ -76,7 +81,11 @@ export default async function OrganizationProfilePage({ params }: PageProps) {
         phone={org.phone}
         website={org.website}
         location={locationString}
-        coordinates={org.location?.latitude && org.location?.longitude ? { lat: org.location.latitude, lng: org.location.longitude } : null}
+        coordinates={
+          org.location?.latitude && org.location?.longitude
+            ? { lat: org.location.latitude, lng: org.location.longitude }
+            : null
+        }
         googleMapsUrl={org.location?.googleMapsUrl}
         impactCurrent={org.impactCurrent}
         impactGoal={org.impactGoal}
@@ -92,5 +101,5 @@ export default async function OrganizationProfilePage({ params }: PageProps) {
         verified={org.verified}
       />
     </div>
-  );
+  )
 }

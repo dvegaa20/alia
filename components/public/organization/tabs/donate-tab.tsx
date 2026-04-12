@@ -1,5 +1,3 @@
 export function DonateTab() {
-    return (
-        <div>donate-tab</div>
-    )
+  return <div>donate-tab</div>
 }

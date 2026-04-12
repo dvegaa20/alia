@@ -5,7 +5,9 @@ import type { PaginationMeta } from './admin'
 // ============================================================================
 
 /** Prisma transaction client type — extracted from prisma.$transaction callback */
-export type TxClient = Parameters<Parameters<typeof import('@/lib/prisma').default.$transaction>[0]>[0]
+export type TxClient = Parameters<
+  Parameters<typeof import('@/lib/prisma').default.$transaction>[0]
+>[0]
 
 /** Generic result type for all server actions */
 export type ActionResult<T = undefined> = T extends undefined

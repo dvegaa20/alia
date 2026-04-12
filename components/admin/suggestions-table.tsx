@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import { useState, useTransition, useEffect, useRef, useCallback } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useState, useTransition, useEffect, useRef, useCallback } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import {
   Search,
   MoreVertical,
@@ -16,7 +16,7 @@ import {
   Tag,
   FileText,
   Globe,
-} from "lucide-react"
+} from 'lucide-react'
 import {
   Table,
   TableBody,
@@ -24,17 +24,17 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
+} from '@/components/ui/table'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from '@/components/ui/dropdown-menu'
 import {
   Dialog,
   DialogContent,
@@ -42,16 +42,16 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
+} from '@/components/ui/dialog'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { approveSuggestion, rejectSuggestion } from "@/server/actions"
-import { AdminPagination } from "./admin-pagination"
+} from '@/components/ui/select'
+import { approveSuggestion, rejectSuggestion } from '@/server/actions'
+import { AdminPagination } from './admin-pagination'
 import type { SuggestionRow as Suggestion, SuggestionsTableProps as Props } from '@/types'
 
 import { SUGG_STATUS_CONFIG, CATEGORY_LABELS } from '@/lib/constants'
@@ -61,21 +61,21 @@ import { SUGG_STATUS_CONFIG, CATEGORY_LABELS } from '@/lib/constants'
 // ---------------------------------------------------------------------------
 
 function formatRelativeDate(dateInput: string | Date): string {
-  const date = typeof dateInput === "string" ? new Date(dateInput) : dateInput
+  const date = typeof dateInput === 'string' ? new Date(dateInput) : dateInput
   const now = new Date()
   const diffMs = now.getTime() - date.getTime()
   const diffMins = Math.floor(diffMs / 60000)
   const diffHours = Math.floor(diffMs / 3600000)
   const diffDays = Math.floor(diffMs / 86400000)
 
-  if (diffMins < 1) return "ahora mismo"
+  if (diffMins < 1) return 'ahora mismo'
   if (diffMins < 60) return `hace ${diffMins} min`
   if (diffHours < 24) return `hace ${diffHours}h`
   if (diffDays < 7) return `hace ${diffDays}d`
-  return date.toLocaleDateString("es-MX", {
-    day: "numeric",
-    month: "short",
-    year: diffDays > 365 ? "numeric" : undefined,
+  return date.toLocaleDateString('es-MX', {
+    day: 'numeric',
+    month: 'short',
+    year: diffDays > 365 ? 'numeric' : undefined,
   })
 }
 
@@ -90,15 +90,15 @@ export function SuggestionsTable({ suggestions, meta }: Props) {
   const [isFilteringStatus, startFilteringStatus] = useTransition()
 
   // Search debounce
-  const [searchInput, setSearchInput] = useState(searchParams.get("q") ?? "")
+  const [searchInput, setSearchInput] = useState(searchParams.get('q') ?? '')
   const [isDebouncing, setIsDebouncing] = useState(false)
   const initialMount = useRef(true)
   const isSearchLoading = isPending || isDebouncing
 
   // Detail dialog
   const [detailSuggestion, setDetailSuggestion] = useState<Suggestion | null>(null)
-  const [actionType, setActionType] = useState<"approve" | "reject" | null>(null)
-  const [adminNotes, setAdminNotes] = useState("")
+  const [actionType, setActionType] = useState<'approve' | 'reject' | null>(null)
+  const [adminNotes, setAdminNotes] = useState('')
   const [isActionPending, setIsActionPending] = useState(false)
 
   // ------ URL helpers ------
@@ -112,14 +112,14 @@ export function SuggestionsTable({ suggestions, meta }: Props) {
           sp.delete(key)
         }
       })
-      if (!("page" in params)) {
-        sp.delete("page")
+      if (!('page' in params)) {
+        sp.delete('page')
       }
       startTransition(() => {
         router.push(`?${sp.toString()}`)
       })
     },
-    [router, searchParams],
+    [router, searchParams]
   )
 
   // Debounced search
@@ -141,20 +141,20 @@ export function SuggestionsTable({ suggestions, meta }: Props) {
     pushParams({ q: searchInput || undefined })
   }
 
-  const currentStatus = searchParams.get("status") ?? "ALL"
+  const currentStatus = searchParams.get('status') ?? 'ALL'
 
   // ------ Action handlers ------
 
   function openDetail(suggestion: Suggestion) {
     setDetailSuggestion(suggestion)
     setActionType(null)
-    setAdminNotes("")
+    setAdminNotes('')
   }
 
-  function openAction(suggestion: Suggestion, type: "approve" | "reject") {
+  function openAction(suggestion: Suggestion, type: 'approve' | 'reject') {
     setDetailSuggestion(suggestion)
     setActionType(type)
-    setAdminNotes("")
+    setAdminNotes('')
   }
 
   async function handleAction() {
@@ -163,7 +163,7 @@ export function SuggestionsTable({ suggestions, meta }: Props) {
     setIsActionPending(true)
 
     try {
-      if (actionType === "approve") {
+      if (actionType === 'approve') {
         await approveSuggestion(detailSuggestion.id, adminNotes || undefined)
       } else {
         await rejectSuggestion(detailSuggestion.id, adminNotes || undefined)
@@ -171,14 +171,14 @@ export function SuggestionsTable({ suggestions, meta }: Props) {
 
       setDetailSuggestion(null)
       setActionType(null)
-      setAdminNotes("")
+      setAdminNotes('')
 
       // Refresh page data
       startTransition(() => {
         router.refresh()
       })
     } catch (error) {
-      console.error("Action failed:", error)
+      console.error('Action failed:', error)
     } finally {
       setIsActionPending(false)
     }
@@ -219,12 +219,12 @@ export function SuggestionsTable({ suggestions, meta }: Props) {
               value={currentStatus}
               onValueChange={(value) => {
                 const sp = new URLSearchParams(searchParams.toString())
-                if (value === "ALL") {
-                  sp.delete("status")
+                if (value === 'ALL') {
+                  sp.delete('status')
                 } else {
-                  sp.set("status", value)
+                  sp.set('status', value)
                 }
-                sp.delete("page")
+                sp.delete('page')
                 startFilteringStatus(() => {
                   router.push(`?${sp.toString()}`)
                 })
@@ -276,15 +276,10 @@ export function SuggestionsTable({ suggestions, meta }: Props) {
             <TableBody>
               {suggestions.length === 0 ? (
                 <TableRow>
-                  <TableCell
-                    colSpan={6}
-                    className="px-8 py-16 text-center text-muted-foreground"
-                  >
+                  <TableCell colSpan={6} className="px-8 py-16 text-center text-muted-foreground">
                     <div className="flex flex-col items-center gap-2">
                       <ClipboardList className="h-8 w-8 opacity-40" />
-                      <p className="text-sm font-medium">
-                        No se encontraron sugerencias
-                      </p>
+                      <p className="text-sm font-medium">No se encontraron sugerencias</p>
                       <p className="text-xs text-muted-foreground/70">
                         Las sugerencias enviadas por la comunidad aparecerán aquí.
                       </p>
@@ -293,7 +288,8 @@ export function SuggestionsTable({ suggestions, meta }: Props) {
                 </TableRow>
               ) : (
                 suggestions.map((suggestion) => {
-                  const statusCfg = SUGG_STATUS_CONFIG[suggestion.status] ?? SUGG_STATUS_CONFIG.PENDING
+                  const statusCfg =
+                    SUGG_STATUS_CONFIG[suggestion.status] ?? SUGG_STATUS_CONFIG.PENDING
 
                   return (
                     <TableRow key={suggestion.id} className="group">
@@ -309,7 +305,7 @@ export function SuggestionsTable({ suggestions, meta }: Props) {
                             rel="noopener noreferrer"
                             className="text-xs text-muted-foreground truncate hover:text-primary transition-colors inline-flex items-center gap-1"
                           >
-                            {suggestion.url.replace(/^https?:\/\//, "").substring(0, 30)}
+                            {suggestion.url.replace(/^https?:\/\//, '').substring(0, 30)}
                             <ExternalLink className="h-3 w-3 shrink-0" />
                           </a>
                         </div>
@@ -324,9 +320,7 @@ export function SuggestionsTable({ suggestions, meta }: Props) {
 
                       {/* Location */}
                       <TableCell className="px-8 py-5">
-                        <span className="text-sm text-muted-foreground">
-                          {suggestion.location}
-                        </span>
+                        <span className="text-sm text-muted-foreground">{suggestion.location}</span>
                       </TableCell>
 
                       {/* Date */}
@@ -339,12 +333,8 @@ export function SuggestionsTable({ suggestions, meta }: Props) {
                       {/* Status */}
                       <TableCell className="px-8 py-5">
                         <div className="flex items-center gap-2">
-                          <span
-                            className={`h-2 w-2 rounded-full ${statusCfg.dotColor}`}
-                          />
-                          <span
-                            className={`text-sm font-medium ${statusCfg.textColor}`}
-                          >
+                          <span className={`h-2 w-2 rounded-full ${statusCfg.dotColor}`} />
+                          <span className={`text-sm font-medium ${statusCfg.textColor}`}>
                             {statusCfg.label}
                           </span>
                         </div>
@@ -368,18 +358,16 @@ export function SuggestionsTable({ suggestions, meta }: Props) {
                               Ver Detalles
                             </DropdownMenuItem>
 
-                            {suggestion.status === "PENDING" && (
+                            {suggestion.status === 'PENDING' && (
                               <>
                                 <DropdownMenuSeparator />
-                                <DropdownMenuItem
-                                  onClick={() => openAction(suggestion, "approve")}
-                                >
+                                <DropdownMenuItem onClick={() => openAction(suggestion, 'approve')}>
                                   <CheckCircle2 className="h-4 w-4 mr-2 text-emerald-600" />
                                   Aprobar
                                 </DropdownMenuItem>
                                 <DropdownMenuItem
                                   className="text-red-600 focus:text-red-600"
-                                  onClick={() => openAction(suggestion, "reject")}
+                                  onClick={() => openAction(suggestion, 'reject')}
                                 >
                                   <XCircle className="h-4 w-4 mr-2" />
                                   Rechazar
@@ -408,34 +396,28 @@ export function SuggestionsTable({ suggestions, meta }: Props) {
           if (!open) {
             setDetailSuggestion(null)
             setActionType(null)
-            setAdminNotes("")
+            setAdminNotes('')
           }
         }}
       >
         <DialogContent className="sm:max-w-lg">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
-              {actionType === "approve" && (
-                <CheckCircle2 className="h-5 w-5 text-emerald-600" />
-              )}
-              {actionType === "reject" && (
-                <XCircle className="h-5 w-5 text-red-600" />
-              )}
-              {!actionType && (
-                <FileText className="h-5 w-5 text-primary" />
-              )}
-              {actionType === "approve"
-                ? "Aprobar Sugerencia"
-                : actionType === "reject"
-                  ? "Rechazar Sugerencia"
-                  : "Detalle de Sugerencia"}
+              {actionType === 'approve' && <CheckCircle2 className="h-5 w-5 text-emerald-600" />}
+              {actionType === 'reject' && <XCircle className="h-5 w-5 text-red-600" />}
+              {!actionType && <FileText className="h-5 w-5 text-primary" />}
+              {actionType === 'approve'
+                ? 'Aprobar Sugerencia'
+                : actionType === 'reject'
+                  ? 'Rechazar Sugerencia'
+                  : 'Detalle de Sugerencia'}
             </DialogTitle>
             <DialogDescription>
-              {actionType === "approve"
-                ? "Se creará una organización en borrador con estos datos."
-                : actionType === "reject"
-                  ? "Esta sugerencia será rechazada permanentemente."
-                  : "Información completa de la sugerencia."}
+              {actionType === 'approve'
+                ? 'Se creará una organización en borrador con estos datos.'
+                : actionType === 'reject'
+                  ? 'Esta sugerencia será rechazada permanentemente.'
+                  : 'Información completa de la sugerencia.'}
             </DialogDescription>
           </DialogHeader>
 
@@ -449,9 +431,7 @@ export function SuggestionsTable({ suggestions, meta }: Props) {
                     <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                       Organización
                     </p>
-                    <p className="text-sm font-bold text-foreground">
-                      {detailSuggestion.orgName}
-                    </p>
+                    <p className="text-sm font-bold text-foreground">{detailSuggestion.orgName}</p>
                   </div>
                 </div>
 
@@ -463,8 +443,7 @@ export function SuggestionsTable({ suggestions, meta }: Props) {
                         Categoría
                       </p>
                       <p className="text-sm text-foreground">
-                        {CATEGORY_LABELS[detailSuggestion.category] ||
-                          detailSuggestion.category}
+                        {CATEGORY_LABELS[detailSuggestion.category] || detailSuggestion.category}
                       </p>
                     </div>
                   </div>
@@ -474,9 +453,7 @@ export function SuggestionsTable({ suggestions, meta }: Props) {
                       <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                         Ubicación
                       </p>
-                      <p className="text-sm text-foreground">
-                        {detailSuggestion.location}
-                      </p>
+                      <p className="text-sm text-foreground">{detailSuggestion.location}</p>
                     </div>
                   </div>
                 </div>
@@ -506,12 +483,12 @@ export function SuggestionsTable({ suggestions, meta }: Props) {
                       Fecha de envío
                     </p>
                     <p className="text-sm text-foreground">
-                      {new Date(detailSuggestion.createdAt).toLocaleDateString("es-MX", {
-                        day: "numeric",
-                        month: "long",
-                        year: "numeric",
-                        hour: "2-digit",
-                        minute: "2-digit",
+                      {new Date(detailSuggestion.createdAt).toLocaleDateString('es-MX', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
                       })}
                     </p>
                   </div>
@@ -529,7 +506,7 @@ export function SuggestionsTable({ suggestions, meta }: Props) {
               </div>
 
               {/* Status (if already reviewed) */}
-              {detailSuggestion.status !== "PENDING" && (
+              {detailSuggestion.status !== 'PENDING' && (
                 <div className="flex items-center gap-2 py-2 px-3 rounded-lg bg-muted/30">
                   <span
                     className={`h-2 w-2 rounded-full ${SUGG_STATUS_CONFIG[detailSuggestion.status]?.dotColor}`}
@@ -548,16 +525,16 @@ export function SuggestionsTable({ suggestions, meta }: Props) {
               )}
 
               {/* Admin notes input (for approve/reject) */}
-              {actionType && detailSuggestion.status === "PENDING" && (
+              {actionType && detailSuggestion.status === 'PENDING' && (
                 <div className="space-y-1.5">
                   <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                     Notas del admin (opcional)
                   </label>
                   <Textarea
                     placeholder={
-                      actionType === "approve"
-                        ? "Notas sobre la aprobación..."
-                        : "Razón del rechazo..."
+                      actionType === 'approve'
+                        ? 'Notas sobre la aprobación...'
+                        : 'Razón del rechazo...'
                     }
                     value={adminNotes}
                     onChange={(e) => setAdminNotes(e.target.value)}
@@ -569,19 +546,19 @@ export function SuggestionsTable({ suggestions, meta }: Props) {
           )}
 
           <DialogFooter>
-            {!actionType && detailSuggestion?.status === "PENDING" && (
+            {!actionType && detailSuggestion?.status === 'PENDING' && (
               <div className="flex gap-2 w-full">
                 <Button
                   variant="outline"
                   className="flex-1"
-                  onClick={() => setActionType("reject")}
+                  onClick={() => setActionType('reject')}
                 >
                   <XCircle className="h-4 w-4 mr-2 text-red-600" />
                   Rechazar
                 </Button>
                 <Button
                   className="flex-1 bg-emerald-600 hover:bg-emerald-700 "
-                  onClick={() => setActionType("approve")}
+                  onClick={() => setActionType('approve')}
                 >
                   <CheckCircle2 className="h-4 w-4 mr-2" />
                   Aprobar
@@ -589,7 +566,7 @@ export function SuggestionsTable({ suggestions, meta }: Props) {
               </div>
             )}
 
-            {actionType && detailSuggestion?.status === "PENDING" && (
+            {actionType && detailSuggestion?.status === 'PENDING' && (
               <div className="flex gap-2 w-full">
                 <Button
                   variant="outline"
@@ -600,25 +577,26 @@ export function SuggestionsTable({ suggestions, meta }: Props) {
                   Cancelar
                 </Button>
                 <Button
-                  className={`flex-1 ${actionType === "approve"
-                    ? "bg-emerald-600 hover:bg-emerald-700 "
-                    : "bg-red-600 hover:bg-red-700 "
-                    }`}
+                  className={`flex-1 ${
+                    actionType === 'approve'
+                      ? 'bg-emerald-600 hover:bg-emerald-700 '
+                      : 'bg-red-600 hover:bg-red-700 '
+                  }`}
                   onClick={handleAction}
                   disabled={isActionPending}
                 >
                   {isActionPending ? (
                     <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                  ) : actionType === "approve" ? (
+                  ) : actionType === 'approve' ? (
                     <CheckCircle2 className="h-4 w-4 mr-2" />
                   ) : (
                     <XCircle className="h-4 w-4 mr-2" />
                   )}
                   {isActionPending
-                    ? "Procesando..."
-                    : actionType === "approve"
-                      ? "Confirmar Aprobación"
-                      : "Confirmar Rechazo"}
+                    ? 'Procesando...'
+                    : actionType === 'approve'
+                      ? 'Confirmar Aprobación'
+                      : 'Confirmar Rechazo'}
                 </Button>
               </div>
             )}

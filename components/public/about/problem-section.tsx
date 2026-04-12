@@ -1,7 +1,7 @@
-"use client";
+'use client'
 
-import { motion } from "framer-motion";
-import Image from "next/image";
+import { motion } from 'framer-motion'
+import Image from 'next/image'
 
 export function ProblemSection() {
   return (
@@ -11,8 +11,8 @@ export function ProblemSection() {
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
           className="flex-1 space-y-8"
         >
           <h2 className="font-headline font-bold text-4xl text-primary dark:text-ds-primary-fixed">
@@ -20,18 +20,16 @@ export function ProblemSection() {
           </h2>
           <div className="space-y-6 font-body text-lg text-muted-foreground leading-loose">
             <p>
-              En un mundo saturado de información, encontrar organizaciones
-              sociales honestas y locales se ha vuelto una tarea compleja. A
-              menudo, las pequeñas iniciativas quedan invisibilizadas por la
-              falta de recursos digitales, mientras que los ciudadanos con ganas
-              de ayudar no saben por dónde empezar.
+              En un mundo saturado de información, encontrar organizaciones sociales honestas y
+              locales se ha vuelto una tarea compleja. A menudo, las pequeñas iniciativas quedan
+              invisibilizadas por la falta de recursos digitales, mientras que los ciudadanos con
+              ganas de ayudar no saben por dónde empezar.
             </p>
             <p>
-              Notamos que los directorios existentes solían ser comerciales,
-              estar desactualizados o enfocarse únicamente en grandes ONGs
-              internacionales. Faltaba un puente humano, transparente y gratuito
-              que pusiera en valor el trabajo territorial de quienes transforman
-              realidades cada día.
+              Notamos que los directorios existentes solían ser comerciales, estar desactualizados o
+              enfocarse únicamente en grandes ONGs internacionales. Faltaba un puente humano,
+              transparente y gratuito que pusiera en valor el trabajo territorial de quienes
+              transforman realidades cada día.
             </p>
           </div>
         </motion.div>
@@ -40,8 +38,8 @@ export function ProblemSection() {
         <motion.div
           initial={{ opacity: 0, x: 50 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
           className="flex-1 relative"
         >
           <div className="aspect-4/5 rounded-xl overflow-hidden shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-500">
@@ -58,5 +56,5 @@ export function ProblemSection() {
         </motion.div>
       </div>
     </section>
-  );
+  )
 }

@@ -1,17 +1,17 @@
-import { AboutContent } from "../about-content";
-import { ContactSidebar } from "../contact-sidebar";
+import { AboutContent } from '../about-content'
+import { ContactSidebar } from '../contact-sidebar'
 
 export interface AboutTabProps {
-  name: string;
-  fullDescription: string | null;
-  galleryImages: string[];
-  email: string;
-  phone?: string | null;
-  website?: string | null;
-  location?: string | null;
-  impactCurrent?: number | null;
-  impactGoal?: number | null;
-  impactType?: string | null;
+  name: string
+  fullDescription: string | null
+  galleryImages: string[]
+  email: string
+  phone?: string | null
+  website?: string | null
+  location?: string | null
+  impactCurrent?: number | null
+  impactGoal?: number | null
+  impactType?: string | null
 }
 
 export function AboutTab({
@@ -36,11 +36,7 @@ export function AboutTab({
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-16 items-start">
-        <AboutContent
-          name={name}
-          fullDescription={fullDescription}
-          galleryImages={galleryImages}
-        />
+        <AboutContent name={name} fullDescription={fullDescription} galleryImages={galleryImages} />
         <ContactSidebar
           location={location || undefined}
           email={email}
@@ -52,5 +48,5 @@ export function AboutTab({
         />
       </div>
     </div>
-  );
+  )
 }

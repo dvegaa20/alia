@@ -1,22 +1,18 @@
-import { Suspense } from "react"
-import { StatsGrid } from "@/components/admin/stats-grid"
-import { OrganizationsTable } from "@/components/admin/organizations-table"
-import { getAdminOrganizations, getAdminCategories } from "@/server/actions"
-import type { OrganizationStatus } from "@/prisma/generated/enums"
+import { Suspense } from 'react'
+import { StatsGrid } from '@/components/admin/stats-grid'
+import { OrganizationsTable } from '@/components/admin/organizations-table'
+import { getAdminOrganizations, getAdminCategories } from '@/server/actions'
+import type { OrganizationStatus } from '@/prisma/generated/enums'
 
 type SearchParams = Promise<{
   q?: string
   status?: string
   page?: string
   sort?: string
-  order?: "asc" | "desc"
+  order?: 'asc' | 'desc'
 }>
 
-export default async function AdminDashboardPage({
-  searchParams,
-}: {
-  searchParams: SearchParams
-}) {
+export default async function AdminDashboardPage({ searchParams }: { searchParams: SearchParams }) {
   const params = await searchParams
 
   const [result, categoriesResult] = await Promise.all([

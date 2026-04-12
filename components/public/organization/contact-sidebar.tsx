@@ -1,15 +1,15 @@
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { MapPin, Mail, Phone, Share2 } from "lucide-react";
+import { Button } from '@/components/ui/button'
+import { Progress } from '@/components/ui/progress'
+import { MapPin, Mail, Phone, Share2 } from 'lucide-react'
 
 interface ContactSidebarProps {
-  location?: string | null;
-  email: string;
-  phone?: string | null;
-  website?: string | null;
-  impactCurrent?: number | null;
-  impactGoal?: number | null;
-  impactType?: string | null;
+  location?: string | null
+  email: string
+  phone?: string | null
+  website?: string | null
+  impactCurrent?: number | null
+  impactGoal?: number | null
+  impactType?: string | null
 }
 
 export function ContactSidebar({
@@ -21,12 +21,13 @@ export function ContactSidebar({
   impactGoal,
   impactType,
 }: ContactSidebarProps) {
-  const progressValue = impactCurrent && impactGoal ? Math.min(Math.round((impactCurrent / impactGoal) * 100), 100) : 0;
+  const progressValue =
+    impactCurrent && impactGoal ? Math.min(Math.round((impactCurrent / impactGoal) * 100), 100) : 0
 
   function formatNumber(n: number): string {
-    if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
-    if (n >= 1_000) return `${(n / 1_000).toFixed(n >= 10_000 ? 0 : 1)}k`;
-    return n.toLocaleString();
+    if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`
+    if (n >= 1_000) return `${(n / 1_000).toFixed(n >= 10_000 ? 0 : 1)}k`
+    return n.toLocaleString()
   }
   return (
     <aside className="sticky top-32 space-y-6">
@@ -95,7 +96,10 @@ export function ContactSidebar({
               </a>
             </Button>
           )}
-          <Button variant="ghost" className="w-12 h-auto shrink-0 flex items-center justify-center text-muted-foreground">
+          <Button
+            variant="ghost"
+            className="w-12 h-auto shrink-0 flex items-center justify-center text-muted-foreground"
+          >
             <Share2 className="size-5" />
           </Button>
         </div>
@@ -112,7 +116,7 @@ export function ContactSidebar({
               {formatNumber(impactCurrent)}+
             </span>
             <span className="text-sm font-medium text-ds-on-primary-fixed-variant/70 mb-1">
-              {impactType || "Personas impactadas"}
+              {impactType || 'Personas impactadas'}
             </span>
           </div>
           <Progress
@@ -122,5 +126,5 @@ export function ContactSidebar({
         </div>
       )}
     </aside>
-  );
+  )
 }

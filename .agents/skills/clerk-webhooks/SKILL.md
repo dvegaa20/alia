@@ -142,6 +142,7 @@ export async function POST(req: NextRequest) {
 ```
 
 **Also include proxy.ts (Next.js <=15: middleware.ts) to make the route public:**
+
 ```typescript
 // proxy.ts (Next.js <=15: middleware.ts)
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
@@ -272,10 +273,11 @@ app.post('/webhooks/clerk', express.raw({ type: 'application/json' }), async (re
 ## Payload Field Reference
 
 ### User events (`user.created`, `user.updated`, `user.deleted`)
+
 ```typescript
 const {
-  id,                  // Clerk user ID
-  email_addresses,     // array; [0].email_address is primary email
+  id, // Clerk user ID
+  email_addresses, // array; [0].email_address is primary email
   first_name,
   last_name,
   image_url,
@@ -284,20 +286,22 @@ const {
 ```
 
 ### Organization events (`organization.created`, `organization.updated`, `organization.deleted`)
+
 ```typescript
 const {
-  id,    // org ID
-  name,  // org name
+  id, // org ID
+  name, // org name
   slug,
 } = evt.data
 ```
 
 ### Organization Membership events (`organizationMembership.created`, `organizationMembership.updated`, `organizationMembership.deleted`)
+
 ```typescript
 const {
-  organization,        // { id, name, ... }
-  public_user_data,    // { user_id, first_name, last_name, ... }
-  role,                // e.g. 'org:admin', 'org:member'
+  organization, // { id, name, ... }
+  public_user_data, // { user_id, first_name, last_name, ... }
+  role, // e.g. 'org:admin', 'org:member'
 } = evt.data
 // Access: organization.id, public_user_data.user_id, role
 ```
@@ -340,15 +344,15 @@ const {
 
 ## Common Pitfalls
 
-| Symptom | Cause | Fix |
-|---------|-------|-----|
-| Verification fails (Next.js) | Wrong import or usage | Use `@clerk/nextjs/webhooks`, pass `req` directly |
-| Verification fails (Express) | Using `express.json()` | Use `express.raw({ type: 'application/json' })` for webhook route |
-| Route not found (404) | Wrong path | Use `/api/webhooks` or preserve existing path |
-| Not authorized (401) | Route is protected by middleware | Make route public in `clerkMiddleware()` |
-| No data in DB | Async job pending | Wait/check logs |
-| Duplicate entries | Only handling `user.created` | Also handle `user.updated` |
-| Timeouts | Handler too slow | Queue async work, return 200 first |
+| Symptom                      | Cause                            | Fix                                                               |
+| ---------------------------- | -------------------------------- | ----------------------------------------------------------------- |
+| Verification fails (Next.js) | Wrong import or usage            | Use `@clerk/nextjs/webhooks`, pass `req` directly                 |
+| Verification fails (Express) | Using `express.json()`           | Use `express.raw({ type: 'application/json' })` for webhook route |
+| Route not found (404)        | Wrong path                       | Use `/api/webhooks` or preserve existing path                     |
+| Not authorized (401)         | Route is protected by middleware | Make route public in `clerkMiddleware()`                          |
+| No data in DB                | Async job pending                | Wait/check logs                                                   |
+| Duplicate entries            | Only handling `user.created`     | Also handle `user.updated`                                        |
+| Timeouts                     | Handler too slow                 | Queue async work, return 200 first                                |
 
 ## Testing & Deployment
 

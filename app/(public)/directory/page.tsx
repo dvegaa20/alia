@@ -1,37 +1,38 @@
-import { Suspense } from "react";
-import { type Metadata } from "next";
-import { getPublishedOrgs, getAllCategoriesWithCount } from "@/server/actions";
-import { SidebarFilters } from "@/components/public/directory/sidebar-filters";
-import { ResultsGrid } from "@/components/public/directory/results-grid";
-import type { OrganizationCardProps } from "@/components/public/directory/organization-card";
-import type { MapPoint } from "@/components/public/directory/map-view";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { Suspense } from 'react'
+import { type Metadata } from 'next'
+import { getPublishedOrgs, getAllCategoriesWithCount } from '@/server/actions'
+import { SidebarFilters } from '@/components/public/directory/sidebar-filters'
+import { ResultsGrid } from '@/components/public/directory/results-grid'
+import type { OrganizationCardProps } from '@/components/public/directory/organization-card'
+import type { MapPoint } from '@/components/public/directory/map-view'
+import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 
 export const metadata: Metadata = {
   title: 'Directorio de Organizaciones',
-  description: 'Explora el directorio completo de organizaciones sociales verificadas. Filtra por categoría, estado y ciudad.',
+  description:
+    'Explora el directorio completo de organizaciones sociales verificadas. Filtra por categoría, estado y ciudad.',
   alternates: { canonical: '/directory' },
-};
+}
 
 export default async function DirectoryPage(props: {
   searchParams: Promise<{
-    q?: string;
-    category?: string;
-    page?: string;
-    state?: string;
-    city?: string;
-    verified?: string;
-    sort?: string;
-  }>;
+    q?: string
+    category?: string
+    page?: string
+    state?: string
+    city?: string
+    verified?: string
+    sort?: string
+  }>
 }) {
-  const searchParams = await props.searchParams;
-  const query = searchParams?.q || "";
-  const page = Number(searchParams?.page) || 1;
-  const categorySlug = searchParams?.category;
-  const state = searchParams?.state;
-  const city = searchParams?.city;
-  const verified = searchParams?.verified === "true" ? true : undefined;
-  const sort = searchParams?.sort;
+  const searchParams = await props.searchParams
+  const query = searchParams?.q || ''
+  const page = Number(searchParams?.page) || 1
+  const categorySlug = searchParams?.category
+  const state = searchParams?.state
+  const city = searchParams?.city
+  const verified = searchParams?.verified === 'true' ? true : undefined
+  const sort = searchParams?.sort
 
   const [result, categoriesResult] = await Promise.all([
     getPublishedOrgs({
@@ -45,47 +46,35 @@ export default async function DirectoryPage(props: {
       sort,
     }),
     getAllCategoriesWithCount(),
-  ]);
+  ])
 
-  const categories = categoriesResult.data || [];
+  const categories = categoriesResult.data || []
 
-  const organizations: OrganizationCardProps[] = (result.data || []).map(
-    (org) => ({
-      slug: org.slug,
-      name: org.name,
-      description: org.shortDescription,
-      category: org.categories?.[0]?.name || "Organización",
-      location: org.location
-        ? `${org.location.city}, ${org.location.state}`
-        : "México",
-      coverImage: org.coverImageUrl || "/images/directorio/card-forest.jpg",
-      logoImage: org.logoUrl || "/images/directorio/logo-forest.jpg",
-      verified: org.verified,
-    })
-  );
+  const organizations: OrganizationCardProps[] = (result.data || []).map((org) => ({
+    slug: org.slug,
+    name: org.name,
+    description: org.shortDescription,
+    category: org.categories?.[0]?.name || 'Organización',
+    location: org.location ? `${org.location.city}, ${org.location.state}` : 'México',
+    coverImage: org.coverImageUrl || '/images/directorio/card-forest.jpg',
+    logoImage: org.logoUrl || '/images/directorio/logo-forest.jpg',
+    verified: org.verified,
+  }))
 
   // Build map points from organizations that have coordinates
   const mapPoints: MapPoint[] = (result.data || [])
-    .filter(
-      (org) =>
-        org.location?.latitude != null && org.location?.longitude != null
-    )
+    .filter((org) => org.location?.latitude != null && org.location?.longitude != null)
     .map((org) => ({
       slug: org.slug,
       name: org.name,
-      category: org.categories?.[0]?.name || "Organización",
-      location: org.location
-        ? `${org.location.city}, ${org.location.state}`
-        : "México",
-      coordinates: [org.location!.longitude!, org.location!.latitude!] as [
-        number,
-        number,
-      ],
-      logoImage: org.logoUrl || "/images/directorio/logo-forest.jpg",
+      category: org.categories?.[0]?.name || 'Organización',
+      location: org.location ? `${org.location.city}, ${org.location.state}` : 'México',
+      coordinates: [org.location!.longitude!, org.location!.latitude!] as [number, number],
+      logoImage: org.logoUrl || '/images/directorio/logo-forest.jpg',
       verified: org.verified,
-    }));
+    }))
 
-  const meta = result.meta || { total: 0, page: 1, limit: 12, totalPages: 0 };
+  const meta = result.meta || { total: 0, page: 1, limit: 12, totalPages: 0 }
 
   return (
     <SidebarProvider>
@@ -124,5 +113,5 @@ export default async function DirectoryPage(props: {
         </div>
       </div>
     </SidebarProvider>
-  );
+  )
 }
