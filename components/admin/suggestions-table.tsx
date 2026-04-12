@@ -52,46 +52,9 @@ import {
 } from "@/components/ui/select"
 import { approveSuggestion, rejectSuggestion } from "@/server/actions"
 import { AdminPagination } from "./admin-pagination"
-import type { SuggestionRow as Suggestion, SuggestionsTableProps as Props, StatusConfig } from '@/types'
+import type { SuggestionRow as Suggestion, SuggestionsTableProps as Props } from '@/types'
 
-// ---------------------------------------------------------------------------
-// Status config
-// ---------------------------------------------------------------------------
-
-const STATUS_CONFIG: Record<
-  string,
-  { label: string; dotColor: string; textColor: string }
-> = {
-  PENDING: {
-    label: "Pendiente",
-    dotColor: "bg-amber-500",
-    textColor: "text-amber-700 dark:text-amber-400",
-  },
-  APPROVED: {
-    label: "Aprobada",
-    dotColor: "bg-emerald-500",
-    textColor: "text-emerald-700 dark:text-emerald-400",
-  },
-  REJECTED: {
-    label: "Rechazada",
-    dotColor: "bg-red-500",
-    textColor: "text-red-700 dark:text-red-400",
-  },
-}
-
-// Category display name mapping based on what users submit
-const CATEGORY_LABELS: Record<string, string> = {
-  "medio-ambiente": "Medio Ambiente",
-  "Medio Ambiente": "Medio Ambiente",
-  salud: "Salud",
-  Salud: "Salud",
-  educacion: "Educación",
-  "Educación": "Educación",
-  animales: "Bienestar Animal",
-  "Bienestar Animal": "Bienestar Animal",
-  social: "Acción Social",
-  "Acción Social": "Acción Social",
-}
+import { SUGG_STATUS_CONFIG, CATEGORY_LABELS } from '@/lib/constants'
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -329,7 +292,7 @@ export function SuggestionsTable({ suggestions, meta }: Props) {
                 </TableRow>
               ) : (
                 suggestions.map((suggestion) => {
-                  const statusCfg = STATUS_CONFIG[suggestion.status] ?? STATUS_CONFIG.PENDING
+                  const statusCfg = SUGG_STATUS_CONFIG[suggestion.status] ?? SUGG_STATUS_CONFIG.PENDING
 
                   return (
                     <TableRow key={suggestion.id} className="group">
@@ -568,12 +531,12 @@ export function SuggestionsTable({ suggestions, meta }: Props) {
               {detailSuggestion.status !== "PENDING" && (
                 <div className="flex items-center gap-2 py-2 px-3 rounded-lg bg-muted/30">
                   <span
-                    className={`h-2 w-2 rounded-full ${STATUS_CONFIG[detailSuggestion.status]?.dotColor}`}
+                    className={`h-2 w-2 rounded-full ${SUGG_STATUS_CONFIG[detailSuggestion.status]?.dotColor}`}
                   />
                   <span
-                    className={`text-sm font-medium ${STATUS_CONFIG[detailSuggestion.status]?.textColor}`}
+                    className={`text-sm font-medium ${SUGG_STATUS_CONFIG[detailSuggestion.status]?.textColor}`}
                   >
-                    {STATUS_CONFIG[detailSuggestion.status]?.label}
+                    {SUGG_STATUS_CONFIG[detailSuggestion.status]?.label}
                   </span>
                   {detailSuggestion.adminNotes && (
                     <span className="text-xs text-muted-foreground ml-2">

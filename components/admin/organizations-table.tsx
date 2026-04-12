@@ -57,32 +57,9 @@ import { toggleOrgStatus, toggleOrgFeatured, deleteOrganization, getOrganization
 import type { OrganizationStatus } from "@/prisma/generated/enums"
 import { OrganizationSheet } from "./organization-sheet"
 import { AdminPagination } from "./admin-pagination"
-import type { OrgWithAllRelations, OrgWithRelations, OrganizationsTableProps as Props, StatusConfig } from '@/types'
+import type { OrgWithAllRelations, OrgWithRelations, OrganizationsTableProps as Props } from '@/types'
 
-// ---------------------------------------------------------------------------
-// Status config
-// ---------------------------------------------------------------------------
-
-const STATUS_CONFIG: Record<
-  string,
-  { label: string; dotColor: string; textColor: string }
-> = {
-  PUBLISHED: {
-    label: "Publicada",
-    dotColor: "bg-emerald-500",
-    textColor: "text-emerald-700 dark:text-emerald-400",
-  },
-  DRAFT: {
-    label: "Borrador",
-    dotColor: "bg-amber-500",
-    textColor: "text-amber-700 dark:text-amber-400",
-  },
-  ARCHIVED: {
-    label: "Archivada",
-    dotColor: "bg-red-400 dark:bg-red-500",
-    textColor: "text-red-600 dark:text-red-400",
-  },
-}
+import { ORG_STATUS_CONFIG } from '@/lib/constants'
 
 // ---------------------------------------------------------------------------
 // Component
@@ -353,7 +330,7 @@ export function OrganizationsTable({ organizations, meta, categories }: Props) {
                 </TableRow>
               ) : (
                 organizations.map((org) => {
-                  const statusCfg = STATUS_CONFIG[org.status] ?? STATUS_CONFIG.DRAFT
+                  const statusCfg = ORG_STATUS_CONFIG[org.status] ?? ORG_STATUS_CONFIG.DRAFT
                   const isPublished = org.status === "PUBLISHED"
 
                   return (
