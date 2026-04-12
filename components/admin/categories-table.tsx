@@ -70,17 +70,19 @@ export function CategoriesTable({ categories }: Props) {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [deleteTarget, setDeleteTarget] = useState<{ id: string; name: string } | null>(null)
 
-  const filteredCategories = categories
-    .filter((c) => c.name.toLowerCase().includes(search.toLowerCase()))
-    .sort((a, b) => {
-      let comparison = 0
-      if (sortField === 'name') {
-        comparison = a.name.localeCompare(b.name)
-      } else if (sortField === 'count') {
-        comparison = a._count.organizations - b._count.organizations
-      }
-      return sortOrder === 'asc' ? comparison : -comparison
-    })
+  const filteredCategories = (
+    search.trim() === ''
+      ? categories
+      : categories.filter((c) => c.name.toLowerCase().includes(search.toLowerCase()))
+  ).sort((a, b) => {
+    let comparison = 0
+    if (sortField === 'name') {
+      comparison = a.name.localeCompare(b.name)
+    } else if (sortField === 'count') {
+      comparison = a._count.organizations - b._count.organizations
+    }
+    return sortOrder === 'asc' ? comparison : -comparison
+  })
 
   // Pagination calculations
   const total = filteredCategories.length

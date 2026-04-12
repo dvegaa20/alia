@@ -134,7 +134,8 @@ export function SuggestionsTable({ suggestions, meta }: Props) {
       setIsDebouncing(false)
     }, 400)
     return () => clearTimeout(handler)
-  }, [searchInput, pushParams])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchInput])
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault()

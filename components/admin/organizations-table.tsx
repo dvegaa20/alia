@@ -159,7 +159,8 @@ export function OrganizationsTable({ organizations, meta, categories }: Props) {
     }, 400)
 
     return () => clearTimeout(handler)
-  }, [searchInput, pushParams])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchInput])
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault()
