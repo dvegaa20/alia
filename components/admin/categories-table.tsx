@@ -45,6 +45,7 @@ import {
 } from "@/components/ui/alert-dialog"
 import { deleteAdminCategory } from "@/server/actions"
 import { CategoryFormDialog } from "./category-form-dialog"
+import { AdminPagination } from "./admin-pagination"
 import type { CategoryWithCount, CategoriesTableProps as Props } from '@/types'
 
 export function CategoriesTable({ categories }: Props) {
@@ -84,8 +85,6 @@ export function CategoriesTable({ categories }: Props) {
   // Pagination calculations
   const total = filteredCategories.length
   const totalPages = Math.ceil(total / limit)
-  const start = (page - 1) * limit + 1
-  const end = Math.min(page * limit, total)
 
   const paginatedCategories = filteredCategories.slice((page - 1) * limit, page * limit)
 
@@ -269,43 +268,10 @@ export function CategoriesTable({ categories }: Props) {
         </div>
 
         {/* Pagination */}
-        {total > 0 && (
-          <div className="px-8 py-4 flex items-center justify-between border-t border-border">
-            <span className="text-xs text-muted-foreground">
-              Mostrando {start} a {end} de {total} resultados
-            </span>
-            <div className="flex items-center gap-2">
-              <button
-                disabled={page <= 1}
-                onClick={() => setPage(page - 1)}
-                className="px-3 py-1 rounded border-none bg-muted text-muted-foreground hover:bg-muted/80 transition-colors text-xs disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                &lt;
-              </button>
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                (p) => (
-                  <button
-                    key={p}
-                    onClick={() => setPage(p)}
-                    className={`px-3 py-1 rounded border-none transition-colors text-xs ${p === page
-                      ? "bg-muted text-foreground font-bold"
-                      : "text-muted-foreground hover:bg-muted"
-                      }`}
-                  >
-                    {p}
-                  </button>
-                )
-              )}
-              <button
-                disabled={page >= totalPages}
-                onClick={() => setPage(page + 1)}
-                className="px-3 py-1 rounded border-none bg-muted text-muted-foreground hover:bg-muted/80 transition-colors text-xs disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                &gt;
-              </button>
-            </div>
-          </div>
-        )}
+        <AdminPagination 
+          meta={{ page, limit, total, totalPages }} 
+          onPageChange={setPage} 
+        />
       </section>
 
       {/* Forms and Dialogs */}

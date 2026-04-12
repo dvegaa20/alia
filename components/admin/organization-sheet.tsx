@@ -52,12 +52,7 @@ const DEFAULT_OFFICE_HOURS = {
   sunday: null,
 }
 
-/* ── Shared styles ──────────────────────────────────── */
-const labelCx =
-  'font-label text-[11px] font-medium uppercase tracking-wider text-muted-foreground pointer-events-none'
-
-const inputCx =
-  'w-full bg-muted/50 border border-transparent hover:bg-muted rounded-lg px-4 py-2.5 h-auto min-h-[44px] focus-visible:ring-2 focus-visible:ring-ring focus-visible:border-input focus-visible:bg-background transition-all duration-300 font-body text-foreground placeholder:text-muted-foreground/70'
+import { LABEL_CX, INPUT_CX, TAB_TRIGGER_CX } from '@/lib/styles'
 
 export function OrganizationSheet({
   open,
@@ -384,10 +379,10 @@ export function OrganizationSheet({
                     <TabsContent value="sobre" className="space-y-8 mt-0">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <Field>
-                          <FieldLabel className={labelCx}>Nombre</FieldLabel>
+                          <FieldLabel className={LABEL_CX}>Nombre</FieldLabel>
                           <FieldContent>
                             <Input
-                              className={inputCx}
+                              className={INPUT_CX}
                               placeholder="Ej. TECHO México"
                               {...register('name')}
                             />
@@ -396,37 +391,37 @@ export function OrganizationSheet({
                         </Field>
 
                         <Field>
-                          <FieldLabel className={labelCx}>Slug (URL amigable)</FieldLabel>
+                          <FieldLabel className={LABEL_CX}>Slug (URL amigable)</FieldLabel>
                           <FieldContent>
                             <Input
                               placeholder="techo-mexico"
                               {...register('slug')}
                               readOnly
-                              className={`${inputCx} bg-muted opacity-70 cursor-not-allowed`}
+                              className={`${INPUT_CX} bg-muted opacity-70 cursor-not-allowed`}
                             />
                             <FieldError errors={[errors.slug]} />
                           </FieldContent>
                         </Field>
 
                         <Field className="md:col-span-2">
-                          <FieldLabel className={labelCx}>Descripción Corta</FieldLabel>
+                          <FieldLabel className={LABEL_CX}>Descripción Corta</FieldLabel>
                           <FieldContent>
                             <Textarea
                               placeholder="Resumen de máximo 160 caracteres..."
                               {...register('shortDescription')}
                               maxLength={160}
-                              className={inputCx}
+                              className={INPUT_CX}
                             />
                             <FieldError errors={[errors.shortDescription]} />
                           </FieldContent>
                         </Field>
 
                         <Field className="md:col-span-2">
-                          <FieldLabel className={labelCx}>Descripción Completa</FieldLabel>
+                          <FieldLabel className={LABEL_CX}>Descripción Completa</FieldLabel>
                           <FieldContent>
                             <Textarea
                               placeholder="Descripción detallada de la organización..."
-                              className={`${inputCx} min-h-32`}
+                              className={`${INPUT_CX} min-h-32`}
                               {...register('fullDescription')}
                             />
                             <FieldError errors={[errors.fullDescription]} />
@@ -436,10 +431,10 @@ export function OrganizationSheet({
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-border/50">
                         <Field>
-                          <FieldLabel className={labelCx}>URL del Logo</FieldLabel>
+                          <FieldLabel className={LABEL_CX}>URL del Logo</FieldLabel>
                           <FieldContent>
                             <Input
-                              className={inputCx}
+                              className={INPUT_CX}
                               placeholder="https://..."
                               {...register('logoUrl')}
                             />
@@ -448,10 +443,10 @@ export function OrganizationSheet({
                         </Field>
 
                         <Field>
-                          <FieldLabel className={labelCx}>URL Imagen de Portada</FieldLabel>
+                          <FieldLabel className={LABEL_CX}>URL Imagen de Portada</FieldLabel>
                           <FieldContent>
                             <Input
-                              className={inputCx}
+                              className={INPUT_CX}
                               placeholder="https://..."
                               {...register('coverImageUrl')}
                             />
@@ -460,10 +455,10 @@ export function OrganizationSheet({
                         </Field>
 
                         <Field>
-                          <FieldLabel className={labelCx}>Año de fundación</FieldLabel>
+                          <FieldLabel className={LABEL_CX}>Año de fundación</FieldLabel>
                           <FieldContent>
                             <Input
-                              className={inputCx}
+                              className={INPUT_CX}
                               type="number"
                               placeholder="Ej. 1990"
                               {...register('foundedYear')}
@@ -662,7 +657,7 @@ export function OrganizationSheet({
                                     name={`needs.${index}.category` as const}
                                     render={({ field }) => (
                                       <Select onValueChange={field.onChange} value={field.value || 'otro'}>
-                                        <SelectTrigger className={inputCx}>
+                                        <SelectTrigger className={INPUT_CX}>
                                           <SelectValue placeholder="Selecciona..." />
                                         </SelectTrigger>
                                         <SelectContent>
@@ -685,7 +680,7 @@ export function OrganizationSheet({
                                     name={`needs.${index}.urgency` as const}
                                     render={({ field }) => (
                                       <Select onValueChange={field.onChange} value={field.value || 'media'}>
-                                        <SelectTrigger className={inputCx}>
+                                        <SelectTrigger className={INPUT_CX}>
                                           <SelectValue placeholder="Selecciona..." />
                                         </SelectTrigger>
                                         <SelectContent>
@@ -700,17 +695,17 @@ export function OrganizationSheet({
 
                                 <Field className="md:col-span-2">
                                   <FieldLabel>Título de la Necesidad</FieldLabel>
-                                  <Input className={inputCx} placeholder="Ej. Cobijas e insumos de invierno" {...register(`needs.${index}.title` as const)} />
+                                  <Input className={INPUT_CX} placeholder="Ej. Cobijas e insumos de invierno" {...register(`needs.${index}.title` as const)} />
                                 </Field>
 
                                 <Field className="md:col-span-2">
                                   <FieldLabel>Descripción</FieldLabel>
-                                  <Textarea className={`${inputCx} min-h-24`} placeholder="Ej. Necesitamos 200 cobertores en buen estado para albergues..." {...register(`needs.${index}.description` as const)} />
+                                  <Textarea className={`${INPUT_CX} min-h-24`} placeholder="Ej. Necesitamos 200 cobertores en buen estado para albergues..." {...register(`needs.${index}.description` as const)} />
                                 </Field>
 
                                 <Field className="md:col-span-2">
                                   <FieldLabel>Cantidad Esperada (Opcional)</FieldLabel>
-                                  <Input className={inputCx} placeholder="Ej. 200 piezas / $10,000 MXN / 15 voluntarios" {...register(`needs.${index}.quantity` as const)} />
+                                  <Input className={INPUT_CX} placeholder="Ej. 200 piezas / $10,000 MXN / 15 voluntarios" {...register(`needs.${index}.quantity` as const)} />
                                 </Field>
                               </div>
                             </div>
@@ -734,30 +729,30 @@ export function OrganizationSheet({
                     <TabsContent value="impacto" className="space-y-8 mt-0">
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <Field>
-                          <FieldLabel className={labelCx}>Impacto Actual (Progreso)</FieldLabel>
+                          <FieldLabel className={LABEL_CX}>Impacto Actual (Progreso)</FieldLabel>
                           <FieldContent>
                             <Input
-                              className={inputCx}
+                              className={INPUT_CX}
                               type="number"
                               {...register('impactCurrent')}
                             />
                           </FieldContent>
                         </Field>
                         <Field>
-                          <FieldLabel className={labelCx}>Impacto Meta (Goal)</FieldLabel>
+                          <FieldLabel className={LABEL_CX}>Impacto Meta (Goal)</FieldLabel>
                           <FieldContent>
                             <Input
-                              className={inputCx}
+                              className={INPUT_CX}
                               type="number"
                               {...register('impactGoal')}
                             />
                           </FieldContent>
                         </Field>
                         <Field>
-                          <FieldLabel className={labelCx}>Tipo de Impacto (Unidad)</FieldLabel>
+                          <FieldLabel className={LABEL_CX}>Tipo de Impacto (Unidad)</FieldLabel>
                           <FieldContent>
                             <Input
-                              className={inputCx}
+                              className={INPUT_CX}
                               placeholder="Ej. Niños beneficiados"
                               {...register('impactType')}
                             />
@@ -769,29 +764,29 @@ export function OrganizationSheet({
                         <h3 className="text-lg font-bold mb-4">Dato Destacado (Featured Fact)</h3>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                           <Field>
-                            <FieldLabel className={labelCx}>Valor (Ej. 8,500)</FieldLabel>
-                            <Input className={inputCx} {...register('featuredFact.value')} />
+                            <FieldLabel className={LABEL_CX}>Valor (Ej. 8,500)</FieldLabel>
+                            <Input className={INPUT_CX} {...register('featuredFact.value')} />
                           </Field>
                           <Field>
-                            <FieldLabel className={labelCx}>Unidad (Ej. viviendas)</FieldLabel>
-                            <Input className={inputCx} {...register('featuredFact.unit')} />
+                            <FieldLabel className={LABEL_CX}>Unidad (Ej. viviendas)</FieldLabel>
+                            <Input className={INPUT_CX} {...register('featuredFact.unit')} />
                           </Field>
                           <Field>
-                            <FieldLabel className={labelCx}>Label (Ej. construidas)</FieldLabel>
-                            <Input className={inputCx} {...register('featuredFact.label')} />
+                            <FieldLabel className={LABEL_CX}>Label (Ej. construidas)</FieldLabel>
+                            <Input className={INPUT_CX} {...register('featuredFact.label')} />
                           </Field>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <Field>
-                            <FieldLabel className={labelCx}>Descripción</FieldLabel>
+                            <FieldLabel className={LABEL_CX}>Descripción</FieldLabel>
                             <Textarea
-                              className={`${inputCx} min-h-[100px]`}
+                              className={`${INPUT_CX} min-h-[100px]`}
                               {...register('featuredFact.description')}
                             />
                           </Field>
                           <Field>
-                            <FieldLabel className={labelCx}>Badge (Ej. Logro principal)</FieldLabel>
-                            <Input className={inputCx} {...register('featuredFact.badge')} />
+                            <FieldLabel className={LABEL_CX}>Badge (Ej. Logro principal)</FieldLabel>
+                            <Input className={INPUT_CX} {...register('featuredFact.badge')} />
                           </Field>
                         </div>
                       </div>
@@ -857,23 +852,23 @@ export function OrganizationSheet({
                           <h3 className="text-lg font-bold mb-4">Testimonio</h3>
                           <div className="space-y-4">
                             <Field>
-                              <FieldLabel className={labelCx}>Cita</FieldLabel>
+                              <FieldLabel className={LABEL_CX}>Cita</FieldLabel>
                               <Textarea
-                                className={`${inputCx} min-h-[100px]`}
+                                className={`${INPUT_CX} min-h-[100px]`}
                                 {...register('testimony.quote')}
                               />
                             </Field>
                             <Field>
-                              <FieldLabel className={labelCx}>Autor</FieldLabel>
-                              <Input className={inputCx} {...register('testimony.author')} />
+                              <FieldLabel className={LABEL_CX}>Autor</FieldLabel>
+                              <Input className={INPUT_CX} {...register('testimony.author')} />
                             </Field>
                             <Field>
-                              <FieldLabel className={labelCx}>Rol</FieldLabel>
-                              <Input className={inputCx} {...register('testimony.role')} />
+                              <FieldLabel className={LABEL_CX}>Rol</FieldLabel>
+                              <Input className={INPUT_CX} {...register('testimony.role')} />
                             </Field>
                             <Field>
-                              <FieldLabel className={labelCx}>Avatar URL</FieldLabel>
-                              <Input className={inputCx} {...register('testimony.avatarUrl')} />
+                              <FieldLabel className={LABEL_CX}>Avatar URL</FieldLabel>
+                              <Input className={INPUT_CX} {...register('testimony.avatarUrl')} />
                             </Field>
                           </div>
                         </div>
@@ -882,26 +877,26 @@ export function OrganizationSheet({
                           <h3 className="text-lg font-bold mb-4">Milestone (Hito de trayectoria)</h3>
                           <div className="space-y-4">
                             <Field>
-                              <FieldLabel className={labelCx}>
+                              <FieldLabel className={LABEL_CX}>
                                 Categoría (Ej. Medio ambiente)
                               </FieldLabel>
-                              <Input className={inputCx} {...register('milestone.category')} />
+                              <Input className={INPUT_CX} {...register('milestone.category')} />
                             </Field>
                             <Field>
-                              <FieldLabel className={labelCx}>
+                              <FieldLabel className={LABEL_CX}>
                                 Tagline (Ej. 31 años defendiendo...)
                               </FieldLabel>
-                              <Input className={inputCx} {...register('milestone.tagline')} />
+                              <Input className={INPUT_CX} {...register('milestone.tagline')} />
                             </Field>
                             <p className="font-semibold text-sm mt-4 text-muted-foreground">Stat 1</p>
                             <div className="grid grid-cols-2 gap-2">
                               <Input
-                                className={inputCx}
+                                className={INPUT_CX}
                                 placeholder="Label"
                                 {...register('milestone.stats.0.label')}
                               />
                               <Input
-                                className={inputCx}
+                                className={INPUT_CX}
                                 placeholder="Value"
                                 {...register('milestone.stats.0.value')}
                               />
@@ -909,12 +904,12 @@ export function OrganizationSheet({
                             <p className="font-semibold text-sm mt-2 text-muted-foreground">Stat 2</p>
                             <div className="grid grid-cols-2 gap-2">
                               <Input
-                                className={inputCx}
+                                className={INPUT_CX}
                                 placeholder="Label"
                                 {...register('milestone.stats.1.label')}
                               />
                               <Input
-                                className={inputCx}
+                                className={INPUT_CX}
                                 placeholder="Value"
                                 {...register('milestone.stats.1.value')}
                               />
@@ -928,10 +923,10 @@ export function OrganizationSheet({
                     <TabsContent value="contacto" className="space-y-8 mt-0">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <Field>
-                          <FieldLabel className={labelCx}>Email Principal</FieldLabel>
+                          <FieldLabel className={LABEL_CX}>Email Principal</FieldLabel>
                           <FieldContent>
                             <Input
-                              className={inputCx}
+                              className={INPUT_CX}
                               type="email"
                               placeholder="contacto@..."
                               {...register('email')}
@@ -940,16 +935,16 @@ export function OrganizationSheet({
                           </FieldContent>
                         </Field>
                         <Field>
-                          <FieldLabel className={labelCx}>Teléfono</FieldLabel>
+                          <FieldLabel className={LABEL_CX}>Teléfono</FieldLabel>
                           <FieldContent>
-                            <Input className={inputCx} placeholder="+52..." {...register('phone')} />
+                            <Input className={INPUT_CX} placeholder="+52..." {...register('phone')} />
                           </FieldContent>
                         </Field>
                         <Field>
-                          <FieldLabel className={labelCx}>Sitio Web</FieldLabel>
+                          <FieldLabel className={LABEL_CX}>Sitio Web</FieldLabel>
                           <FieldContent>
                             <Input
-                              className={inputCx}
+                              className={INPUT_CX}
                               placeholder="https://..."
                               {...register('website')}
                             />
@@ -957,10 +952,10 @@ export function OrganizationSheet({
                           </FieldContent>
                         </Field>
                         <Field>
-                          <FieldLabel className={labelCx}>Link de Donación</FieldLabel>
+                          <FieldLabel className={LABEL_CX}>Link de Donación</FieldLabel>
                           <FieldContent>
                             <Input
-                              className={inputCx}
+                              className={INPUT_CX}
                               placeholder="https://..."
                               {...register('donationLink')}
                             />
@@ -973,14 +968,14 @@ export function OrganizationSheet({
                         <h3 className="text-lg font-bold mb-4">Ubicación Físca</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           <Field>
-                            <FieldLabel className={labelCx}>Estado</FieldLabel>
+                            <FieldLabel className={LABEL_CX}>Estado</FieldLabel>
                             <FieldContent>
                               <Controller
                                 control={control}
                                 name="location.state"
                                 render={({ field }) => (
                                   <Select onValueChange={field.onChange} value={field.value || ''}>
-                                    <SelectTrigger className={inputCx}>
+                                    <SelectTrigger className={INPUT_CX}>
                                       <SelectValue placeholder="Selecciona estado..." />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -997,17 +992,17 @@ export function OrganizationSheet({
                             </FieldContent>
                           </Field>
                           <Field>
-                            <FieldLabel className={labelCx}>Ciudad/Municipio</FieldLabel>
+                            <FieldLabel className={LABEL_CX}>Ciudad/Municipio</FieldLabel>
                             <FieldContent>
-                              <Input className={inputCx} {...register('location.city')} />
+                              <Input className={INPUT_CX} {...register('location.city')} />
                               <FieldError errors={[errors.location?.city]} />
                             </FieldContent>
                           </Field>
                           <Field className="md:col-span-2">
-                            <FieldLabel className={labelCx}>Google Maps URL</FieldLabel>
+                            <FieldLabel className={LABEL_CX}>Google Maps URL</FieldLabel>
                             <FieldContent>
                               <Input
-                                className={inputCx}
+                                className={INPUT_CX}
                                 placeholder="https://maps.app.goo.gl/..."
                                 {...register('location.googleMapsUrl')}
                               />
@@ -1015,10 +1010,10 @@ export function OrganizationSheet({
                             </FieldContent>
                           </Field>
                           <Field>
-                            <FieldLabel className={labelCx}>Latitud</FieldLabel>
+                            <FieldLabel className={LABEL_CX}>Latitud</FieldLabel>
                             <FieldContent>
                               <Input
-                                className={inputCx}
+                                className={INPUT_CX}
                                 type="number"
                                 step="any"
                                 placeholder="Ej. 20.6597"
@@ -1031,10 +1026,10 @@ export function OrganizationSheet({
                             </FieldContent>
                           </Field>
                           <Field>
-                            <FieldLabel className={labelCx}>Longitud</FieldLabel>
+                            <FieldLabel className={LABEL_CX}>Longitud</FieldLabel>
                             <FieldContent>
                               <Input
-                                className={inputCx}
+                                className={INPUT_CX}
                                 type="number"
                                 step="any"
                                 placeholder="Ej. -103.3496"
@@ -1059,7 +1054,7 @@ export function OrganizationSheet({
                                 name={`socialLinks.${index}.platform`}
                                 render={({ field: f }) => (
                                   <Select onValueChange={f.onChange} value={f.value}>
-                                    <SelectTrigger className={`w-40 ${inputCx}`}>
+                                    <SelectTrigger className={`w-40 ${INPUT_CX}`}>
                                       <SelectValue placeholder="Plataforma" />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -1075,7 +1070,7 @@ export function OrganizationSheet({
                                 )}
                               />
                               <Input
-                                className={inputCx}
+                                className={INPUT_CX}
                                 placeholder="https://..."
                                 {...register(`socialLinks.${index}.url`)}
                               />

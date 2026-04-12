@@ -8,6 +8,7 @@ import NeedsTab from "./tabs/needs-tab";
 import ImpactTab from "./tabs/impact-tab";
 import ContactTab from "./tabs/contact-tab";
 
+import { TAB_TRIGGER_CX } from '@/lib/styles';
 import type { OrgTabsProps } from '@/types'
 
 export function OrgTabs({
@@ -44,31 +45,31 @@ export function OrgTabs({
         <TabsList className="bg-transparent border-b border-border/30 rounded-none w-full justify-start gap-10 h-auto p-0">
           <TabsTrigger
             value="sobre"
-            className="rounded-none border-0 border-b-4 border-transparent data-[state=active]:border-b-ds-primary data-[state=active]:text-primary data-[state=active]:font-bold data-[state=active]:shadow-none text-muted-foreground font-medium tracking-tight pb-4 px-0 bg-transparent! dark:data-[state=active]:bg-transparent hover:text-primary transition-colors cursor-pointer"
+            className={TAB_TRIGGER_CX}
           >
             Sobre nosotros
           </TabsTrigger>
           <TabsTrigger
             value="explorar"
-            className="rounded-none border-0 border-b-4 border-transparent data-[state=active]:border-b-ds-primary data-[state=active]:text-primary data-[state=active]:font-bold data-[state=active]:shadow-none text-muted-foreground font-medium tracking-tight pb-4 px-0 bg-transparent! dark:data-[state=active]:bg-transparent hover:text-primary transition-colors cursor-pointer"
+            className={TAB_TRIGGER_CX}
           >
             Explorar
           </TabsTrigger>
           <TabsTrigger
             value="necesidades"
-            className="rounded-none border-0 border-b-4 border-transparent data-[state=active]:border-b-ds-primary data-[state=active]:text-primary data-[state=active]:font-bold data-[state=active]:shadow-none text-muted-foreground font-medium tracking-tight pb-4 px-0 bg-transparent! dark:data-[state=active]:bg-transparent hover:text-primary transition-colors cursor-pointer"
+            className={TAB_TRIGGER_CX}
           >
             Necesidades
           </TabsTrigger>
           <TabsTrigger
             value="impacto"
-            className="rounded-none border-0 border-b-4 border-transparent data-[state=active]:border-b-ds-primary data-[state=active]:text-primary data-[state=active]:font-bold data-[state=active]:shadow-none text-muted-foreground font-medium tracking-tight pb-4 px-0 bg-transparent! dark:data-[state=active]:bg-transparent hover:text-primary transition-colors cursor-pointer"
+            className={TAB_TRIGGER_CX}
           >
             Impacto
           </TabsTrigger>
           <TabsTrigger
             value="contacto"
-            className="rounded-none border-0 border-b-4 border-transparent data-[state=active]:border-b-ds-primary data-[state=active]:text-primary data-[state=active]:font-bold data-[state=active]:shadow-none text-muted-foreground font-medium tracking-tight pb-4 px-0 bg-transparent! dark:data-[state=active]:bg-transparent hover:text-primary transition-colors cursor-pointer"
+            className={TAB_TRIGGER_CX}
           >
             Contacto
           </TabsTrigger>
