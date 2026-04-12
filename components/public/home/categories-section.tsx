@@ -6,12 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Leaf, HeartPulse, GraduationCap, PawPrint, Scale, Grid2X2 } from "lucide-react";
 import { Feature, type CampaignItem } from "@/components/ui/feature-with-image-carousel";
 import Link from "next/link";
-import { Organization, Location, Category } from "@/prisma/generated/client";
-
-// Define a type for our dynamic data
-export type DynamicCategoryData = Category & {
-  organizations: (Organization & { location: Location | null })[];
-};
+import type { DynamicCategoryData } from '@/types'
+export type { DynamicCategoryData }
 
 interface CategoriesSectionProps {
   categories: DynamicCategoryData[];

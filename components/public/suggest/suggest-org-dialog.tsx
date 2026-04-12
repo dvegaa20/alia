@@ -49,7 +49,7 @@ const suggestSchema = z.object({
 
 type SuggestValues = z.infer<typeof suggestSchema>;
 
-type SubmitState = "idle" | "loading" | "success" | "error";
+import type { SubmitState } from '@/types'
 
 /* ── Shared styles ──────────────────────────────────── */
 const labelCx =

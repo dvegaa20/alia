@@ -10,16 +10,7 @@ import { Separator } from "@/components/ui/separator";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Map, MapMarker, MarkerContent, MarkerPopup, MapControls, MapRoute } from "@/components/ui/map";
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-export interface ContactTabProps {
-  email: string;
-  phone?: string | null;
-  location?: string | null;
-  googleMapsUrl?: string | null;
-  coordinates?: { lat: number | null; lng: number | null } | null;
-  officeHours?: any;
-}
+import type { ContactTabProps } from '@/types'
 
 const DAY_LABELS: Record<string, string> = {
   monday: "Lunes",

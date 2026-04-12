@@ -24,19 +24,8 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { MapView, type MapPoint } from "./map-view";
-
-type ViewMode = "list" | "map";
-
-interface ResultsGridProps {
-  organizations: OrganizationCardProps[];
-  mapPoints: MapPoint[];
-  total: number;
-  currentPage: number;
-  totalPages: number;
-  searchQuery?: string;
-  sort?: string;
-}
+import { MapView } from "./map-view";
+import type { ViewMode, ResultsGridProps, MapPoint } from '@/types'
 
 function buildPageHref(page: number, searchQuery?: string, sort?: string) {
   const params = new URLSearchParams();

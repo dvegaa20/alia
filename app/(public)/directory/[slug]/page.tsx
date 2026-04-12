@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { HeroCover, OrgHeader, OrgTabs } from "@/components/public";
 import { getOrgBySlug } from "@/server/actions";
+import type { NeedItem, FeaturedFact, SecondaryFact, Testimony, Milestone, OfficeHours } from '@/types'
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -51,13 +52,13 @@ export default async function OrganizationProfilePage({ params }: PageProps) {
         impactGoal={org.impactGoal}
         impactType={org.impactType}
         relevantLinks={org.relevantLinks || []}
-        needs={org.needs as any}
-        featuredFact={org.featuredFact}
-        secondaryFacts={org.secondaryFacts}
-        testimony={org.testimony}
-        milestone={org.milestone}
+        needs={(org.needs ?? undefined) as unknown as NeedItem[] | undefined}
+        featuredFact={(org.featuredFact ?? undefined) as unknown as FeaturedFact | undefined}
+        secondaryFacts={(org.secondaryFacts ?? undefined) as unknown as SecondaryFact[] | undefined}
+        testimony={(org.testimony ?? undefined) as unknown as Testimony | undefined}
+        milestone={(org.milestone ?? undefined) as unknown as Milestone | undefined}
         foundedYear={org.foundedYear}
-        officeHours={org.officeHours}
+        officeHours={(org.officeHours ?? undefined) as unknown as OfficeHours | undefined}
         verified={org.verified}
       />
     </div>

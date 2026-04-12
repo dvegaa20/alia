@@ -45,20 +45,7 @@ import {
 } from "@/components/ui/alert-dialog"
 import { deleteAdminCategory } from "@/server/actions"
 import { CategoryFormDialog } from "./category-form-dialog"
-
-type CategoryWithCount = {
-  id: string
-  name: string
-  slug: string
-  description: string | null
-  _count: {
-    organizations: number
-  }
-}
-
-type Props = {
-  categories: CategoryWithCount[]
-}
+import type { CategoryWithCount, CategoriesTableProps as Props } from '@/types'
 
 export function CategoriesTable({ categories }: Props) {
   const [isPending, startTransition] = useTransition()

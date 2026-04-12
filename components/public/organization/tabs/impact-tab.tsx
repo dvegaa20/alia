@@ -21,7 +21,7 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { ImpactTabProps, SecondaryFact, MilestoneStat } from '@/types'
 
 // ─── Icon mapping (string key from JSON → Lucide component) ──────────────────
 
@@ -46,17 +46,6 @@ const COLOR_MAP: Record<string, { text: string; bg: string }> = {
   rose: { text: "text-rose-500", bg: "bg-rose-50 dark:bg-rose-950/40" },
 };
 
-// ─── Props ───────────────────────────────────────────────────────────────────
-
-interface ImpactTabProps {
-  featuredFact?: any;
-  secondaryFacts?: any;
-  testimony?: any;
-  milestone?: any;
-  foundedYear?: number | null;
-  verified?: boolean;
-}
-
 // ─────────────────────────────────────────────────────────────────────────────
 
 export default function ImpactTab({
@@ -68,7 +57,7 @@ export default function ImpactTab({
   verified,
 }: ImpactTabProps) {
   // Parse JSON fields safely
-  const facts: any[] = Array.isArray(secondaryFacts) ? secondaryFacts : [];
+  const facts: SecondaryFact[] = Array.isArray(secondaryFacts) ? secondaryFacts : [];
 
   if (!featuredFact) {
     return (

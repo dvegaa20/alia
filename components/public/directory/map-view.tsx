@@ -8,30 +8,10 @@ import { BadgeCheck, MapPin, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
-export interface MapPoint {
-  slug: string;
-  name: string;
-  category: string;
-  location: string;
-  coordinates: [number, number]; // [lng, lat]
-  logoImage: string;
-  verified: boolean;
-}
+import type { MapPoint, MapViewProps } from '@/types'
+export type { MapPoint }
 
-interface MapViewProps {
-  total?: number;
-  mapPoints: MapPoint[];
-}
-
-interface SelectedOrg {
-  slug: string;
-  name: string;
-  category: string;
-  location: string;
-  coordinates: [number, number];
-  logoImage: string;
-  verified: boolean;
-}
+type SelectedOrg = MapPoint
 
 // Convert MapPoints to GeoJSON FeatureCollection
 function toGeoJSON(points: MapPoint[]): GeoJSON.FeatureCollection {

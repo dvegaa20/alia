@@ -8,36 +8,7 @@ import NeedsTab from "./tabs/needs-tab";
 import ImpactTab from "./tabs/impact-tab";
 import ContactTab from "./tabs/contact-tab";
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-interface OrgTabsProps {
-  name: string;
-  fullDescription: string | null;
-  galleryImages: string[];
-  email: string;
-  phone?: string | null;
-  website?: string | null;
-  location?: string | null;
-  googleMapsUrl?: string | null;
-  coordinates?: { lat: number | null; lng: number | null } | null;
-  // Impact sidebar
-  impactCurrent?: number | null;
-  impactGoal?: number | null;
-  impactType?: string | null;
-  // Explore tab
-  relevantLinks: string[];
-  // Needs tab
-  needs?: any[];
-  // Impact tab
-  featuredFact?: any;
-  secondaryFacts?: any;
-  testimony?: any;
-  milestone?: any;
-  foundedYear?: number | null;
-  verified?: boolean;
-  // Contact tab
-  officeHours?: any;
-}
+import type { OrgTabsProps } from '@/types'
 
 export function OrgTabs({
   name,

@@ -38,21 +38,7 @@ import {
   SidebarMenuButton,
 } from "@/components/ui/sidebar";
 
-interface CategoryData {
-  id: string;
-  slug: string;
-  name: string;
-  _count: { organizations: number };
-}
-
-interface SidebarFiltersProps {
-  searchQuery?: string;
-  categories?: CategoryData[];
-  activeCategorySlug?: string;
-  activeState?: string;
-  activeCity?: string;
-  activeVerified?: boolean;
-}
+import type { CategoryData, SidebarFiltersProps } from '@/types'
 
 const iconMap: Record<string, React.ElementType> = {
   "educacion": GraduationCap,

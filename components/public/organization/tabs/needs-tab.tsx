@@ -3,11 +3,7 @@
 import { Package, Users, Wallet, Apple, Wrench, HelpCircle } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-interface NeedsTabProps {
-  needs?: any[];
-}
+import type { NeedsTabProps } from '@/types'
 
 const CATEGORY_MAP: Record<string, { label: string; icon: any }> = {
   material: { label: "Donación Material", icon: Package },

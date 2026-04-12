@@ -55,35 +55,8 @@ import {
 } from "@/components/ui/select"
 import { toggleOrgStatus, toggleOrgFeatured, deleteOrganization, getOrganizationById, upsertOrganization } from "@/server/actions"
 import type { OrganizationStatus } from "@/prisma/generated/enums"
-import { OrganizationSheet, type OrgWithAllRelations } from "./organization-sheet"
-
-// ---------------------------------------------------------------------------
-// Types
-// ---------------------------------------------------------------------------
-
-type OrgWithRelations = {
-  id: string
-  slug: string
-  name: string
-  logoUrl: string | null
-  website: string | null
-  email: string
-  status: OrganizationStatus
-  featured: boolean
-  location: { city: string; state: string } | null
-  categories: { id: string; name: string; slug: string }[]
-}
-
-type Props = {
-  organizations: OrgWithRelations[]
-  meta: {
-    total: number
-    page: number
-    limit: number
-    totalPages: number
-  }
-  categories: { id: string; name: string }[]
-}
+import { OrganizationSheet } from "./organization-sheet"
+import type { OrgWithAllRelations, OrgWithRelations, OrganizationsTableProps as Props, StatusConfig } from '@/types'
 
 // ---------------------------------------------------------------------------
 // Status config

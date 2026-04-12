@@ -230,10 +230,10 @@ export async function getTopCategoriesWithOrgs() {
       },
     })
 
-    // Sort by org count descending and take top 5
+    // Sort by org count descending and take top 4
     const topCategories = categories
       .sort((a, b) => b._count.organizations - a._count.organizations)
-      .slice(0, 5)
+      .slice(0, 4)
 
     return { success: true, data: topCategories }
   } catch (error) {

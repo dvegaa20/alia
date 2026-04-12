@@ -3,16 +3,8 @@ import { Badge } from "@/components/ui/badge";
 import { MapPin, BadgeCheck, Users, ArrowRight } from "lucide-react";
 import Image from "next/image";
 
-export interface OrganizationCardProps {
-  slug: string;
-  name: string;
-  description: string;
-  category: string;
-  location: string;
-  coverImage: string;
-  logoImage: string;
-  verified?: boolean;
-}
+import type { OrganizationCardProps } from '@/types'
+export type { OrganizationCardProps }
 
 export function OrganizationCard({
   slug,

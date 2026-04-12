@@ -51,33 +51,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { approveSuggestion, rejectSuggestion } from "@/server/actions"
-
-// ---------------------------------------------------------------------------
-// Types
-// ---------------------------------------------------------------------------
-
-type Suggestion = {
-  id: string
-  orgName: string
-  category: string
-  location: string
-  description: string
-  url: string
-  status: "PENDING" | "APPROVED" | "REJECTED"
-  adminNotes: string | null
-  createdAt: string | Date
-  reviewedAt: string | Date | null
-}
-
-type Props = {
-  suggestions: Suggestion[]
-  meta: {
-    total: number
-    page: number
-    limit: number
-    totalPages: number
-  }
-}
+import type { SuggestionRow as Suggestion, SuggestionsTableProps as Props, StatusConfig } from '@/types'
 
 // ---------------------------------------------------------------------------
 // Status config

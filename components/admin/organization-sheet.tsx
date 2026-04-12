@@ -39,19 +39,8 @@ import {
 import { Checkbox } from '@/components/ui/checkbox'
 import { Skeleton } from '@/components/ui/skeleton'
 
-export type OrgWithAllRelations = {
-  id: string
-  [key: string]: any // simplify for props, fully typed usage below
-}
-
-interface OrganizationSheetProps {
-  open: boolean
-  onOpenChange: (open: boolean) => void
-  organization?: OrgWithAllRelations | null
-  isLoading?: boolean
-  categories: { id: string; name: string }[]
-  onSave: (data: OrgFormValues, id?: string) => Promise<{ success: boolean; error?: string }>
-}
+import type { OrgWithAllRelations, OrganizationSheetProps } from '@/types'
+export type { OrgWithAllRelations }
 
 const DEFAULT_OFFICE_HOURS = {
   monday: { open: '09:00', close: '18:00' },
@@ -101,21 +90,51 @@ export function OrganizationSheet({
       }
     }
 
-    // Map organization to form values
+    // Map organization to form values — destructure nullable fields for null → undefined conversion
+    const {
+      location, socialLinks, categories, galleryImages, relevantLinks, needs, officeHours,
+      fullDescription, logoUrl, coverImageUrl, website, phone, donationLink,
+      foundedYear, impactCurrent, impactGoal, impactType,
+      featuredFact, secondaryFacts, testimony, milestone,
+      id: _id, createdAt: _createdAt, updatedAt: _updatedAt,
+      ...rest
+    } = organization
     return {
-      ...organization,
-      categoryIds: organization.categories?.map((c: any) => c.id) || [],
-      location: organization.location || undefined,
-      socialLinks: organization.socialLinks || [],
-      galleryImages: organization.galleryImages?.length
+      ...rest,
+      fullDescription: fullDescription ?? undefined,
+      logoUrl: logoUrl ?? undefined,
+      coverImageUrl: coverImageUrl ?? undefined,
+      website: website ?? undefined,
+      phone: phone ?? undefined,
+      donationLink: donationLink ?? undefined,
+      foundedYear: foundedYear ?? undefined,
+      impactCurrent: impactCurrent ?? undefined,
+      impactGoal: impactGoal ?? undefined,
+      impactType: impactType ?? undefined,
+      featuredFact: featuredFact ?? undefined,
+      secondaryFacts: secondaryFacts ?? undefined,
+      testimony: testimony ?? undefined,
+      milestone: milestone ?? undefined,
+      categoryIds: categories?.map((c: { id: string }) => c.id) || [],
+      location: location
+        ? {
+          city: location.city,
+          state: location.state,
+          googleMapsUrl: location.googleMapsUrl ?? undefined,
+          latitude: location.latitude,
+          longitude: location.longitude,
+        }
+        : undefined,
+      socialLinks: socialLinks || [],
+      galleryImages: galleryImages?.length
         ? [
-          ...organization.galleryImages,
-          ...Array(Math.max(0, 4 - organization.galleryImages.length)).fill(''),
+          ...galleryImages,
+          ...Array(Math.max(0, 4 - galleryImages.length)).fill(''),
         ] // Ensure 4 inputs
         : ['', '', '', ''],
-      relevantLinks: organization.relevantLinks?.length ? organization.relevantLinks : [''],
-      needs: organization.needs || [],
-      officeHours: organization.officeHours || DEFAULT_OFFICE_HOURS,
+      relevantLinks: relevantLinks?.length ? relevantLinks : [''],
+      needs: needs || [],
+      officeHours: officeHours || DEFAULT_OFFICE_HOURS,
     }
   }, [organization])
 

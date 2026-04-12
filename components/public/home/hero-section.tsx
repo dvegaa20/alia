@@ -15,12 +15,7 @@ import {
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 
-type OrganizationOption = {
-  slug: string;
-  name: string;
-  category: string;
-  logo: string;
-};
+import type { OrganizationOption } from '@/types'
 
 export function HeroSection({ organizations }: { organizations: OrganizationOption[] }) {
   const router = useRouter();
