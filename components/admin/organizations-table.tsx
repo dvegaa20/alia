@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useTransition, useEffect, useRef } from "react"
+import { useState, useTransition, useEffect, useRef, useCallback } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
@@ -114,24 +114,26 @@ export function OrganizationsTable({ organizations, meta, categories }: Props) {
   }
 
   // ------ URL helpers ------
-
-  function pushParams(params: Record<string, string | undefined>) {
-    const sp = new URLSearchParams(searchParams.toString())
-    Object.entries(params).forEach(([key, value]) => {
-      if (value) {
-        sp.set(key, value)
-      } else {
-        sp.delete(key)
+  const pushParams = useCallback(
+    (params: Record<string, string | undefined>) => {
+      const sp = new URLSearchParams(searchParams.toString())
+      Object.entries(params).forEach(([key, value]) => {
+        if (value) {
+          sp.set(key, value)
+        } else {
+          sp.delete(key)
+        }
+      })
+      // Always reset to page 1 when filters change (except when changing page itself)
+      if (!("page" in params)) {
+        sp.delete("page")
       }
-    })
-    // Always reset to page 1 when filters change (except when changing page itself)
-    if (!("page" in params)) {
-      sp.delete("page")
-    }
-    startTransition(() => {
-      router.push(`?${sp.toString()}`)
-    })
-  }
+      startTransition(() => {
+        router.push(`?${sp.toString()}`)
+      })
+    },
+    [router, searchParams],
+  )
 
   // Debounced search
   useEffect(() => {
@@ -147,8 +149,7 @@ export function OrganizationsTable({ organizations, meta, categories }: Props) {
     }, 400)
 
     return () => clearTimeout(handler)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchInput])
+  }, [searchInput, pushParams])
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault()

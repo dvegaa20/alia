@@ -7,8 +7,7 @@ const prismaClientSingleton = () => {
   const pool = new Pool({ connectionString: process.env.DATABASE_URL })
 
   // 2. Envolvemos el pool en el adaptador de Prisma
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const adapter = new PrismaPg(pool as any)
+  const adapter = new PrismaPg(pool as unknown as ConstructorParameters<typeof PrismaPg>[0])
 
   // 3. ¡Ahora sí! Instanciamos Prisma pasándole el adaptador que exige la versión 7
   return new PrismaClient({ adapter })

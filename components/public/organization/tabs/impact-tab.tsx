@@ -48,7 +48,7 @@ const COLOR_MAP: Record<string, { text: string; bg: string }> = {
 
 // ─────────────────────────────────────────────────────────────────────────────
 
-export default function ImpactTab({
+export function ImpactTab({
   featuredFact,
   secondaryFacts,
   testimony,

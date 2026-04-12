@@ -20,7 +20,7 @@ const URGENCY_MAP: Record<string, { label: string; bg: string; text: string; dot
   baja: { label: "Urgencia Baja", bg: "bg-emerald-50 dark:bg-emerald-950/40", text: "text-emerald-600 dark:text-emerald-400", dot: "bg-emerald-500 dark:bg-emerald-400" },
 };
 
-export default function NeedsTab({ needs }: NeedsTabProps) {
+export function NeedsTab({ needs }: NeedsTabProps) {
   const activeNeeds = needs && Array.isArray(needs) ? needs.filter(n => n.title) : [];
 
   return (

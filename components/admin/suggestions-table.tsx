@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useTransition, useEffect, useRef } from "react"
+import { useState, useTransition, useEffect, useRef, useCallback } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import {
   Search,
@@ -102,23 +102,25 @@ export function SuggestionsTable({ suggestions, meta }: Props) {
   const [isActionPending, setIsActionPending] = useState(false)
 
   // ------ URL helpers ------
-
-  function pushParams(params: Record<string, string | undefined>) {
-    const sp = new URLSearchParams(searchParams.toString())
-    Object.entries(params).forEach(([key, value]) => {
-      if (value) {
-        sp.set(key, value)
-      } else {
-        sp.delete(key)
+  const pushParams = useCallback(
+    (params: Record<string, string | undefined>) => {
+      const sp = new URLSearchParams(searchParams.toString())
+      Object.entries(params).forEach(([key, value]) => {
+        if (value) {
+          sp.set(key, value)
+        } else {
+          sp.delete(key)
+        }
+      })
+      if (!("page" in params)) {
+        sp.delete("page")
       }
-    })
-    if (!("page" in params)) {
-      sp.delete("page")
-    }
-    startTransition(() => {
-      router.push(`?${sp.toString()}`)
-    })
-  }
+      startTransition(() => {
+        router.push(`?${sp.toString()}`)
+      })
+    },
+    [router, searchParams],
+  )
 
   // Debounced search
   useEffect(() => {
@@ -132,8 +134,7 @@ export function SuggestionsTable({ suggestions, meta }: Props) {
       setIsDebouncing(false)
     }, 400)
     return () => clearTimeout(handler)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchInput])
+  }, [searchInput, pushParams])
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault()

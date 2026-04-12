@@ -22,7 +22,7 @@ const DAY_LABELS: Record<string, string> = {
   sunday: "Domingo",
 };
 
-export default function ContactTab({ email, phone, location, googleMapsUrl, coordinates, officeHours }: ContactTabProps) {
+export function ContactTab({ email, phone, location, googleMapsUrl, coordinates, officeHours }: ContactTabProps) {
   const [nombre, setNombre] = useState("");
   const [asunto, setAsunto] = useState("");
   const [mensaje, setMensaje] = useState("");

@@ -2,11 +2,11 @@
 
 import { motion } from "framer-motion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import AboutTab from "./tabs/about-tab";
-import ExploreTab from "./tabs/explore-tab";
-import NeedsTab from "./tabs/needs-tab";
-import ImpactTab from "./tabs/impact-tab";
-import ContactTab from "./tabs/contact-tab";
+import { AboutTab } from "./tabs/about-tab";
+import { ExploreTab } from "./tabs/explore-tab";
+import { NeedsTab } from "./tabs/needs-tab";
+import { ImpactTab } from "./tabs/impact-tab";
+import { ContactTab } from "./tabs/contact-tab";
 
 import { TAB_TRIGGER_CX } from '@/lib/styles';
 import type { OrgTabsProps } from '@/types'

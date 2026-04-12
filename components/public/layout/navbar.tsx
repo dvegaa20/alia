@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { ModeToggle } from "@/components/mode-toggle";
+import { ModeToggle } from "@/components/ui/mode-toggle";
 import { SuggestOrgDialog } from "@/components/public/suggest/suggest-org-dialog";
 
 const navLinks = [

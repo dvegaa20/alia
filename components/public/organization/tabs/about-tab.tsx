@@ -14,7 +14,7 @@ export interface AboutTabProps {
   impactType?: string | null;
 }
 
-export default function AboutTab({
+export function AboutTab({
   name,
   fullDescription,
   galleryImages,

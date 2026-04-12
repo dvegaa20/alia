@@ -1,4 +1,4 @@
-export default function DonateTab() {
+export function DonateTab() {
     return (
         <div>donate-tab</div>
     )

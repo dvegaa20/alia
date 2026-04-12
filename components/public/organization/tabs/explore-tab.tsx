@@ -113,7 +113,7 @@ function LinkCard({ url }: { url: string }) {
   );
 }
 
-export default function ExploreTab({ relevantLinks }: { relevantLinks: string[] }) {
+export function ExploreTab({ relevantLinks }: { relevantLinks: string[] }) {
   const links = relevantLinks.length > 0 ? relevantLinks : [];
 
   return (
