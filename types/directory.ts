@@ -9,7 +9,7 @@ import type { CategoryData } from './category'
 export interface MapPoint {
   slug: string
   name: string
-  category: string
+  categories: string[]
   location: string
   coordinates: [number, number] // [lng, lat]
   logoImage: string

@@ -22,7 +22,7 @@ function toGeoJSON(points: MapPoint[]): GeoJSON.FeatureCollection {
       properties: {
         slug: point.slug,
         name: point.name,
-        category: point.category,
+        categories: JSON.stringify(point.categories),
         location: point.location,
         logoImage: point.logoImage,
         verified: point.verified,
@@ -99,7 +99,7 @@ function OrganizationsLayer({ mapPoints }: { mapPoints: MapPoint[] }) {
       source: sourceId,
       paint: {
         'circle-radius': 8,
-        'circle-color': '#16a34a', // Primary green — matches your design system
+        'circle-color': '#00759A',
         'circle-stroke-width': 3,
         'circle-stroke-color': '#ffffff',
         'circle-opacity': 0.9,
@@ -120,7 +120,7 @@ function OrganizationsLayer({ mapPoints }: { mapPoints: MapPoint[] }) {
       setSelectedOrg({
         slug: feature.properties?.slug,
         name: feature.properties?.name,
-        category: feature.properties?.category,
+        categories: JSON.parse(feature.properties?.categories || '[]'),
         location: feature.properties?.location,
         coordinates: coords,
         logoImage: feature.properties?.logoImage,
@@ -193,9 +193,21 @@ function OrganizationsLayer({ mapPoints }: { mapPoints: MapPoint[] }) {
                     <BadgeCheck className="size-3.5 text-primary-900 dark:text-primary-200 shrink-0" />
                   )}
                 </div>
-                <Badge className="mt-1 bg-secondary text-secondary-foreground border-none px-2 py-0 rounded-full text-[10px] font-bold tracking-tight h-auto">
-                  {selectedOrg.category}
-                </Badge>
+                <div className="flex flex-wrap gap-1 mt-1">
+                  {selectedOrg.categories.slice(0, 2).map((cat) => (
+                    <Badge
+                      key={cat}
+                      className="bg-muted/40 text-muted-foreground border border-border/60 px-2 py-0 rounded-full text-[9px] font-bold uppercase tracking-wider h-auto"
+                    >
+                      {cat}
+                    </Badge>
+                  ))}
+                  {selectedOrg.categories.length > 2 && (
+                    <span className="text-[9px] text-muted-foreground font-bold">
+                      +{selectedOrg.categories.length - 2}
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
 

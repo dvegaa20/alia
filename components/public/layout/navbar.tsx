@@ -52,7 +52,7 @@ export function Navbar() {
         <div className="flex items-center gap-2">
           <Link
             href="/"
-            className="text-2xl font-bold text-primary-900 dark:text-primary-200 font-headline tracking-tight hover:opacity-80 transition-opacity"
+            className="text-2xl font-bold text-primary dark:text-primary-200 font-headline tracking-tight hover:opacity-80 transition-opacity"
           >
             Alia
           </Link>
@@ -76,7 +76,7 @@ export function Navbar() {
                   onMouseEnter={() => setHoveredPath(link.href)}
                   className={cn(
                     'text-sm font-medium font-headline transition-colors duration-200 relative group py-1',
-                    isActive ? 'text-primary-900 dark:text-primary-200' : 'text-muted-foreground'
+                    isActive ? 'text-primary dark:text-primary-200' : 'text-muted-foreground'
                   )}
                 >
                   {link.label}
@@ -85,7 +85,7 @@ export function Navbar() {
                       layoutId={`nav-indicator-${pathname}`}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      className="absolute bottom-0 left-0 w-full h-[1.5px] bg-primary-900 dark:bg-primary-200 z-10"
+                      className="absolute bottom-0 left-0 w-full h-[1.5px] bg-primary dark:bg-primary-200 z-10"
                       transition={{
                         type: 'spring',
                         stiffness: 380,
@@ -101,7 +101,7 @@ export function Navbar() {
           <div className="flex items-center gap-3">
             <SuggestOrgDialog>
               <Button
-                className="rounded-xl shadow-md hover:shadow-lg transition-all duration-300 group px-6 bg-linear-to-r from-primary to-primary-300 hover:from-primary/90 hover:to-primary-300/90 text-primary-foreground font-headline text-xs h-9"
+                className="rounded-xl shadow-md hover:shadow-lg transition-all duration-300 group px-6 bg-primary hover:bg-primary/90 text-primary-foreground font-headline text-xs h-9 border-none"
                 asChild
               >
                 <span>Sugerir ONG</span>
@@ -142,7 +142,7 @@ export function Navbar() {
                 onClick={() => setOpen(false)}
                 className={cn(
                   'text-2xl font-bold font-headline transition-all duration-200 relative group inline-block w-fit py-1',
-                  isActive ? 'text-primary-900 dark:text-primary-200' : 'text-muted-foreground'
+                  isActive ? 'text-primary dark:text-primary-200' : 'text-muted-foreground'
                 )}
               >
                 {link.label}
@@ -151,7 +151,7 @@ export function Navbar() {
                     layoutId={`mobile-nav-indicator-${pathname}`}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className="absolute bottom-0 left-0 w-full h-[3px] bg-primary-900 dark:bg-primary-200"
+                    className="absolute bottom-0 left-0 w-full h-[3px] bg-primary dark:bg-primary-200"
                   />
                 )}
               </Link>
@@ -162,7 +162,7 @@ export function Navbar() {
         <div className="flex flex-col gap-4 pt-6 border-t border-border/40">
           <SuggestOrgDialog>
             <Button
-              className="w-full rounded-2xl py-6 text-base shadow-lg bg-linear-to-r from-primary to-primary-300 text-primary-foreground font-headline"
+              className="w-full rounded-2xl py-6 text-base shadow-lg bg-primary hover:bg-primary/90 text-primary-foreground font-headline border-none"
               onClick={() => setOpen(false)}
             >
               Sugerir una ONG

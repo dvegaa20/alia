@@ -196,7 +196,7 @@ export function SidebarFilters({
                           <span className="font-headline text-sm font-medium flex-1">
                             {category.name}
                           </span>
-                          <span className="text-xs font-medium text-muted-foreground bg-muted px-2 py-0.5 rounded-full">
+                          <span className="text-xs font-medium text-primary bg-primary/10 px-2 py-0.5 rounded-full">
                             {category._count.organizations}
                           </span>
                         </a>

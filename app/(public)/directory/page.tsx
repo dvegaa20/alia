@@ -54,7 +54,7 @@ export default async function DirectoryPage(props: {
     slug: org.slug,
     name: org.name,
     description: org.shortDescription,
-    category: org.categories?.[0]?.name || 'Organización',
+    categories: org.categories?.map((c: any) => c.name) || ['Organización'],
     location: org.location ? `${org.location.city}, ${org.location.state}` : 'México',
     coverImage: org.coverImageUrl || '/images/directorio/card-forest.jpg',
     logoImage: org.logoUrl || '/images/directorio/logo-forest.jpg',
@@ -67,7 +67,7 @@ export default async function DirectoryPage(props: {
     .map((org) => ({
       slug: org.slug,
       name: org.name,
-      category: org.categories?.[0]?.name || 'Organización',
+      categories: org.categories?.map((c: any) => c.name) || ['Organización'],
       location: org.location ? `${org.location.city}, ${org.location.state}` : 'México',
       coordinates: [org.location!.longitude!, org.location!.latitude!] as [number, number],
       logoImage: org.logoUrl || '/images/directorio/logo-forest.jpg',

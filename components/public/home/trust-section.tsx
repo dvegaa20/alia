@@ -48,9 +48,9 @@ export function TrustSection() {
 
           {/* Feature Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <Card className="bg-muted border-none ring-0 rounded-xl py-0">
+            <Card className="bg-card border border-border/50 ring-0 rounded-xl py-0 shadow-sm">
               <CardContent className="p-6">
-                <ShieldCheck className="size-8 text-primary-900 dark:text-primary-200 mb-3" />
+                <ShieldCheck className="size-8 text-primary mb-3" />
                 <h4 className="font-bold text-foreground mb-1 text-base">Organizaciones Curadas</h4>
                 <p className="text-sm text-muted-foreground">
                   Verificamos la existencia y legalidad de cada ONG antes de listarla.
@@ -58,9 +58,9 @@ export function TrustSection() {
               </CardContent>
             </Card>
 
-            <Card className="bg-muted border-none ring-0 rounded-xl py-0">
+            <Card className="bg-card border border-border/50 ring-0 rounded-xl py-0 shadow-sm">
               <CardContent className="p-6">
-                <HeartHandshake className="size-8 text-secondary-foreground dark:text-muted mb-3" />
+                <HeartHandshake className="size-8 text-primary/80 mb-3" />
                 <h4 className="font-bold text-foreground mb-1 text-base">Impacto Real</h4>
                 <p className="text-sm text-muted-foreground">
                   Conecta directamente con los líderes de cada proyecto sin intermediarios.

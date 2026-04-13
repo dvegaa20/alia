@@ -21,6 +21,7 @@ export interface CampaignItem {
   tag: string
   image: string
   logo: string
+  isVerified?: boolean
 }
 
 interface FeatureProps {
@@ -36,7 +37,7 @@ function Feature({ badge, title, description, items }: FeatureProps) {
       <div className="grid grid-cols-1 lg:grid-cols-2 items-start gap-10">
         {/* Left: Text Content */}
         <div className="flex gap-4 flex-col items-start">
-          <Badge className="bg-primary/90 text-primary-900 dark:bg-primary-200/10 dark:text-primary-200 border-none px-3 py-1 h-auto rounded-full text-xs font-bold uppercase tracking-wider">
+          <Badge className="bg-primary/15 text-primary border border-primary/20 px-3 py-1 h-auto rounded-full text-xs font-bold uppercase tracking-wider">
             {badge}
           </Badge>
           <div className="flex gap-2 flex-col">
@@ -56,7 +57,7 @@ function Feature({ badge, title, description, items }: FeatureProps) {
               {items.map((item) => (
                 <CarouselItem key={item.name}>
                   <Link href={`/directory/${item.slug}`} className="block h-full">
-                    <Card className="group relative bg-slate-50/40 dark:bg-zinc-900/20 rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2 border-none ring-0 py-0 gap-0 h-full">
+                    <Card className="group relative bg-card rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2 border border-border/40 ring-0 py-0 gap-0 h-full">
                       {/* Cover Image */}
                       <div className="h-48 overflow-hidden relative">
                         <Image
@@ -67,7 +68,7 @@ function Feature({ badge, title, description, items }: FeatureProps) {
                           height={300}
                         />
                         <div className="absolute top-4 left-4">
-                          <Badge className="bg-primary/90 text-primary-900 dark:bg-primary-200/10 dark:text-primary-200 border-none px-3 py-1 h-auto rounded-full text-xs font-bold uppercase tracking-wider">
+                          <Badge className="bg-primary/60 text-primary-foreground border border-primary/30 backdrop-blur-md px-3 py-1 h-auto rounded-full text-xs font-bold uppercase tracking-wider">
                             {item.tag}
                           </Badge>
                         </div>
@@ -100,9 +101,11 @@ function Feature({ badge, title, description, items }: FeatureProps) {
                           <MapPin className="size-3.5" />
                           {item.location}
                         </div>
-                        <Badge className="bg-primary/30 text-primary-800 dark:bg-primary/80 dark:text-primary-foreground border-none px-3 py-1 h-auto rounded-full text-[10px] font-bold">
-                          VERIFICADA
-                        </Badge>
+                        {item.isVerified && (
+                          <Badge className="bg-primary/15 text-primary border border-primary/20 px-3 py-1 h-auto rounded-full text-[10px] font-bold uppercase">
+                            Verificada
+                          </Badge>
+                        )}
                       </CardFooter>
                     </Card>
                   </Link>

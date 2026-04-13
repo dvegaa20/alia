@@ -28,6 +28,7 @@ export async function CategoryCarousel({
     logo:
       org.logoUrl ||
       'https://ui-avatars.com/api/?name=' + encodeURIComponent(org.name) + '&background=random',
+    isVerified: org.verified,
   }))
 
   if (items.length === 0) {

@@ -4,12 +4,12 @@ export { Footer } from './layout/footer'
 export { FooterCTA } from './layout/footer-cta'
 
 // Home
-export { HeroContainer } from './home/hero-container'
 export { HeroSection } from './home/hero-section'
 export { CategoriesSection } from './home/categories-section'
 export { CategoryFilters } from './home/category-filters'
 export { CategoryCarousel } from './home/category-carousel'
 export { TrustSection } from './home/trust-section'
+export { FeaturesSection } from './home/features-section'
 
 // Directory
 export { SidebarFilters } from './directory/sidebar-filters'

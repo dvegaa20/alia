@@ -37,11 +37,10 @@ export function CategoryFilters({ categories, activeCategorySlug }: CategoryFilt
             <Link key={cat.id} href={`/?category=${cat.slug}`} scroll={false} prefetch={true}>
               <Button
                 variant="ghost"
-                className={`px-6 py-3 h-auto rounded-full font-label font-medium flex items-center gap-2 transition-colors ${
-                  isActive
-                    ? 'bg-primary/20 text-primary-900 dark:bg-primary/80 dark:text-primary-foreground hover:bg-primary/30 dark:hover:bg-primary/90'
-                    : 'bg-muted text-muted-foreground hover:bg-accent'
-                }`}
+                className={`px-6 py-3 h-auto rounded-full font-label font-medium flex items-center gap-2 transition-all border ${isActive
+                  ? 'bg-primary/15 text-primary border-primary/20 hover:bg-primary/25'
+                  : 'bg-card text-muted-foreground border-border/40 hover:bg-accent'
+                  }`}
               >
                 <Icon className="size-4" />
                 {cat.name}
@@ -60,7 +59,7 @@ export function CategoryFilters({ categories, activeCategorySlug }: CategoryFilt
         <Link href="/directory">
           <Button
             variant="ghost"
-            className="px-6 py-3 h-auto rounded-full font-label font-medium items-center gap-2 transition-colors bg-muted text-muted-foreground hover:bg-accent hidden md:flex"
+            className="px-6 py-3 h-auto rounded-full font-label font-medium items-center gap-2 transition-colors bg-card text-muted-foreground hover:bg-accent hidden md:flex border border-border/40"
           >
             <Grid2X2 className="size-4" />
             Ver más categorías

@@ -1,12 +1,12 @@
 import type { Metadata } from 'next'
-import { Plus_Jakarta_Sans, Inter } from 'next/font/google'
+import { Exo_2, Inter } from 'next/font/google'
 import { ThemeProvider } from '@/components/providers/theme-provider'
 import { Toaster } from '@/components/ui/sonner'
 import { SmoothScrolling } from '@/components/providers/smooth-scrolling'
 import { WebsiteJsonLd } from '@/components/seo/json-ld'
 import './globals.css'
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const exo2 = Exo_2({
   subsets: ['latin'],
   variable: '--font-headline',
   weight: ['400', '500', '600', '700', '800'],
@@ -14,7 +14,7 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 
 const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-label',
+  variable: '--font-body',
 })
 
 export const metadata: Metadata = {
@@ -52,7 +52,7 @@ export default function RootLayout({
         />
         <style>{`.material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }`}</style>
       </head>
-      <body className={`${plusJakartaSans.variable} ${inter.variable} font-body antialiased`}>
+      <body className={`${exo2.variable} ${inter.variable} font-body antialiased`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

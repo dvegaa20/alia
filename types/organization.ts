@@ -101,7 +101,7 @@ export interface OrganizationCardProps {
   slug: string
   name: string
   description: string
-  category: string
+  categories: string[]
   location: string
   coverImage: string
   logoImage: string
@@ -112,7 +112,7 @@ export interface OrganizationCardProps {
 export type OrganizationOption = {
   slug: string
   name: string
-  category: string
+  categories: string[]
   logo: string
 }
 

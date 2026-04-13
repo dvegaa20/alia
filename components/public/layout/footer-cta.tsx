@@ -8,10 +8,6 @@ export function FooterCTA() {
       {/* Radial gradient overlay */}
       <div
         className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            'radial-gradient(ellipse 80% 60% at 50% 0%, color-mix(in srgb, var(--primary) 15%, transparent) 0%, transparent 70%)',
-        }}
       />
 
       <div className="relative z-10 max-w-[1600px] mx-auto text-center space-y-6">

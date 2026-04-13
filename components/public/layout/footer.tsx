@@ -104,7 +104,7 @@ export function Footer() {
 
       {/* ─── Main Footer Card ─── */}
       <div className={`relative px-4 pb-4 sm:px-8 sm:pb-8 ${isHomePage ? '-mt-36' : 'pt-8'}`}>
-        <div className="max-w-[1600px] mx-auto bg-card border border-border/60 rounded-[28px] sm:rounded-[32px] shadow-xl overflow-hidden">
+        <div className="bg-card max-w-[1600px] mx-auto border border-border/60 rounded-[28px] sm:rounded-[32px] shadow-xl overflow-hidden">
           <div className="p-8 sm:p-10 lg:p-14">
             <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_2fr] gap-12 lg:gap-16">
               {/* Left: Brand */}
