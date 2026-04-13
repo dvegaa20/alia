@@ -240,8 +240,8 @@ export function SidebarFilters({
                               className={cn(
                                 'flex flex-col items-center justify-center p-6 rounded-2xl border text-center transition-all duration-200 hover:shadow-md hover:-translate-y-1',
                                 isActive
-                                  ? 'bg-ds-primary/10 border-ds-primary text-ds-primary dark:bg-ds-primary-fixed/20 dark:text-ds-primary-fixed dark:border-ds-primary-fixed'
-                                  : 'bg-background border-border hover:border-border/80'
+                                  ? 'bg-primary/10 border-primary-900 text-primary-900 dark:bg-primary-200/20 dark:text-primary-200 dark:border-primary-200'
+                                  : 'border-transparent text-muted-foreground hover:bg-muted/50 hover:text-foreground'
                               )}
                             >
                               <Icon className="size-8 mb-3 opacity-80" />

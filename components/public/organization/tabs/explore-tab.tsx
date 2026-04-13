@@ -107,7 +107,7 @@ function LinkCard({ url }: { url: string }) {
             <Link2 className="size-3.5 mr-1.5 shrink-0" />
             <span className="truncate">{url.replace(/^https?:\/\//, '').replace(/\/$/, '')}</span>
           </div>
-          <span className="text-primary dark:text-ds-primary-fixed font-bold text-[11px] uppercase tracking-wider hover:underline underline-offset-4 flex items-center shrink-0">
+          <span className="text-primary-900 dark:text-primary-200 font-bold text-[11px] uppercase tracking-wider hover:underline underline-offset-4 flex items-center shrink-0">
             Visitar <ExternalLink className="size-3 ml-1" />
           </span>
         </CardFooter>

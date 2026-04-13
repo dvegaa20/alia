@@ -15,7 +15,7 @@ export function ProblemSection() {
           transition={{ duration: 0.6, ease: 'easeOut' }}
           className="flex-1 space-y-8"
         >
-          <h2 className="font-headline font-bold text-4xl text-primary dark:text-ds-primary-fixed">
+          <h2 className="font-headline font-bold text-4xl text-primary-900 dark:text-primary-200">
             El problema que vimos
           </h2>
           <div className="space-y-6 font-body text-lg text-muted-foreground leading-loose">

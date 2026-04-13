@@ -32,7 +32,7 @@ export function ContactSidebar({
   return (
     <aside className="sticky top-32 space-y-6">
       {/* Contact Info Card */}
-      <div className="bg-slate-50/40 dark:bg-zinc-900/20 rounded-xl p-8 editorial-shadow space-y-8 border-t-4 border-ds-primary">
+      <div className="bg-slate-50/40 dark:bg-zinc-900/20 rounded-xl p-8 editorial-shadow space-y-8 border-t-4 border-primary">
         <div className="space-y-6">
           <h3 className="text-xl font-bold font-headline text-foreground">
             Información de contacto
@@ -89,7 +89,7 @@ export function ContactSidebar({
           {website && (
             <Button
               asChild
-              className="flex-1 py-4 h-auto bg-linear-to-r from-ds-primary to-ds-primary-container text-primary-foreground font-bold rounded-xl shadow-lg shadow-ds-primary/20 hover:scale-[1.02] active:scale-95 transition-all"
+              className="flex-1 py-4 h-auto bg-linear-to-r from-primary to-primary-200 text-primary-foreground font-bold rounded-xl shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all"
             >
               <a href={website} target="_blank" rel="noopener noreferrer">
                 Ir al sitio web
@@ -107,21 +107,21 @@ export function ContactSidebar({
 
       {/* Impact Stats Snippet */}
       {impactCurrent != null && impactGoal != null && (
-        <div className="bg-ds-secondary-fixed rounded-xl p-6 space-y-4">
-          <p className="text-ds-on-primary-fixed-variant font-bold text-sm tracking-tight uppercase">
+        <div className="bg-muted rounded-xl p-6 space-y-4">
+          <p className="text-primary-800 dark:text-primary-200 font-bold text-sm tracking-tight uppercase">
             Impacto Reciente
           </p>
           <div className="flex justify-between items-end">
-            <span className="text-4xl font-extrabold text-ds-on-primary-fixed-variant font-headline">
+            <span className="text-4xl font-extrabold text-primary-800 dark:text-primary-200 font-headline">
               {formatNumber(impactCurrent)}+
             </span>
-            <span className="text-sm font-medium text-ds-on-primary-fixed-variant/70 mb-1">
+            <span className="text-sm font-medium text-primary-800/70 dark:text-primary-200/70 mb-1">
               {impactType || 'Personas impactadas'}
             </span>
           </div>
           <Progress
             value={progressValue}
-            className="h-1.5 bg-ds-on-primary-fixed-variant/10 *:data-[slot=progress-indicator]:bg-ds-secondary"
+            className="h-1.5 bg-primary/20 *:data-[slot=progress-indicator]:bg-primary-800 dark:*:data-[slot=progress-indicator]:bg-primary-200"
           />
         </div>
       )}

@@ -190,7 +190,7 @@ function OrganizationsLayer({ mapPoints }: { mapPoints: MapPoint[] }) {
                     {selectedOrg.name}
                   </h4>
                   {selectedOrg.verified && (
-                    <BadgeCheck className="size-3.5 text-primary dark:text-ds-primary-fixed shrink-0" />
+                    <BadgeCheck className="size-3.5 text-primary-900 dark:text-primary-200 shrink-0" />
                   )}
                 </div>
                 <Badge className="mt-1 bg-secondary text-secondary-foreground border-none px-2 py-0 rounded-full text-[10px] font-bold tracking-tight h-auto">
@@ -205,7 +205,7 @@ function OrganizationsLayer({ mapPoints }: { mapPoints: MapPoint[] }) {
                 <MapPin className="size-3 mr-1 shrink-0" />
                 <span className="truncate max-w-32">{selectedOrg.location}</span>
               </div>
-              <span className="text-primary dark:text-ds-primary-fixed font-bold text-[10px] uppercase tracking-wider flex items-center group-hover:underline underline-offset-2">
+              <span className="text-primary-900 dark:text-primary-200 font-bold text-[10px] uppercase tracking-wider flex items-center group-hover:underline underline-offset-2">
                 Ver perfil <ArrowRight className="size-2.5 ml-0.5" />
               </span>
             </div>

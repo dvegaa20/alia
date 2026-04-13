@@ -17,7 +17,7 @@ export function TrustSection() {
           transition={{ duration: 0.7 }}
           className="lg:w-1/2 relative"
         >
-          <div className="absolute -top-10 -left-10 w-40 h-40 bg-ds-secondary-fixed rounded-full opacity-30 blur-3xl" />
+          <div className="absolute -top-10 -left-10 w-40 h-40 bg-muted rounded-full opacity-30 blur-3xl" />
           <div className="bg-muted rounded-xl overflow-hidden p-4 rotate-3 hover:rotate-0 transition-transform duration-500">
             <Image
               alt="Equipo trabajando feliz"
@@ -50,7 +50,7 @@ export function TrustSection() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <Card className="bg-muted border-none ring-0 rounded-xl py-0">
               <CardContent className="p-6">
-                <ShieldCheck className="size-8 text-primary dark:text-ds-primary-fixed mb-3" />
+                <ShieldCheck className="size-8 text-primary-900 dark:text-primary-200 mb-3" />
                 <h4 className="font-bold text-foreground mb-1 text-base">Organizaciones Curadas</h4>
                 <p className="text-sm text-muted-foreground">
                   Verificamos la existencia y legalidad de cada ONG antes de listarla.
@@ -60,7 +60,7 @@ export function TrustSection() {
 
             <Card className="bg-muted border-none ring-0 rounded-xl py-0">
               <CardContent className="p-6">
-                <HeartHandshake className="size-8 text-ds-secondary dark:text-ds-secondary-fixed mb-3" />
+                <HeartHandshake className="size-8 text-secondary-foreground dark:text-muted mb-3" />
                 <h4 className="font-bold text-foreground mb-1 text-base">Impacto Real</h4>
                 <p className="text-sm text-muted-foreground">
                   Conecta directamente con los líderes de cada proyecto sin intermediarios.

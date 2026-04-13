@@ -20,10 +20,10 @@ export function CtaSection() {
 
         {/* Content */}
         <div className="relative px-8 py-20 md:py-24 text-center max-w-4xl mx-auto space-y-10">
-          <h2 className="font-headline font-bold text-4xl md:text-5xl text-ds-on-primary">
+          <h2 className="font-headline font-bold text-4xl md:text-5xl text-primary-foreground">
             Ayúdanos a crecer
           </h2>
-          <p className="font-body text-xl text-ds-primary-fixed leading-relaxed">
+          <p className="font-body text-xl text-primary-foreground/80 leading-relaxed">
             ¿Conoces una organización que debería estar aquí? Ayúdanos a mapear el impacto social y
             hacer este directorio cada vez más grande.
           </p>
@@ -32,7 +32,7 @@ export function CtaSection() {
             <Button
               asChild
               size="lg"
-              className="bg-linear-to-r from-ds-primary-fixed to-[#a1d494] text-primary px-10 py-5 h-auto rounded-lg font-bold text-lg hover:opacity-90 transition-all active:scale-95 shadow-xl border-none"
+              className="bg-linear-to-r from-white to-primary-50 dark:from-primary-900 dark:to-primary-800 text-primary-900 dark:text-primary-50 px-10 py-5 h-auto rounded-lg font-bold text-lg hover:opacity-90 transition-all active:scale-95 shadow-xl border-none"
             >
               <Link href="/sugerir">Sumar proyecto</Link>
             </Button>

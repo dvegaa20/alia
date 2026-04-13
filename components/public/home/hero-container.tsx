@@ -13,7 +13,7 @@ export function HeroContainer({ children }: { children: React.ReactNode }) {
         className="absolute left-1/4 bottom-1/2 -translate-x-1/2 w-200 h-150 pointer-events-none z-10"
         style={{
           background:
-            'radial-gradient(ellipse at center, var(--color-ds-primary-fixed) 0%, transparent 70%)',
+            'radial-gradient(ellipse at center, var(--color-primary) 0%, transparent 70%)',
           filter: 'blur(80px)',
         }}
       />
@@ -24,7 +24,7 @@ export function HeroContainer({ children }: { children: React.ReactNode }) {
         className="absolute left-1/3 bottom-[40%] -translate-x-1/3 w-125 h-100 pointer-events-none z-10"
         style={{
           background:
-            'radial-gradient(ellipse at center, var(--color-ds-tertiary-container) 0%, transparent 70%)',
+            'radial-gradient(ellipse at center, var(--color-chart-2) 0%, transparent 70%)',
           filter: 'blur(100px)',
         }}
       />

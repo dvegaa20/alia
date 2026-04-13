@@ -9,24 +9,24 @@ const pillars = [
     title: '100% Gratuito',
     description:
       'No cobramos a las organizaciones ni a los usuarios. No hay anuncios ni rastreadores. Queremos que la ayuda sea directa y sin barreras.',
-    iconBg: 'bg-ds-primary-fixed',
-    iconColor: 'text-ds-primary',
+    iconBg: 'bg-primary/20 dark:bg-primary-200/20',
+    iconColor: 'text-primary-900 dark:text-primary-200',
   },
   {
     icon: 'verified_user',
     title: 'Curaduría Manual',
     description:
       'Cada proyecto es verificado individualmente por nuestro equipo para asegurar transparencia. Sabemos quién está detrás de cada causa.',
-    iconBg: 'bg-ds-secondary-fixed',
-    iconColor: 'text-ds-secondary',
+    iconBg: 'bg-secondary dark:bg-secondary/50',
+    iconColor: 'text-secondary-foreground',
   },
   {
     icon: 'public',
     title: 'Sin Fines de Lucro',
     description:
       'No monetizamos la plataforma. Es nuestro aporte al bien común digital, mantenido con recursos propios y tiempo de voluntarios.',
-    iconBg: 'bg-ds-tertiary-fixed',
-    iconColor: 'text-ds-tertiary',
+    iconBg: 'bg-chart-1/20',
+    iconColor: 'text-chart-1',
   },
 ]
 

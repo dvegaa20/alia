@@ -82,7 +82,7 @@ export function ContactTab({
                     value={nombre}
                     onChange={(e) => setNombre(e.target.value)}
                     required
-                    className="border-transparent h-14 rounded-2xl px-5 focus-visible:ring-ds-primary shadow-none"
+                    className="border-transparent h-14 rounded-2xl px-5 focus-visible:ring-primary shadow-none"
                   />
                 </div>
                 <div className="space-y-2">
@@ -95,7 +95,7 @@ export function ContactTab({
                     value={asunto}
                     onChange={(e) => setAsunto(e.target.value)}
                     required
-                    className="border-transparent h-14 rounded-2xl px-5 focus-visible:ring-ds-primary shadow-none"
+                    className="border-transparent h-14 rounded-2xl px-5 focus-visible:ring-primary shadow-none"
                   />
                 </div>
               </div>
@@ -109,7 +109,7 @@ export function ContactTab({
                   value={mensaje}
                   onChange={(e) => setMensaje(e.target.value)}
                   required
-                  className="border-transparent flex-1 resize-none rounded-2xl p-5 focus-visible:ring-ds-primary shadow-none"
+                  className="border-transparent flex-1 resize-none rounded-2xl p-5 focus-visible:ring-primary shadow-none"
                 />
               </div>
 
@@ -259,7 +259,7 @@ function MapCardInner({ location }: { location?: string }) {
 
         {/* Location Pill */}
         <div className="relative bg-white dark:bg-zinc-900 rounded-xl py-3 px-4 flex items-center shadow-lg w-full z-20">
-          <Navigation className="size-4 text-[#1e4a23] dark:text-ds-primary-fixed mr-3 shrink-0 fill-current" />
+          <Navigation className="size-4 text-primary-900 dark:text-primary-200 mr-3 shrink-0 fill-current" />
           <span className="text-sm font-bold text-zinc-900 dark: truncate">
             {location || 'Ciudad de México'}
           </span>
@@ -372,7 +372,7 @@ function InteractiveMapCard({
         </Map>
         <div className="absolute top-4 left-4 z-20 pointer-events-none">
           <div className="bg-background/80 backdrop-blur-md rounded-xl py-2 px-3 flex items-center shadow-sm">
-            <Navigation className="size-3 text-[#1e4a23] dark:text-ds-primary-fixed mr-2 shrink-0 fill-current" />
+            <Navigation className="size-3 text-primary-900 dark:text-primary-200 mr-2 shrink-0 fill-current" />
             <span className="text-xs font-bold text-foreground truncate select-none">
               {location || 'Ciudad de México'}
             </span>

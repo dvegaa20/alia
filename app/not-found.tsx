@@ -36,19 +36,19 @@ export default function NotFound() {
           {/* Illustration Area */}
           <div className="relative mb-6 md:mb-8">
             {/* Background organic shape decorative element */}
-            <div className="absolute inset-0 bg-ds-primary/20 blur-2xl organic-shape -z-10 transform scale-125 md:scale-150"></div>
+            <div className="absolute inset-0 bg-primary/20 blur-2xl organic-shape -z-10 transform scale-125 md:scale-150"></div>
 
             <div className="relative flex flex-col items-center">
               <div className="w-40 h-40 md:w-48 md:h-48 bg-background rounded-2xl md:rounded-[1.5rem] flex items-center justify-center shadow-[0_10px_30px_rgba(0,0,0,0.06)] overflow-hidden border">
-                <div className="absolute inset-0 opacity-10 bg-[radial-gradient(var(--color-ds-primary)_1.5px,transparent_1.5px)] bg-size-[20px_20px]"></div>
+                <div className="absolute inset-0 opacity-10 bg-[radial-gradient(var(--color-primary)_1.5px,transparent_1.5px)] bg-size-[20px_20px]"></div>
 
                 {/* Symbolic Compass/Map Illustration */}
                 <div className="relative z-10 flex flex-col items-center gap-3">
                   <Compass className="text-primary w-16 h-16 md:w-20 md:h-20" strokeWidth={1} />
                   <div className="flex gap-1.5 md:gap-2">
-                    <span className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-ds-secondary"></span>
-                    <span className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-ds-primary/30"></span>
-                    <span className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-ds-primary/30"></span>
+                    <span className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-secondary-foreground"></span>
+                    <span className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-primary/30"></span>
+                    <span className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-primary/30"></span>
                   </div>
                 </div>
               </div>
@@ -78,7 +78,7 @@ export default function NotFound() {
             {/* Actions */}
             <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
               <Button
-                className="rounded-xl shadow-md hover:shadow-lg transition-all duration-300 group px-6 bg-linear-to-r from-ds-primary to-ds-primary-container hover:from-ds-primary/90 hover:to-ds-primary-container/90"
+                className="rounded-xl shadow-md hover:shadow-lg transition-all duration-300 group px-6 bg-linear-to-r from-primary to-primary-300 hover:from-primary/90 hover:to-primary-300/90 text-primary-foreground"
                 asChild
               >
                 <Link href="/directory">
@@ -91,7 +91,7 @@ export default function NotFound() {
 
               <Button
                 variant="outline"
-                className="rounded-xl border-ds-primary/20 text-primary hover:bg-muted hover:text-primary transition-colors duration-300 px-6"
+                className="rounded-xl border-primary/20 text-primary-900 dark:text-primary-200 hover:bg-muted hover:text-primary-900 dark:hover:text-primary-200 transition-colors duration-300 px-6"
                 asChild
               >
                 <Link href="/">Ir al Inicio ({countdown}s)</Link>

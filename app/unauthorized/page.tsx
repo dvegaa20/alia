@@ -36,7 +36,7 @@ export default function UnauthorizedPage() {
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
           <Button
-            className="rounded-xl shadow-md hover:shadow-lg transition-all duration-300 group px-6 bg-linear-to-r from-ds-primary to-ds-primary-container hover:from-ds-primary/90 hover:to-ds-primary-container/90"
+            className="rounded-xl shadow-md hover:shadow-lg transition-all duration-300 group px-6 bg-linear-to-r from-primary to-primary-300 hover:from-primary/90 hover:to-primary-300/90 text-primary-foreground"
             asChild
           >
             <Link href="/">
@@ -49,7 +49,7 @@ export default function UnauthorizedPage() {
 
           <Button
             variant="outline"
-            className="rounded-xl border-ds-primary/20 text-primary hover:bg-muted hover:text-primary transition-colors duration-300 px-6"
+            className="rounded-xl border-primary/20 text-primary-900 dark:text-primary-200 hover:bg-muted hover:text-primary-900 dark:hover:text-primary-200 transition-colors duration-300 px-6"
             asChild
           >
             <Link href="/">Ir al Inicio ({countdown}s)</Link>

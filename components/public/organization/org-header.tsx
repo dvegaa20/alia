@@ -63,7 +63,7 @@ export function OrgHeader({ name, verified, categories, donationLink, orgId }: O
             {categories.map((cat) => (
               <Badge
                 key={cat.id}
-                className="bg-ds-tertiary-container border-none px-4 py-1.5 rounded-full text-sm font-medium font-label h-auto"
+                className="bg-primary/10 text-primary-900 dark:bg-primary-200/10 dark:text-primary-200 border-none px-4 py-1.5 rounded-full text-sm font-medium font-label h-auto"
               >
                 {cat.name}
               </Badge>

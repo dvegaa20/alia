@@ -21,7 +21,7 @@ export function Navbar() {
         <div className="flex justify-start">
           <Link
             href="/"
-            className="text-2xl font-bold text-primary dark:text-ds-primary-fixed font-headline tracking-tight"
+            className="text-2xl font-bold text-primary-900 dark:text-primary-200 font-headline tracking-tight"
           >
             Alia
           </Link>
@@ -37,8 +37,8 @@ export function Navbar() {
                 href={link.href}
                 className={
                   isActive
-                    ? 'text-primary dark:text-ds-primary-fixed font-bold border-b-2 border-ds-primary dark:border-ds-primary-fixed pb-1 font-headline text-base transition-all duration-300'
-                    : 'text-muted-foreground font-medium font-headline text-base hover:text-primary dark:hover:text-ds-primary-fixed transition-all duration-300'
+                    ? 'text-primary-900 dark:text-primary-200 font-bold border-b-2 border-primary-900 dark:border-primary-200 pb-1 font-headline text-base transition-all duration-300'
+                    : 'text-muted-foreground font-medium font-headline text-base hover:text-primary-900 dark:hover:text-primary-200 transition-all duration-300'
                 }
               >
                 {link.label}
@@ -50,7 +50,7 @@ export function Navbar() {
         <div className="flex justify-end items-center space-x-4">
           <SuggestOrgDialog>
             <Button
-              className="rounded-xl shadow-md hover:shadow-lg transition-all duration-300 group px-6 bg-linear-to-r from-ds-primary to-ds-primary-container hover:from-ds-primary/90 hover:to-ds-primary-container/90"
+              className="rounded-xl shadow-md hover:shadow-lg transition-all duration-300 group px-6 bg-linear-to-r from-primary to-primary-300 hover:from-primary/90 hover:to-primary-300/90 text-primary-foreground"
               asChild
             >
               <span className="relative z-10 flex items-center gap-2">Sugerir ONG</span>

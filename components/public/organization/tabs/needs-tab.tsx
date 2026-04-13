@@ -65,7 +65,7 @@ export function NeedsTab({ needs }: NeedsTabProps) {
                   <div className={`absolute top-0 inset-x-0 h-1.5 ${urgency.dot}`} />
 
                   <div className="flex justify-between items-start mb-4 gap-4">
-                    <div className="flex items-center gap-2 text-primary dark:text-ds-primary-fixed bg-primary/10 dark:bg-ds-primary-fixed/10 px-2.5 py-1 rounded-lg shrink-0">
+                    <div className="flex items-center gap-2 text-primary-900 dark:text-primary-200 bg-primary/10 dark:bg-primary-200/10 px-2.5 py-1 rounded-lg shrink-0">
                       <Icon className="size-4" />
                       <span className="text-[11px] font-bold uppercase tracking-wider">
                         {cat.label}

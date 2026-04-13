@@ -85,7 +85,7 @@ export function OrganizationCard({
               </div>
 
               <div className="flex items-center justify-end">
-                <span className="text-primary dark:text-ds-primary-fixed font-bold text-[11px] uppercase tracking-wider hover:underline underline-offset-4 flex items-center">
+                <span className="text-primary-900 dark:text-primary-200 font-bold text-[11px] uppercase tracking-wider hover:underline underline-offset-4 flex items-center">
                   Ver perfil <ArrowRight className="size-3 ml-1" />
                 </span>
               </div>
