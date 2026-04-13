@@ -12,7 +12,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       <AdminSidebar pendingCount={pendingCount} />
       <SidebarInset className="bg-background text-foreground min-h-screen overflow-x-hidden">
         <AdminHeader />
-        <main className="p-10 max-w-7xl mx-auto w-full">{children}</main>
+        <main className="p-10 max-w-[1600px] mx-auto w-full">{children}</main>
       </SidebarInset>
     </SidebarProvider>
   )

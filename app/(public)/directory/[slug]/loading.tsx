@@ -2,7 +2,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 
 export default function OrgProfileLoading() {
   return (
-    <div className="pt-4 pb-20 max-w-7xl mx-auto px-6 lg:px-8">
+    <div className="pt-4 pb-20 max-w-[1600px] mx-auto px-6 lg:px-8">
       {/* Hero Cover Skeleton */}
       <Skeleton className="h-75 md:h-112.5 w-full rounded-xl" />
 

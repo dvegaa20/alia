@@ -45,7 +45,7 @@ export default async function Page(props: { searchParams: Promise<{ category?: s
         <HeroSection organizations={formattedOrgs} />
 
         {/* New Category Approach via Server Components */}
-        <div id="categorias" className="py-20 px-8 max-w-360 mx-auto scroll-mt-20">
+        <div id="categorias" className="py-20 px-8 max-w-[1600px] mx-auto scroll-mt-20">
           <CategoryFilters
             categories={topCategories || []}
             activeCategorySlug={activeCategorySlug}

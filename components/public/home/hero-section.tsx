@@ -35,7 +35,7 @@ export function HeroSection({ organizations }: { organizations: OrganizationOpti
 
   return (
     <section className="relative px-8 pt-20 pb-16 overflow-hidden bg-background">
-      <div className="max-w-360 mx-auto relative z-10">
+      <div className="max-w-[1600px] mx-auto relative z-10">
         <div className="max-w-3xl">
           <motion.h1
             initial={{ opacity: 0, y: 30 }}

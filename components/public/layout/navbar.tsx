@@ -17,7 +17,7 @@ export function Navbar() {
 
   return (
     <nav className="sticky top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
-      <div className="grid grid-cols-2 md:grid-cols-3 items-center w-full px-8 py-6 max-w-360 mx-auto">
+      <div className="grid grid-cols-2 md:grid-cols-3 items-center w-full px-8 py-6 max-w-[1600px] mx-auto">
         <div className="flex justify-start">
           <Link
             href="/"
