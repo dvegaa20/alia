@@ -99,7 +99,7 @@ export function Footer() {
   const isHomePage = pathname === '/'
 
   return (
-    <footer className="relative w-full overflow-hidden bg-base-950 dark:bg-base-1000">
+    <footer className="relative w-full">
       {isHomePage && <FooterCTA />}
 
       {/* ─── Main Footer Card ─── */}
