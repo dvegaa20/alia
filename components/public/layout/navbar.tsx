@@ -47,7 +47,7 @@ export function Navbar() {
         }
       )}
     >
-      <nav className="max-w-[1600px] mx-auto flex h-14 w-full items-center justify-between px-6 sm:px-8">
+      <nav className="max-w-400 mx-auto flex h-14 w-full items-center justify-between px-6 sm:px-8">
         {/* Logo */}
         <div className="flex items-center gap-2">
           <Link

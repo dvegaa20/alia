@@ -2,6 +2,7 @@
 
 import { Package, Users, Wallet, Apple, Wrench, HelpCircle } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
+import { Prose } from '@/components/ui/prose'
 
 import type { NeedsTabProps } from '@/types'
 
@@ -86,9 +87,7 @@ export function NeedsTab({ needs }: NeedsTabProps) {
                     {need.title}
                   </h3>
 
-                  <p className="text-muted-foreground text-sm font-medium mb-5 line-clamp-4 flex-1 whitespace-pre-wrap">
-                    {need.description}
-                  </p>
+                  <Prose content={need.description} size="sm" className="line-clamp-4 flex-1 mb-5" />
 
                   {need.quantity && (
                     <div className="mt-auto pt-4 border-t border-border/50">

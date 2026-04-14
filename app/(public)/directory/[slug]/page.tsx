@@ -57,7 +57,7 @@ export default async function OrganizationProfilePage({ params }: PageProps) {
   const locationString = org.location ? `${org.location.city}, ${org.location.state}` : 'México'
 
   return (
-    <div className="pt-4 pb-20 max-w-[1600px] mx-auto px-6 lg:px-8">
+    <div className="pt-4 pb-20 max-w-400 mx-auto px-6 lg:px-8">
       <OrganizationProfileJsonLd org={org} />
       <HeroCover
         coverImageUrl={org.coverImageUrl || '/images/directorio/card-forest.jpg'}

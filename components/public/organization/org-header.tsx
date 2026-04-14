@@ -18,7 +18,7 @@ interface OrgHeaderProps {
 export function OrgHeader({ name, verified, categories, donationLink, orgId }: OrgHeaderProps) {
   const handleDonateClick = async () => {
     // Fire-and-forget tracking — don't block navigation
-    trackDonationClick(orgId).catch(() => {})
+    trackDonationClick(orgId).catch(() => { })
   }
 
   return (
@@ -29,13 +29,21 @@ export function OrgHeader({ name, verified, categories, donationLink, orgId }: O
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.4 }}
       >
-        <Link
-          href="/directory"
-          className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors font-label text-sm font-bold uppercase tracking-wider group"
-        >
-          <ArrowLeft className="size-4 transition-transform group-hover:-translate-x-1" />
-          Volver al directorio
-        </Link>
+        <div className="flex items-center justify-between gap-2">
+          <Link
+            href="/directory"
+            className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors font-label text-sm font-bold uppercase tracking-wider group"
+          >
+            <ArrowLeft className="size-4 transition-transform group-hover:-translate-x-1" />
+            Volver al directorio
+          </Link>
+          {verified && (
+            <Badge className="bg-primary/20 text-primary border-none px-3 py-1 rounded-full text-xs font-bold font-label uppercase tracking-wider h-auto gap-1">
+              <BadgeCheck className="size-3.5" />
+              Verificada
+            </Badge>
+          )}
+        </div>
       </motion.div>
 
       <motion.div
@@ -50,21 +58,12 @@ export function OrgHeader({ name, verified, categories, donationLink, orgId }: O
             <h1 className="text-4xl md:text-5xl font-extrabold font-headline tracking-tight text-foreground">
               {name}
             </h1>
-            {verified && (
-              <Badge className="bg-primary/20 text-primary border-none px-3 py-1 rounded-full text-xs font-bold font-label uppercase tracking-wider h-auto gap-1">
-                <BadgeCheck className="size-3.5" />
-                Verificada
-              </Badge>
-            )}
           </div>
 
           {/* Category tags */}
           <div className="flex flex-wrap gap-2">
             {categories.map((cat) => (
-              <Badge
-                key={cat.id}
-                className="bg-primary/10 text-primary-900 dark:bg-primary-200/10 dark:text-primary-200 border-none px-4 py-1.5 rounded-full text-sm font-medium font-label h-auto"
-              >
+              <Badge key={cat.id} className="bg-primary/15 text-primary border border-primary/20 px-3 py-1 h-auto rounded-full text-xs font-bold">
                 {cat.name}
               </Badge>
             ))}
@@ -79,9 +78,9 @@ export function OrgHeader({ name, verified, categories, donationLink, orgId }: O
             transition={{ duration: 0.4, delay: 0.35 }}
           >
             <Button
-              asChild
+              className="px-8 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full h-12 font-bold text-sm shadow-lg shadow-[#1e4a23]/20 hover:shadow-[#1e4a23]/30 transition-all duration-300 hover:scale-105 gap-2"
               onClick={handleDonateClick}
-              className="bg-[#1e4a23] hover:bg-[#153418]  rounded-full px-8 h-12 font-bold text-sm shadow-lg shadow-[#1e4a23]/20 hover:shadow-[#1e4a23]/30 transition-all duration-300 hover:scale-105 gap-2"
+              asChild
             >
               <a href={donationLink} target="_blank" rel="noopener noreferrer">
                 <Heart className="size-4 fill-white" />

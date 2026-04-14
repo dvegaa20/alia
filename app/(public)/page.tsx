@@ -43,7 +43,7 @@ export default async function Page(props: { searchParams: Promise<{ category?: s
       <HeroSection organizations={formattedOrgs} />
 
       {/* New Category Approach via Server Components */}
-      <div id="categorias" className="py-20 px-8 max-w-[1600px] mx-auto scroll-mt-20">
+      <div id="categorias" className="py-20 px-8 max-w-400 mx-auto scroll-mt-20">
         <div className="mb-12 text-left">
           <h2 className="text-3xl md:text-5xl font-bold font-headline text-foreground mb-4">
             Explora por <span className="text-primary">Categoría</span>

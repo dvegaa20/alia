@@ -89,7 +89,7 @@ export function ContactSidebar({
           {website && (
             <Button
               asChild
-              className="flex-1 py-4 h-auto bg-linear-to-r from-primary to-primary-200 text-primary-foreground font-bold rounded-xl shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all"
+              className="flex-1 py-4 h-auto bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-xl shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all"
             >
               <a href={website} target="_blank" rel="noopener noreferrer">
                 Ir al sitio web

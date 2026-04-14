@@ -76,7 +76,7 @@ export function HeroSection({ organizations }: { organizations: OrganizationOpti
 
   return (
     <section className="relative px-4 sm:px-8 pt-6 pb-10 bg-background">
-      <div className="max-w-[1600px] mx-auto relative z-10">
+      <div className="max-w-400 mx-auto relative z-10">
         {/* Hero Image Container */}
         <div className="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden min-h-[520px] md:min-h-[600px] lg:min-h-[680px]">
           {/* Image Crossfade Background */}
@@ -294,10 +294,10 @@ export function HeroSection({ organizations }: { organizations: OrganizationOpti
                                   {org.logo ? <AvatarImage src={org.logo} alt={org.name} className="object-cover" /> : null}
                                   <AvatarFallback>{org.name.slice(0, 2).toUpperCase()}</AvatarFallback>
                                 </Avatar>
-                                  <div className="flex flex-col">
-                                    <span className="font-medium text-foreground">{org.name}</span>
-                                    <span className="text-xs text-muted-foreground">{org.categories[0]}</span>
-                                  </div>
+                                <div className="flex flex-col">
+                                  <span className="font-medium text-foreground">{org.name}</span>
+                                  <span className="text-xs text-muted-foreground">{org.categories[0]}</span>
+                                </div>
                               </ComboboxItem>
                             ))
                           ) : (

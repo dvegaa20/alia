@@ -12,7 +12,7 @@ const fadeUp = {
 export function FeaturesSection() {
   return (
     <section className="px-4 sm:px-8 py-20 bg-background">
-      <div className="max-w-[1600px] mx-auto">
+      <div className="max-w-400 mx-auto">
         <div className="mb-12 text-left">
           <h2 className="text-3xl md:text-5xl font-bold font-headline text-foreground mb-4">
             Nuestro <span className="text-primary">Impacto</span>

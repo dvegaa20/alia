@@ -32,7 +32,7 @@ const pillars = [
 
 export function PillarsSection() {
   return (
-    <section className="px-8 py-28 max-w-[1600px] mx-auto overflow-hidden">
+    <section className="px-8 py-28 max-w-400 mx-auto overflow-hidden">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}

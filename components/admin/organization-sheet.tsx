@@ -409,6 +409,9 @@ export function OrganizationSheet({
                               className={`${INPUT_CX} min-h-32`}
                               {...register('fullDescription')}
                             />
+                            <FieldDescription className="text-xs text-muted-foreground mt-1">
+                              Soporta Markdown: <code className="font-mono text-[11px] bg-muted px-1 py-0.5 rounded">**negrita**</code>, <code className="font-mono text-[11px] bg-muted px-1 py-0.5 rounded">*cursiva*</code>, listas con <code className="font-mono text-[11px] bg-muted px-1 py-0.5 rounded">-</code>, y saltos de línea normales.
+                            </FieldDescription>
                             <FieldError errors={[errors.fullDescription]} />
                           </FieldContent>
                         </Field>

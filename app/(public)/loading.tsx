@@ -9,7 +9,7 @@ export default function HomeLoading() {
       </div>
 
       {/* Category Section Skeleton */}
-      <div className="py-20 px-8 max-w-[1600px] mx-auto">
+      <div className="py-20 px-8 max-w-400 mx-auto">
         {/* Category pills */}
         <div className="flex gap-3 mb-8">
           {Array.from({ length: 5 }).map((_, i) => (

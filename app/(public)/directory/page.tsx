@@ -78,7 +78,7 @@ export default async function DirectoryPage(props: {
 
   return (
     <SidebarProvider>
-      <div className="pt-8 pb-12 w-full max-w-[1600px] mx-auto px-4 md:px-8 flex flex-col lg:flex-row gap-6 lg:gap-12">
+      <div className="pt-8 pb-12 w-full max-w-400 mx-auto px-4 md:px-8 flex flex-col lg:flex-row gap-6 lg:gap-12">
         <Suspense>
           <SidebarFilters
             searchQuery={query}

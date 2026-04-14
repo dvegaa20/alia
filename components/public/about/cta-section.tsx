@@ -12,7 +12,7 @@ export function CtaSection() {
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true, margin: '-100px' }}
         transition={{ duration: 0.6, ease: 'easeOut' }}
-        className="max-w-[1600px] mx-auto relative"
+        className="max-w-400 mx-auto relative"
       >
         {/* Image Background Container */}
         <div className="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden min-h-[400px] md:min-h-[480px]">

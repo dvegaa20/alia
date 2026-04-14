@@ -10,7 +10,7 @@ export function FooterCTA() {
         className="pointer-events-none absolute inset-0"
       />
 
-      <div className="relative z-10 max-w-[1600px] mx-auto text-center space-y-6">
+      <div className="relative z-10 max-w-400 mx-auto text-center space-y-6">
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold  font-headline leading-tight tracking-tight">
           ¿Listo para hacer una verdadera diferencia?
         </h2>

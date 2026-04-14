@@ -8,7 +8,7 @@ import Image from 'next/image'
 export function TrustSection() {
   return (
     <section className="px-8 py-32 bg-background">
-      <div className="max-w-[1600px] mx-auto flex flex-col lg:flex-row gap-20 items-center">
+      <div className="max-w-400 mx-auto flex flex-col lg:flex-row gap-20 items-center">
         {/* Image Side */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}

@@ -55,7 +55,7 @@ export function CategoriesSection({ categories = [] }: CategoriesSectionProps) {
 
   return (
     <section className="px-8 py-10 bg-background overflow-hidden">
-      <div className="max-w-[1600px] mx-auto">
+      <div className="max-w-400 mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
           {/* Category Buttons */}
           <motion.div
@@ -72,11 +72,10 @@ export function CategoriesSection({ categories = [] }: CategoriesSectionProps) {
                   key={cat.id}
                   variant="ghost"
                   onClick={() => setActiveCategoryId(cat.id)}
-                  className={`px-6 py-3 h-auto rounded-full font-label font-medium flex items-center gap-2 transition-colors ${
-                    cat.id === activeCategoryId
+                  className={`px-6 py-3 h-auto rounded-full font-label font-medium flex items-center gap-2 transition-colors ${cat.id === activeCategoryId
                       ? 'bg-primary/20 text-primary-900 dark:bg-primary/80 dark:text-primary-foreground hover:bg-primary/30 dark:hover:bg-primary/90'
                       : 'bg-muted text-muted-foreground hover:bg-accent'
-                  }`}
+                    }`}
                 >
                   <Icon className="size-4" />
                   {cat.name}

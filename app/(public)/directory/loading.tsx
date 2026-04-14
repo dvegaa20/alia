@@ -2,7 +2,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 
 export default function DirectoryLoading() {
   return (
-    <div className="pt-8 pb-12 w-full max-w-[1600px] mx-auto px-4 md:px-8 flex flex-col lg:flex-row gap-6 lg:gap-12">
+    <div className="pt-8 pb-12 w-full max-w-400 mx-auto px-4 md:px-8 flex flex-col lg:flex-row gap-6 lg:gap-12">
       {/* Sidebar skeleton */}
       <aside className="hidden lg:block w-72 shrink-0 space-y-6">
         <Skeleton className="h-10 w-full rounded-lg" /> {/* Search */}

@@ -20,6 +20,7 @@ import {
 } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import Image from 'next/image'
+import { Prose } from '@/components/ui/prose'
 
 import type { ImpactTabProps, SecondaryFact, MilestoneStat } from '@/types'
 
@@ -99,9 +100,7 @@ export function ImpactTab({
           </div>
 
           {/* Description */}
-          <p className="text-muted-foreground text-sm md:text-base font-medium max-w-2xl leading-relaxed">
-            {featuredFact.description}
-          </p>
+          <Prose content={featuredFact.description} size="base" className="max-w-2xl" />
         </CardContent>
       </Card>
 

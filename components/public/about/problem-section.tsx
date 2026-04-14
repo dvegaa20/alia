@@ -6,7 +6,7 @@ import Image from 'next/image'
 export function ProblemSection() {
   return (
     <section className="px-8 py-20 bg-muted/50 overflow-hidden">
-      <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row items-center gap-16 md:gap-24">
+      <div className="max-w-400 mx-auto flex flex-col md:flex-row items-center gap-16 md:gap-24">
         {/* Text Column */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
