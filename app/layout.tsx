@@ -4,6 +4,7 @@ import { ThemeProvider } from '@/components/providers/theme-provider'
 import { Toaster } from '@/components/ui/sonner'
 import { SmoothScrolling } from '@/components/providers/smooth-scrolling'
 import { WebsiteJsonLd } from '@/components/seo/json-ld'
+import { GoogleAnalytics } from '@next/third-parties/google'
 import './globals.css'
 
 const exo2 = Exo_2({
@@ -44,13 +45,6 @@ export default function RootLayout({
     <html lang="es" suppressHydrationWarning>
       <head>
         <WebsiteJsonLd />
-        {/* Material Symbols for pillar icons */}
-        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
-        <link
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-          rel="stylesheet"
-        />
-        <style>{`.material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }`}</style>
       </head>
       <body className={`${exo2.variable} ${inter.variable} font-body antialiased`}>
         <ThemeProvider
@@ -63,6 +57,7 @@ export default function RootLayout({
           <Toaster position="bottom-right" richColors closeButton />
         </ThemeProvider>
       </body>
+      <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID as string} />
     </html>
   )
 }
