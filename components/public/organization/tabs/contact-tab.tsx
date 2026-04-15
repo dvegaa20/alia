@@ -115,7 +115,7 @@ export function ContactTab({
 
               <Button
                 type="submit"
-                className="w-full h-14 bg-[#1e4a23] hover:bg-[#153418]  rounded-2xl font-bold text-base shadow-md transition-all gap-2"
+                className="w-full h-14 bg-primary hover:bg-primary/90  rounded-2xl font-bold text-base shadow-md transition-all gap-2"
               >
                 <Send className="size-4" />
                 Enviar Mensaje
@@ -315,7 +315,7 @@ function InteractiveMapCard({
           {/* Org Marker */}
           <MapMarker longitude={coordinates.lng} latitude={coordinates.lat} offset={[0, -12]}>
             <MarkerContent>
-              <div className="w-6 h-6 bg-[#1e4a23] rounded-full flex items-center justify-center border-2 border-white dark:border-zinc-900 shadow-lg relative z-10 transition-transform group-hover:scale-110 cursor-pointer">
+              <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center border-2 border-white dark:border-zinc-900 shadow-lg relative z-10 transition-transform group-hover:scale-110 cursor-pointer">
                 <div className="w-1.5 h-1.5 bg-white rounded-full" />
               </div>
               <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-1 bg-black/40 blur-[1px] rounded-full" />

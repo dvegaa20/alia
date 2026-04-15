@@ -87,7 +87,7 @@ export function NeedsTab({ needs }: NeedsTabProps) {
                     {need.title}
                   </h3>
 
-                  <Prose content={need.description} size="sm" className="line-clamp-4 flex-1 mb-5" />
+                  <Prose content={need.description} size="sm" className="line-clamp-4 flex-1 mb-5 text-sm" />
 
                   {need.quantity && (
                     <div className="mt-auto pt-4 border-t border-border/50">

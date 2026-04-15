@@ -160,11 +160,11 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --font-headline: var(--font-headline, 'Exo 2', sans-serif);
-  --font-body: var(--font-body, 'Inter', sans-serif);
-  --font-label: var(--font-body, 'Inter', sans-serif);
-  --font-heading: var(--font-headline, 'Exo 2', sans-serif);
-  --font-sans: var(--font-body, 'Inter', sans-serif);
+  --font-headline: var(--font-dm-serif, 'DM Serif Text', serif);
+  --font-body: var(--font-pt-serif, 'PT Serif', serif);
+  --font-label: var(--font-pt-serif, 'PT Serif', serif);
+  --font-heading: var(--font-dm-serif, 'DM Serif Text', serif);
+  --font-sans: var(--font-pt-serif, 'PT Serif', serif);
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);

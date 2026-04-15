@@ -210,7 +210,7 @@ export function HeroSection({ organizations }: { organizations: OrganizationOpti
                     <CardFooter className="p-6 pt-0">
                       <Button
                         asChild
-                        className="w-full rounded-full bg-primary hover:bg-primary/90 focus-visible:ring-primary text-primary-foreground font-headline font-bold text-sm py-5 h-auto transition-all editorial-shadow"
+                        className="w-full rounded-full bg-primary hover:bg-primary/90 focus-visible:ring-primary text-primary-foreground font-headline font-bold text-sm py-5 h-auto transition-all duration-500 shadow-xl shadow-primary/25 hover:shadow-2xl hover:shadow-primary/40 hover:scale-[1.02] active:scale-95"
                       >
                         <Link href="/directory">Explorar Directorio</Link>
                       </Button>

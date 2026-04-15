@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Exo_2, Inter } from 'next/font/google'
+import { DM_Serif_Text, PT_Serif } from 'next/font/google'
 import { ThemeProvider } from '@/components/providers/theme-provider'
 import { Toaster } from '@/components/ui/sonner'
 import { SmoothScrolling } from '@/components/providers/smooth-scrolling'
@@ -7,15 +7,16 @@ import { WebsiteJsonLd } from '@/components/seo/json-ld'
 import { GoogleAnalytics } from '@next/third-parties/google'
 import './globals.css'
 
-const exo2 = Exo_2({
+const dmSerifText = DM_Serif_Text({
   subsets: ['latin'],
-  variable: '--font-headline',
-  weight: ['400', '500', '600', '700', '800'],
+  variable: '--font-dm-serif',
+  weight: ['400'],
 })
 
-const inter = Inter({
+const ptSerif = PT_Serif({
   subsets: ['latin'],
-  variable: '--font-body',
+  variable: '--font-pt-serif',
+  weight: ['400', '700'],
 })
 
 export const metadata: Metadata = {
@@ -46,7 +47,7 @@ export default function RootLayout({
       <head>
         <WebsiteJsonLd />
       </head>
-      <body className={`${exo2.variable} ${inter.variable} font-body antialiased`}>
+      <body className={`${dmSerifText.variable} ${ptSerif.variable} antialiased`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

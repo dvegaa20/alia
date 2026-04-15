@@ -22,7 +22,7 @@ export function FooterCTA() {
           <Button
             asChild
             variant="secondary"
-            className="rounded-full px-8 py-3 h-auto text-base font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] active:scale-95"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8 py-3 h-auto text-base font-semibold shadow-xl shadow-primary/25 hover:shadow-2xl hover:shadow-primary/40 transition-all duration-500 hover:scale-[1.04] active:scale-95 mb-1"
           >
             <Link href="/directory">
               Explorar Causas
