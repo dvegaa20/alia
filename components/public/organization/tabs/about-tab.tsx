@@ -38,6 +38,7 @@ export function AboutTab({
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-16 items-start">
         <AboutContent name={name} fullDescription={fullDescription} galleryImages={galleryImages} />
         <ContactSidebar
+          orgName={name}
           location={location || undefined}
           email={email}
           phone={phone}

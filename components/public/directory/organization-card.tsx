@@ -1,8 +1,11 @@
+'use client'
+
 import Link from 'next/link'
 import { Badge } from '@/components/ui/badge'
 import { MapPin, BadgeCheck, Users, ArrowRight } from 'lucide-react'
 import Image from 'next/image'
 import { Card, CardContent, CardFooter } from '@/components/ui/card'
+import { trackSocialLead } from '@/lib/analytics'
 
 import type { OrganizationCardProps } from '@/types'
 export type { OrganizationCardProps }
@@ -18,7 +21,7 @@ export function OrganizationCard({
   verified = false,
 }: OrganizationCardProps) {
   return (
-    <Link href={`/directory/${slug}`} className="block">
+    <Link href={`/directory/${slug}`} className="block" onClick={() => trackSocialLead('view_profile', name)}>
       <Card className="group relative bg-background rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(26,28,28,0.06)] dark:hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)] border border-border/50 p-0! gap-0!">
         {/* Cover Image */}
         <div className="h-40 overflow-hidden relative">
@@ -68,9 +71,7 @@ export function OrganizationCard({
             </div>
 
             {/* Title */}
-            <h3 className="text-xl font-bold text-foreground leading-tight font-headline">
-              {name}
-            </h3>
+            <h3 className="text-xl font-bold text-foreground leading-tight font-headline">{name}</h3>
 
             {/* Description */}
             <p className="text-muted-foreground text-sm leading-relaxed line-clamp-2 font-medium">
@@ -89,7 +90,7 @@ export function OrganizationCard({
               </div>
               <div className="flex items-center shrink-0 mt-0.5">
                 <Users className="size-3.5 mr-1 shrink-0" />
-                <span>+50 Voluntarios</span> {/* Placeholder for extra data */}
+                <span>+50 Voluntarios</span>
               </div>
             </div>
 

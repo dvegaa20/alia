@@ -1,8 +1,13 @@
+'use client'
+
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { MapPin, Mail, Phone, Share2 } from 'lucide-react'
+import { trackSocialLead } from '@/lib/analytics'
 
 interface ContactSidebarProps {
+  /** Name of the organization — used for GA4 event labeling */
+  orgName: string
   location?: string | null
   email: string
   phone?: string | null
@@ -13,6 +18,7 @@ interface ContactSidebarProps {
 }
 
 export function ContactSidebar({
+  orgName,
   location,
   email,
   phone,
@@ -29,6 +35,7 @@ export function ContactSidebar({
     if (n >= 1_000) return `${(n / 1_000).toFixed(n >= 10_000 ? 0 : 1)}k`
     return n.toLocaleString()
   }
+
   return (
     <aside className="sticky top-32 space-y-6">
       {/* Contact Info Card */}
@@ -54,8 +61,12 @@ export function ContactSidebar({
               </div>
             )}
 
-            {/* Email */}
-            <div className="flex items-center gap-4 group">
+            {/* Email — tracked as "send_message" */}
+            <a
+              href={`mailto:${email}`}
+              className="flex items-center gap-4 group"
+              onClick={() => trackSocialLead('send_message', orgName)}
+            >
               <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                 <Mail className="size-5" />
               </div>
@@ -65,7 +76,7 @@ export function ContactSidebar({
                 </p>
                 <p className="text-foreground font-medium">{email}</p>
               </div>
-            </div>
+            </a>
 
             {/* Phone */}
             {phone && (
@@ -91,7 +102,12 @@ export function ContactSidebar({
               asChild
               className="flex-1 py-4 h-auto bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-xl shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all"
             >
-              <a href={website} target="_blank" rel="noopener noreferrer">
+              <a
+                href={website}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackSocialLead('click_website', orgName)}
+              >
                 Ir al sitio web
               </a>
             </Button>
@@ -99,6 +115,7 @@ export function ContactSidebar({
           <Button
             variant="ghost"
             className="w-12 h-auto shrink-0 flex items-center justify-center text-muted-foreground"
+            onClick={() => trackSocialLead('share_org', orgName)}
           >
             <Share2 className="size-5" />
           </Button>

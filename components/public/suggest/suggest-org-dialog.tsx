@@ -6,6 +6,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { Info, Link as LinkIcon, Send, Loader2, Check, X } from 'lucide-react'
 import { submitSuggestion, getPublicCategories } from '@/server/actions'
+import { trackSocialLead } from '@/lib/analytics'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -114,6 +115,7 @@ export function SuggestOrgDialog({ children }: { children: React.ReactNode }) {
       const result = await submitSuggestion(data)
 
       if (result.success) {
+        trackSocialLead('suggest_org', data.orgName)
         setSubmitState('success')
         // Close dialog after showing success
         setTimeout(() => {
