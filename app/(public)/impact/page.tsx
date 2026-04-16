@@ -8,12 +8,12 @@ import { ImpactTransparency } from '@/components/public/impact/impact-transparen
 export const metadata: Metadata = {
   title: 'Alcance Social',
   description:
-    'Datos abiertos sobre el alcance y conexión de Alia — El directorio social de México. Transparencia en tiempo real sobre nuestra labor.',
+    'Datos de impacto sobre el alcance y conexión de Alia — El directorio social de México. Transparencia en tiempo real sobre nuestra labor.',
   alternates: { canonical: '/impacto' },
   openGraph: {
     title: 'Alcance Social | Alia',
     description:
-      'Datos abiertos sobre el alcance y conexión de la plataforma Alia. Transparencia sobre personas ayudando y causas descubiertas.',
+      'Datos de impacto sobre el alcance y conexión de la plataforma Alia. Transparencia sobre personas ayudando y causas descubiertas.',
     type: 'website',
   },
 }

@@ -85,7 +85,7 @@ export function ImpactHero({ metrics }: ImpactHeroProps) {
             Social
           </h1>
           <p className="text-base md:text-lg text-muted-foreground max-w-2xl leading-relaxed">
-            Datos abiertos sobre nuestro alcance en México, actualizados constantemente para
+            Datos de impacto sobre nuestro alcance en México, actualizados constantemente para
             garantizar total transparencia en nuestra labor comunitaria.
           </p>
         </motion.div>

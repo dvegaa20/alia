@@ -29,7 +29,7 @@ export async function FeaturesSection() {
             href="/impacto"
             className="shrink-0 text-xs font-bold text-primary uppercase tracking-wider hover:underline underline-offset-4 flex items-center gap-1 transition-opacity opacity-70 hover:opacity-100"
           >
-            Explora nuestros datos abiertos →
+            Explora nuestro impacto →
           </Link>
         </div>
 

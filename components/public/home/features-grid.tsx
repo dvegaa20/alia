@@ -1,8 +1,16 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { HeartHandshake, ShieldCheck, Eye, Users, TrendingUp, Globe } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import Image from 'next/image'
+import { HeartHandshake, ShieldCheck, Users, TrendingUp, Globe } from 'lucide-react'
+import { useCarouselCycle } from '@/hooks/use-carousel-cycle'
 import type { ImpactMetrics } from '@/server/actions/analytics'
+
+const VERTICAL_IMAGES = [
+  '/images/vertical1.jpg',
+  '/images/vertical2.jpg',
+  '/images/vertical3.jpg',
+]
 
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
@@ -24,6 +32,7 @@ interface FeaturesSectionGridProps {
 
 export function FeaturesSectionGrid({ metrics }: FeaturesSectionGridProps) {
   const { communityReach, realConnections, pageViews } = metrics
+  const { currentIndex } = useCarouselCycle(VERTICAL_IMAGES, 15000)
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -33,33 +42,33 @@ export function FeaturesSectionGrid({ metrics }: FeaturesSectionGridProps) {
         transition={{ duration: 0.5 }}
         className="relative bg-card rounded-2xl overflow-hidden min-h-[280px] md:row-span-2 group"
       >
-        {/* Gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-base-200 via-base-100 to-base-50">
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center space-y-2 opacity-40">
-              <div className="size-12 rounded-full bg-base-300/50 mx-auto flex items-center justify-center">
-                <Eye className="size-5 text-base-400" />
-              </div>
-              <p className="text-base-400 text-xs font-medium uppercase tracking-wider">Imagen</p>
-            </div>
-          </div>
-        </div>
+        <AnimatePresence mode="popLayout">
+          <motion.div
+            key={currentIndex}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.5, ease: 'easeOut' }}
+            className="absolute inset-0"
+          >
+            <Image
+              src={VERTICAL_IMAGES[currentIndex]}
+              alt={`Feature visual ${currentIndex + 1}`}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 33vw"
+            />
+          </motion.div>
+        </AnimatePresence>
 
-        {/* Live badge overlay */}
-        <div className="absolute top-4 right-4 z-10">
-          <div className="flex items-center gap-1.5 bg-primary/10 border border-primary/20 rounded-full px-3 py-1">
-            <span className="size-1.5 rounded-full bg-primary animate-pulse" />
-            <span className="text-[10px] font-bold text-primary uppercase tracking-wider">Live</span>
-          </div>
-        </div>
-
-        {/* Floating brand badge */}
+        {/* Brand Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
         <div className="absolute bottom-6 left-6 z-10">
-          <div className="bg-card rounded-full px-4 py-2 shadow-lg flex items-center gap-2 border border-border/40">
-            <div className="size-8 rounded-full bg-primary/10 flex items-center justify-center">
-              <Users className="size-4 text-primary" />
+          <div className="bg-background/80 backdrop-blur-md rounded-full px-4 py-2 flex items-center gap-2 border border-white/20 shadow-xl">
+            <div className="size-6 rounded-full bg-primary/20 flex items-center justify-center">
+              <Users className="size-3 text-primary" />
             </div>
-            <span className="text-sm font-bold text-foreground font-headline">Alia</span>
+            <span className="text-xs font-bold text-foreground font-headline">Alia</span>
           </div>
         </div>
       </motion.div>

@@ -65,7 +65,7 @@ const footerColumns = [
       { label: 'Nuestra Misión', href: '/about' },
       { label: 'Cómo verificamos', href: '#' },
       { label: 'Principios de transparencia', href: '#' },
-      { label: 'Datos Abiertos', href: '#' },
+      { label: 'Datos de impacto', href: '#' },
     ],
   },
   {

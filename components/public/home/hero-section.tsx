@@ -2,9 +2,10 @@
 
 import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 import { Combobox as ComboboxPrimitive } from '@base-ui/react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Search, ArrowRight, ImageIcon } from 'lucide-react'
+import { Search, ArrowRight } from 'lucide-react'
 import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group'
 import {
   ComboboxContent,
@@ -23,9 +24,11 @@ import { useCarouselCycle } from '@/hooks/use-carousel-cycle'
 import type { OrganizationOption } from '@/types'
 
 const HERO_IMAGES = [
-  'bg-gradient-to-br from-base-300 via-base-200 to-base-100',
-  'bg-gradient-to-tr from-primary-800 via-primary-500 to-base-300',
-  'bg-gradient-to-tl from-base-400 via-base-300 to-base-100',
+  '/images/landscape1.jpg',
+  '/images/landscape2.jpg',
+  '/images/landscape3.jpg',
+  '/images/landscape4.jpg',
+  '/images/landscape5.jpg',
 ]
 
 const HERO_TITLES = [
@@ -87,21 +90,16 @@ export function HeroSection({ organizations }: { organizations: OrganizationOpti
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 1.5, ease: 'easeOut' }}
-              className={cn('absolute inset-0', HERO_IMAGES[imageIndex])}
+              className="absolute inset-0"
             >
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center space-y-3 opacity-40 mix-blend-overlay">
-                  <div className="size-16 rounded-full bg-white/20 mx-auto flex items-center justify-center">
-                    <ImageIcon className="size-7 text-white" />
-                  </div>
-                  <p className="text-white text-sm font-bold tracking-widest uppercase shadow-sm">
-                    Imagen del Hero {imageIndex + 1}
-                  </p>
-                  <p className="text-white text-xs max-w-xs font-medium">
-                    1600 × 680px recomendado
-                  </p>
-                </div>
-              </div>
+              <Image
+                src={HERO_IMAGES[imageIndex]}
+                alt={`Hero background ${imageIndex + 1}`}
+                fill
+                priority={imageIndex === 0}
+                className="object-cover"
+                sizes="100vw"
+              />
             </motion.div>
           </AnimatePresence>
 
