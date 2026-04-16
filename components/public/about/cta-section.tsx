@@ -48,12 +48,12 @@ export function CtaSection() {
               {/* Badge */}
               <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-50 text-primary-800 text-xs font-bold tracking-widest uppercase">
                 <span className="size-1.5 rounded-full bg-primary-500 animate-pulse" />
-                Mantente Conectado
+                Nuestra Comunidad
               </span>
 
               {/* Title */}
               <h3 className="text-2xl font-bold text-base-900 font-headline leading-snug">
-                Recibe Actualizaciones que Hacen la Diferencia
+                Recibe Historias que Hacen la Diferencia
               </h3>
 
               {/* Email Form */}
@@ -65,7 +65,7 @@ export function CtaSection() {
                   <Mail className="size-4 text-base-400 shrink-0" />
                   <input
                     type="email"
-                    placeholder="Ingresa tu correo electrónico"
+                    placeholder="Tu correo electrónico"
                     className="text-sm bg-transparent border-none outline-none placeholder:text-base-400 text-base-800 w-full font-body"
                   />
                 </div>
@@ -73,7 +73,7 @@ export function CtaSection() {
                   type="submit"
                   className="rounded-full bg-primary-700 hover:bg-primary-800 text-white font-headline font-bold text-xs px-6 py-2.5 h-auto shrink-0 transition-all"
                 >
-                  Suscribirse
+                  Unirse
                 </Button>
               </form>
             </div>

@@ -5,7 +5,7 @@ import { HeroSection, CategoryFilters, CategoryCarousel, TrustSection, FeaturesS
 export const metadata: Metadata = {
   title: 'Inicio',
   description:
-    'Encuentra y apoya organizaciones sociales verificadas en México. Explora por categorías como medio ambiente, educación, salud y más.',
+    'Encuentra y apoya iniciativas sociales verificadas en México. Explora por categorías como medio ambiente, educación, salud y más.',
   alternates: { canonical: '/' },
 }
 

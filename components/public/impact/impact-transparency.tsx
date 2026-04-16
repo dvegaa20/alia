@@ -24,27 +24,27 @@ export function ImpactTransparency({ lastUpdated }: ImpactTransparencyProps) {
   const items = [
     {
       icon: <Database className="size-5 text-primary" />,
-      title: 'Fuente de datos',
+      title: 'Origen de los datos',
       description:
-        'Todos los números provienen directamente de Google Analytics 4 (GA4), la herramienta estándar de la industria para analítica web.',
+        'Nuestros registros se basan en la interacción genuina de las personas con la plataforma, garantizando que cada número represente un interés real.',
     },
     {
       icon: <Clock className="size-5 text-primary" />,
-      title: 'Actualización cada hora',
+      title: 'Actualización periódica',
       description:
-        'Para mantener el costo operativo en $0, consultamos la API de GA4 una vez por hora. Los datos reflejan los últimos 30 días.',
+        'Consultamos y actualizamos la información constantemente para ofrecer una visión clara y honesta del alcance del proyecto en tiempo real.',
     },
     {
       icon: <ShieldCheck className="size-5 text-primary" />,
-      title: 'Sin inflación de métricas',
+      title: 'Datos verificables',
       description:
-        'Los datos se muestran tal como los reporta GA4, sin ajustes ni estimaciones. "Usuarios únicos" excluye bots y visitas del equipo.',
+        'Mostramos la actividad real sin ajustes ni estimaciones, excluyendo visitas técnicas para mantener la integridad de la información ciudadana.',
     },
     {
       icon: <Zap className="size-5 text-primary" />,
-      title: 'Conexiones reales',
+      title: 'Vínculos genuinos',
       description:
-        'Cada "conexión" representa una acción directa: un clic en el sitio web de una organización, un mensaje enviado, o un perfil compartido.',
+        'Cada "vínculo" representa un paso hacia la colaboración: descubrir una iniciativa, visitar su labor o compartir su impacto con otros.',
     },
   ]
 

@@ -51,9 +51,9 @@ export function TrustSection() {
             <Card className="bg-card border border-border/50 ring-0 rounded-xl py-0 shadow-sm">
               <CardContent className="p-6">
                 <ShieldCheck className="size-8 text-primary mb-3" />
-                <h4 className="font-bold text-foreground mb-1 text-base">Organizaciones Curadas</h4>
+                <h4 className="font-bold text-foreground mb-1 text-base">Red de Confianza</h4>
                 <p className="text-sm text-muted-foreground">
-                  Verificamos la existencia y legalidad de cada ONG antes de listarla.
+                  Conocemos y verificamos cada iniciativa para asegurar que tu apoyo llegue a donde se necesita.
                 </p>
               </CardContent>
             </Card>
@@ -61,9 +61,9 @@ export function TrustSection() {
             <Card className="bg-card border border-border/50 ring-0 rounded-xl py-0 shadow-sm">
               <CardContent className="p-6">
                 <HeartHandshake className="size-8 text-primary/80 mb-3" />
-                <h4 className="font-bold text-foreground mb-1 text-base">Impacto Real</h4>
+                <h4 className="font-bold text-foreground mb-1 text-base">Vínculo Directo</h4>
                 <p className="text-sm text-muted-foreground">
-                  Conecta directamente con los líderes de cada proyecto sin intermediarios.
+                  Conecta sin intermediarios con las personas que lideran cada proyecto.
                 </p>
               </CardContent>
             </Card>

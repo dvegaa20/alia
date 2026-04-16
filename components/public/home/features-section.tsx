@@ -17,10 +17,10 @@ export async function FeaturesSection() {
         <div className="mb-12 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
           <div className="text-left">
             <h2 className="text-3xl md:text-5xl font-bold font-headline text-foreground mb-4">
-              Nuestro <span className="text-primary">Impacto</span>
+              Nuestro <span className="text-primary">Alcance</span>
             </h2>
             <p className="text-base md:text-lg text-muted-foreground w-full max-w-2xl">
-              Conectamos donantes con organizaciones verificadas para crear un cambio real y sostenible.
+              Conectamos a personas con voluntad de ayudar con iniciativas verificadas para fortalecer nuestra comunidad.
             </p>
           </div>
 
@@ -29,7 +29,7 @@ export async function FeaturesSection() {
             href="/impacto"
             className="shrink-0 text-xs font-bold text-primary uppercase tracking-wider hover:underline underline-offset-4 flex items-center gap-1 transition-opacity opacity-70 hover:opacity-100"
           >
-            Ver métricas completas →
+            Explora nuestros datos abiertos →
           </Link>
         </div>
 

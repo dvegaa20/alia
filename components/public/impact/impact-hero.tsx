@@ -77,16 +77,16 @@ export function ImpactHero({ metrics }: ImpactHeroProps) {
         <motion.div {...fadeUp} transition={{ duration: 0.5 }} className="mb-4">
           <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 text-primary rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-widest mb-6">
             <span className="size-1.5 rounded-full bg-primary animate-pulse" />
-            Datos en tiempo real
+            Transparencia Activa
           </div>
           <h1 className="text-4xl md:text-6xl font-bold font-headline text-foreground mb-4 leading-tight">
-            Nuestro <span className="text-primary">Impacto</span>
+            Nuestro <span className="text-primary">Alcance</span>
             <br />
             Social
           </h1>
           <p className="text-base md:text-lg text-muted-foreground max-w-2xl leading-relaxed">
-            Métricas reales del alcance de Alia en México — extraídas directamente de Google Analytics
-            4 y actualizadas automáticamente cada hora.
+            Datos abiertos sobre nuestro alcance en México, actualizados constantemente para
+            garantizar total transparencia en nuestra labor comunitaria.
           </p>
         </motion.div>
 
@@ -104,22 +104,22 @@ export function ImpactHero({ metrics }: ImpactHeroProps) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <MetricCard
             icon={<Users className="size-5 text-primary" />}
-            sublabel="Alcance comunitario"
-            label="Usuarios únicos que exploraron el directorio"
+            sublabel="Voluntad compartida"
+            label="Personas que han explorado iniciativas locales"
             value={formatNumber(communityReach)}
             delay={0.1}
           />
           <MetricCard
             icon={<Zap className="size-5 text-primary" />}
-            sublabel="Conexiones reales"
-            label="Interacciones directas con organizaciones"
+            sublabel="Vínculos directos"
+            label="Personas conectando con causas sociales"
             value={formatNumber(realConnections)}
             delay={0.2}
           />
           <MetricCard
             icon={<Globe className="size-5 text-primary" />}
-            sublabel="Páginas vistas"
-            label="Visitas totales a perfiles de organizaciones"
+            sublabel="Historias descubiertas"
+            label="Iniciativas que han dado a conocer su labor"
             value={formatNumber(pageViews)}
             delay={0.3}
           />

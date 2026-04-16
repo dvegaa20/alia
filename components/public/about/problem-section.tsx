@@ -16,20 +16,19 @@ export function ProblemSection() {
           className="flex-1 space-y-8"
         >
           <h2 className="font-headline font-bold text-4xl text-primary-900 dark:text-primary-200">
-            El problema que vimos
+            Por qué decidimos actuar
           </h2>
           <div className="space-y-6 font-body text-lg text-muted-foreground leading-loose">
             <p>
-              En un mundo saturado de información, encontrar organizaciones sociales honestas y
-              locales se ha vuelto una tarea compleja. A menudo, las pequeñas iniciativas quedan
-              invisibilizadas por la falta de recursos digitales, mientras que los ciudadanos con
-              ganas de ayudar no saben por dónde empezar.
+              En un mundo saturado de información, encontrar iniciativas honestas y cercanas se ha
+              vuelto una tarea compleja. A menudo, los proyectos locales quedan invisibilizados por
+              la falta de recursos digitales, mientras que las personas con ganas de sumar no saben
+              por dónde empezar.
             </p>
             <p>
-              Notamos que los directorios existentes solían ser comerciales, estar desactualizados o
-              enfocarse únicamente en grandes ONGs internacionales. Faltaba un puente humano,
-              transparente y gratuito que pusiera en valor el trabajo territorial de quienes
-              transforman realidades cada día.
+              Notamos que las redes existentes solían ser comerciales o enfocarse solo en grandes
+              estructuras. Hacía falta un puente humano, transparente y gratuito que pusiera en valor
+              el trabajo de quienes transforman nuestra realidad cada día, desde el territorio.
             </p>
           </div>
         </motion.div>

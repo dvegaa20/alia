@@ -6,14 +6,14 @@ import { ImpactTopOrgs } from '@/components/public/impact/impact-top-orgs'
 import { ImpactTransparency } from '@/components/public/impact/impact-transparency'
 
 export const metadata: Metadata = {
-  title: 'Impacto Social',
+  title: 'Alcance Social',
   description:
-    'Métricas reales de alcance y conexión de Alia — El directorio social de México. Datos actualizados cada hora desde Google Analytics 4.',
+    'Datos abiertos sobre el alcance y conexión de Alia — El directorio social de México. Transparencia en tiempo real sobre nuestra labor.',
   alternates: { canonical: '/impacto' },
   openGraph: {
-    title: 'Impacto Social | Alia',
+    title: 'Alcance Social | Alia',
     description:
-      'Métricas reales de alcance y conexión de la plataforma Alia. Usuarios únicos, conexiones directas y organizaciones más visitadas.',
+      'Datos abiertos sobre el alcance y conexión de la plataforma Alia. Transparencia sobre personas ayudando y causas descubiertas.',
     type: 'website',
   },
 }

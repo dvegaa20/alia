@@ -29,18 +29,18 @@ const HERO_IMAGES = [
 ]
 
 const HERO_TITLES = [
-  { main: 'Encuentra y apoya', accent: 'importan' },
-  { main: 'Conecta con causas que', accent: 'transforman' },
-  { main: 'Descubre organizaciones que', accent: 'inspiran' },
+  { main: 'Encuentra y apoya causas que', accent: 'nos mueven' },
+  { main: 'Conecta con iniciativas que', accent: 'transforman' },
+  { main: 'Descubre historias que', accent: 'nos inspiran' },
 ]
 
 const HERO_BADGES = [
-  'Organizaciones verificadas',
-  'Directorio transparente',
-  'Impacto medible',
-  'Comunidad activa',
-  'Donaciones seguras',
-  'Reportes de impacto',
+  'Iniciativas verificadas',
+  'Transparencia ciudadana',
+  'Comunidad en acción',
+  'Impacto compartido',
+  'Apoyo sin intermediarios',
+  'Historias de cambio',
 ]
 
 export function HeroSection({ organizations }: { organizations: OrganizationOption[] }) {
@@ -141,8 +141,6 @@ export function HeroSection({ organizations }: { organizations: OrganizationOpti
                       className="font-headline font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-foreground tracking-tight leading-[1.08] lg:leading-[1.08]"
                     >
                       {title.main}{' '}
-                      <br className="hidden sm:block" />
-                      causas que{' '}
                       <span className="text-primary italic">{title.accent}</span>.
                     </motion.h1>
                   </AnimatePresence>
@@ -197,12 +195,12 @@ export function HeroSection({ organizations }: { organizations: OrganizationOpti
                       {/* Card Content Text */}
                       <div>
                         <h3 className="text-lg font-bold text-foreground font-headline leading-snug">
-                          Haz un Impacto
+                          Involúcrate en tu
                           <br />
-                          Inmediato
+                          Comunidad
                         </h3>
                         <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
-                          Conecta directamente con organizaciones que transforman comunidades.
+                          Conecta directamente con las iniciativas que transforman nuestra realidad.
                         </p>
                       </div>
                     </CardContent>

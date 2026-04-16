@@ -4,7 +4,7 @@ import { AboutHeroSection, ProblemSection, PillarsSection, CtaSection } from '@/
 export const metadata: Metadata = {
   title: 'Sobre el Proyecto',
   description:
-    'Conoce la misión de Alia: conectar personas con organizaciones sociales que transforman comunidades en México.',
+    'Conoce la misión de Alia: unir voluntades con iniciativas sociales que transforman nuestra realidad en México.',
   alternates: { canonical: '/about' },
 }
 
