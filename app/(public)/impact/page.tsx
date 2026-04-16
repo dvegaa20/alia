@@ -22,7 +22,7 @@ export default async function ImpactoPage() {
   const metrics = await getImpactMetrics()
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen">
       {/* Hero with metric cards */}
       <ImpactHero metrics={metrics} />
 
@@ -31,16 +31,6 @@ export default async function ImpactoPage() {
 
       {/* Transparency / methodology */}
       <ImpactTransparency lastUpdated={metrics.lastUpdated} />
-
-      {/* CTA back to directory */}
-      <section className="px-4 sm:px-8 py-20 text-center">
-        <Link
-          href="/directory"
-          className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-bold px-8 py-4 rounded-full shadow-lg shadow-primary/25 hover:bg-primary/90 hover:shadow-xl hover:shadow-primary/30 hover:scale-[1.02] active:scale-95 transition-all duration-300 font-headline text-base"
-        >
-          Explorar el directorio →
-        </Link>
-      </section>
     </main>
   )
 }

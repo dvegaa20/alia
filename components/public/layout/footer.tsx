@@ -43,7 +43,7 @@ const footerColumns = [
   {
     title: 'Explorar Causas',
     links: [
-      { label: 'Todas las organizaciones', href: '/directory' },
+      { label: 'Directorio', href: '/directory' },
       { label: 'Medio Ambiente', href: '/directory?category=medio-ambiente' },
       { label: 'Educación y Niñez', href: '/directory?category=educacion' },
       { label: 'Bienestar Animal', href: '/directory?category=bienestar-animal' },

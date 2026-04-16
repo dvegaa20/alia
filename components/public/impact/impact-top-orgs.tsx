@@ -18,7 +18,7 @@ interface ImpactTopOrgsProps {
 export function ImpactTopOrgs({ topOrgs }: ImpactTopOrgsProps) {
   if (topOrgs.length === 0) {
     return (
-      <section className="px-4 sm:px-8 py-16 bg-background">
+      <section className="px-4 sm:px-8 py-16 bg-muted/30">
         <div className="max-w-400 mx-auto">
           <div className="bg-card border border-border/60 rounded-2xl p-12 text-center">
             <TrendingUp className="size-8 text-muted-foreground mx-auto mb-4" />
@@ -34,7 +34,7 @@ export function ImpactTopOrgs({ topOrgs }: ImpactTopOrgsProps) {
   const maxViews = topOrgs[0]?.views ?? 1
 
   return (
-    <section className="px-4 sm:px-8 py-16 bg-background">
+    <section className="px-4 sm:px-8 py-16 bg-muted/30">
       <div className="max-w-400 mx-auto">
 
         {/* Section header */}
@@ -71,15 +71,14 @@ export function ImpactTopOrgs({ topOrgs }: ImpactTopOrgsProps) {
 
                     {/* Rank */}
                     <span
-                      className={`text-sm font-bold w-7 text-center shrink-0 ${
-                        i === 0
-                          ? 'text-amber-500'
-                          : i === 1
+                      className={`text-sm font-bold w-7 text-center shrink-0 ${i === 0
+                        ? 'text-amber-500'
+                        : i === 1
                           ? 'text-base-400'
                           : i === 2
-                          ? 'text-amber-700'
-                          : 'text-muted-foreground'
-                      }`}
+                            ? 'text-amber-700'
+                            : 'text-muted-foreground'
+                        }`}
                     >
                       {i + 1}
                     </span>

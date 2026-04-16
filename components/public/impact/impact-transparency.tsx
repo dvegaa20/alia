@@ -49,7 +49,7 @@ export function ImpactTransparency({ lastUpdated }: ImpactTransparencyProps) {
   ]
 
   return (
-    <section className="px-4 sm:px-8 py-20 bg-muted/30">
+    <section className="px-4 sm:px-8 py-20 bg-background">
       <div className="max-w-400 mx-auto">
 
         {/* Header */}

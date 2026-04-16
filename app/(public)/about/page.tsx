@@ -1,5 +1,12 @@
 import { type Metadata } from 'next'
-import { AboutHeroSection, ProblemSection, PillarsSection, CtaSection } from '@/components/public'
+import {
+  AboutHeroSection,
+  ProblemSection,
+  StorySection,
+  PillarsSection,
+  TransparencySection,
+  CtaSection,
+} from '@/components/public'
 
 export const metadata: Metadata = {
   title: 'Sobre el Proyecto',
@@ -13,7 +20,9 @@ export default function SobreElProyectoPage() {
     <>
       <AboutHeroSection />
       <ProblemSection />
+      <StorySection />
       <PillarsSection />
+      <TransparencySection />
       <CtaSection />
     </>
   )

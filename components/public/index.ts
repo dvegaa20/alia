@@ -20,7 +20,9 @@ export { ResultsGrid } from './directory/results-grid'
 // About
 export { AboutHeroSection } from './about/hero-section'
 export { ProblemSection } from './about/problem-section'
+export { StorySection } from './about/story-section'
 export { PillarsSection } from './about/pillars-section'
+export { TransparencySection } from './about/transparency-section'
 export { CtaSection } from './about/cta-section'
 
 // Organizations

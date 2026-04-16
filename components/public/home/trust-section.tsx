@@ -9,26 +9,6 @@ export function TrustSection() {
   return (
     <section className="px-8 py-32 bg-background">
       <div className="max-w-400 mx-auto flex flex-col lg:flex-row gap-20 items-center">
-        {/* Image Side */}
-        <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.7 }}
-          className="lg:w-1/2 relative"
-        >
-          <div className="absolute -top-10 -left-10 w-40 h-40 bg-muted rounded-full opacity-30 blur-3xl" />
-          <div className="bg-muted rounded-xl overflow-hidden p-4 rotate-3 hover:rotate-0 transition-transform duration-500">
-            <Image
-              alt="Equipo trabajando feliz"
-              className="rounded-lg shadow-xl"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmLNwGqAQzMm-LKHgcfEvO-Rrp1G47w1Rq-biYHrpnUz8IuBbQyeMw6FE4nGGWMcOd8fCtB9MBRByPGbulBSL6U_f4wJUW2mbVbtEQ6z9w3whts_sICK5RyK5UzlsmyBSdLvMdPehxOtwQV6i1yFc9avfn68rU7jTUnAg2G_x9rTFNUBoxs_8T41Vgo-j5egk7hzq9n1uHrYMimkdDTbXZLh_tspxQCwwp9oaJIUmho0a5iYSFtENdxzsksnoEYDIpGA74j2FJzoM"
-              width={800}
-              height={600}
-            />
-          </div>
-        </motion.div>
-
         {/* Text Side */}
         <motion.div
           initial={{ opacity: 0, x: 50 }}
@@ -67,6 +47,26 @@ export function TrustSection() {
                 </p>
               </CardContent>
             </Card>
+          </div>
+        </motion.div>
+
+        {/* Image Side */}
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 0.7 }}
+          className="lg:w-1/2 relative"
+        >
+          <div className="absolute -top-10 -left-10 w-40 h-40 bg-muted rounded-full opacity-30 blur-3xl" />
+          <div className="bg-muted rounded-xl overflow-hidden p-4 rotate-3 hover:rotate-0 transition-transform duration-500">
+            <Image
+              alt="Equipo trabajando feliz"
+              className="rounded-lg shadow-xl"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmLNwGqAQzMm-LKHgcfEvO-Rrp1G47w1Rq-biYHrpnUz8IuBbQyeMw6FE4nGGWMcOd8fCtB9MBRByPGbulBSL6U_f4wJUW2mbVbtEQ6z9w3whts_sICK5RyK5UzlsmyBSdLvMdPehxOtwQV6i1yFc9avfn68rU7jTUnAg2G_x9rTFNUBoxs_8T41Vgo-j5egk7hzq9n1uHrYMimkdDTbXZLh_tspxQCwwp9oaJIUmho0a5iYSFtENdxzsksnoEYDIpGA74j2FJzoM"
+              width={800}
+              height={600}
+            />
           </div>
         </motion.div>
       </div>
