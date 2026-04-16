@@ -16,6 +16,7 @@ const navLinks = [
   { href: '/', label: 'Inicio' },
   { href: '/directory', label: 'Todas las causas' },
   { href: '/about', label: 'Sobre el proyecto' },
+  { href: '/impact', label: 'Impacto' },
 ]
 
 export function Navbar() {
