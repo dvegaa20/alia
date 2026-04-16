@@ -1,14 +1,16 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Users, Zap, Globe, Clock } from 'lucide-react'
+import { HeartHandshake, Users, Globe2, Clock } from 'lucide-react'
+import { Card, CardContent } from '@/components/ui/card'
 import type { ImpactMetrics } from '@/server/actions/analytics'
 
-const fadeUp = {
+const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 28 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-}
+  viewport: { once: true, margin: '-60px' } as const,
+  transition: { duration: 0.55, ease: 'easeOut' as const, delay },
+})
 
 function formatNumber(n: number): string {
   if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`
@@ -27,102 +29,115 @@ function timeAgo(isoDate: string): string {
   return `hace ${hrs}h`
 }
 
-interface MetricCardProps {
-  icon: React.ReactNode
-  label: string
-  sublabel: string
-  value: string
-  delay?: number
-}
-
-function MetricCard({ icon, label, sublabel, value, delay = 0 }: MetricCardProps) {
-  return (
-    <motion.div
-      {...fadeUp}
-      transition={{ duration: 0.6, delay }}
-      className="relative bg-card border border-border/60 rounded-2xl p-8 flex flex-col justify-between min-h-[220px] shadow-sm overflow-hidden group hover:border-primary/30 hover:shadow-md transition-all duration-300"
-    >
-      {/* Subtle gradient glow */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/3 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-
-      <div className="relative">
-        <div className="size-11 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
-          {icon}
-        </div>
-        <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-1">
-          {sublabel}
-        </p>
-        <p className="text-sm text-muted-foreground">{label}</p>
-      </div>
-
-      <span className="relative text-5xl font-bold text-foreground font-headline leading-none mt-6">
-        {value}
-      </span>
-    </motion.div>
-  )
-}
+const metrics_cards = [
+  {
+    key: 'reach',
+    Icon: Users,
+    sublabel: 'Voluntad compartida',
+    label: 'Personas que han explorado iniciativas locales',
+    field: 'communityReach' as const,
+    iconColor: 'text-primary',
+    iconBg: 'bg-primary/10',
+    glowColor: 'var(--color-primary-400)',
+  },
+  {
+    key: 'connections',
+    Icon: HeartHandshake,
+    sublabel: 'Vínculos directos',
+    label: 'Personas conectando con causas sociales',
+    field: 'realConnections' as const,
+    iconColor: 'text-primary',
+    iconBg: 'bg-primary/10',
+    glowColor: 'var(--color-primary-400)',
+  },
+  {
+    key: 'views',
+    Icon: Globe2,
+    sublabel: 'Historias descubiertas',
+    label: 'Iniciativas que han dado a conocer su labor',
+    field: 'pageViews' as const,
+    iconColor: 'text-primary',
+    iconBg: 'bg-primary/10',
+    glowColor: 'var(--color-primary-400)',
+  },
+]
 
 interface ImpactHeroProps {
   metrics: ImpactMetrics
 }
 
 export function ImpactHero({ metrics }: ImpactHeroProps) {
-  const { communityReach, realConnections, pageViews, lastUpdated } = metrics
+  const { lastUpdated } = metrics
 
   return (
-    <section className="px-4 sm:px-8 pt-20 pb-16 bg-background">
+    <section className="px-4 sm:px-8 pt-20 pb-16 bg-background overflow-hidden">
       <div className="max-w-400 mx-auto">
 
-        {/* Header */}
-        <motion.div {...fadeUp} transition={{ duration: 0.5 }} className="mb-4">
-          <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 text-primary rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-widest mb-6">
-            <span className="size-1.5 rounded-full bg-primary animate-pulse" />
+        {/* ── Section Header (About-page pattern) ── */}
+        <motion.div {...fadeUp()} className="text-center mb-16">
+          <p className="text-primary font-label text-xs uppercase tracking-widest font-bold mb-3">
             Transparencia Activa
-          </div>
-          <h1 className="text-4xl md:text-6xl font-bold font-headline text-foreground mb-4 leading-tight">
-            Nuestro <span className="text-primary">Alcance</span>
-            <br />
+          </p>
+          <h1 className="font-headline font-bold text-4xl sm:text-5xl md:text-6xl text-foreground leading-tight mb-5">
+            Nuestro{' '}
+            <span className="text-primary italic">Alcance</span>{' '}
             Social
           </h1>
-          <p className="text-base md:text-lg text-muted-foreground max-w-2xl leading-relaxed">
-            Datos de impacto sobre nuestro alcance en México, actualizados constantemente para
-            garantizar total transparencia en nuestra labor comunitaria.
+          <p className="font-body text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            Datos de impacto sobre nuestro alcance en México, actualizados
+            constantemente para garantizar total transparencia en nuestra labor
+            comunitaria.
           </p>
+          <div className="mt-5 w-16 h-1 bg-primary/30 rounded-full mx-auto" />
         </motion.div>
 
-        {/* Timestamp */}
+        {/* Timestamp pill */}
         <motion.div
-          {...fadeUp}
-          transition={{ duration: 0.4, delay: 0.1 }}
-          className="flex items-center gap-2 text-xs text-muted-foreground mb-12"
+          {...fadeUp(0.1)}
+          className="flex items-center justify-center gap-2 text-xs text-muted-foreground mb-10"
         >
           <Clock className="size-3.5" />
           <span>Datos de los últimos 30 días · Actualizado {timeAgo(lastUpdated)}</span>
         </motion.div>
 
-        {/* Metric Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <MetricCard
-            icon={<Users className="size-5 text-primary" />}
-            sublabel="Voluntad compartida"
-            label="Personas que han explorado iniciativas locales"
-            value={formatNumber(communityReach)}
-            delay={0.1}
-          />
-          <MetricCard
-            icon={<Zap className="size-5 text-primary" />}
-            sublabel="Vínculos directos"
-            label="Personas conectando con causas sociales"
-            value={formatNumber(realConnections)}
-            delay={0.2}
-          />
-          <MetricCard
-            icon={<Globe className="size-5 text-primary" />}
-            sublabel="Historias descubiertas"
-            label="Iniciativas que han dado a conocer su labor"
-            value={formatNumber(pageViews)}
-            delay={0.3}
-          />
+        {/* ── Metric Cards ── */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {metrics_cards.map(({ key, Icon, sublabel, label, field, iconColor, iconBg, glowColor }, idx) => (
+            <motion.div key={key} {...fadeUp(idx * 0.12)}>
+              <Card className="relative h-full bg-card/50 backdrop-blur-sm border border-border/50 ring-0 shadow-sm hover:shadow-[0_12px_32px_rgba(26,28,28,0.08)] transition-all duration-400 py-0 group overflow-hidden">
+
+                {/* ── Warm glow behind the number ── */}
+                <div
+                  className="pointer-events-none absolute bottom-4 right-4 w-32 h-32 rounded-full opacity-[0.08] blur-3xl group-hover:opacity-[0.14] transition-opacity duration-700"
+                  style={{
+                    background: `radial-gradient(circle, ${glowColor} 0%, transparent 70%)`,
+                  }}
+                />
+
+                <CardContent className="relative p-8 flex flex-col justify-between min-h-[220px]">
+                  {/* Top: icon + labels */}
+                  <div>
+                    <div
+                      className={`w-12 h-12 ${iconBg} rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform duration-300`}
+                    >
+                      <Icon className={`size-5 ${iconColor}`} strokeWidth={1.75} />
+                    </div>
+                    <p className="font-label text-xs font-bold text-muted-foreground uppercase tracking-widest mb-1">
+                      {sublabel}
+                    </p>
+                    <p className="font-body text-sm text-muted-foreground leading-relaxed">
+                      {label}
+                    </p>
+                  </div>
+
+                  {/* Bottom: number */}
+                  <span className="font-headline text-5xl font-bold text-foreground leading-none mt-6">
+                    {formatNumber(metrics[field])}
+                  </span>
+                </CardContent>
+              </Card>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
