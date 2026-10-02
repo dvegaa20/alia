@@ -83,7 +83,7 @@ export function OrgHeader({ name, verified, categories, donationLink, orgId }: O
               asChild
             >
               <a href={donationLink} target="_blank" rel="noopener noreferrer">
-                <Heart className="size-4 fill-white" />
+                <Heart className="size-4 fill-accent" />
                 Hacer una donación
               </a>
             </Button>

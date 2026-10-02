@@ -76,39 +76,20 @@ async function main() {
         'https://aristeguinoticias.com/2803/mundo/mas-de-cada-4-familias-en-pobreza-en-la-ue-no-pueden-calentar-de-forma-adecuada-sus-hogares/',
         'https://www.un.org/sustainabledevelopment/es/poverty/',
       ],
-      featuredFact: {
-        value: '8,500',
-        unit: 'viviendas',
-        label: 'construidas',
-        description:
-          'Desde nuestra fundación, hemos construido viviendas de emergencia para familias en situación de vulnerabilidad en comunidades de todo México.',
-        badge: 'Logro principal',
-      },
-      secondaryFacts: [
+      impactHighlights: [
         {
-          value: '120k',
-          unit: 'Voluntarios',
-          label: 'movilizados',
-          icon: 'users',
-          color: 'violet',
+          value: '8,500',
+          label: 'viviendas construidas',
+          description: 'Desde nuestra fundación, hemos construido viviendas de emergencia para familias en situación de vulnerabilidad en comunidades de todo México.',
         },
-        { value: '19', unit: 'Países', label: 'con presencia', icon: 'globe', color: 'emerald' },
-        { value: '450', unit: 'Comunidades', label: 'atendidas', icon: 'home', color: 'sky' },
+        { value: '120k', label: 'voluntarios movilizados' },
+        { value: '19', label: 'países con presencia' },
+        { value: '450', label: 'comunidades atendidas' },
       ],
-      testimony: {
-        quote:
-          'Gracias a TECHO, mi familia tiene un lugar seguro donde vivir. Mis hijos ya no enferman por la humedad.',
+      impactTestimony: {
+        quote: 'Gracias a TECHO, mi familia tiene un lugar seguro donde vivir. Mis hijos ya no enferman por la humedad.',
         author: 'María González',
         role: 'Beneficiaria en Ecatepec',
-        avatarUrl: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Maria&backgroundColor=b6e3f4',
-      },
-      milestone: {
-        category: 'Vivienda',
-        tagline: '18 años construyendo hogares',
-        stats: [
-          { label: 'Proyectos completados', value: '320' },
-          { label: 'Estados con presencia', value: '28' },
-        ],
       },
       officeHours: {
         monday: { open: '09:00', close: '18:00' },
@@ -154,39 +135,20 @@ async function main() {
         'https://www.greenpeace.org/mexico/blog/',
         'https://www.apple.com/mx/environment/',
       ],
-      featuredFact: {
-        value: '1,240',
-        unit: 'árboles',
-        label: 'plantados',
-        description:
-          'Gracias a tu apoyo continuo hemos superado la meta anual en un 15%. Cada árbol representa una promesa de futuro más verde para las comunidades locales.',
-        badge: 'Logro principal',
-      },
-      secondaryFacts: [
-        { value: '45k', unit: 'Litros', label: 'de agua filtrada', icon: 'droplet', color: 'sky' },
+      impactHighlights: [
         {
-          value: '850',
-          unit: 'Voluntarios',
-          label: 'miembros activos',
-          icon: 'users',
-          color: 'violet',
+          value: '1,240',
+          label: 'árboles plantados',
+          description: 'Gracias a tu apoyo continuo hemos superado la meta anual en un 15%. Cada árbol representa una promesa de futuro más verde para las comunidades locales.',
         },
-        { value: '12', unit: 'Zonas', label: 'reforestadas', icon: 'globe', color: 'emerald' },
+        { value: '45k', label: 'litros de agua filtrada' },
+        { value: '850', label: 'voluntarios activos' },
+        { value: '12', label: 'zonas reforestadas' },
       ],
-      testimony: {
-        quote:
-          'La llegada de Greenpeace cambió cómo nuestros hijos ven el monte. Ya no es solo un bosque; es nuestro patrimonio.',
+      impactTestimony: {
+        quote: 'La llegada de Greenpeace cambió cómo nuestros hijos ven el monte. Ya no es solo un bosque; es nuestro patrimonio.',
         author: 'Mateo Rivera',
         role: 'Coordinador Local',
-        avatarUrl: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Mateo&backgroundColor=b6e3f4',
-      },
-      milestone: {
-        category: 'Medio ambiente',
-        tagline: '31 años defendiendo el planeta',
-        stats: [
-          { label: 'Campañas lanzadas', value: '95' },
-          { label: 'Especies protegidas', value: '42' },
-        ],
       },
       officeHours: {
         monday: { open: '09:00', close: '18:00' },
@@ -227,33 +189,20 @@ async function main() {
       impactGoal: 1000000,
       impactType: 'Personas atendidas',
       relevantLinks: ['https://www.cruzrojamexicana.org.mx/que-hacemos'],
-      featuredFact: {
-        value: '950k',
-        unit: 'personas',
-        label: 'atendidas anualmente',
-        description:
-          'Cada año respondemos a emergencias, desastres naturales y situaciones de crisis, brindando atención médica y asistencia humanitaria.',
-        badge: 'Impacto anual',
-      },
-      secondaryFacts: [
-        { value: '45k', unit: 'Voluntarios', label: 'activos', icon: 'users', color: 'violet' },
-        { value: '32', unit: 'Estados', label: 'con presencia', icon: 'globe', color: 'emerald' },
-        { value: '580', unit: 'Ambulancias', label: 'operativas', icon: 'heart', color: 'rose' },
+      impactHighlights: [
+        {
+          value: '950k',
+          label: 'personas atendidas anualmente',
+          description: 'Cada año respondemos a emergencias, desastres naturales y situaciones de crisis, brindando atención médica y asistencia humanitaria.',
+        },
+        { value: '45k', label: 'voluntarios activos' },
+        { value: '32', label: 'estados con presencia' },
+        { value: '580', label: 'ambulancias operativas' },
       ],
-      testimony: {
-        quote:
-          'Cuando el temblor destruyó nuestra comunidad, la Cruz Roja fue la primera en llegar. Nos dieron esperanza.',
+      impactTestimony: {
+        quote: 'Cuando el temblor destruyó nuestra comunidad, la Cruz Roja fue la primera en llegar. Nos dieron esperanza.',
         author: 'Carlos Mendoza',
         role: 'Sobreviviente del sismo 2017',
-        avatarUrl: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Carlos&backgroundColor=ffd5dc',
-      },
-      milestone: {
-        category: 'Salud',
-        tagline: '114 años salvando vidas',
-        stats: [
-          { label: 'Centros de operación', value: '168' },
-          { label: 'Personal capacitado', value: '12k' },
-        ],
       },
       officeHours: {
         monday: { open: '08:00', close: '20:00' },
@@ -297,33 +246,20 @@ async function main() {
         'https://www.savethechildren.mx/que-hacemos',
         'https://www.unicef.org/mexico/',
       ],
-      featuredFact: {
-        value: '680k',
-        unit: 'niños',
-        label: 'beneficiados',
-        description:
-          'Programas de educación, salud y protección que transforman las vidas de niñas, niños y adolescentes en las comunidades más vulnerables de México.',
-        badge: 'Impacto 2024',
-      },
-      secondaryFacts: [
-        { value: '2.5k', unit: 'Escuelas', label: 'apoyadas', icon: 'book', color: 'sky' },
-        { value: '350', unit: 'Comunidades', label: 'atendidas', icon: 'home', color: 'violet' },
-        { value: '18', unit: 'Estados', label: 'con programas', icon: 'globe', color: 'emerald' },
+      impactHighlights: [
+        {
+          value: '680k',
+          label: 'niños beneficiados',
+          description: 'Programas de educación, salud y protección que transforman las vidas de niñas, niños y adolescentes en las comunidades más vulnerables de México.',
+        },
+        { value: '2.5k', label: 'escuelas apoyadas' },
+        { value: '350', label: 'comunidades atendidas' },
+        { value: '18', label: 'estados con programas' },
       ],
-      testimony: {
-        quote:
-          'Ahora puedo ir a la escuela y soñar con ser doctora. Save the Children me dio la oportunidad que necesitaba.',
+      impactTestimony: {
+        quote: 'Ahora puedo ir a la escuela y soñar con ser doctora. Save the Children me dio la oportunidad que necesitaba.',
         author: 'Sofía Ramírez',
         role: 'Beneficiaria, 12 años',
-        avatarUrl: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Sofia&backgroundColor=c0aede',
-      },
-      milestone: {
-        category: 'Infancia',
-        tagline: '51 años protegiendo la infancia',
-        stats: [
-          { label: 'Programas activos', value: '48' },
-          { label: 'Alianzas públicas', value: '85' },
-        ],
       },
       officeHours: {
         monday: { open: '09:00', close: '18:00' },
@@ -364,46 +300,20 @@ async function main() {
       impactGoal: 10000,
       impactType: 'Acciones urgentes enviadas',
       relevantLinks: ['https://amnistia.org.mx/contenido/que-hacemos/'],
-      featuredFact: {
-        value: '10M+',
-        unit: 'personas',
-        label: 'en el movimiento global',
-        description:
-          'Un movimiento global de personas que defienden los derechos humanos y luchan contra la injusticia en más de 150 países.',
-        badge: 'Presencia global',
-      },
-      secondaryFacts: [
+      impactHighlights: [
         {
-          value: '8.5k',
-          unit: 'Acciones',
-          label: 'urgentes enviadas',
-          icon: 'megaphone',
-          color: 'rose',
+          value: '10M+',
+          label: 'personas en el movimiento',
+          description: 'Un movimiento global de personas que defienden los derechos humanos y luchan contra la injusticia en más de 150 países.',
         },
-        { value: '150+', unit: 'Países', label: 'con presencia', icon: 'globe', color: 'emerald' },
-        {
-          value: '48',
-          unit: 'Informes',
-          label: 'publicados este año',
-          icon: 'file-text',
-          color: 'sky',
-        },
+        { value: '8.5k', label: 'acciones enviadas' },
+        { value: '150+', label: 'países involucrados' },
+        { value: '48', label: 'informes publicados' },
       ],
-      testimony: {
-        quote:
-          'Amnistía amplificó la voz de nuestra comunidad cuando más peligroso era hablar. Cada firma cuenta.',
+      impactTestimony: {
+        quote: 'Amnistía amplificó la voz de nuestra comunidad cuando más peligroso era hablar. Cada firma cuenta.',
         author: 'Daniela Torres',
         role: 'Activista comunitaria',
-        avatarUrl:
-          'https://api.dicebear.com/9.x/adventurer/svg?seed=Daniela&backgroundColor=d1d4f9',
-      },
-      milestone: {
-        category: 'Derechos Humanos',
-        tagline: '53 años defendiendo libertades',
-        stats: [
-          { label: 'Casos documentados', value: '2.4k' },
-          { label: 'Campañas activas', value: '15' },
-        ],
       },
       officeHours: {
         monday: { open: '09:00', close: '18:00' },
@@ -444,34 +354,20 @@ async function main() {
       impactGoal: 5000,
       impactType: 'Hectáreas conservadas',
       relevantLinks: ['https://www.wwf.org.mx/que_hacemos/', 'https://www.worldwildlife.org/'],
-      featuredFact: {
-        value: '4,200',
-        unit: 'hectáreas',
-        label: 'conservadas',
-        description:
-          'Áreas naturales protegidas y ecosistemas restaurados gracias a nuestros programas de conservación y la participación de las comunidades.',
-        badge: 'Conservación activa',
-      },
-      secondaryFacts: [
-        { value: '18', unit: 'Especies', label: 'en recuperación', icon: 'leaf', color: 'emerald' },
-        { value: '35', unit: 'Proyectos', label: 'activos', icon: 'target', color: 'sky' },
-        { value: '120', unit: 'Comunidades', label: 'aliadas', icon: 'users', color: 'violet' },
+      impactHighlights: [
+        {
+          value: '4,200',
+          label: 'hectáreas conservadas',
+          description: 'Áreas naturales protegidas y ecosistemas restaurados gracias a nuestros programas de conservación y la participación de las comunidades.',
+        },
+        { value: '18', label: 'especies en recuperación' },
+        { value: '35', label: 'proyectos activos' },
+        { value: '120', label: 'comunidades aliadas' },
       ],
-      testimony: {
-        quote:
-          'Con WWF aprendimos a producir sin destruir. Ahora nuestro café es orgánico y nuestro bosque sigue en pie.',
+      impactTestimony: {
+        quote: 'Con WWF aprendimos a producir sin destruir. Ahora nuestro café es orgánico y nuestro bosque sigue en pie.',
         author: 'Roberto Sánchez',
         role: 'Productor en Chiapas',
-        avatarUrl:
-          'https://api.dicebear.com/9.x/adventurer/svg?seed=Roberto&backgroundColor=ffdfbf',
-      },
-      milestone: {
-        category: 'Medio ambiente',
-        tagline: '34 años conservando la biodiversidad',
-        stats: [
-          { label: 'Ecosistemas protegidos', value: '12' },
-          { label: 'Alianzas corporativas', value: '65' },
-        ],
       },
       officeHours: {
         monday: { open: '09:00', close: '18:00' },

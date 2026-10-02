@@ -19,43 +19,18 @@ export interface NeedItem {
   quantity?: string
 }
 
-/** Featured fact stored in Organization.featuredFact JSON field */
-export interface FeaturedFact {
+/** An impact highlight stored in Organization.impactHighlights JSON array */
+export interface ImpactHighlight {
   value: string
-  unit: string
   label: string
   description?: string
-  badge?: string
 }
 
-/** A secondary fact stored in Organization.secondaryFacts JSON array */
-export interface SecondaryFact {
-  value: string
-  unit: string
-  label: string
-  icon?: string
-  color?: string
-}
-
-/** Testimony stored in Organization.testimony JSON field */
-export interface Testimony {
+/** Testimony stored in Organization.impactTestimony JSON field */
+export interface ImpactTestimony {
   quote: string
   author: string
   role: string
-  avatarUrl?: string
-}
-
-/** Milestone stat entry */
-export interface MilestoneStat {
-  value: string
-  label: string
-}
-
-/** Milestone stored in Organization.milestone JSON field */
-export interface Milestone {
-  category: string
-  tagline: string
-  stats?: MilestoneStat[]
 }
 
 /** A single day's office hours */
@@ -132,10 +107,8 @@ export interface OrgTabsProps {
   impactType?: string | null
   relevantLinks: string[]
   needs?: NeedItem[]
-  featuredFact?: FeaturedFact
-  secondaryFacts?: SecondaryFact[]
-  testimony?: Testimony
-  milestone?: Milestone
+  impactHighlights?: ImpactHighlight[]
+  impactTestimony?: ImpactTestimony
   foundedYear?: number | null
   verified?: boolean
   officeHours?: OfficeHours
@@ -153,10 +126,8 @@ export interface ContactTabProps {
 
 /** Props for ImpactTab */
 export interface ImpactTabProps {
-  featuredFact?: FeaturedFact
-  secondaryFacts?: SecondaryFact[]
-  testimony?: Testimony
-  milestone?: Milestone
+  impactHighlights?: ImpactHighlight[]
+  impactTestimony?: ImpactTestimony
   foundedYear?: number | null
   verified?: boolean
 }

@@ -59,7 +59,7 @@ export function NeedsTab({ needs }: NeedsTabProps) {
             return (
               <Card
                 key={idx}
-                className="rounded-2xl border-border/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] transition-all duration-300 hover:-translate-y-1 overflow-hidden h-full flex flex-col group py-0 bg-background/50"
+                className="rounded-2xl border-border/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] transition-all duration-300 hover:-translate-y-1 overflow-hidden h-full flex flex-col group py-0"
               >
                 <CardContent className="p-6 flex-1 flex flex-col relative pt-8">
                   {/* Urgency Badge */}
@@ -83,7 +83,7 @@ export function NeedsTab({ needs }: NeedsTabProps) {
                     </div>
                   </div>
 
-                  <h3 className="text-xl font-bold text-foreground mb-2 leading-tight group-hover:text-primary transition-colors">
+                  <h3 className="text-xl font-bold text-foreground mb-2 leading-tight">
                     {need.title}
                   </h3>
 

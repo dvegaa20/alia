@@ -39,42 +39,30 @@ function IconGitHub({ className }: { className?: string }) {
 }
 
 /* ── Link column data ── */
-const footerColumns = [
-  {
-    title: 'Explorar Causas',
-    links: [
-      { label: 'Directorio', href: '/directory' },
-      { label: 'Medio Ambiente', href: '/directory?category=medio-ambiente' },
-      { label: 'Educación y Niñez', href: '/directory?category=educacion' },
-      { label: 'Bienestar Animal', href: '/directory?category=bienestar-animal' },
-      { label: 'Salud y Nutrición', href: '/directory?category=salud' },
-    ],
-  },
+const defaultFooterColumns = [
   {
     title: 'Participar',
     links: [
-      { label: 'Sugerir una ONG', href: '#' },
-      { label: 'Guías para donantes', href: '#' },
-      { label: 'Oportunidades de Voluntariado', href: '#' },
-      { label: 'Recursos para ONGs', href: '#' },
+      { label: 'Blog', href: '/blog' },
+      { label: 'Guías para donantes', href: '/resources/donors' },
+      { label: 'Guías para voluntarios', href: '/resources/volunteers' },
+      { label: 'Recursos para ONGs', href: '/resources/nonprofits' },
     ],
   },
   {
     title: 'Conoce Alia',
     links: [
       { label: 'Nuestra Misión', href: '/about' },
-      { label: 'Cómo verificamos', href: '#' },
-      { label: 'Principios de transparencia', href: '#' },
-      { label: 'Datos de impacto', href: '#' },
+      { label: 'Cómo verificamos', href: '/criteria' },
+      { label: 'Impacto y Métricas', href: '/impact' },
     ],
   },
   {
     title: 'Contacto',
     links: [
-      { label: 'Preguntas Frecuentes', href: '#' },
-      { label: 'Soporte para ONGs', href: '#' },
-      { label: 'Prensa y Medios', href: '#' },
-      { label: 'Contacto directo', href: '#' },
+      { label: 'Preguntas Frecuentes', href: '/faq' },
+      { label: 'Prensa y Medios', href: '/press' },
+      { label: 'Contacto directo', href: '/contact' },
     ],
   },
 ]
@@ -92,11 +80,31 @@ const legalLinks = [
   { label: 'Criterios de Verificación', href: '#' },
 ]
 
+interface FooterProps {
+  topCategories?: { name: string; slug: string }[]
+}
+
 /* ── Footer Component ── */
-export function Footer() {
+export function Footer({ topCategories = [] }: FooterProps) {
   const currentYear = new Date().getFullYear()
   const pathname = usePathname()
   const isHomePage = pathname === '/'
+
+  const exploreLinks = [
+    { label: 'Directorio', href: '/directory' },
+    ...topCategories.map((cat) => ({
+      label: cat.name,
+      href: `/directory?category=${cat.slug}`,
+    })),
+  ]
+
+  const footerColumns = [
+    {
+      title: 'Explorar Causas',
+      links: exploreLinks,
+    },
+    ...defaultFooterColumns,
+  ]
 
   return (
     <footer className="relative w-full">

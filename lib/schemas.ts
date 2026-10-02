@@ -90,10 +90,8 @@ export const orgFormSchema = z.object({
   needs: z.any().optional(),
 
   // Impact tab (JSON)
-  featuredFact: z.any().optional(),
-  secondaryFacts: z.any().optional(),
-  testimony: z.any().optional(),
-  milestone: z.any().optional(),
+  impactHighlights: z.any().optional(),
+  impactTestimony: z.any().optional(),
 
   // Contact tab
   officeHours: z.any().optional(),

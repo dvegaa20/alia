@@ -95,10 +95,8 @@ export function OrganizationSheet({
       impactCurrent,
       impactGoal,
       impactType,
-      featuredFact,
-      secondaryFacts,
-      testimony,
-      milestone,
+      impactHighlights,
+      impactTestimony,
       id: _id,
       createdAt: _createdAt,
       updatedAt: _updatedAt,
@@ -116,10 +114,8 @@ export function OrganizationSheet({
       impactCurrent: impactCurrent ?? undefined,
       impactGoal: impactGoal ?? undefined,
       impactType: impactType ?? undefined,
-      featuredFact: featuredFact ?? undefined,
-      secondaryFacts: secondaryFacts ?? undefined,
-      testimony: testimony ?? undefined,
-      milestone: milestone ?? undefined,
+      impactHighlights: impactHighlights ?? undefined,
+      impactTestimony: impactTestimony ?? undefined,
       categoryIds: categories?.map((c: { id: string }) => c.id) || [],
       location: location
         ? {
@@ -189,12 +185,12 @@ export function OrganizationSheet({
   })
 
   const {
-    fields: secondaryFactsFields,
-    append: appendFact,
-    remove: removeFact,
+    fields: impactHighlightFields,
+    append: appendHighlight,
+    remove: removeHighlight,
   } = useFieldArray({
     control,
-    name: 'secondaryFacts' as any,
+    name: 'impactHighlights' as any,
   })
 
   const {
@@ -785,167 +781,75 @@ export function OrganizationSheet({
                       </div>
 
                       <div className="pt-6 border-t">
-                        <h3 className="text-lg font-bold mb-4">Dato Destacado (Featured Fact)</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                          <Field>
-                            <FieldLabel className={LABEL_CX}>Valor (Ej. 8,500)</FieldLabel>
-                            <Input className={INPUT_CX} {...register('featuredFact.value')} />
-                          </Field>
-                          <Field>
-                            <FieldLabel className={LABEL_CX}>Unidad (Ej. viviendas)</FieldLabel>
-                            <Input className={INPUT_CX} {...register('featuredFact.unit')} />
-                          </Field>
-                          <Field>
-                            <FieldLabel className={LABEL_CX}>Label (Ej. construidas)</FieldLabel>
-                            <Input className={INPUT_CX} {...register('featuredFact.label')} />
-                          </Field>
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <Field>
-                            <FieldLabel className={LABEL_CX}>Descripción</FieldLabel>
-                            <Textarea
-                              className={`${INPUT_CX} min-h-[100px]`}
-                              {...register('featuredFact.description')}
-                            />
-                          </Field>
-                          <Field>
-                            <FieldLabel className={LABEL_CX}>
-                              Badge (Ej. Logro principal)
-                            </FieldLabel>
-                            <Input className={INPUT_CX} {...register('featuredFact.badge')} />
-                          </Field>
-                        </div>
-                      </div>
-
-                      <div className="pt-6 border-t">
-                        <h3 className="text-lg font-bold mb-4">Datos Secundarios (Hasta 3)</h3>
+                        <h3 className="text-lg font-bold mb-4">Logros de Impacto (Hasta 4)</h3>
+                        <p className="text-sm text-muted-foreground mb-4">
+                          El primer logro será el destacado (Hero). Añade una descripción para ese.
+                        </p>
                         <div className="space-y-6">
-                          {secondaryFactsFields.map((field, index) => (
+                          {impactHighlightFields.map((field, index) => (
                             <div
                               key={field.id}
-                              className="p-4 bg-muted/30 rounded-xl relative border"
+                              className="p-4 bg-muted/30 rounded-xl relative border space-y-4"
                             >
                               <Button
                                 type="button"
                                 variant="ghost"
                                 size="icon-sm"
                                 className="absolute top-2 right-2 text-muted-foreground hover:text-red-500"
-                                onClick={() => removeFact(index)}
+                                onClick={() => removeHighlight(index)}
                               >
                                 <Trash2 className="h-4 w-4" />
                               </Button>
-                              <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <Field>
-                                  <FieldLabel>Valor</FieldLabel>
-                                  <Input {...register(`secondaryFacts.${index}.value` as const)} />
+                                  <FieldLabel>Valor (Ej. 8,500)</FieldLabel>
+                                  <Input {...register(`impactHighlights.${index}.value` as const)} />
                                 </Field>
                                 <Field>
-                                  <FieldLabel>Unidad</FieldLabel>
-                                  <Input {...register(`secondaryFacts.${index}.unit` as const)} />
+                                  <FieldLabel>Etiqueta (Ej. viviendas construidas)</FieldLabel>
+                                  <Input {...register(`impactHighlights.${index}.label` as const)} />
                                 </Field>
-                                <Field>
-                                  <FieldLabel>Label</FieldLabel>
-                                  <Input {...register(`secondaryFacts.${index}.label` as const)} />
-                                </Field>
-                                <Field>
-                                  <FieldLabel>Icono (lucide)</FieldLabel>
-                                  <Input {...register(`secondaryFacts.${index}.icon` as const)} />
-                                </Field>
-                                <Field>
-                                  <FieldLabel>Color (tw)</FieldLabel>
-                                  <Input {...register(`secondaryFacts.${index}.color` as const)} />
-                                </Field>
+                                {index === 0 && (
+                                  <Field className="md:col-span-2">
+                                    <FieldLabel>Descripción (Solo para destacado)</FieldLabel>
+                                    <Textarea {...register(`impactHighlights.${index}.description` as const)} />
+                                  </Field>
+                                )}
                               </div>
                             </div>
                           ))}
-                          {secondaryFactsFields.length < 3 && (
+                          {impactHighlightFields.length < 4 && (
                             <Button
                               type="button"
                               variant="outline"
                               size="sm"
-                              onClick={() =>
-                                appendFact({ value: '', unit: '', label: '', icon: '', color: '' })
-                              }
+                              onClick={() => appendHighlight({ value: '', label: '', description: '' })}
                             >
-                              <Plus className="mr-2 h-4 w-4" /> Agregar Dato Secundario
+                              <Plus className="mr-2 h-4 w-4" /> Agregar Logro
                             </Button>
                           )}
                         </div>
                       </div>
 
-                      <div className="pt-6 border-t grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div>
-                          <h3 className="text-lg font-bold mb-4">Testimonio</h3>
-                          <div className="space-y-4">
-                            <Field>
-                              <FieldLabel className={LABEL_CX}>Cita</FieldLabel>
-                              <Textarea
-                                className={`${INPUT_CX} min-h-[100px]`}
-                                {...register('testimony.quote')}
-                              />
-                            </Field>
+                      <div className="pt-6 border-t">
+                        <h3 className="text-lg font-bold mb-4">Testimonio</h3>
+                        <div className="space-y-4 max-w-3xl">
+                          <Field>
+                            <FieldLabel className={LABEL_CX}>Cita</FieldLabel>
+                            <Textarea
+                              className={`${INPUT_CX} min-h-[100px]`}
+                              {...register('impactTestimony.quote')}
+                            />
+                          </Field>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <Field>
                               <FieldLabel className={LABEL_CX}>Autor</FieldLabel>
-                              <Input className={INPUT_CX} {...register('testimony.author')} />
+                              <Input className={INPUT_CX} {...register('impactTestimony.author')} />
                             </Field>
                             <Field>
                               <FieldLabel className={LABEL_CX}>Rol</FieldLabel>
-                              <Input className={INPUT_CX} {...register('testimony.role')} />
+                              <Input className={INPUT_CX} {...register('impactTestimony.role')} />
                             </Field>
-                            <Field>
-                              <FieldLabel className={LABEL_CX}>Avatar URL</FieldLabel>
-                              <Input className={INPUT_CX} {...register('testimony.avatarUrl')} />
-                            </Field>
-                          </div>
-                        </div>
-
-                        <div>
-                          <h3 className="text-lg font-bold mb-4">
-                            Milestone (Hito de trayectoria)
-                          </h3>
-                          <div className="space-y-4">
-                            <Field>
-                              <FieldLabel className={LABEL_CX}>
-                                Categoría (Ej. Medio ambiente)
-                              </FieldLabel>
-                              <Input className={INPUT_CX} {...register('milestone.category')} />
-                            </Field>
-                            <Field>
-                              <FieldLabel className={LABEL_CX}>
-                                Tagline (Ej. 31 años defendiendo...)
-                              </FieldLabel>
-                              <Input className={INPUT_CX} {...register('milestone.tagline')} />
-                            </Field>
-                            <p className="font-semibold text-sm mt-4 text-muted-foreground">
-                              Stat 1
-                            </p>
-                            <div className="grid grid-cols-2 gap-2">
-                              <Input
-                                className={INPUT_CX}
-                                placeholder="Label"
-                                {...register('milestone.stats.0.label')}
-                              />
-                              <Input
-                                className={INPUT_CX}
-                                placeholder="Value"
-                                {...register('milestone.stats.0.value')}
-                              />
-                            </div>
-                            <p className="font-semibold text-sm mt-2 text-muted-foreground">
-                              Stat 2
-                            </p>
-                            <div className="grid grid-cols-2 gap-2">
-                              <Input
-                                className={INPUT_CX}
-                                placeholder="Label"
-                                {...register('milestone.stats.1.label')}
-                              />
-                              <Input
-                                className={INPUT_CX}
-                                placeholder="Value"
-                                {...register('milestone.stats.1.value')}
-                              />
-                            </div>
                           </div>
                         </div>
                       </div>

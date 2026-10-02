@@ -26,10 +26,8 @@ export function OrgTabs({
   impactType,
   relevantLinks,
   needs,
-  featuredFact,
-  secondaryFacts,
-  testimony,
-  milestone,
+  impactHighlights,
+  impactTestimony,
   foundedYear,
   verified,
   officeHours,
@@ -86,10 +84,8 @@ export function OrgTabs({
 
         <TabsContent value="impacto" className="mt-12">
           <ImpactTab
-            featuredFact={featuredFact}
-            secondaryFacts={secondaryFacts}
-            testimony={testimony}
-            milestone={milestone}
+            impactHighlights={impactHighlights}
+            impactTestimony={impactTestimony}
             foundedYear={foundedYear}
             verified={verified}
           />

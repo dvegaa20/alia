@@ -6,7 +6,7 @@ import { OrganizationStatus } from '@/prisma/generated/client'
 import { slugify } from '@/lib/utils'
 import { withAuth } from './utils'
 
-export async function getTopCategoriesWithOrgs() {
+export async function getTopCategoriesWithOrgs(limit: number = 5) {
   try {
     const categories = await prisma.category.findMany({
       include: {
@@ -28,10 +28,10 @@ export async function getTopCategoriesWithOrgs() {
       },
     })
 
-    // Sort by org count descending and take top 4
+    // Sort by org count descending and take limit
     const topCategories = categories
       .sort((a, b) => b._count.organizations - a._count.organizations)
-      .slice(0, 4)
+      .slice(0, limit)
 
     return { success: true, data: topCategories }
   } catch (error) {

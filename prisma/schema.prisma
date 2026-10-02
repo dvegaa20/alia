@@ -69,10 +69,8 @@ model Organization {
     relevantLinks String[]
 
     // Impact tab (JSON fields — 1:1 with org)
-    featuredFact   Json? // { value, unit, label, description, badge }
-    secondaryFacts Json? // [{ value, unit, label, icon, color }]
-    testimony      Json? // { quote, author, role, avatarUrl }
-    milestone      Json? // { year, category, tagline, stats: [{ label, value }] }
+    impactHighlights Json? // [{ value, label, description? }]
+    impactTestimony  Json? // { quote, author, role }
 
     // Contact tab
     officeHours Json? // { monday: { open, close }, tuesday: ... , sunday: null }
