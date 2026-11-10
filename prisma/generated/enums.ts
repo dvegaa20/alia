@@ -27,6 +27,14 @@ export const SuggestionStatus = {
 export type SuggestionStatus = (typeof SuggestionStatus)[keyof typeof SuggestionStatus]
 
 
+export const CauseType = {
+  ONG: 'ONG',
+  YOUTH_INITIATIVE: 'YOUTH_INITIATIVE'
+} as const
+
+export type CauseType = (typeof CauseType)[keyof typeof CauseType]
+
+
 export const SocialPlatform = {
   FACEBOOK: 'FACEBOOK',
   INSTAGRAM: 'INSTAGRAM',

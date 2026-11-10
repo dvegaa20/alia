@@ -33,6 +33,23 @@ export interface ImpactTestimony {
   role: string
 }
 
+/** Volunteering info stored in Organization.volunteering JSON field */
+export interface VolunteeringInfo {
+  description: string
+  activities: string[]
+  ageRequirement: string // ej. "Mayores de 18 años", "Cualquier edad", "15+ años"
+}
+
+/** A single event stored in Organization.events JSON array */
+export interface OrgEventItem {
+  id: string
+  title: string
+  description: string
+  date: string
+  isPast: boolean // true = Evento pasado (con reseña de lo que se hizo), false = Evento futuro
+  imageUrl?: string
+}
+
 /** A single day's office hours */
 export interface DayHours {
   open: string

@@ -53,6 +53,11 @@ export type OrganizationMinAggregateOutputType = {
   email: string | null
   phone: string | null
   donationLink: string | null
+  causeType: $Enums.CauseType | null
+  address: string | null
+  whatsapp: string | null
+  isDonatariaAutorizada: boolean | null
+  howToDonate: string | null
   impactCurrent: number | null
   impactGoal: number | null
   impactType: string | null
@@ -76,6 +81,11 @@ export type OrganizationMaxAggregateOutputType = {
   email: string | null
   phone: string | null
   donationLink: string | null
+  causeType: $Enums.CauseType | null
+  address: string | null
+  whatsapp: string | null
+  isDonatariaAutorizada: boolean | null
+  howToDonate: string | null
   impactCurrent: number | null
   impactGoal: number | null
   impactType: string | null
@@ -99,6 +109,13 @@ export type OrganizationCountAggregateOutputType = {
   email: number
   phone: number
   donationLink: number
+  causeType: number
+  address: number
+  whatsapp: number
+  isDonatariaAutorizada: number
+  howToDonate: number
+  volunteering: number
+  events: number
   galleryImages: number
   impactCurrent: number
   impactGoal: number
@@ -142,6 +159,11 @@ export type OrganizationMinAggregateInputType = {
   email?: true
   phone?: true
   donationLink?: true
+  causeType?: true
+  address?: true
+  whatsapp?: true
+  isDonatariaAutorizada?: true
+  howToDonate?: true
   impactCurrent?: true
   impactGoal?: true
   impactType?: true
@@ -165,6 +187,11 @@ export type OrganizationMaxAggregateInputType = {
   email?: true
   phone?: true
   donationLink?: true
+  causeType?: true
+  address?: true
+  whatsapp?: true
+  isDonatariaAutorizada?: true
+  howToDonate?: true
   impactCurrent?: true
   impactGoal?: true
   impactType?: true
@@ -188,6 +215,13 @@ export type OrganizationCountAggregateInputType = {
   email?: true
   phone?: true
   donationLink?: true
+  causeType?: true
+  address?: true
+  whatsapp?: true
+  isDonatariaAutorizada?: true
+  howToDonate?: true
+  volunteering?: true
+  events?: true
   galleryImages?: true
   impactCurrent?: true
   impactGoal?: true
@@ -304,6 +338,13 @@ export type OrganizationGroupByOutputType = {
   email: string
   phone: string | null
   donationLink: string | null
+  causeType: $Enums.CauseType
+  address: string | null
+  whatsapp: string | null
+  isDonatariaAutorizada: boolean
+  howToDonate: string | null
+  volunteering: runtime.JsonValue | null
+  events: runtime.JsonValue | null
   galleryImages: string[]
   impactCurrent: number | null
   impactGoal: number | null
@@ -356,6 +397,13 @@ export type OrganizationWhereInput = {
   email?: Prisma.StringFilter<"Organization"> | string
   phone?: Prisma.StringNullableFilter<"Organization"> | string | null
   donationLink?: Prisma.StringNullableFilter<"Organization"> | string | null
+  causeType?: Prisma.EnumCauseTypeFilter<"Organization"> | $Enums.CauseType
+  address?: Prisma.StringNullableFilter<"Organization"> | string | null
+  whatsapp?: Prisma.StringNullableFilter<"Organization"> | string | null
+  isDonatariaAutorizada?: Prisma.BoolFilter<"Organization"> | boolean
+  howToDonate?: Prisma.StringNullableFilter<"Organization"> | string | null
+  volunteering?: Prisma.JsonNullableFilter<"Organization">
+  events?: Prisma.JsonNullableFilter<"Organization">
   galleryImages?: Prisma.StringNullableListFilter<"Organization">
   impactCurrent?: Prisma.IntNullableFilter<"Organization"> | number | null
   impactGoal?: Prisma.IntNullableFilter<"Organization"> | number | null
@@ -388,6 +436,13 @@ export type OrganizationOrderByWithRelationInput = {
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   donationLink?: Prisma.SortOrderInput | Prisma.SortOrder
+  causeType?: Prisma.SortOrder
+  address?: Prisma.SortOrderInput | Prisma.SortOrder
+  whatsapp?: Prisma.SortOrderInput | Prisma.SortOrder
+  isDonatariaAutorizada?: Prisma.SortOrder
+  howToDonate?: Prisma.SortOrderInput | Prisma.SortOrder
+  volunteering?: Prisma.SortOrderInput | Prisma.SortOrder
+  events?: Prisma.SortOrderInput | Prisma.SortOrder
   galleryImages?: Prisma.SortOrder
   impactCurrent?: Prisma.SortOrderInput | Prisma.SortOrder
   impactGoal?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -423,6 +478,13 @@ export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
   email?: Prisma.StringFilter<"Organization"> | string
   phone?: Prisma.StringNullableFilter<"Organization"> | string | null
   donationLink?: Prisma.StringNullableFilter<"Organization"> | string | null
+  causeType?: Prisma.EnumCauseTypeFilter<"Organization"> | $Enums.CauseType
+  address?: Prisma.StringNullableFilter<"Organization"> | string | null
+  whatsapp?: Prisma.StringNullableFilter<"Organization"> | string | null
+  isDonatariaAutorizada?: Prisma.BoolFilter<"Organization"> | boolean
+  howToDonate?: Prisma.StringNullableFilter<"Organization"> | string | null
+  volunteering?: Prisma.JsonNullableFilter<"Organization">
+  events?: Prisma.JsonNullableFilter<"Organization">
   galleryImages?: Prisma.StringNullableListFilter<"Organization">
   impactCurrent?: Prisma.IntNullableFilter<"Organization"> | number | null
   impactGoal?: Prisma.IntNullableFilter<"Organization"> | number | null
@@ -455,6 +517,13 @@ export type OrganizationOrderByWithAggregationInput = {
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   donationLink?: Prisma.SortOrderInput | Prisma.SortOrder
+  causeType?: Prisma.SortOrder
+  address?: Prisma.SortOrderInput | Prisma.SortOrder
+  whatsapp?: Prisma.SortOrderInput | Prisma.SortOrder
+  isDonatariaAutorizada?: Prisma.SortOrder
+  howToDonate?: Prisma.SortOrderInput | Prisma.SortOrder
+  volunteering?: Prisma.SortOrderInput | Prisma.SortOrder
+  events?: Prisma.SortOrderInput | Prisma.SortOrder
   galleryImages?: Prisma.SortOrder
   impactCurrent?: Prisma.SortOrderInput | Prisma.SortOrder
   impactGoal?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -492,6 +561,13 @@ export type OrganizationScalarWhereWithAggregatesInput = {
   email?: Prisma.StringWithAggregatesFilter<"Organization"> | string
   phone?: Prisma.StringNullableWithAggregatesFilter<"Organization"> | string | null
   donationLink?: Prisma.StringNullableWithAggregatesFilter<"Organization"> | string | null
+  causeType?: Prisma.EnumCauseTypeWithAggregatesFilter<"Organization"> | $Enums.CauseType
+  address?: Prisma.StringNullableWithAggregatesFilter<"Organization"> | string | null
+  whatsapp?: Prisma.StringNullableWithAggregatesFilter<"Organization"> | string | null
+  isDonatariaAutorizada?: Prisma.BoolWithAggregatesFilter<"Organization"> | boolean
+  howToDonate?: Prisma.StringNullableWithAggregatesFilter<"Organization"> | string | null
+  volunteering?: Prisma.JsonNullableWithAggregatesFilter<"Organization">
+  events?: Prisma.JsonNullableWithAggregatesFilter<"Organization">
   galleryImages?: Prisma.StringNullableListFilter<"Organization">
   impactCurrent?: Prisma.IntNullableWithAggregatesFilter<"Organization"> | number | null
   impactGoal?: Prisma.IntNullableWithAggregatesFilter<"Organization"> | number | null
@@ -521,6 +597,13 @@ export type OrganizationCreateInput = {
   email: string
   phone?: string | null
   donationLink?: string | null
+  causeType?: $Enums.CauseType
+  address?: string | null
+  whatsapp?: string | null
+  isDonatariaAutorizada?: boolean
+  howToDonate?: string | null
+  volunteering?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  events?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   galleryImages?: Prisma.OrganizationCreategalleryImagesInput | string[]
   impactCurrent?: number | null
   impactGoal?: number | null
@@ -553,6 +636,13 @@ export type OrganizationUncheckedCreateInput = {
   email: string
   phone?: string | null
   donationLink?: string | null
+  causeType?: $Enums.CauseType
+  address?: string | null
+  whatsapp?: string | null
+  isDonatariaAutorizada?: boolean
+  howToDonate?: string | null
+  volunteering?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  events?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   galleryImages?: Prisma.OrganizationCreategalleryImagesInput | string[]
   impactCurrent?: number | null
   impactGoal?: number | null
@@ -585,6 +675,13 @@ export type OrganizationUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donationLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  causeType?: Prisma.EnumCauseTypeFieldUpdateOperationsInput | $Enums.CauseType
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDonatariaAutorizada?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  howToDonate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  volunteering?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  events?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   galleryImages?: Prisma.OrganizationUpdategalleryImagesInput | string[]
   impactCurrent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   impactGoal?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -617,6 +714,13 @@ export type OrganizationUncheckedUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donationLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  causeType?: Prisma.EnumCauseTypeFieldUpdateOperationsInput | $Enums.CauseType
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDonatariaAutorizada?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  howToDonate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  volunteering?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  events?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   galleryImages?: Prisma.OrganizationUpdategalleryImagesInput | string[]
   impactCurrent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   impactGoal?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -649,6 +753,13 @@ export type OrganizationCreateManyInput = {
   email: string
   phone?: string | null
   donationLink?: string | null
+  causeType?: $Enums.CauseType
+  address?: string | null
+  whatsapp?: string | null
+  isDonatariaAutorizada?: boolean
+  howToDonate?: string | null
+  volunteering?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  events?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   galleryImages?: Prisma.OrganizationCreategalleryImagesInput | string[]
   impactCurrent?: number | null
   impactGoal?: number | null
@@ -678,6 +789,13 @@ export type OrganizationUpdateManyMutationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donationLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  causeType?: Prisma.EnumCauseTypeFieldUpdateOperationsInput | $Enums.CauseType
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDonatariaAutorizada?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  howToDonate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  volunteering?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  events?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   galleryImages?: Prisma.OrganizationUpdategalleryImagesInput | string[]
   impactCurrent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   impactGoal?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -707,6 +825,13 @@ export type OrganizationUncheckedUpdateManyInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donationLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  causeType?: Prisma.EnumCauseTypeFieldUpdateOperationsInput | $Enums.CauseType
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDonatariaAutorizada?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  howToDonate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  volunteering?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  events?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   galleryImages?: Prisma.OrganizationUpdategalleryImagesInput | string[]
   impactCurrent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   impactGoal?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -744,6 +869,13 @@ export type OrganizationCountOrderByAggregateInput = {
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   donationLink?: Prisma.SortOrder
+  causeType?: Prisma.SortOrder
+  address?: Prisma.SortOrder
+  whatsapp?: Prisma.SortOrder
+  isDonatariaAutorizada?: Prisma.SortOrder
+  howToDonate?: Prisma.SortOrder
+  volunteering?: Prisma.SortOrder
+  events?: Prisma.SortOrder
   galleryImages?: Prisma.SortOrder
   impactCurrent?: Prisma.SortOrder
   impactGoal?: Prisma.SortOrder
@@ -779,6 +911,11 @@ export type OrganizationMaxOrderByAggregateInput = {
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   donationLink?: Prisma.SortOrder
+  causeType?: Prisma.SortOrder
+  address?: Prisma.SortOrder
+  whatsapp?: Prisma.SortOrder
+  isDonatariaAutorizada?: Prisma.SortOrder
+  howToDonate?: Prisma.SortOrder
   impactCurrent?: Prisma.SortOrder
   impactGoal?: Prisma.SortOrder
   impactType?: Prisma.SortOrder
@@ -802,6 +939,11 @@ export type OrganizationMinOrderByAggregateInput = {
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   donationLink?: Prisma.SortOrder
+  causeType?: Prisma.SortOrder
+  address?: Prisma.SortOrder
+  whatsapp?: Prisma.SortOrder
+  isDonatariaAutorizada?: Prisma.SortOrder
+  howToDonate?: Prisma.SortOrder
   impactCurrent?: Prisma.SortOrder
   impactGoal?: Prisma.SortOrder
   impactType?: Prisma.SortOrder
@@ -853,6 +995,10 @@ export type EnumOrganizationStatusFieldUpdateOperationsInput = {
 
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
+}
+
+export type EnumCauseTypeFieldUpdateOperationsInput = {
+  set?: $Enums.CauseType
 }
 
 export type OrganizationUpdategalleryImagesInput = {
@@ -958,6 +1104,13 @@ export type OrganizationCreateWithoutCategoriesInput = {
   email: string
   phone?: string | null
   donationLink?: string | null
+  causeType?: $Enums.CauseType
+  address?: string | null
+  whatsapp?: string | null
+  isDonatariaAutorizada?: boolean
+  howToDonate?: string | null
+  volunteering?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  events?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   galleryImages?: Prisma.OrganizationCreategalleryImagesInput | string[]
   impactCurrent?: number | null
   impactGoal?: number | null
@@ -989,6 +1142,13 @@ export type OrganizationUncheckedCreateWithoutCategoriesInput = {
   email: string
   phone?: string | null
   donationLink?: string | null
+  causeType?: $Enums.CauseType
+  address?: string | null
+  whatsapp?: string | null
+  isDonatariaAutorizada?: boolean
+  howToDonate?: string | null
+  volunteering?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  events?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   galleryImages?: Prisma.OrganizationCreategalleryImagesInput | string[]
   impactCurrent?: number | null
   impactGoal?: number | null
@@ -1044,6 +1204,13 @@ export type OrganizationScalarWhereInput = {
   email?: Prisma.StringFilter<"Organization"> | string
   phone?: Prisma.StringNullableFilter<"Organization"> | string | null
   donationLink?: Prisma.StringNullableFilter<"Organization"> | string | null
+  causeType?: Prisma.EnumCauseTypeFilter<"Organization"> | $Enums.CauseType
+  address?: Prisma.StringNullableFilter<"Organization"> | string | null
+  whatsapp?: Prisma.StringNullableFilter<"Organization"> | string | null
+  isDonatariaAutorizada?: Prisma.BoolFilter<"Organization"> | boolean
+  howToDonate?: Prisma.StringNullableFilter<"Organization"> | string | null
+  volunteering?: Prisma.JsonNullableFilter<"Organization">
+  events?: Prisma.JsonNullableFilter<"Organization">
   galleryImages?: Prisma.StringNullableListFilter<"Organization">
   impactCurrent?: Prisma.IntNullableFilter<"Organization"> | number | null
   impactGoal?: Prisma.IntNullableFilter<"Organization"> | number | null
@@ -1073,6 +1240,13 @@ export type OrganizationCreateWithoutLocationInput = {
   email: string
   phone?: string | null
   donationLink?: string | null
+  causeType?: $Enums.CauseType
+  address?: string | null
+  whatsapp?: string | null
+  isDonatariaAutorizada?: boolean
+  howToDonate?: string | null
+  volunteering?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  events?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   galleryImages?: Prisma.OrganizationCreategalleryImagesInput | string[]
   impactCurrent?: number | null
   impactGoal?: number | null
@@ -1104,6 +1278,13 @@ export type OrganizationUncheckedCreateWithoutLocationInput = {
   email: string
   phone?: string | null
   donationLink?: string | null
+  causeType?: $Enums.CauseType
+  address?: string | null
+  whatsapp?: string | null
+  isDonatariaAutorizada?: boolean
+  howToDonate?: string | null
+  volunteering?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  events?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   galleryImages?: Prisma.OrganizationCreategalleryImagesInput | string[]
   impactCurrent?: number | null
   impactGoal?: number | null
@@ -1151,6 +1332,13 @@ export type OrganizationUpdateWithoutLocationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donationLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  causeType?: Prisma.EnumCauseTypeFieldUpdateOperationsInput | $Enums.CauseType
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDonatariaAutorizada?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  howToDonate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  volunteering?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  events?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   galleryImages?: Prisma.OrganizationUpdategalleryImagesInput | string[]
   impactCurrent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   impactGoal?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1182,6 +1370,13 @@ export type OrganizationUncheckedUpdateWithoutLocationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donationLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  causeType?: Prisma.EnumCauseTypeFieldUpdateOperationsInput | $Enums.CauseType
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDonatariaAutorizada?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  howToDonate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  volunteering?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  events?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   galleryImages?: Prisma.OrganizationUpdategalleryImagesInput | string[]
   impactCurrent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   impactGoal?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1213,6 +1408,13 @@ export type OrganizationCreateWithoutSocialLinksInput = {
   email: string
   phone?: string | null
   donationLink?: string | null
+  causeType?: $Enums.CauseType
+  address?: string | null
+  whatsapp?: string | null
+  isDonatariaAutorizada?: boolean
+  howToDonate?: string | null
+  volunteering?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  events?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   galleryImages?: Prisma.OrganizationCreategalleryImagesInput | string[]
   impactCurrent?: number | null
   impactGoal?: number | null
@@ -1244,6 +1446,13 @@ export type OrganizationUncheckedCreateWithoutSocialLinksInput = {
   email: string
   phone?: string | null
   donationLink?: string | null
+  causeType?: $Enums.CauseType
+  address?: string | null
+  whatsapp?: string | null
+  isDonatariaAutorizada?: boolean
+  howToDonate?: string | null
+  volunteering?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  events?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   galleryImages?: Prisma.OrganizationCreategalleryImagesInput | string[]
   impactCurrent?: number | null
   impactGoal?: number | null
@@ -1291,6 +1500,13 @@ export type OrganizationUpdateWithoutSocialLinksInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donationLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  causeType?: Prisma.EnumCauseTypeFieldUpdateOperationsInput | $Enums.CauseType
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDonatariaAutorizada?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  howToDonate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  volunteering?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  events?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   galleryImages?: Prisma.OrganizationUpdategalleryImagesInput | string[]
   impactCurrent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   impactGoal?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1322,6 +1538,13 @@ export type OrganizationUncheckedUpdateWithoutSocialLinksInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donationLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  causeType?: Prisma.EnumCauseTypeFieldUpdateOperationsInput | $Enums.CauseType
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDonatariaAutorizada?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  howToDonate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  volunteering?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  events?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   galleryImages?: Prisma.OrganizationUpdategalleryImagesInput | string[]
   impactCurrent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   impactGoal?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1353,6 +1576,13 @@ export type OrganizationUpdateWithoutCategoriesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donationLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  causeType?: Prisma.EnumCauseTypeFieldUpdateOperationsInput | $Enums.CauseType
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDonatariaAutorizada?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  howToDonate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  volunteering?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  events?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   galleryImages?: Prisma.OrganizationUpdategalleryImagesInput | string[]
   impactCurrent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   impactGoal?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1384,6 +1614,13 @@ export type OrganizationUncheckedUpdateWithoutCategoriesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donationLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  causeType?: Prisma.EnumCauseTypeFieldUpdateOperationsInput | $Enums.CauseType
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDonatariaAutorizada?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  howToDonate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  volunteering?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  events?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   galleryImages?: Prisma.OrganizationUpdategalleryImagesInput | string[]
   impactCurrent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   impactGoal?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1415,6 +1652,13 @@ export type OrganizationUncheckedUpdateManyWithoutCategoriesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donationLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  causeType?: Prisma.EnumCauseTypeFieldUpdateOperationsInput | $Enums.CauseType
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDonatariaAutorizada?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  howToDonate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  volunteering?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  events?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   galleryImages?: Prisma.OrganizationUpdategalleryImagesInput | string[]
   impactCurrent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   impactGoal?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1484,6 +1728,13 @@ export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   email?: boolean
   phone?: boolean
   donationLink?: boolean
+  causeType?: boolean
+  address?: boolean
+  whatsapp?: boolean
+  isDonatariaAutorizada?: boolean
+  howToDonate?: boolean
+  volunteering?: boolean
+  events?: boolean
   galleryImages?: boolean
   impactCurrent?: boolean
   impactGoal?: boolean
@@ -1517,6 +1768,13 @@ export type OrganizationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   email?: boolean
   phone?: boolean
   donationLink?: boolean
+  causeType?: boolean
+  address?: boolean
+  whatsapp?: boolean
+  isDonatariaAutorizada?: boolean
+  howToDonate?: boolean
+  volunteering?: boolean
+  events?: boolean
   galleryImages?: boolean
   impactCurrent?: boolean
   impactGoal?: boolean
@@ -1546,6 +1804,13 @@ export type OrganizationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   email?: boolean
   phone?: boolean
   donationLink?: boolean
+  causeType?: boolean
+  address?: boolean
+  whatsapp?: boolean
+  isDonatariaAutorizada?: boolean
+  howToDonate?: boolean
+  volunteering?: boolean
+  events?: boolean
   galleryImages?: boolean
   impactCurrent?: boolean
   impactGoal?: boolean
@@ -1575,6 +1840,13 @@ export type OrganizationSelectScalar = {
   email?: boolean
   phone?: boolean
   donationLink?: boolean
+  causeType?: boolean
+  address?: boolean
+  whatsapp?: boolean
+  isDonatariaAutorizada?: boolean
+  howToDonate?: boolean
+  volunteering?: boolean
+  events?: boolean
   galleryImages?: boolean
   impactCurrent?: boolean
   impactGoal?: boolean
@@ -1589,7 +1861,7 @@ export type OrganizationSelectScalar = {
   updatedAt?: boolean
 }
 
-export type OrganizationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "name" | "shortDescription" | "fullDescription" | "logoUrl" | "coverImageUrl" | "status" | "featured" | "verified" | "website" | "email" | "phone" | "donationLink" | "galleryImages" | "impactCurrent" | "impactGoal" | "impactType" | "needs" | "relevantLinks" | "impactHighlights" | "impactTestimony" | "officeHours" | "foundedYear" | "createdAt" | "updatedAt", ExtArgs["result"]["organization"]>
+export type OrganizationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "name" | "shortDescription" | "fullDescription" | "logoUrl" | "coverImageUrl" | "status" | "featured" | "verified" | "website" | "email" | "phone" | "donationLink" | "causeType" | "address" | "whatsapp" | "isDonatariaAutorizada" | "howToDonate" | "volunteering" | "events" | "galleryImages" | "impactCurrent" | "impactGoal" | "impactType" | "needs" | "relevantLinks" | "impactHighlights" | "impactTestimony" | "officeHours" | "foundedYear" | "createdAt" | "updatedAt", ExtArgs["result"]["organization"]>
 export type OrganizationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   location?: boolean | Prisma.Organization$locationArgs<ExtArgs>
   socialLinks?: boolean | Prisma.Organization$socialLinksArgs<ExtArgs>
@@ -1621,6 +1893,13 @@ export type $OrganizationPayload<ExtArgs extends runtime.Types.Extensions.Intern
     email: string
     phone: string | null
     donationLink: string | null
+    causeType: $Enums.CauseType
+    address: string | null
+    whatsapp: string | null
+    isDonatariaAutorizada: boolean
+    howToDonate: string | null
+    volunteering: runtime.JsonValue | null
+    events: runtime.JsonValue | null
     galleryImages: string[]
     impactCurrent: number | null
     impactGoal: number | null
@@ -2073,6 +2352,13 @@ export interface OrganizationFieldRefs {
   readonly email: Prisma.FieldRef<"Organization", 'String'>
   readonly phone: Prisma.FieldRef<"Organization", 'String'>
   readonly donationLink: Prisma.FieldRef<"Organization", 'String'>
+  readonly causeType: Prisma.FieldRef<"Organization", 'CauseType'>
+  readonly address: Prisma.FieldRef<"Organization", 'String'>
+  readonly whatsapp: Prisma.FieldRef<"Organization", 'String'>
+  readonly isDonatariaAutorizada: Prisma.FieldRef<"Organization", 'Boolean'>
+  readonly howToDonate: Prisma.FieldRef<"Organization", 'String'>
+  readonly volunteering: Prisma.FieldRef<"Organization", 'Json'>
+  readonly events: Prisma.FieldRef<"Organization", 'Json'>
   readonly galleryImages: Prisma.FieldRef<"Organization", 'String[]'>
   readonly impactCurrent: Prisma.FieldRef<"Organization", 'Int'>
   readonly impactGoal: Prisma.FieldRef<"Organization", 'Int'>

@@ -1,14 +1,13 @@
 import { type Metadata } from 'next'
-import Link from 'next/link'
 import { getImpactMetrics } from '@/server/actions/analytics'
 import { ImpactHero } from '@/components/public/impact/impact-hero'
 import { ImpactTopOrgs } from '@/components/public/impact/impact-top-orgs'
-import { ImpactTransparency } from '@/components/public/impact/impact-transparency'
+import { ImpactPhotos } from '@/components/public/impact/impact-photos'
 
 export const metadata: Metadata = {
   title: 'Alcance Social',
   description:
-    'Datos de impacto sobre el alcance y conexión de Alia — El directorio social de México. Transparencia en tiempo real sobre nuestra labor.',
+    'Datos de impacto sobre el alcance y conexión de Alia — El directorio social de México.',
   alternates: { canonical: '/impacto' },
   openGraph: {
     title: 'Alcance Social | Alia',
@@ -29,8 +28,8 @@ export default async function ImpactoPage() {
       {/* Top 10 organizations */}
       <ImpactTopOrgs topOrgs={metrics.topOrgs} />
 
-      {/* Transparency / methodology */}
-      <ImpactTransparency lastUpdated={metrics.lastUpdated} />
+      {/* Continuous auto-moving photos carousel */}
+      <ImpactPhotos lastUpdated={metrics.lastUpdated} />
     </main>
   )
 }

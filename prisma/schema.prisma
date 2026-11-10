@@ -1,10 +1,10 @@
 generator client {
-    provider = "prisma-client"
-    output   = "./generated"
+  provider = "prisma-client"
+  output   = "./generated"
 }
 
 datasource db {
-    provider = "postgresql"
+  provider = "postgresql"
 }
 
 // ============================================================================
@@ -12,25 +12,30 @@ datasource db {
 // ============================================================================
 
 enum OrganizationStatus {
-    DRAFT
-    PUBLISHED
-    ARCHIVED
+  DRAFT
+  PUBLISHED
+  ARCHIVED
 }
 
 enum SuggestionStatus {
-    PENDING
-    APPROVED
-    REJECTED
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum CauseType {
+  ONG // Organización consolidada del directorio oficial
+  YOUTH_INITIATIVE // Iniciativa joven, escolar o temporal que apenas empieza
 }
 
 enum SocialPlatform {
-    FACEBOOK
-    INSTAGRAM
-    TIKTOK
-    X
-    LINKEDIN
-    YOUTUBE
-    OTHER
+  FACEBOOK
+  INSTAGRAM
+  TIKTOK
+  X
+  LINKEDIN
+  YOUTUBE
+  OTHER
 }
 
 // ============================================================================
@@ -39,135 +44,151 @@ enum SocialPlatform {
 
 /// Organización principal (ONG, Asociación Civil, Proyecto Social)
 model Organization {
-    id               String             @id @default(cuid())
-    slug             String             @unique
-    name             String
-    shortDescription String             @db.VarChar(160)
-    fullDescription  String?            @db.Text
-    logoUrl          String?
-    coverImageUrl    String?
-    status           OrganizationStatus @default(DRAFT)
-    featured         Boolean            @default(false)
-    verified         Boolean            @default(false)
-    website          String?
-    email            String
-    phone            String?
-    donationLink     String?
+  id               String             @id @default(cuid())
+  slug             String             @unique
+  name             String
+  shortDescription String             @db.VarChar(160)
+  fullDescription  String?            @db.Text
+  logoUrl          String?
+  coverImageUrl    String?
+  status           OrganizationStatus @default(DRAFT)
+  featured         Boolean            @default(false)
+  verified         Boolean            @default(false)
+  website          String?
+  email            String
+  phone            String?
+  donationLink     String?
 
-    // Gallery (4 image URLs)
-    galleryImages String[]
+  // Classification & directory filters
+  causeType CauseType @default(ONG)
 
-    // Impact sidebar (progress bar)
-    impactCurrent Int?
-    impactGoal    Int?
-    impactType    String?
+  // Contact / donation details
+  address               String? // Dirección física completa (calle, número, colonia)
+  whatsapp              String? // Número directo para botón WhatsApp
+  isDonatariaAutorizada Boolean @default(false) // Emite recibos deducibles de ISR (SAT)
+  howToDonate           String? @db.Text // Instrucciones de cómo y dónde donar
 
-    // Needs tab
-    needs Json? // [{ category, title, description, urgency, quantity }]
+  // Volunteering tab
+  volunteering Json? // { description, activities: string[], ageRequirement: string }
 
-    // Explore tab
-    relevantLinks String[]
+  // Events tab
+  events Json? // [{ id, title, description, date, isPast: boolean, imageUrl? }]
 
-    // Impact tab (JSON fields — 1:1 with org)
-    impactHighlights Json? // [{ value, label, description? }]
-    impactTestimony  Json? // { quote, author, role }
+  // Gallery (4 image URLs)
+  galleryImages String[]
 
-    // Contact tab
-    officeHours Json? // { monday: { open, close }, tuesday: ... , sunday: null }
+  // Impact sidebar (progress bar)
+  impactCurrent Int?
+  impactGoal    Int?
+  impactType    String?
 
-    // Organization metadata
-    foundedYear Int?
+  // Needs tab
+  needs Json? // [{ category, title, description, urgency, quantity }]
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  // Explore tab
+  relevantLinks String[]
 
-    // Relations
-    location    Location?
-    socialLinks SocialLink[]
-    categories  Category[]
+  // Impact tab (JSON fields — 1:1 with org)
+  impactHighlights Json? // [{ value, label, description? }]
+  impactTestimony  Json? // { quote, author, role }
 
-    @@index([slug])
-    @@index([status])
-    @@index([featured])
-    @@index([verified])
+  // Contact tab
+  officeHours Json? // { monday: { open, close }, tuesday: ... , sunday: null }
+
+  // Organization metadata
+  foundedYear Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  location    Location?
+  socialLinks SocialLink[]
+  categories  Category[]
+
+  @@index([slug])
+  @@index([status])
+  @@index([featured])
+  @@index([verified])
+  @@index([causeType])
 }
 
 /// Categoría/Taxonomía para clasificar organizaciones
 model Category {
-    id          String  @id @default(cuid())
-    slug        String  @unique
-    name        String
-    description String?
+  id          String  @id @default(cuid())
+  slug        String  @unique
+  name        String
+  description String?
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-    // Relations (Many-to-Many)
-    organizations Organization[]
+  // Relations (Many-to-Many)
+  organizations Organization[]
 
-    @@index([slug])
+  @@index([slug])
 }
 
 /// Ubicación de la organización (sede principal)
 model Location {
-    id            String  @id @default(cuid())
-    city          String // Municipio/Delegación
-    state         String // Estado
-    googleMapsUrl String?
-    latitude      Float?
-    longitude     Float?
+  id            String  @id @default(cuid())
+  city          String // Municipio/Delegación
+  state         String // Estado
+  googleMapsUrl String?
+  latitude      Float?
+  longitude     Float?
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-    // Relations (1-to-1)
-    organizationId String       @unique
-    organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  // Relations (1-to-1)
+  organizationId String       @unique
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 }
 
 /// Enlaces a redes sociales de la organización
 model SocialLink {
-    id       String         @id @default(cuid())
-    platform SocialPlatform
-    url      String
+  id       String         @id @default(cuid())
+  platform SocialPlatform
+  url      String
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-    // Relations (Many-to-1)
-    organizationId String
-    organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  // Relations (Many-to-1)
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
-    @@index([organizationId])
+  @@index([organizationId])
 }
 
 /// Log de auditoría para rastrear cambios
 model AuditLog {
-    id        String   @id @default(cuid())
-    action    String // CREATE, UPDATE, DELETE, UPDATE_STATUS, DONATION_CLICK, etc.
-    entityId  String // ID de la organización afectada
-    details   Json? // Snapshot de cambios
-    createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  action    String // CREATE, UPDATE, DELETE, UPDATE_STATUS, DONATION_CLICK, etc.
+  entityId  String // ID de la organización afectada
+  details   Json? // Snapshot de cambios
+  createdAt DateTime @default(now())
 
-    @@index([entityId])
-    @@index([createdAt])
+  @@index([entityId])
+  @@index([createdAt])
 }
 
 /// Sugerencias de organizaciones enviadas por usuarios anónimos
 model Suggestion {
-    id          String           @id @default(cuid())
-    orgName     String
-    category    String           // slug de categoría sugerida
-    location    String           // Ciudad / Estado (texto libre)
-    description String           @db.Text
-    url         String           // URL para verificación
+  id          String @id @default(cuid())
+  orgName     String
+  category    String // slug de categoría sugerida
+  location    String // Ciudad / Estado (texto libre)
+  description String @db.Text
+  url         String // URL para verificación
 
-    status      SuggestionStatus @default(PENDING)
-    adminNotes  String?          @db.Text
+  status     SuggestionStatus @default(PENDING)
+  adminNotes String?          @db.Text
 
-    createdAt   DateTime         @default(now())
-    reviewedAt  DateTime?
+  createdAt  DateTime  @default(now())
+  reviewedAt DateTime?
 
-    @@index([status])
-    @@index([createdAt])
+  @@index([status])
+  @@index([createdAt])
 }

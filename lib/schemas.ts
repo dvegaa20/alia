@@ -26,6 +26,21 @@ export const socialLinkSchema = z.object({
   url: z.url('Debe ser una URL válida'),
 })
 
+export const volunteeringSchema = z.object({
+  description: z.string().min(1, 'La descripción es obligatoria'),
+  activities: z.array(z.string()).default([]),
+  ageRequirement: z.string().min(1, 'El requisito de edad es obligatorio'),
+})
+
+export const orgEventSchema = z.object({
+  id: z.string().min(1),
+  title: z.string().min(1, 'El título del evento es obligatorio'),
+  description: z.string().default(''),
+  date: z.string().min(1, 'La fecha del evento es obligatoria'),
+  isPast: z.boolean().default(false),
+  imageUrl: z.url('Debe ser una URL válida').optional().or(z.literal('')),
+})
+
 export const orgFormSchema = z.object({
   slug: z
     .string()
@@ -50,6 +65,14 @@ export const orgFormSchema = z.object({
   email: z.email('Ingresa un email válido'),
   phone: z.string().optional(),
   donationLink: z.url('Debe ser una URL válida').optional().or(z.literal('')),
+
+  // Classification & donation details
+  causeType: z.enum(['ONG', 'YOUTH_INITIATIVE']).default('ONG'),
+  address: z.string().optional(),
+  whatsapp: z.string().optional(),
+  isDonatariaAutorizada: z.boolean().default(false),
+  howToDonate: z.string().optional(),
+
   foundedYear: z.preprocess(
     (val) =>
       val === '' || val === undefined || val === null || Number.isNaN(val)
@@ -95,6 +118,12 @@ export const orgFormSchema = z.object({
 
   // Contact tab
   officeHours: z.any().optional(),
+
+  // Volunteering tab (JSON)
+  volunteering: volunteeringSchema.optional(),
+
+  // Events tab (JSON)
+  events: z.array(orgEventSchema).optional(),
 
   // Relations
   location: locationSchema.optional(),

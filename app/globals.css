@@ -216,3 +216,27 @@
 .animate-fade-slide-in {
   animation: fadeSlideIn 300ms ease-out;
 }
+
+/* Continuous auto-scrolling photo carousel */
+@keyframes marquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 50s linear infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+    overflow-x: auto;
+  }
+}

@@ -6,10 +6,8 @@ import { OrganizationProfileJsonLd } from '@/components/seo/json-ld'
 import { getOrgBySlug } from '@/server/actions'
 import type {
   NeedItem,
-  FeaturedFact,
-  SecondaryFact,
-  Testimony,
-  Milestone,
+  ImpactHighlight,
+  ImpactTestimony,
   OfficeHours,
 } from '@/types'
 
@@ -92,10 +90,12 @@ export default async function OrganizationProfilePage({ params }: PageProps) {
         impactType={org.impactType}
         relevantLinks={org.relevantLinks || []}
         needs={(org.needs ?? undefined) as unknown as NeedItem[] | undefined}
-        featuredFact={(org.featuredFact ?? undefined) as unknown as FeaturedFact | undefined}
-        secondaryFacts={(org.secondaryFacts ?? undefined) as unknown as SecondaryFact[] | undefined}
-        testimony={(org.testimony ?? undefined) as unknown as Testimony | undefined}
-        milestone={(org.milestone ?? undefined) as unknown as Milestone | undefined}
+        impactHighlights={
+          (org.impactHighlights ?? undefined) as unknown as ImpactHighlight[] | undefined
+        }
+        impactTestimony={
+          (org.impactTestimony ?? undefined) as unknown as ImpactTestimony | undefined
+        }
         foundedYear={org.foundedYear}
         officeHours={(org.officeHours ?? undefined) as unknown as OfficeHours | undefined}
         verified={org.verified}
