@@ -4,18 +4,28 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { ArrowLeft, BadgeCheck, Heart } from 'lucide-react'
+import { ArrowLeft, BadgeCheck, Heart, Sparkles } from 'lucide-react'
 import { trackDonationClick } from '@/server/actions'
 
 interface OrgHeaderProps {
   name: string
   verified: boolean
+  causeType?: 'ONG' | 'YOUTH_INITIATIVE'
+  isDonatariaAutorizada?: boolean
   categories: { id: string; name: string }[]
   donationLink?: string | null
   orgId: string
 }
 
-export function OrgHeader({ name, verified, categories, donationLink, orgId }: OrgHeaderProps) {
+export function OrgHeader({
+  name,
+  verified,
+  causeType,
+  isDonatariaAutorizada,
+  categories,
+  donationLink,
+  orgId,
+}: OrgHeaderProps) {
   const handleDonateClick = async () => {
     // Fire-and-forget tracking — don't block navigation
     trackDonationClick(orgId).catch(() => { })
@@ -29,7 +39,7 @@ export function OrgHeader({ name, verified, categories, donationLink, orgId }: O
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.4 }}
       >
-        <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center justify-between gap-2 flex-wrap">
           <Link
             href="/directory"
             className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors font-label text-sm font-bold uppercase tracking-wider group"
@@ -37,12 +47,26 @@ export function OrgHeader({ name, verified, categories, donationLink, orgId }: O
             <ArrowLeft className="size-4 transition-transform group-hover:-translate-x-1" />
             Volver al directorio
           </Link>
-          {verified && (
-            <Badge className="bg-primary/20 text-primary border-none px-3 py-1 rounded-full text-xs font-bold font-label uppercase tracking-wider h-auto gap-1">
-              <BadgeCheck className="size-3.5" />
-              Verificada
-            </Badge>
-          )}
+          <div className="flex items-center gap-2 flex-wrap">
+            {causeType === 'YOUTH_INITIATIVE' && (
+              <Badge className="bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30 px-3 py-1 rounded-full text-xs font-bold font-label uppercase tracking-wider h-auto gap-1">
+                <Sparkles className="size-3.5" />
+                Iniciativa Joven
+              </Badge>
+            )}
+            {isDonatariaAutorizada && (
+              <Badge className="bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 px-3 py-1 rounded-full text-xs font-bold font-label uppercase tracking-wider h-auto gap-1">
+                <BadgeCheck className="size-3.5" />
+                Donataria Autorizada (ISR)
+              </Badge>
+            )}
+            {verified && (
+              <Badge className="bg-primary/20 text-primary border-none px-3 py-1 rounded-full text-xs font-bold font-label uppercase tracking-wider h-auto gap-1">
+                <BadgeCheck className="size-3.5" />
+                Verificada
+              </Badge>
+            )}
+          </div>
         </div>
       </motion.div>
 

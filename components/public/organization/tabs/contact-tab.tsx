@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { MapPin, Clock, Mail, Phone, Navigation, Send, User } from 'lucide-react'
+import { MapPin, Clock, Mail, Phone, Navigation, Send, User, MessageCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -32,6 +32,8 @@ const DAY_LABELS: Record<string, string> = {
 export function ContactTab({
   email,
   phone,
+  whatsapp,
+  address,
   location,
   googleMapsUrl,
   coordinates,
@@ -184,6 +186,20 @@ export function ContactTab({
 
               {/* Contact Info */}
               <div className="space-y-6">
+                {address && (
+                  <div className="flex items-start">
+                    <div className="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-950/40 flex items-center justify-center mr-4 shrink-0 mt-0.5">
+                      <MapPin className="size-4 text-blue-600 dark:text-blue-400" />
+                    </div>
+                    <div className="overflow-hidden">
+                      <p className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground mb-1">
+                        DIRECCIÓN FÍSICA
+                      </p>
+                      <p className="text-sm font-bold text-foreground leading-snug">{address}</p>
+                    </div>
+                  </div>
+                )}
+
                 <div className="flex items-center">
                   <div className="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-950/40 flex items-center justify-center mr-4 shrink-0">
                     <Mail className="size-4 text-blue-600 dark:text-blue-400" />
@@ -209,6 +225,27 @@ export function ContactTab({
                     </p>
                   </div>
                 </div>
+
+                {whatsapp && (
+                  <a
+                    href={`https://wa.me/${whatsapp.replace(/\D/g, '')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center group/wa p-3 -mx-3 rounded-2xl hover:bg-emerald-500/10 transition-colors"
+                  >
+                    <div className="w-10 h-10 rounded-full bg-emerald-50 dark:bg-emerald-950/40 flex items-center justify-center mr-4 shrink-0">
+                      <MessageCircle className="size-4 text-emerald-600 dark:text-emerald-400" />
+                    </div>
+                    <div className="overflow-hidden">
+                      <p className="text-[10px] uppercase tracking-widest font-bold text-emerald-600 dark:text-emerald-400 mb-1">
+                        WHATSAPP DIRECTO
+                      </p>
+                      <p className="text-sm font-bold text-foreground group-hover/wa:underline">
+                        {whatsapp}
+                      </p>
+                    </div>
+                  </a>
+                )}
               </div>
             </CardContent>
           </Card>

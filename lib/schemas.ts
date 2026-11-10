@@ -27,9 +27,9 @@ export const socialLinkSchema = z.object({
 })
 
 export const volunteeringSchema = z.object({
-  description: z.string().min(1, 'La descripción es obligatoria'),
+  description: z.string().optional().default(''),
   activities: z.array(z.string()).default([]),
-  ageRequirement: z.string().min(1, 'El requisito de edad es obligatorio'),
+  ageRequirement: z.string().optional().default(''),
 })
 
 export const orgEventSchema = z.object({

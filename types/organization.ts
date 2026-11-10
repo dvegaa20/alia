@@ -98,6 +98,8 @@ export interface OrganizationCardProps {
   coverImage: string
   logoImage: string
   verified?: boolean
+  causeType?: 'ONG' | 'YOUTH_INITIATIVE'
+  isDonatariaAutorizada?: boolean
 }
 
 /** Organization option for the hero search combobox */
@@ -115,6 +117,8 @@ export interface OrgTabsProps {
   galleryImages: string[]
   email: string
   phone?: string | null
+  whatsapp?: string | null
+  address?: string | null
   website?: string | null
   location?: string | null
   googleMapsUrl?: string | null
@@ -124,6 +128,11 @@ export interface OrgTabsProps {
   impactType?: string | null
   relevantLinks: string[]
   needs?: NeedItem[]
+  howToDonate?: string | null
+  isDonatariaAutorizada?: boolean
+  causeType?: 'ONG' | 'YOUTH_INITIATIVE'
+  volunteering?: VolunteeringInfo | null
+  events?: OrgEventItem[] | null
   impactHighlights?: ImpactHighlight[]
   impactTestimony?: ImpactTestimony
   foundedYear?: number | null
@@ -135,6 +144,8 @@ export interface OrgTabsProps {
 export interface ContactTabProps {
   email: string
   phone?: string | null
+  whatsapp?: string | null
+  address?: string | null
   location?: string | null
   googleMapsUrl?: string | null
   coordinates?: { lat: number | null; lng: number | null } | null
@@ -152,4 +163,8 @@ export interface ImpactTabProps {
 /** Props for NeedsTab */
 export interface NeedsTabProps {
   needs?: NeedItem[]
+  howToDonate?: string | null
+  isDonatariaAutorizada?: boolean
+  volunteering?: VolunteeringInfo | null
+  events?: OrgEventItem[] | null
 }

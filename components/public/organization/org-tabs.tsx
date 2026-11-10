@@ -17,6 +17,8 @@ export function OrgTabs({
   galleryImages,
   email,
   phone,
+  whatsapp,
+  address,
   website,
   location,
   googleMapsUrl,
@@ -26,6 +28,10 @@ export function OrgTabs({
   impactType,
   relevantLinks,
   needs,
+  howToDonate,
+  isDonatariaAutorizada,
+  volunteering,
+  events,
   impactHighlights,
   impactTestimony,
   foundedYear,
@@ -79,7 +85,13 @@ export function OrgTabs({
         </TabsContent>
 
         <TabsContent value="necesidades" className="mt-12">
-          <NeedsTab needs={needs} />
+          <NeedsTab
+            needs={needs}
+            howToDonate={howToDonate}
+            isDonatariaAutorizada={isDonatariaAutorizada}
+            volunteering={volunteering}
+            events={events}
+          />
         </TabsContent>
 
         <TabsContent value="impacto" className="mt-12">
@@ -95,6 +107,8 @@ export function OrgTabs({
           <ContactTab
             email={email}
             phone={phone}
+            whatsapp={whatsapp}
+            address={address}
             location={location}
             googleMapsUrl={googleMapsUrl}
             coordinates={coordinates}

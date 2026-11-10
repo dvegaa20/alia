@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { Badge } from '@/components/ui/badge'
-import { MapPin, BadgeCheck, Users, ArrowRight } from 'lucide-react'
+import { MapPin, BadgeCheck, Users, ArrowRight, Sparkles } from 'lucide-react'
 import Image from 'next/image'
 import { Card, CardContent, CardFooter } from '@/components/ui/card'
 import { trackSocialLead } from '@/lib/analytics'
@@ -19,6 +19,7 @@ export function OrganizationCard({
   coverImage,
   logoImage,
   verified = false,
+  causeType,
 }: OrganizationCardProps) {
   return (
     <Link href={`/directory/${slug}`} className="block" onClick={() => trackSocialLead('view_profile', name)}>
@@ -47,15 +48,21 @@ export function OrganizationCard({
             />
           </div>
 
-          {/* Verified Badge */}
-          {verified && (
-            <div className="absolute top-2 right-4">
+          {/* Badges (Verified / Youth Initiative) */}
+          <div className="absolute top-2 right-4 flex items-center gap-1.5">
+            {causeType === 'YOUTH_INITIATIVE' && (
+              <Badge className="bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30 rounded-full text-[10px] font-bold uppercase">
+                <Sparkles className="size-3" />
+                Iniciativa Joven
+              </Badge>
+            )}
+            {verified && (
               <Badge className="bg-primary/15 text-primary border border-primary/20 rounded-full text-[10px] font-bold uppercase">
                 <BadgeCheck className="size-3" />
                 Verificada
               </Badge>
-            </div>
-          )}
+            )}
+          </div>
 
           <div className="space-y-3 py-2">
             {/* Categories */}

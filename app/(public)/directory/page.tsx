@@ -3,6 +3,7 @@ import { type Metadata } from 'next'
 import { getPublishedOrgs, getAllCategoriesWithCount } from '@/server/actions'
 import { SidebarFilters } from '@/components/public/directory/sidebar-filters'
 import { ResultsGrid } from '@/components/public/directory/results-grid'
+import { DirectoryShowcase } from '@/components/public/directory/directory-showcase'
 import type { OrganizationCardProps } from '@/components/public/directory/organization-card'
 import type { MapPoint } from '@/components/public/directory/map-view'
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
@@ -12,6 +13,21 @@ export const metadata: Metadata = {
   description:
     'Explora el directorio completo de organizaciones sociales verificadas. Filtra por categoría, estado y ciudad.',
   alternates: { canonical: '/directory' },
+}
+
+function mapOrgToCard(org: any): OrganizationCardProps {
+  return {
+    slug: org.slug,
+    name: org.name,
+    description: org.shortDescription,
+    categories: org.categories?.map((c: any) => c.name) || ['Organización'],
+    location: org.location ? `${org.location.city}, ${org.location.state}` : 'México',
+    coverImage: org.coverImageUrl || '/images/directorio/card-forest.jpg',
+    logoImage: org.logoUrl || '/images/directorio/logo-forest.jpg',
+    verified: org.verified,
+    causeType: org.causeType,
+    isDonatariaAutorizada: org.isDonatariaAutorizada,
+  }
 }
 
 export default async function DirectoryPage(props: {
@@ -34,7 +50,7 @@ export default async function DirectoryPage(props: {
   const verified = searchParams?.verified === 'true' ? true : undefined
   const sort = searchParams?.sort
 
-  const [result, categoriesResult] = await Promise.all([
+  const [result, categoriesResult, youthResult, newAdditionsResult] = await Promise.all([
     getPublishedOrgs({
       query: query || undefined,
       categorySlug,
@@ -46,20 +62,20 @@ export default async function DirectoryPage(props: {
       sort,
     }),
     getAllCategoriesWithCount(),
+    getPublishedOrgs({
+      causeType: 'YOUTH_INITIATIVE',
+      limit: 6,
+    }),
+    getPublishedOrgs({
+      limit: 6,
+    }),
   ])
 
   const categories = categoriesResult.data || []
 
-  const organizations: OrganizationCardProps[] = (result.data || []).map((org) => ({
-    slug: org.slug,
-    name: org.name,
-    description: org.shortDescription,
-    categories: org.categories?.map((c: any) => c.name) || ['Organización'],
-    location: org.location ? `${org.location.city}, ${org.location.state}` : 'México',
-    coverImage: org.coverImageUrl || '/images/directorio/card-forest.jpg',
-    logoImage: org.logoUrl || '/images/directorio/logo-forest.jpg',
-    verified: org.verified,
-  }))
+  const organizations: OrganizationCardProps[] = (result.data || []).map(mapOrgToCard)
+  const youthInitiatives: OrganizationCardProps[] = (youthResult.data || []).map(mapOrgToCard)
+  const newAdditions: OrganizationCardProps[] = (newAdditionsResult.data || []).map(mapOrgToCard)
 
   // Build map points from organizations that have coordinates
   const mapPoints: MapPoint[] = (result.data || [])
@@ -101,15 +117,17 @@ export default async function DirectoryPage(props: {
               </span>
             )}
           </div>
-          <ResultsGrid
-            organizations={organizations}
-            mapPoints={mapPoints}
-            total={meta.total}
-            currentPage={meta.page}
-            totalPages={meta.totalPages}
-            searchQuery={query}
-            sort={sort}
-          />
+          <DirectoryShowcase youthInitiatives={youthInitiatives} newAdditions={newAdditions}>
+            <ResultsGrid
+              organizations={organizations}
+              mapPoints={mapPoints}
+              total={meta.total}
+              currentPage={meta.page}
+              totalPages={meta.totalPages}
+              searchQuery={query}
+              sort={sort}
+            />
+          </DirectoryShowcase>
         </div>
       </div>
     </SidebarProvider>

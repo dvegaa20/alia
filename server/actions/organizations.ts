@@ -32,6 +32,7 @@ export async function getPublishedOrgs(filters?: {
   city?: string
   verified?: boolean
   sort?: string
+  causeType?: 'ONG' | 'YOUTH_INITIATIVE'
 }) {
   const {
     categorySlug,
@@ -43,12 +44,17 @@ export async function getPublishedOrgs(filters?: {
     city,
     verified,
     sort,
+    causeType,
   } = filters || {}
   const skip = (page - 1) * limit
 
   try {
     const whereClause: Prisma.OrganizationWhereInput = {
       status: OrganizationStatus.PUBLISHED,
+    }
+
+    if (causeType) {
+      whereClause.causeType = causeType
     }
 
     if (categorySlug) {

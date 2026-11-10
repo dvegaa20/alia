@@ -66,12 +66,23 @@ export function OrganizationSheet({
         status: 'DRAFT',
         featured: false,
         verified: false,
+        causeType: 'ONG',
+        isDonatariaAutorizada: false,
+        howToDonate: '',
+        address: '',
+        whatsapp: '',
         email: '',
         galleryImages: ['', '', '', ''],
         relevantLinks: [''],
         socialLinks: [],
         categoryIds: [],
         needs: [],
+        volunteering: {
+          description: '',
+          activities: [''],
+          ageRequirement: '',
+        },
+        events: [],
         officeHours: DEFAULT_OFFICE_HOURS,
       }
     }
@@ -84,12 +95,19 @@ export function OrganizationSheet({
       galleryImages,
       relevantLinks,
       needs,
+      volunteering,
+      events,
       officeHours,
       fullDescription,
       logoUrl,
       coverImageUrl,
       website,
       phone,
+      address,
+      whatsapp,
+      howToDonate,
+      causeType,
+      isDonatariaAutorizada,
       donationLink,
       foundedYear,
       impactCurrent,
@@ -102,8 +120,19 @@ export function OrganizationSheet({
       updatedAt: _updatedAt,
       ...rest
     } = organization
+
+    const rawVolunteering = volunteering as
+      | { description?: string; activities?: string[]; ageRequirement?: string }
+      | null
+      | undefined
+
     return {
       ...rest,
+      causeType: (causeType as 'ONG' | 'YOUTH_INITIATIVE') || 'ONG',
+      isDonatariaAutorizada: isDonatariaAutorizada ?? false,
+      howToDonate: howToDonate ?? undefined,
+      address: address ?? undefined,
+      whatsapp: whatsapp ?? undefined,
       fullDescription: fullDescription ?? undefined,
       logoUrl: logoUrl ?? undefined,
       coverImageUrl: coverImageUrl ?? undefined,
@@ -132,6 +161,12 @@ export function OrganizationSheet({
         : ['', '', '', ''],
       relevantLinks: relevantLinks?.length ? relevantLinks : [''],
       needs: needs || [],
+      volunteering: {
+        description: rawVolunteering?.description || '',
+        activities: rawVolunteering?.activities?.length ? rawVolunteering.activities : [''],
+        ageRequirement: rawVolunteering?.ageRequirement || '',
+      },
+      events: (events as any[]) || [],
       officeHours: officeHours || DEFAULT_OFFICE_HOURS,
     }
   }, [organization])
@@ -202,6 +237,24 @@ export function OrganizationSheet({
     name: 'needs' as any,
   })
 
+  const {
+    fields: activityFields,
+    append: appendActivity,
+    remove: removeActivity,
+  } = useFieldArray({
+    control,
+    name: 'volunteering.activities' as any,
+  })
+
+  const {
+    fields: eventFields,
+    append: appendEvent,
+    remove: removeEvent,
+  } = useFieldArray({
+    control,
+    name: 'events',
+  })
+
   function onFormError(formErrors: Record<string, any>) {
     // Group errors by tab
     const tabsWithErrors = new Set<string>()
@@ -225,11 +278,24 @@ export function OrganizationSheet({
     setIsPending(true)
     setSavedSuccess(false)
 
-    // Clean up empty gallery images
-    const cleanedData = {
+    const cleanedActivities = data.volunteering?.activities?.filter(Boolean) || []
+    const hasVolunteering =
+      Boolean(data.volunteering?.description?.trim()) ||
+      Boolean(data.volunteering?.ageRequirement?.trim()) ||
+      cleanedActivities.length > 0
+
+    // Clean up empty gallery images & volunteering activities
+    const cleanedData: OrgFormValues = {
       ...data,
       galleryImages: data.galleryImages.filter(Boolean),
       relevantLinks: data.relevantLinks.filter(Boolean),
+      volunteering: hasVolunteering
+        ? {
+            description: data.volunteering?.description?.trim() || '',
+            ageRequirement: data.volunteering?.ageRequirement?.trim() || '',
+            activities: cleanedActivities,
+          }
+        : undefined,
     }
 
     const result = await onSave(cleanedData, organization?.id)
@@ -450,9 +516,35 @@ export function OrganizationSheet({
                             <FieldError errors={[errors.foundedYear]} />
                           </FieldContent>
                         </Field>
+
+                        <Field>
+                          <FieldLabel className={LABEL_CX}>Tipo de Causa</FieldLabel>
+                          <FieldContent>
+                            <Controller
+                              control={control}
+                              name="causeType"
+                              render={({ field }) => (
+                                <Select onValueChange={field.onChange} value={field.value || 'ONG'}>
+                                  <SelectTrigger className={INPUT_CX}>
+                                    <SelectValue placeholder="Selecciona tipo..." />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    <SelectItem value="ONG">
+                                      Organización Consolidada (ONG / A.C.)
+                                    </SelectItem>
+                                    <SelectItem value="YOUTH_INITIATIVE">
+                                      Iniciativa Joven / Escolar
+                                    </SelectItem>
+                                  </SelectContent>
+                                </Select>
+                              )}
+                            />
+                            <FieldError errors={[errors.causeType]} />
+                          </FieldContent>
+                        </Field>
                       </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t">
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 pt-6 border-t">
                         <Field>
                           <FieldLabel>Estado</FieldLabel>
                           <FieldContent>
@@ -513,6 +605,30 @@ export function OrganizationSheet({
                             name="verified"
                             render={({ field }) => (
                               <Switch checked={field.value} onCheckedChange={field.onChange} />
+                            )}
+                          />
+                        </Field>
+
+                        <Field
+                          orientation="horizontal"
+                          className="bg-muted/30 p-4 rounded-xl border"
+                        >
+                          <FieldContent>
+                            <FieldLabel className="pointer-events-none p-0 border-none bg-transparent gap-1.5 flex-row items-center font-bold text-sm">
+                              ¿Donataria Autorizada?
+                            </FieldLabel>
+                            <FieldDescription className="text-xs">
+                              Emite recibos deducibles de ISR.
+                            </FieldDescription>
+                          </FieldContent>
+                          <Controller
+                            control={control}
+                            name="isDonatariaAutorizada"
+                            render={({ field }) => (
+                              <Switch
+                                checked={Boolean(field.value)}
+                                onCheckedChange={field.onChange}
+                              />
                             )}
                           />
                         </Field>
@@ -688,9 +804,15 @@ export function OrganizationSheet({
                                           <SelectValue placeholder="Selecciona..." />
                                         </SelectTrigger>
                                         <SelectContent>
-                                          <SelectItem value="alta">Alta</SelectItem>
-                                          <SelectItem value="media">Media</SelectItem>
-                                          <SelectItem value="baja">Baja</SelectItem>
+                                          <SelectItem value="alta">
+                                            Alta (🔴 Con urgencia)
+                                          </SelectItem>
+                                          <SelectItem value="media">
+                                            Media (🔴 Con urgencia)
+                                          </SelectItem>
+                                          <SelectItem value="baja">
+                                            Baja (🟢 Sin urgencia / Permanente)
+                                          </SelectItem>
                                         </SelectContent>
                                       </Select>
                                     )}
@@ -745,6 +867,238 @@ export function OrganizationSheet({
                               <Plus className="mr-2 h-4 w-4" /> Agregar Necesidad
                             </Button>
                           )}
+                        </div>
+                      </div>
+
+                      {/* CÓMO DONAR */}
+                      <div className="pt-6 border-t">
+                        <h3 className="text-lg font-bold mb-2">
+                          ¿Cómo donar? (Instrucciones de entrega o cuenta)
+                        </h3>
+                        <p className="text-sm text-muted-foreground mb-4">
+                          Indica cuentas bancarias (CLABE), horarios/centros de acopio o pasos para
+                          hacer llegar los donativos en especie o económicos.
+                        </p>
+                        <Field>
+                          <FieldContent>
+                            <Textarea
+                              className={`${INPUT_CX} min-h-28`}
+                              placeholder="Ej. Puedes entregar donativos en especie de lunes a viernes en nuestra sede principal o realizar transferencia a CLABE 012345678901234567 (BBVA)..."
+                              {...register('howToDonate')}
+                            />
+                            <FieldDescription className="text-xs text-muted-foreground mt-1">
+                              Soporta Markdown (negritas, listas y enlaces).
+                            </FieldDescription>
+                            <FieldError errors={[errors.howToDonate]} />
+                          </FieldContent>
+                        </Field>
+                      </div>
+
+                      {/* VOLUNTARIADO */}
+                      <div className="pt-6 border-t space-y-6">
+                        <div>
+                          <h3 className="text-lg font-bold mb-2">Programa de Voluntariado</h3>
+                          <p className="text-sm text-muted-foreground">
+                            Describe en qué consiste el voluntariado, las actividades específicas y
+                            quiénes pueden participar.
+                          </p>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-5 bg-muted/30 rounded-xl border">
+                          <Field className="md:col-span-2">
+                            <FieldLabel className={LABEL_CX}>¿De qué trata el voluntariado?</FieldLabel>
+                            <FieldContent>
+                              <Textarea
+                                className={`${INPUT_CX} min-h-24`}
+                                placeholder="Ej. Nuestros voluntarios participan directamente en brigadas comunitarias de fin de semana..."
+                                {...register('volunteering.description')}
+                              />
+                              <FieldError errors={[errors.volunteering?.description]} />
+                            </FieldContent>
+                          </Field>
+
+                          <Field className="md:col-span-2">
+                            <FieldLabel className={LABEL_CX}>
+                              ¿Quién puede ayudar? / Rango de edades
+                            </FieldLabel>
+                            <FieldContent>
+                              <Input
+                                className={INPUT_CX}
+                                placeholder="Ej. Mayores de 18 años / Estudiantes de preparatoria y universidad (15+ años)"
+                                {...register('volunteering.ageRequirement')}
+                              />
+                              <FieldError errors={[errors.volunteering?.ageRequirement]} />
+                            </FieldContent>
+                          </Field>
+
+                          <div className="md:col-span-2 space-y-3">
+                            <FieldLabel className={LABEL_CX}>Lista de Actividades</FieldLabel>
+                            <div className="space-y-3">
+                              {activityFields.map((actField, actIdx) => (
+                                <div key={actField.id} className="flex items-center gap-3">
+                                  <Input
+                                    className={`${INPUT_CX} flex-1`}
+                                    placeholder={`Ej. Actividad ${actIdx + 1} (Clasificación de despensas, mentoría, etc.)`}
+                                    {...register(`volunteering.activities.${actIdx}` as const)}
+                                  />
+                                  <Button
+                                    type="button"
+                                    variant="ghost"
+                                    size="icon"
+                                    onClick={() => removeActivity(actIdx)}
+                                    className="text-muted-foreground hover:text-red-500"
+                                  >
+                                    <Trash2 className="h-4 w-4" />
+                                  </Button>
+                                </div>
+                              ))}
+                              <Button
+                                type="button"
+                                variant="outline"
+                                size="sm"
+                                onClick={() => appendActivity('')}
+                              >
+                                <Plus className="mr-2 h-4 w-4" /> Agregar Actividad
+                              </Button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* EVENTOS Y CAMPAÑAS */}
+                      <div className="pt-6 border-t space-y-6">
+                        <div>
+                          <h3 className="text-lg font-bold mb-2">
+                            Eventos y Campañas (Pasados y Futuros)
+                          </h3>
+                          <p className="text-sm text-muted-foreground">
+                            Registra próximos eventos para invitar a la comunidad o eventos pasados
+                            con una reseña de lo que se logró.
+                          </p>
+                        </div>
+
+                        <div className="space-y-6">
+                          {eventFields.map((evField, evIdx) => (
+                            <div
+                              key={evField.id}
+                              className="p-5 bg-muted/30 rounded-xl relative border space-y-4"
+                            >
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="icon-sm"
+                                className="absolute top-3 right-3 text-muted-foreground hover:text-red-500 z-10"
+                                onClick={() => removeEvent(evIdx)}
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+
+                              <input
+                                type="hidden"
+                                {...register(`events.${evIdx}.id` as const)}
+                              />
+
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pr-6">
+                                <Field>
+                                  <FieldLabel className={LABEL_CX}>Título del Evento o Campaña</FieldLabel>
+                                  <FieldContent>
+                                    <Input
+                                      className={INPUT_CX}
+                                      placeholder="Ej. Colecta Invernal 2026"
+                                      {...register(`events.${evIdx}.title` as const)}
+                                    />
+                                    <FieldError errors={[errors.events?.[evIdx]?.title]} />
+                                  </FieldContent>
+                                </Field>
+
+                                <Field>
+                                  <FieldLabel className={LABEL_CX}>Fecha o Periodo</FieldLabel>
+                                  <FieldContent>
+                                    <Input
+                                      className={INPUT_CX}
+                                      placeholder="Ej. 15 de Diciembre, 2026 / Octubre 2025"
+                                      {...register(`events.${evIdx}.date` as const)}
+                                    />
+                                    <FieldError errors={[errors.events?.[evIdx]?.date]} />
+                                  </FieldContent>
+                                </Field>
+
+                                <Field
+                                  orientation="horizontal"
+                                  className="md:col-span-2 bg-background/70 p-3.5 rounded-lg border"
+                                >
+                                  <FieldContent>
+                                    <FieldLabel className="pointer-events-none p-0 border-none bg-transparent gap-1.5 flex-row items-center font-bold text-sm">
+                                      ¿Es un evento pasado?
+                                    </FieldLabel>
+                                    <FieldDescription className="text-xs">
+                                      Actívalo si el evento ya ocurrió y deseas mostrar la reseña de
+                                      resultados. Desactívalo si es un próximo evento.
+                                    </FieldDescription>
+                                  </FieldContent>
+                                  <Controller
+                                    control={control}
+                                    name={`events.${evIdx}.isPast` as const}
+                                    render={({ field }) => (
+                                      <Switch
+                                        checked={Boolean(field.value)}
+                                        onCheckedChange={field.onChange}
+                                      />
+                                    )}
+                                  />
+                                </Field>
+
+                                <Field className="md:col-span-2">
+                                  <FieldLabel className={LABEL_CX}>
+                                    Descripción / Reseña de lo que se hizo
+                                  </FieldLabel>
+                                  <FieldContent>
+                                    <Textarea
+                                      className={`${INPUT_CX} min-h-20`}
+                                      placeholder="Describe de qué tratará el evento o qué impacto se logró..."
+                                      {...register(`events.${evIdx}.description` as const)}
+                                    />
+                                    <FieldError errors={[errors.events?.[evIdx]?.description]} />
+                                  </FieldContent>
+                                </Field>
+
+                                <Field className="md:col-span-2">
+                                  <FieldLabel className={LABEL_CX}>
+                                    URL de Imagen del Evento (Opcional)
+                                  </FieldLabel>
+                                  <FieldContent>
+                                    <Input
+                                      className={INPUT_CX}
+                                      placeholder="https://..."
+                                      {...register(`events.${evIdx}.imageUrl` as const)}
+                                    />
+                                    <FieldError errors={[errors.events?.[evIdx]?.imageUrl]} />
+                                  </FieldContent>
+                                </Field>
+                              </div>
+                            </div>
+                          ))}
+
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() =>
+                              appendEvent({
+                                id:
+                                  typeof crypto !== 'undefined' && crypto.randomUUID
+                                    ? crypto.randomUUID()
+                                    : `ev-${Date.now()}-${eventFields.length}`,
+                                title: '',
+                                date: '',
+                                description: '',
+                                isPast: false,
+                                imageUrl: '',
+                              })
+                            }
+                          >
+                            <Plus className="mr-2 h-4 w-4" /> Agregar Evento o Campaña
+                          </Button>
                         </div>
                       </div>
                     </TabsContent>
@@ -881,6 +1235,20 @@ export function OrganizationSheet({
                           </FieldContent>
                         </Field>
                         <Field>
+                          <FieldLabel className={LABEL_CX}>WhatsApp Directo</FieldLabel>
+                          <FieldContent>
+                            <Input
+                              className={INPUT_CX}
+                              placeholder="Ej. +52 55 1234 5678"
+                              {...register('whatsapp')}
+                            />
+                            <FieldDescription className="text-[11px] text-muted-foreground">
+                              Número para botón directo de WhatsApp.
+                            </FieldDescription>
+                            <FieldError errors={[errors.whatsapp]} />
+                          </FieldContent>
+                        </Field>
+                        <Field>
                           <FieldLabel className={LABEL_CX}>Sitio Web</FieldLabel>
                           <FieldContent>
                             <Input
@@ -891,7 +1259,7 @@ export function OrganizationSheet({
                             <FieldError errors={[errors.website]} />
                           </FieldContent>
                         </Field>
-                        <Field>
+                        <Field className="md:col-span-2">
                           <FieldLabel className={LABEL_CX}>Link de Donación</FieldLabel>
                           <FieldContent>
                             <Input
@@ -905,8 +1273,21 @@ export function OrganizationSheet({
                       </div>
 
                       <div className="pt-6 border-t border-border/50">
-                        <h3 className="text-lg font-bold mb-4">Ubicación Físca</h3>
+                        <h3 className="text-lg font-bold mb-4">Ubicación Física</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <Field className="md:col-span-2">
+                            <FieldLabel className={LABEL_CX}>
+                              Dirección Física (Calle, número, colonia, C.P.)
+                            </FieldLabel>
+                            <FieldContent>
+                              <Input
+                                className={INPUT_CX}
+                                placeholder="Ej. Av. Insurgentes Sur 1234, Col. Del Valle, Benito Juárez, C.P. 03100"
+                                {...register('address')}
+                              />
+                              <FieldError errors={[errors.address]} />
+                            </FieldContent>
+                          </Field>
                           <Field>
                             <FieldLabel className={LABEL_CX}>Estado</FieldLabel>
                             <FieldContent>

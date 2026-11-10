@@ -6,6 +6,8 @@ import { OrganizationProfileJsonLd } from '@/components/seo/json-ld'
 import { getOrgBySlug } from '@/server/actions'
 import type {
   NeedItem,
+  VolunteeringInfo,
+  OrgEventItem,
   ImpactHighlight,
   ImpactTestimony,
   OfficeHours,
@@ -66,6 +68,8 @@ export default async function OrganizationProfilePage({ params }: PageProps) {
       <OrgHeader
         name={org.name}
         verified={org.verified}
+        causeType={org.causeType as 'ONG' | 'YOUTH_INITIATIVE'}
+        isDonatariaAutorizada={org.isDonatariaAutorizada}
         categories={org.categories || []}
         orgId={org.id}
         donationLink={org.donationLink}
@@ -77,6 +81,8 @@ export default async function OrganizationProfilePage({ params }: PageProps) {
         galleryImages={org.galleryImages || []}
         email={org.email}
         phone={org.phone}
+        whatsapp={org.whatsapp}
+        address={org.address}
         website={org.website}
         location={locationString}
         coordinates={
@@ -90,6 +96,11 @@ export default async function OrganizationProfilePage({ params }: PageProps) {
         impactType={org.impactType}
         relevantLinks={org.relevantLinks || []}
         needs={(org.needs ?? undefined) as unknown as NeedItem[] | undefined}
+        howToDonate={org.howToDonate}
+        isDonatariaAutorizada={org.isDonatariaAutorizada}
+        causeType={org.causeType as 'ONG' | 'YOUTH_INITIATIVE'}
+        volunteering={(org.volunteering ?? undefined) as unknown as VolunteeringInfo | undefined}
+        events={(org.events ?? undefined) as unknown as OrgEventItem[] | undefined}
         impactHighlights={
           (org.impactHighlights ?? undefined) as unknown as ImpactHighlight[] | undefined
         }
