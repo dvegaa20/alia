@@ -1,5 +1,6 @@
 import fs from 'node:fs'
 import path from 'node:path'
+import { Suspense } from 'react'
 import { type Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
@@ -13,6 +14,13 @@ import {
   OrganizationCard,
 } from '@/components/public'
 import { HERO_VIDEOS, type ResolvedHeroVideo } from '@/components/public/home/hero-videos'
+import {
+  CategoryCarouselSkeleton,
+  CategorySectionSkeleton,
+  FeaturesSectionSkeleton,
+  NewAdditionsSkeleton,
+  TrustSectionSkeleton,
+} from '@/components/public/home/home-skeletons'
 import { GsapReveal } from '@/components/public/motion/gsap-reveal'
 import { SectionTransition } from '@/components/public/motion/section-transition'
 import { Button } from '@/components/ui/button'
@@ -71,27 +79,100 @@ function resolveHeroVideos(): ResolvedHeroVideo[] {
   })
 }
 
-export default async function Page(props: { searchParams: Promise<{ category?: string }> }) {
-  const searchParams = await props.searchParams
-
-  const [{ data: orgs }, { data: topCategories }, { data: youthOrgs }] = await Promise.all([
-    getPublishedOrgs({ limit: 100 }),
+async function CategoriesBlock({ searchParams }: { searchParams: Promise<{ category?: string }> }) {
+  const [resolvedParams, { data: topCategories }] = await Promise.all([
+    searchParams,
     getTopCategoriesWithOrgs(),
-    getPublishedOrgs({ causeType: 'YOUTH_INITIATIVE', limit: 3 }),
   ])
 
-  const heroVideos = resolveHeroVideos()
-
-  const newAdditions = (orgs || []).slice(0, 3).map(mapOrgToCard)
-  const youthInitiatives = (youthOrgs || []).slice(0, 3).map(mapOrgToCard)
-
-  const activeCategorySlug = searchParams?.category || topCategories?.[0]?.slug || ''
+  const activeCategorySlug = resolvedParams?.category || topCategories?.[0]?.slug || ''
   const activeCategoryData =
     topCategories?.find((c) => c.slug === activeCategorySlug) || topCategories?.[0]
 
   return (
     <>
-      {/* Screen 1 — Full-Viewport Video Hero (Deep Harbor) */}
+      <CategoryFilters categories={topCategories || []} activeCategorySlug={activeCategorySlug} />
+
+      <GsapReveal className="mt-8">
+        {activeCategoryData && (
+          <Suspense key={activeCategorySlug} fallback={<CategoryCarouselSkeleton />}>
+            <CategoryCarousel
+              categorySlug={activeCategorySlug}
+              categoryName={activeCategoryData.name}
+              categoryDescription={activeCategoryData.description}
+            />
+          </Suspense>
+        )}
+      </GsapReveal>
+    </>
+  )
+}
+
+async function NewAdditionsBlock() {
+  const { data: orgs } = await getPublishedOrgs({ limit: 3 })
+  const newAdditions = (orgs || []).slice(0, 3).map(mapOrgToCard)
+
+  if (newAdditions.length === 0) return null
+
+  return (
+    <div className="mt-20 pt-16 border-t border-[#DFD5C0] space-y-8">
+      <GsapReveal className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <div className="space-y-2">
+          <p className="font-mono text-xs font-medium uppercase tracking-[0.06em] text-[#16587B]">
+            Recién sumadas
+          </p>
+          <h3 className="font-sans font-light text-2xl sm:text-4xl tracking-normal leading-[1.1] text-[#0C354C]">
+            Nuevas adiciones al{' '}
+            <span className="font-serif italic font-normal text-[#16587B]">directorio</span>
+          </h3>
+          <p className="font-sans text-sm sm:text-base text-[#0C354C]/80 max-w-xl">
+            Organizaciones e iniciativas que acaban de completar su proceso de verificación.
+          </p>
+        </div>
+
+        <Button
+          asChild
+          variant="outline"
+          className="rounded-full border-[#16587B] bg-transparent text-[#16587B] hover:bg-[#16587B] hover:text-white px-6 py-2.5 h-auto text-sm font-medium shrink-0 self-start sm:self-auto shadow-none transition-colors"
+        >
+          <Link href="/directory">
+            Ver directorio completo
+            <ArrowRight className="ml-2 size-4" strokeWidth={1.5} />
+          </Link>
+        </Button>
+      </GsapReveal>
+
+      <GsapReveal
+        staggerSelector="[data-reveal-card]"
+        stagger={0.1}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7"
+      >
+        {newAdditions.map((org) => (
+          <div key={org.slug} data-reveal-card className="h-full">
+            <OrganizationCard {...org} surface="on-merino" />
+          </div>
+        ))}
+      </GsapReveal>
+    </div>
+  )
+}
+
+async function TrustSectionBlock() {
+  const { data: youthOrgs } = await getPublishedOrgs({
+    causeType: 'YOUTH_INITIATIVE',
+    limit: 3,
+  })
+  const youthInitiatives = (youthOrgs || []).slice(0, 3).map(mapOrgToCard)
+
+  return <TrustSection youthInitiatives={youthInitiatives} />
+}
+
+export default function Page(props: { searchParams: Promise<{ category?: string }> }) {
+  const heroVideos = resolveHeroVideos()
+
+  return (
+    <>
+      {/* Screen 1 — Full-Viewport Video Hero (renders immediately, no DB dependency) */}
       <HeroSection heroVideos={heroVideos} />
 
       {/* Screen 2 — Categorías y Nuevas Adiciones (Merino) */}
@@ -117,75 +198,26 @@ export default async function Page(props: { searchParams: Promise<{ category?: s
               </p>
             </GsapReveal>
 
-            <CategoryFilters
-              categories={topCategories || []}
-              activeCategorySlug={activeCategorySlug}
-            />
+            <Suspense fallback={<CategorySectionSkeleton />}>
+              <CategoriesBlock searchParams={props.searchParams} />
+            </Suspense>
 
-            <GsapReveal className="mt-8">
-              {activeCategoryData && (
-                <CategoryCarousel
-                  categorySlug={activeCategorySlug}
-                  categoryName={activeCategoryData.name}
-                  categoryDescription={activeCategoryData.description}
-                />
-              )}
-            </GsapReveal>
-
-            {/* Nuevas Adiciones */}
-            {newAdditions.length > 0 && (
-              <div className="mt-20 pt-16 border-t border-[#DFD5C0] space-y-8">
-                <GsapReveal className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-                  <div className="space-y-2">
-                    <p className="font-mono text-xs font-medium uppercase tracking-[0.06em] text-[#16587B]">
-                      Recién sumadas
-                    </p>
-                    <h3 className="font-sans font-light text-2xl sm:text-4xl tracking-normal leading-[1.1] text-[#0C354C]">
-                      Nuevas adiciones al{' '}
-                      <span className="font-serif italic font-normal text-[#16587B]">
-                        directorio
-                      </span>
-                    </h3>
-                    <p className="font-sans text-sm sm:text-base text-[#0C354C]/80 max-w-xl">
-                      Organizaciones e iniciativas que acaban de completar su proceso de
-                      verificación.
-                    </p>
-                  </div>
-
-                  <Button
-                    asChild
-                    variant="outline"
-                    className="rounded-full border-[#16587B] bg-transparent text-[#16587B] hover:bg-[#16587B] hover:text-white px-6 py-2.5 h-auto text-sm font-medium shrink-0 self-start sm:self-auto shadow-none transition-colors"
-                  >
-                    <Link href="/directory">
-                      Ver directorio completo
-                      <ArrowRight className="ml-2 size-4" strokeWidth={1.5} />
-                    </Link>
-                  </Button>
-                </GsapReveal>
-
-                <GsapReveal
-                  staggerSelector="[data-reveal-card]"
-                  stagger={0.1}
-                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7"
-                >
-                  {newAdditions.map((org) => (
-                    <div key={org.slug} data-reveal-card className="h-full">
-                      <OrganizationCard {...org} surface="on-merino" />
-                    </div>
-                  ))}
-                </GsapReveal>
-              </div>
-            )}
+            <Suspense fallback={<NewAdditionsSkeleton />}>
+              <NewAdditionsBlock />
+            </Suspense>
           </div>
         </SectionTransition>
       </section>
 
       {/* Screen 3 — Nuestro Alcance: estadísticas con conteo animado (Deep Harbor) */}
-      <FeaturesSection />
+      <Suspense fallback={<FeaturesSectionSkeleton />}>
+        <FeaturesSection />
+      </Suspense>
 
       {/* Screen 4 — Puente de Confianza + Iniciativas Jóvenes (Merino) */}
-      <TrustSection youthInitiatives={youthInitiatives} />
+      <Suspense fallback={<TrustSectionSkeleton />}>
+        <TrustSectionBlock />
+      </Suspense>
     </>
   )
 }

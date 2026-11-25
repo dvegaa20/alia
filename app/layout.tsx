@@ -28,7 +28,7 @@ const jetBrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://alia.mx'),
   title: {
-    default: 'Alia — Directorio Social de México',
+    default: 'Alia',
     template: '%s | Alia',
   },
   description:

@@ -9,7 +9,7 @@ import type { MapPoint } from '@/components/public/directory/map-view'
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 
 export const metadata: Metadata = {
-  title: 'Directorio de Organizaciones',
+  title: 'Directorio',
   description:
     'Explora el directorio completo de organizaciones sociales verificadas. Filtra por categoría, estado y ciudad.',
   alternates: { canonical: '/directory' },
