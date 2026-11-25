@@ -175,7 +175,7 @@ export function NeedsTab({
 
                 <div className="flex flex-wrap items-center gap-2.5">
                   {isDonatariaAutorizada && (
-                    <Badge className="bg-verified-emerald/12 text-verified-emerald dark:bg-verified-emerald/20 dark:text-emerald-300 border border-verified-emerald/25 rounded-full px-3 py-1 h-auto font-mono text-[11px] font-medium uppercase tracking-[0.04em] gap-1.5">
+                    <Badge className="bg-[#1E8E68]/12 text-[#1E8E68] border border-[#1E8E68]/25 rounded-[4px] px-3 py-1 h-auto font-mono text-[11px] font-medium uppercase tracking-[0.05em] gap-1.5">
                       <BadgeCheck className="size-3.5" strokeWidth={1.5} />
                       Donataria Autorizada (ISR)
                     </Badge>
@@ -200,7 +200,7 @@ export function NeedsTab({
                 </div>
               </div>
 
-              <div className="rounded-2xl border border-hairline-sand dark:border-border bg-merino dark:bg-surface-subtle p-5">
+              <div className="rounded-[8px] border border-[#DFD5C0] bg-[#F5EEDD] p-5">
                 {howToDonate ? (
                   <Prose content={howToDonate} size="sm" className="text-foreground-secondary" />
                 ) : (
@@ -359,7 +359,7 @@ export function NeedsTab({
                     {cleanActivities.map((activity, idx) => (
                       <div
                         key={idx}
-                        className="flex items-start gap-2.5 bg-background/60 dark:bg-surface-subtle rounded-xl p-3 border border-border"
+                        className="flex items-start gap-2.5 bg-[#F5EEDD]/80 rounded-[8px] p-3 border border-[#DFD5C0]"
                       >
                         <CheckCircle2
                           className="size-4 text-primary shrink-0 mt-0.5"

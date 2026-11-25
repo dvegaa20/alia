@@ -1,16 +1,14 @@
 'use client'
 
+import { useRef } from 'react'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useGSAP } from '@gsap/react'
 import { MapPin, Clock, Sparkles } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 
-const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 20 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: '-60px' } as const,
-  transition: { duration: 0.45, ease: 'easeOut' as const, delay },
-})
+gsap.registerPlugin(ScrollTrigger, useGSAP)
 
 function formatDate(isoDate: string): string {
   return new Date(isoDate).toLocaleString('es-MX', {
@@ -84,35 +82,62 @@ interface ImpactPhotosProps {
 
 export function ImpactPhotos({ lastUpdated }: ImpactPhotosProps) {
   const duplicatedPhotos = [...PHOTO_ITEMS, ...PHOTO_ITEMS]
+  const sectionRef = useRef<HTMLElement>(null)
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia()
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        gsap.from('[data-photos-reveal]', {
+          y: 24,
+          opacity: 0,
+          duration: 0.75,
+          stagger: 0.12,
+          ease: 'power3.out',
+          clearProps: 'transform,opacity',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 85%',
+            once: true,
+          },
+        })
+      })
+    },
+    { scope: sectionRef }
+  )
 
   return (
-    <section className="w-full py-20 lg:py-24 bg-background overflow-hidden relative">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 mb-12">
-        <motion.div {...fadeUp()} className="text-center space-y-3">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full border border-primary/20 bg-primary/10 text-primary font-mono text-xs uppercase tracking-[0.04em] font-medium">
+    <section
+      ref={sectionRef}
+      className="w-full py-20 lg:py-24 bg-[#F5EEDD] overflow-hidden relative"
+    >
+      <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-14 mb-12">
+        <div data-photos-reveal className="text-center space-y-3">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-[4px] border border-[#16587B]/25 bg-[#16587B]/10 text-[#16587B] font-mono text-xs uppercase tracking-[0.06em] font-medium">
             <Sparkles className="size-3.5" strokeWidth={1.5} />
             <span>Comunidad en acción</span>
           </div>
-          <h2 className="font-sans font-medium text-3xl sm:text-4xl lg:text-[42px] leading-[1.15] tracking-[-0.025em] text-foreground max-w-3xl mx-auto">
-            El impacto que cobra <span className="text-primary">vida</span>
+          <h2 className="font-sans font-light text-3xl sm:text-5xl lg:text-[52px] leading-[1.06] tracking-normal text-[#0C354C] max-w-3xl mx-auto">
+            El impacto que cobra{' '}
+            <span className="font-serif italic font-normal text-[#16587B] text-[1.06em]">vida</span>
           </h2>
-          <p className="font-sans text-base sm:text-lg text-foreground-secondary max-w-2xl mx-auto leading-[1.6]">
+          <p className="font-sans text-base sm:text-lg text-[#0C354C]/80 max-w-2xl mx-auto leading-[1.6]">
             Detrás de cada cifra hay personas, organizaciones y comunidades sumando voluntades todos
             los días en México.
           </p>
-        </motion.div>
+        </div>
       </div>
 
       {/* Marquee Carousel Container */}
-      <motion.div {...fadeUp(0.1)} className="relative w-full overflow-hidden">
-        <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-12 sm:w-28 md:w-40 z-10 bg-gradient-to-r from-background via-background/80 to-transparent" />
-        <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-12 sm:w-28 md:w-40 z-10 bg-gradient-to-l from-background via-background/80 to-transparent" />
+      <div data-photos-reveal className="relative w-full overflow-hidden">
+        <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-12 sm:w-28 md:w-40 z-10 bg-gradient-to-r from-[#F5EEDD] via-[#F5EEDD]/80 to-transparent" />
+        <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-12 sm:w-28 md:w-40 z-10 bg-gradient-to-l from-[#F5EEDD] via-[#F5EEDD]/80 to-transparent" />
 
         <div className="animate-marquee flex gap-5 py-2 cursor-grab active:cursor-grabbing hover:[animation-play-state:paused]">
           {duplicatedPhotos.map((photo, index) => (
             <div
               key={`${photo.src}-${index}`}
-              className="group relative shrink-0 w-[290px] sm:w-[360px] md:w-[420px] aspect-[16/11] rounded-2xl overflow-hidden border border-border bg-surface transition-colors duration-200 hover:border-rock-blue"
+              className="group relative shrink-0 w-[290px] sm:w-[360px] md:w-[420px] aspect-[16/11] rounded-[8px] overflow-hidden border border-[#DFD5C0] bg-[#FAF7F0] transition-colors duration-200 hover:border-[#84B3CE]"
             >
               <Image
                 src={photo.src}
@@ -122,31 +147,31 @@ export function ImpactPhotos({ lastUpdated }: ImpactPhotosProps) {
                 className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
               />
 
-              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-black/5" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0C354C]/80 via-[#0C354C]/25 to-[#0C354C]/10" />
 
               <div className="absolute top-4 left-4 z-10">
-                <Badge className="bg-black/50 backdrop-blur-md text-merino border-white/15 font-mono text-[10px] uppercase tracking-[0.04em] font-medium px-2.5 py-0.5 rounded-full">
+                <Badge className="bg-[#0C354C]/75 backdrop-blur-md text-[#F5EEDD] border border-[#84B3CE]/30 font-mono text-[10px] uppercase tracking-[0.06em] font-medium px-2.5 py-0.5 rounded-[4px]">
                   {photo.tag}
                 </Badge>
               </div>
 
               <div className="absolute bottom-0 inset-x-0 p-5 sm:p-6 z-10 flex flex-col gap-1 text-white">
-                <h3 className="font-sans font-semibold text-lg leading-snug">{photo.title}</h3>
-                <div className="flex items-center gap-1.5 text-xs text-merino/85 font-sans">
-                  <MapPin className="size-3.5 text-rock-blue shrink-0" strokeWidth={1.5} />
+                <h3 className="font-sans font-light text-xl leading-snug">{photo.title}</h3>
+                <div className="flex items-center gap-1.5 text-xs text-[#F5EEDD]/85 font-sans">
+                  <MapPin className="size-3.5 text-[#84B3CE] shrink-0" strokeWidth={1.5} />
                   <span>{photo.location}</span>
                 </div>
               </div>
             </div>
           ))}
         </div>
-      </motion.div>
+      </div>
 
       {/* Last updated footer */}
       {lastUpdated && (
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 mt-10 flex justify-center">
-          <div className="flex items-center justify-center gap-2 text-xs text-foreground-muted pt-4 border-t border-border w-full max-w-xl text-center">
-            <Clock className="size-3.5 shrink-0 text-primary" strokeWidth={1.5} />
+        <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-14 mt-10 flex justify-center">
+          <div className="flex items-center justify-center gap-2 text-xs text-[#0C354C]/60 pt-4 border-t border-[#DFD5C0] w-full max-w-xl text-center">
+            <Clock className="size-3.5 shrink-0 text-[#16587B]" strokeWidth={1.5} />
             <span className="font-mono">
               Última actualización de datos: {formatDate(lastUpdated)}
             </span>

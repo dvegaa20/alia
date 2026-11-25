@@ -115,7 +115,7 @@ export default async function DirectoryPage(props: {
 
   return (
     <SidebarProvider>
-      <div className="pt-8 pb-16 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-6 lg:gap-10">
+      <div className="pt-28 pb-20 w-full max-w-[1440px] mx-auto px-6 md:px-10 lg:px-14 flex flex-col lg:flex-row gap-6 lg:gap-10">
         <Suspense>
           <SidebarFilters
             searchQuery={query}
@@ -128,13 +128,13 @@ export default async function DirectoryPage(props: {
         </Suspense>
 
         <div className="flex-1 min-w-0 w-full">
-          <div className="lg:hidden mb-6 flex items-center justify-between bg-surface p-2.5 rounded-xl border border-border">
+          <div className="lg:hidden mb-6 flex items-center justify-between bg-[#FAF7F0] p-2.5 rounded-[8px] border border-[#DFD5C0]">
             <div className="flex items-center gap-2">
               <SidebarTrigger />
-              <span className="font-sans font-medium text-sm text-foreground">Filtros</span>
+              <span className="font-sans font-medium text-sm text-[#0C354C]">Filtros</span>
             </div>
             {meta.total > 0 && (
-              <span className="font-mono text-xs text-foreground-muted mr-2 tabular-nums">
+              <span className="font-mono text-xs text-[#0C354C]/60 mr-2 tabular-nums">
                 {meta.total} resultados
               </span>
             )}

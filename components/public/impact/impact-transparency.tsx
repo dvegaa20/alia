@@ -51,8 +51,8 @@ interface ImpactTransparencyProps {
 
 export function ImpactTransparency({ lastUpdated }: ImpactTransparencyProps) {
   return (
-    <section className="w-full px-4 sm:px-6 py-20 bg-background overflow-hidden">
-      <div className="max-w-6xl mx-auto">
+    <section className="w-full py-20 bg-[#F5EEDD] overflow-hidden">
+      <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-14">
         <motion.div {...fadeUp()} className="text-center mb-14 space-y-3">
           <p className="font-mono text-xs font-medium uppercase tracking-[0.04em] text-primary">
             Rigor &amp; Responsabilidad

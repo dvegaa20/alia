@@ -84,7 +84,7 @@ export function ContactTab({
                     value={nombre}
                     onChange={(e) => setNombre(e.target.value)}
                     required
-                    className="h-12 rounded-xl border border-border bg-background/50 dark:bg-background px-4 focus-visible:border-primary focus-visible:ring-primary/30 shadow-none"
+                    className="h-12 rounded-[4px] border border-[#DFD5C0] bg-[#F5EEDD]/60 px-4 focus-visible:border-[#16587B] focus-visible:ring-[#16587B]/30 shadow-none"
                   />
                 </div>
                 <div className="space-y-2">
@@ -97,7 +97,7 @@ export function ContactTab({
                     value={asunto}
                     onChange={(e) => setAsunto(e.target.value)}
                     required
-                    className="h-12 rounded-xl border border-border bg-background/50 dark:bg-background px-4 focus-visible:border-primary focus-visible:ring-primary/30 shadow-none"
+                    className="h-12 rounded-[4px] border border-[#DFD5C0] bg-[#F5EEDD]/60 px-4 focus-visible:border-[#16587B] focus-visible:ring-[#16587B]/30 shadow-none"
                   />
                 </div>
               </div>
@@ -111,7 +111,7 @@ export function ContactTab({
                   value={mensaje}
                   onChange={(e) => setMensaje(e.target.value)}
                   required
-                  className="min-h-[150px] flex-1 resize-none rounded-xl border border-border bg-background/50 dark:bg-background p-4 focus-visible:border-primary focus-visible:ring-primary/30 shadow-none"
+                  className="min-h-[150px] flex-1 resize-none rounded-[4px] border border-[#DFD5C0] bg-[#F5EEDD]/60 p-4 focus-visible:border-[#16587B] focus-visible:ring-[#16587B]/30 shadow-none"
                 />
               </div>
 
@@ -272,8 +272,8 @@ function MapCardInner({ location }: { location?: string }) {
 
         {/* Map Pin */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -mt-4">
-          <div className="size-7 bg-venice-blue dark:bg-rock-blue rounded-full flex items-center justify-center border-[3px] border-white dark:border-midnight-harbor relative z-10">
-            <div className="size-2 bg-white dark:bg-midnight-harbor rounded-full" />
+          <div className="size-7 bg-[#16587B] rounded-full flex items-center justify-center border-[3px] border-[#FAF7F0] relative z-10">
+            <div className="size-2 bg-[#FAF7F0] rounded-full" />
           </div>
         </div>
 
@@ -335,8 +335,8 @@ function InteractiveMapCard({
           {/* Org Marker */}
           <MapMarker longitude={coordinates.lng} latitude={coordinates.lat} offset={[0, -12]}>
             <MarkerContent>
-              <div className="size-7 bg-venice-blue dark:bg-rock-blue rounded-full flex items-center justify-center border-[3px] border-white dark:border-midnight-harbor relative z-10 transition-transform group-hover:scale-110 cursor-pointer">
-                <div className="size-2 bg-white dark:bg-midnight-harbor rounded-full" />
+              <div className="size-7 bg-[#16587B] rounded-full flex items-center justify-center border-[3px] border-[#FAF7F0] relative z-10 transition-transform group-hover:scale-110 cursor-pointer">
+                <div className="size-2 bg-[#FAF7F0] rounded-full" />
               </div>
             </MarkerContent>
             <MarkerPopup className="text-sm font-medium w-48 text-center p-3 rounded-2xl border border-border bg-surface text-foreground">

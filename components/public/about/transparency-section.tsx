@@ -1,8 +1,13 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { useRef } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useGSAP } from '@gsap/react'
 import { MessageSquarePlus, SearchCheck, BadgeCheck } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
+
+gsap.registerPlugin(ScrollTrigger, useGSAP)
 
 const steps = [
   {
@@ -29,78 +34,92 @@ const steps = [
 ]
 
 export function TransparencySection() {
+  const sectionRef = useRef<HTMLElement>(null)
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia()
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        gsap.from('[data-verify-reveal]', {
+          y: 24,
+          opacity: 0,
+          duration: 0.75,
+          stagger: 0.1,
+          ease: 'power3.out',
+          clearProps: 'transform,opacity',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 85%',
+            once: true,
+          },
+        })
+      })
+    },
+    { scope: sectionRef }
+  )
+
   return (
-    <section id="verificacion" className="w-full bg-background py-20 lg:py-28 scroll-mt-24">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+    <section
+      ref={sectionRef}
+      id="verificacion"
+      className="w-full bg-[#F5EEDD] py-20 lg:py-28 scroll-mt-24"
+    >
+      <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-14">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.45, ease: 'easeOut' }}
-          className="text-center mb-14 space-y-3"
-        >
-          <p className="font-mono text-xs font-medium uppercase tracking-[0.04em] text-primary">
+        <div data-verify-reveal className="text-center mb-14 space-y-3">
+          <p className="font-mono text-xs font-medium uppercase tracking-[0.06em] text-[#16587B]">
             Rigor &amp; Responsabilidad
           </p>
-          <h2 className="font-sans font-medium text-3xl sm:text-4xl lg:text-[44px] leading-[1.15] tracking-[-0.025em] text-foreground max-w-3xl mx-auto">
-            Cómo verificamos <span className="text-primary">cada iniciativa</span>
+          <h2 className="font-sans font-light text-3xl sm:text-5xl lg:text-[52px] leading-[1.06] tracking-normal text-[#0C354C] max-w-3xl mx-auto">
+            Cómo verificamos{' '}
+            <span className="font-serif italic font-normal text-[#16587B] text-[1.06em]">
+              cada iniciativa
+            </span>
           </h2>
-          <p className="font-sans text-base sm:text-lg text-foreground-secondary max-w-2xl mx-auto leading-[1.6]">
+          <p className="font-sans text-base sm:text-lg text-[#0C354C]/80 max-w-2xl mx-auto leading-[1.6]">
             Cada organización pasa por un proceso de revisión humana antes de formar parte del
             directorio. La confianza ciudadana en Alia depende de este rigor.
           </p>
-        </motion.div>
+        </div>
 
         {/* Steps grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6">
-          {steps.map((step, idx) => {
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+          {steps.map((step) => {
             const Icon = step.icon
             return (
-              <motion.div
-                key={step.step}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-80px' }}
-                transition={{ duration: 0.45, ease: 'easeOut', delay: idx * 0.08 }}
-              >
-                <Card className="h-full bg-surface border border-border ring-0 rounded-[20px] hover:border-rock-blue transition-colors duration-200 py-0">
+              <div key={step.step} data-verify-reveal>
+                <Card className="h-full bg-[#FAF7F0] border border-[#DFD5C0] ring-0 shadow-none rounded-[8px] hover:border-[#84B3CE] transition-colors duration-200 py-0">
                   <CardContent className="p-8 flex flex-col items-start gap-5">
                     <div className="flex items-center justify-between w-full">
-                      <div className="size-11 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                      <div className="size-11 rounded-[4px] bg-[#16587B]/10 text-[#16587B] flex items-center justify-center shrink-0">
                         <Icon className="size-5" strokeWidth={1.5} />
                       </div>
-                      <span className="font-mono font-medium text-3xl tabular-nums text-primary/45 leading-none select-none">
+                      <span className="font-mono font-medium text-3xl tabular-nums text-[#16587B]/40 leading-none select-none">
                         {step.step}
                       </span>
                     </div>
 
                     <div className="space-y-2">
-                      <h3 className="font-sans font-semibold text-xl text-foreground">
-                        {step.title}
-                      </h3>
-                      <p className="font-sans text-foreground-secondary text-sm leading-relaxed">
+                      <h3 className="font-sans font-medium text-xl text-[#0C354C]">{step.title}</h3>
+                      <p className="font-sans text-[#0C354C]/75 text-sm leading-relaxed">
                         {step.description}
                       </p>
                     </div>
                   </CardContent>
                 </Card>
-              </motion.div>
+              </div>
             )
           })}
         </div>
 
         {/* Bottom note */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true, margin: '-40px' }}
-          transition={{ duration: 0.45, delay: 0.25 }}
-          className="text-center font-mono text-xs text-foreground-muted mt-10"
+        <p
+          data-verify-reveal
+          className="text-center font-mono text-xs text-[#0C354C]/60 mt-10 max-w-2xl mx-auto"
         >
           Este proceso es gratuito tanto para quien sugiere como para la organización. Nuestro único
           criterio es el impacto social real.
-        </motion.p>
+        </p>
       </div>
     </section>
   )

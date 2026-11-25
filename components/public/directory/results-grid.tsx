@@ -78,11 +78,12 @@ export function ResultsGrid({
         className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-border"
       >
         <div className="space-y-1">
-          <h1 className="font-sans text-3xl sm:text-4xl font-medium tracking-[-0.025em] text-foreground">
-            Directorio de causas
+          <h1 className="font-sans text-3xl sm:text-4xl font-light tracking-normal text-[#0C354C]">
+            Directorio de{' '}
+            <span className="font-serif italic font-normal text-[#16587B]">causas</span>
           </h1>
-          <div className="flex items-center gap-2 text-sm text-foreground-secondary">
-            <span className="font-mono font-medium tabular-nums text-primary">{total}</span>
+          <div className="flex items-center gap-2 text-sm text-[#0C354C]/75">
+            <span className="font-mono font-medium tabular-nums text-[#16587B]">{total}</span>
             <span>{total === 1 ? 'organización encontrada' : 'organizaciones encontradas'}</span>
           </div>
         </div>
@@ -91,11 +92,11 @@ export function ResultsGrid({
           {/* Sort — only visible in list view */}
           {currentView === 'list' && (
             <div className="flex items-center gap-2 text-sm">
-              <span className="font-mono text-xs uppercase tracking-[0.04em] text-foreground-muted">
+              <span className="font-mono text-xs uppercase tracking-[0.06em] text-[#0C354C]/60">
                 Ordenar:
               </span>
               <Select value={sort} onValueChange={handleSortChange}>
-                <SelectTrigger className="rounded-xl border border-border bg-surface hover:border-rock-blue px-3 h-9 text-sm font-medium text-foreground focus:ring-0">
+                <SelectTrigger className="rounded-[4px] border border-[#DFD5C0] bg-[#FAF7F0] hover:border-[#84B3CE] px-3 h-9 text-sm font-medium text-[#0C354C] focus:ring-0">
                   <SelectValue placeholder="Relevancia" />
                 </SelectTrigger>
                 <SelectContent position="popper" align="end" className="w-45">
@@ -109,15 +110,15 @@ export function ResultsGrid({
           )}
 
           {/* View Toggle */}
-          <div className="flex items-center bg-surface border border-border rounded-full p-1 gap-0.5">
+          <div className="flex items-center bg-[#FAF7F0] border border-[#DFD5C0] rounded-[4px] p-1 gap-0.5">
             <button
               type="button"
               onClick={() => handleViewChange('list')}
               className={cn(
-                'flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium transition-colors duration-200 cursor-pointer',
+                'flex items-center gap-1.5 px-3.5 py-1.5 rounded-[4px] text-xs font-medium transition-colors duration-200 cursor-pointer',
                 currentView === 'list'
-                  ? 'bg-primary text-primary-foreground'
-                  : 'text-foreground-secondary hover:text-primary'
+                  ? 'bg-[#16587B] text-white'
+                  : 'text-[#0C354C]/75 hover:text-[#16587B]'
               )}
             >
               <LayoutGrid className="size-3.5" strokeWidth={1.5} />
@@ -127,10 +128,10 @@ export function ResultsGrid({
               type="button"
               onClick={() => handleViewChange('map')}
               className={cn(
-                'flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium transition-colors duration-200 cursor-pointer',
+                'flex items-center gap-1.5 px-3.5 py-1.5 rounded-[4px] text-xs font-medium transition-colors duration-200 cursor-pointer',
                 currentView === 'map'
-                  ? 'bg-primary text-primary-foreground'
-                  : 'text-foreground-secondary hover:text-primary'
+                  ? 'bg-[#16587B] text-white'
+                  : 'text-[#0C354C]/75 hover:text-[#16587B]'
               )}
             >
               <MapPin className="size-3.5" strokeWidth={1.5} />

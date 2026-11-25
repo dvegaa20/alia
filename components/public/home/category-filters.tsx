@@ -1,10 +1,15 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { useRef } from 'react'
+import Link from 'next/link'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useGSAP } from '@gsap/react'
 import { Button } from '@/components/ui/button'
 import { Leaf, GraduationCap, HeartPulse, Home, Scale, Baby, Grid2X2 } from 'lucide-react'
-import Link from 'next/link'
 import { cn } from '@/lib/utils'
+
+gsap.registerPlugin(ScrollTrigger, useGSAP)
 
 const categoryIcons: Record<string, React.ElementType> = {
   'medio-ambiente': Leaf,
@@ -27,27 +32,54 @@ interface CategoryFiltersProps {
 }
 
 export function CategoryFilters({ categories, activeCategorySlug }: CategoryFiltersProps) {
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia()
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        gsap.from('[data-filter-item]', {
+          y: 16,
+          opacity: 0,
+          duration: 0.55,
+          stagger: 0.05,
+          ease: 'power3.out',
+          clearProps: 'transform,opacity',
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: 'top 85%',
+            once: true,
+          },
+        })
+      })
+    },
+    { scope: containerRef }
+  )
+
   return (
-    <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
-      <motion.div
-        initial={{ opacity: 0, y: 14 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-80px' }}
-        transition={{ duration: 0.4 }}
-        className="flex flex-wrap gap-2.5"
-      >
+    <div
+      ref={containerRef}
+      className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6"
+    >
+      <div className="flex flex-wrap gap-2.5">
         {categories.map((cat) => {
           const Icon = categoryIcons[cat.slug] || Leaf
           const isActive = cat.slug === activeCategorySlug
           return (
-            <Link key={cat.id} href={`/?category=${cat.slug}`} scroll={false} prefetch={true}>
+            <Link
+              key={cat.id}
+              href={`/?category=${cat.slug}`}
+              scroll={false}
+              prefetch={true}
+              data-filter-item
+            >
               <Button
                 variant="outline"
                 className={cn(
-                  'px-5 py-2.5 h-auto rounded-full font-sans text-sm font-medium flex items-center gap-2 transition-all duration-200',
+                  'px-4 py-2.5 h-auto rounded-[4px] font-sans text-sm font-medium flex items-center gap-2 transition-colors duration-200 shadow-none',
                   isActive
-                    ? 'bg-primary text-primary-foreground border-primary hover:bg-primary-hover hover:text-primary-foreground'
-                    : 'bg-background/60 dark:bg-surface-subtle text-foreground-secondary border-border hover:border-rock-blue hover:text-primary hover:bg-primary/5'
+                    ? 'bg-[#16587B] text-white border-[#16587B] hover:bg-[#0C354C] hover:border-[#0C354C] hover:text-white'
+                    : 'bg-[#FAF7F0] text-[#0C354C]/80 border-[#DFD5C0] hover:border-[#16587B] hover:text-[#16587B] hover:bg-[#FAF7F0]'
                 )}
               >
                 <Icon className="size-4" strokeWidth={1.5} />
@@ -56,24 +88,19 @@ export function CategoryFilters({ categories, activeCategorySlug }: CategoryFilt
             </Link>
           )
         })}
-      </motion.div>
+      </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 14 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-80px' }}
-        transition={{ duration: 0.4 }}
-      >
+      <div data-filter-item>
         <Link href="/directory">
           <Button
             variant="outline"
-            className="px-5 py-2.5 h-auto rounded-full font-sans text-sm font-medium items-center gap-2 transition-colors bg-surface text-primary border-primary/40 hover:border-primary hover:bg-primary/5 hidden md:flex"
+            className="px-4 py-2.5 h-auto rounded-[4px] font-sans text-sm font-medium items-center gap-2 transition-colors bg-[#FAF7F0] text-[#16587B] border-[#16587B]/40 hover:border-[#16587B] hover:bg-[#16587B]/5 hidden md:flex shadow-none"
           >
             <Grid2X2 className="size-4" strokeWidth={1.5} />
             Ver más categorías
           </Button>
         </Link>
-      </motion.div>
+      </div>
     </div>
   )
 }

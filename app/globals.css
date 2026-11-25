@@ -2,113 +2,68 @@
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
 
-@custom-variant dark (&:is(.dark *));
-
 @theme {
   --color-merino: #F5EEDD;
+  --color-oat-merino: #EAE1CD;
+  --color-warm-paper: #FAF7F0;
   --color-rock-blue: #84B3CE;
   --color-venice-blue: #16587B;
-  --color-deep-harbor: #0E3A52;
-  --color-midnight-harbor: #0B1B26;
-  --color-dark-surface: #122636;
-  --color-charcoal-ink: #111827;
-  --color-slate-body: #374151;
-  --color-muted-slate: #52606D;
-  --color-hairline-sand: #E3DAC6;
-  --color-hairline-mist: #E5E7EB;
+  --color-deep-harbor: #0C354C;
+  --color-harbor-panel: #124866;
+  --color-harbor-ink: #1B2D38;
+  --color-sea-mist: #A8CBE0;
+  --color-ice-mist: #F4F8FB;
+  --color-ring-sand: #DFD5C0;
+  --color-hairline-sand: #DFD5C0;
   --color-urgency-coral: #C84B31;
   --color-verified-emerald: #1E8E68;
 }
 
 :root {
-  /* Design System — Light Mode (Merino / Pure White / Venice Blue) */
+  /* Alia Editorial System — Single Warm Merino & Deep Harbor Palette */
   --background: #F5EEDD;
-  --surface: #FFFFFF;
-  --surface-subtle: #EFE6D1;
-  --foreground: #111827;
-  --foreground-secondary: #374151;
-  --foreground-muted: #52606D;
-  --border: #E3DAC6;
+  --surface: #FAF7F0;
+  --surface-subtle: #EAE1CD;
+  --foreground: #0C354C;
+  --foreground-secondary: rgba(12, 53, 76, 0.78);
+  --foreground-muted: rgba(12, 53, 76, 0.58);
+  --border: #DFD5C0;
   --primary: #16587B;
-  --primary-hover: #0E3A52;
+  --primary-hover: #0C354C;
   --primary-foreground: #FFFFFF;
   --accent: #84B3CE;
-  --accent-foreground: #0E3A52;
-  --band-dark: #16587B;
-  --band-dark-deep: #0E3A52;
-  --band-dark-foreground: #FFFFFF;
-
-  /* shadcn & Admin compatibility tokens */
-  --card: #FFFFFF;
-  --card-foreground: #111827;
-  --popover: #FFFFFF;
-  --popover-foreground: #111827;
-  --secondary: #EFE6D1;
-  --secondary-foreground: #0E3A52;
-  --muted: #EFE6D1;
-  --muted-foreground: #52606D;
-  --destructive: #C84B31;
-  --input: #E3DAC6;
-  --ring: #16587B;
-  --radius: 0.75rem;
-  --chart-1: #16587B;
-  --chart-2: #84B3CE;
-  --chart-3: #0E3A52;
-  --chart-4: #1E8E68;
-  --chart-5: #C84B31;
-  --sidebar: #FFFFFF;
-  --sidebar-foreground: #111827;
-  --sidebar-primary: #16587B;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #F5EEDD;
-  --sidebar-accent-foreground: #0E3A52;
-  --sidebar-border: #E3DAC6;
-  --sidebar-ring: #16587B;
-}
-
-.dark {
-  /* Design System — Dark Mode (Midnight Harbor) */
-  --background: #0B1B26;
-  --surface: #122636;
-  --surface-subtle: #183044;
-  --foreground: #F5EEDD;
-  --foreground-secondary: #D4DEE6;
-  --foreground-muted: #93AEC0;
-  --border: #203C52;
-  --primary: #84B3CE;
-  --primary-hover: #9EC5DC;
-  --primary-foreground: #0B1B26;
-  --accent: #16587B;
-  --accent-foreground: #F5EEDD;
-  --band-dark: #07131B;
-  --band-dark-deep: #07131B;
+  --accent-foreground: #0C354C;
+  --band-dark: #0C354C;
+  --band-dark-secondary: #16587B;
+  --band-dark-deep: #0C354C;
   --band-dark-foreground: #F5EEDD;
 
   /* shadcn & Admin compatibility tokens */
-  --card: #122636;
-  --card-foreground: #F5EEDD;
-  --popover: #122636;
-  --popover-foreground: #F5EEDD;
-  --secondary: #183044;
-  --secondary-foreground: #F5EEDD;
-  --muted: #183044;
-  --muted-foreground: #93AEC0;
-  --destructive: #E0634A;
-  --input: #203C52;
-  --ring: #84B3CE;
-  --chart-1: #84B3CE;
-  --chart-2: #16587B;
-  --chart-3: #9EC5DC;
+  --card: #FAF7F0;
+  --card-foreground: #0C354C;
+  --popover: #FAF7F0;
+  --popover-foreground: #0C354C;
+  --secondary: #EAE1CD;
+  --secondary-foreground: #0C354C;
+  --muted: #EAE1CD;
+  --muted-foreground: rgba(12, 53, 76, 0.62);
+  --destructive: #C84B31;
+  --input: #DFD5C0;
+  --ring: #16587B;
+  --radius: 0.5rem;
+  --chart-1: #16587B;
+  --chart-2: #84B3CE;
+  --chart-3: #0C354C;
   --chart-4: #1E8E68;
-  --chart-5: #E0634A;
-  --sidebar: #07131B;
-  --sidebar-foreground: #F5EEDD;
-  --sidebar-primary: #84B3CE;
-  --sidebar-primary-foreground: #0B1B26;
-  --sidebar-accent: #183044;
-  --sidebar-accent-foreground: #F5EEDD;
-  --sidebar-border: #203C52;
-  --sidebar-ring: #84B3CE;
+  --chart-5: #C84B31;
+  --sidebar: #FAF7F0;
+  --sidebar-foreground: #0C354C;
+  --sidebar-primary: #16587B;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #F5EEDD;
+  --sidebar-accent-foreground: #0C354C;
+  --sidebar-border: #DFD5C0;
+  --sidebar-ring: #16587B;
 }
 
 @theme inline {
@@ -125,6 +80,7 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-band-dark: var(--band-dark);
+  --color-band-dark-secondary: var(--band-dark-secondary);
   --color-band-dark-deep: var(--band-dark-deep);
   --color-band-dark-foreground: var(--band-dark-foreground);
 
@@ -153,19 +109,20 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) * 1.6);
-  --radius-3xl: calc(var(--radius) * 2);
-  --radius-4xl: calc(var(--radius) * 2.5);
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+  --radius-3xl: 24px;
+  --radius-4xl: 24px;
 
-  --font-sans: var(--font-plus-jakarta), 'Plus Jakarta Sans', -apple-system, sans-serif;
+  --font-sans: var(--font-inter-tight), 'Inter Tight', -apple-system, sans-serif;
+  --font-serif: var(--font-newsreader), 'Newsreader', Georgia, serif;
   --font-mono: var(--font-jetbrains-mono), 'JetBrains Mono', ui-monospace, monospace;
-  --font-heading: var(--font-plus-jakarta), 'Plus Jakarta Sans', -apple-system, sans-serif;
-  --font-headline: var(--font-plus-jakarta), 'Plus Jakarta Sans', -apple-system, sans-serif;
-  --font-body: var(--font-plus-jakarta), 'Plus Jakarta Sans', -apple-system, sans-serif;
+  --font-heading: var(--font-inter-tight), 'Inter Tight', -apple-system, sans-serif;
+  --font-headline: var(--font-inter-tight), 'Inter Tight', -apple-system, sans-serif;
+  --font-body: var(--font-inter-tight), 'Inter Tight', -apple-system, sans-serif;
   --font-label: var(--font-jetbrains-mono), 'JetBrains Mono', ui-monospace, monospace;
 }
 
@@ -195,11 +152,7 @@
 
 /* Alia — Elevation & Utility classes */
 .navbar-float {
-  box-shadow: 0 4px 20px rgba(22, 88, 123, 0.08);
-}
-
-.dark .navbar-float {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 0 4px rgba(12, 53, 76, 0.16), 0 8px 24px rgba(12, 53, 76, 0.08);
 }
 
 .scrollbar-none::-webkit-scrollbar {

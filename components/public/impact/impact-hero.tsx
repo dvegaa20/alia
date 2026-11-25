@@ -1,23 +1,21 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { useRef } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useGSAP } from '@gsap/react'
 import { HeartHandshake, Users, Globe2, Clock } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import type { ImpactMetrics } from '@/server/actions/analytics'
 
-const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 20 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: '-60px' } as const,
-  transition: { duration: 0.45, ease: 'easeOut' as const, delay },
-})
+gsap.registerPlugin(ScrollTrigger, useGSAP)
 
 function formatNumber(n: number): string {
   if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`
   if (n >= 10_000) return `${(n / 1_000).toFixed(0)}k`
   if (n >= 1_000) return `${(n / 1_000).toFixed(1)}k`
-  if (n === 0) return '—'
-  return n.toLocaleString('es-MX')
+  if (n <= 0) return '—'
+  return Math.round(n).toLocaleString('es-MX')
 }
 
 function timeAgo(isoDate: string): string {
@@ -59,58 +57,104 @@ interface ImpactHeroProps {
 
 export function ImpactHero({ metrics }: ImpactHeroProps) {
   const { lastUpdated } = metrics
+  const sectionRef = useRef<HTMLElement>(null)
+  const numberRefs = useRef<(HTMLParagraphElement | null)[]>([])
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia()
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        gsap.from('[data-impact-hero]', {
+          y: 24,
+          opacity: 0,
+          duration: 0.75,
+          stagger: 0.1,
+          ease: 'power3.out',
+          clearProps: 'transform,opacity',
+        })
+
+        metricsCards.forEach((card, idx) => {
+          const target = metrics[card.field]
+          const el = numberRefs.current[idx]
+          if (!el || target <= 0) return
+
+          const counter = { val: 0 }
+          gsap.to(counter, {
+            val: target,
+            duration: 1.4,
+            delay: 0.2 + idx * 0.1,
+            ease: 'power2.out',
+            onUpdate: () => {
+              el.textContent = formatNumber(counter.val)
+            },
+            onComplete: () => {
+              el.textContent = formatNumber(target)
+            },
+          })
+        })
+      })
+    },
+    { scope: sectionRef, dependencies: [metrics.communityReach, metrics.realConnections, metrics.pageViews] }
+  )
 
   return (
-    <section className="w-full bg-background pt-12 pb-16 lg:pt-20 lg:pb-24">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+    <section ref={sectionRef} className="w-full bg-[#F5EEDD] pt-28 pb-16 lg:pt-36 lg:pb-24">
+      <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-14">
         {/* Header */}
-        <motion.div {...fadeUp()} className="text-center mb-10 space-y-4">
-          <p className="font-mono text-xs font-medium uppercase tracking-[0.04em] text-primary">
+        <div data-impact-hero className="text-center mb-10 space-y-4">
+          <p className="font-mono text-xs font-medium uppercase tracking-[0.06em] text-[#16587B]">
             Transparencia activa
           </p>
-          <h1 className="font-sans font-medium text-[38px] sm:text-[52px] lg:text-[60px] leading-[1.06] tracking-[-0.03em] text-foreground">
-            Nuestro <span className="text-primary">alcance</span> social
+          <h1 className="font-sans font-light text-4xl sm:text-6xl lg:text-[66px] leading-[1.03] tracking-normal text-[#0C354C]">
+            Nuestro{' '}
+            <span className="font-serif italic font-normal text-[#16587B] text-[1.06em]">
+              alcance
+            </span>{' '}
+            social
           </h1>
-          <p className="font-sans text-base sm:text-lg text-foreground-secondary max-w-2xl mx-auto leading-[1.6]">
+          <p className="font-sans text-base sm:text-lg text-[#0C354C]/80 max-w-2xl mx-auto leading-[1.6]">
             Datos de impacto sobre nuestro alcance en México, actualizados constantemente para
             garantizar total transparencia en nuestra labor comunitaria.
           </p>
-        </motion.div>
+        </div>
 
         {/* Timestamp pill */}
-        <motion.div {...fadeUp(0.08)} className="flex justify-center mb-12">
-          <span className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-1.5 font-mono text-xs text-foreground-muted">
-            <Clock className="size-3.5 text-primary" strokeWidth={1.5} />
+        <div data-impact-hero className="flex justify-center mb-12">
+          <span className="inline-flex items-center gap-2 rounded-[4px] border border-[#DFD5C0] bg-[#FAF7F0] px-4 py-1.5 font-mono text-xs text-[#0C354C]/65">
+            <Clock className="size-3.5 text-[#16587B]" strokeWidth={1.5} />
             Datos de los últimos 30 días · Actualizado {timeAgo(lastUpdated)}
           </span>
-        </motion.div>
+        </div>
 
         {/* Metric Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {metricsCards.map(({ key, Icon, sublabel, label, field }, idx) => (
-            <motion.div key={key} {...fadeUp(idx * 0.08)}>
-              <Card className="h-full bg-surface border border-border ring-0 rounded-[20px] hover:border-rock-blue transition-colors duration-200 py-0">
-                <CardContent className="p-6 lg:p-8 flex flex-col justify-between min-h-[220px] gap-6">
+            <div key={key} data-impact-hero>
+              <Card className="h-full bg-[#FAF7F0] border border-[#DFD5C0] ring-0 shadow-none rounded-[8px] hover:border-[#84B3CE] transition-colors duration-200 py-0">
+                <CardContent className="p-7 lg:p-8 flex flex-col justify-between min-h-[220px] gap-6">
                   <div className="space-y-3">
                     <div className="flex items-center justify-between gap-2">
-                      <span className="font-mono text-xs font-medium uppercase tracking-[0.04em] text-primary">
+                      <span className="font-mono text-xs font-medium uppercase tracking-[0.06em] text-[#16587B]">
                         {sublabel}
                       </span>
-                      <div className="size-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                      <div className="size-10 rounded-[4px] bg-[#16587B]/10 text-[#16587B] flex items-center justify-center shrink-0">
                         <Icon className="size-5" strokeWidth={1.5} />
                       </div>
                     </div>
-                    <p className="font-sans text-sm text-foreground-secondary leading-relaxed">
-                      {label}
-                    </p>
+                    <p className="font-sans text-sm text-[#0C354C]/75 leading-relaxed">{label}</p>
                   </div>
 
-                  <p className="font-mono font-medium text-4xl sm:text-5xl leading-none tracking-[-0.02em] tabular-nums text-foreground">
+                  <p
+                    ref={(el) => {
+                      numberRefs.current[idx] = el
+                    }}
+                    className="font-mono font-normal text-4xl sm:text-5xl leading-none tracking-[-0.02em] tabular-nums text-[#0C354C]"
+                  >
                     {formatNumber(metrics[field])}
                   </p>
                 </CardContent>
               </Card>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

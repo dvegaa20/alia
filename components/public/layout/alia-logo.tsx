@@ -9,7 +9,7 @@ interface AliaLogoProps {
 }
 
 export function AliaLogo({
-  variant = 'auto',
+  variant = 'dark',
   hasLogoLight = false,
   hasLogoDark = false,
   className,
@@ -27,7 +27,7 @@ export function AliaLogo({
     )
   }
 
-  if (variant === 'dark' && hasLogoDark) {
+  if ((variant === 'dark' || variant === 'auto') && hasLogoDark) {
     return (
       <Image
         src="/logo-dark.svg"
@@ -40,47 +40,19 @@ export function AliaLogo({
     )
   }
 
-  if (variant === 'auto' && hasLogoLight && hasLogoDark) {
-    return (
-      <span className={cn('inline-flex items-center', className)}>
-        <Image
-          src="/logo-dark.svg"
-          alt="Alia"
-          width={96}
-          height={32}
-          className="h-7 w-auto object-contain dark:hidden"
-          priority
-        />
-        <Image
-          src="/logo-light.svg"
-          alt="Alia"
-          width={96}
-          height={32}
-          className="hidden h-7 w-auto object-contain dark:block"
-          priority
-        />
-      </span>
-    )
-  }
+  const isLight = variant === 'light'
 
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1.5 font-sans text-xl font-semibold tracking-[-0.03em]',
-        variant === 'light'
-          ? 'text-merino'
-          : variant === 'dark'
-            ? 'text-venice-blue'
-            : 'text-venice-blue dark:text-merino',
+        'inline-flex items-baseline gap-1 font-sans text-[22px] font-medium tracking-[-0.035em] leading-none',
+        isLight ? 'text-merino' : 'text-venice-blue',
         className
       )}
     >
       <span>alia</span>
       <span
-        className={cn(
-          'size-1.5 rounded-full',
-          variant === 'light' ? 'bg-rock-blue' : 'bg-venice-blue dark:bg-rock-blue'
-        )}
+        className={cn('size-1.5 rounded-full', isLight ? 'bg-rock-blue' : 'bg-venice-blue')}
         aria-hidden="true"
       />
     </span>

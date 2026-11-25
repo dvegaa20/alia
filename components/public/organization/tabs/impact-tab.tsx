@@ -115,7 +115,7 @@ export function ImpactTab({
                 </div>
 
                 {verified && (
-                  <div className="inline-flex items-center gap-2 self-start bg-verified-emerald/12 text-verified-emerald dark:bg-verified-emerald/20 dark:text-emerald-300 border border-verified-emerald/25 px-4 py-2 rounded-full">
+                  <div className="inline-flex items-center gap-2 self-start bg-[#1E8E68]/12 text-[#1E8E68] border border-[#1E8E68]/25 px-4 py-2 rounded-[4px]">
                     <Award className="size-4" strokeWidth={1.5} />
                     <span className="font-mono text-xs font-medium uppercase tracking-[0.04em]">
                       Organización verificada

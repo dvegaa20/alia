@@ -1,21 +1,20 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { useRef } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useGSAP } from '@gsap/react'
 import { Users, HeartHandshake, Globe } from 'lucide-react'
 import type { ImpactMetrics } from '@/server/actions/analytics'
 
-const fadeUp = {
-  initial: { opacity: 0, y: 20 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: '-80px' },
-}
+gsap.registerPlugin(ScrollTrigger, useGSAP)
 
 function formatNumber(n: number): string {
   if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`
   if (n >= 10_000) return `${(n / 1_000).toFixed(0)}k`
   if (n >= 1_000) return `${(n / 1_000).toFixed(1)}k`
-  if (n === 0) return '—'
-  return n.toLocaleString('es-MX')
+  if (n <= 0) return '—'
+  return Math.round(n).toLocaleString('es-MX')
 }
 
 interface FeaturesSectionGridProps {
@@ -24,10 +23,13 @@ interface FeaturesSectionGridProps {
 
 export function FeaturesSectionGrid({ metrics }: FeaturesSectionGridProps) {
   const { communityReach, realConnections, pageViews } = metrics
+  const gridRef = useRef<HTMLDivElement>(null)
+  const numberRefs = useRef<(HTMLParagraphElement | null)[]>([])
 
   const stats = [
     {
       eyebrow: 'Alcance comunitario',
+      rawValue: communityReach,
       value: formatNumber(communityReach),
       title: 'Usuarios únicos',
       description: 'Personas reales que exploraron organizaciones sociales en nuestra plataforma.',
@@ -35,6 +37,7 @@ export function FeaturesSectionGrid({ metrics }: FeaturesSectionGridProps) {
     },
     {
       eyebrow: 'Vínculos reales',
+      rawValue: realConnections,
       value: formatNumber(realConnections),
       title: 'Conexiones directas',
       description: 'Interacciones ciudadanas hacia perfiles, sitios web o canales de contacto.',
@@ -42,6 +45,7 @@ export function FeaturesSectionGrid({ metrics }: FeaturesSectionGridProps) {
     },
     {
       eyebrow: 'Historias descubiertas',
+      rawValue: pageViews,
       value: formatNumber(pageViews),
       title: 'Páginas vistas',
       description: 'Consultas registradas a proyectos sociales verificados en todo México.',
@@ -49,32 +53,80 @@ export function FeaturesSectionGrid({ metrics }: FeaturesSectionGridProps) {
     },
   ]
 
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia()
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        gsap.from('[data-stat-card]', {
+          y: 24,
+          opacity: 0,
+          duration: 0.75,
+          stagger: 0.12,
+          ease: 'power3.out',
+          clearProps: 'transform,opacity',
+          scrollTrigger: {
+            trigger: gridRef.current,
+            start: 'top 85%',
+            once: true,
+          },
+        })
+
+        stats.forEach((stat, idx) => {
+          const el = numberRefs.current[idx]
+          if (!el || stat.rawValue <= 0) return
+
+          const counter = { val: 0 }
+          gsap.to(counter, {
+            val: stat.rawValue,
+            duration: 1.4,
+            delay: idx * 0.1,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: gridRef.current,
+              start: 'top 85%',
+              once: true,
+            },
+            onUpdate: () => {
+              el.textContent = formatNumber(counter.val)
+            },
+            onComplete: () => {
+              el.textContent = formatNumber(stat.rawValue)
+            },
+          })
+        })
+      })
+    },
+    { scope: gridRef, dependencies: [communityReach, realConnections, pageViews] }
+  )
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6">
+    <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
       {stats.map(({ eyebrow, value, title, description, Icon }, idx) => (
-        <motion.div
+        <div
           key={title}
-          {...fadeUp}
-          transition={{ duration: 0.45, delay: idx * 0.08 }}
-          className="rounded-[20px] border border-white/15 dark:border-border bg-white/[0.06] dark:bg-dark-surface p-6 lg:p-8 flex flex-col justify-between gap-6"
+          data-stat-card
+          className="rounded-[8px] border border-[#84B3CE]/25 bg-[#124866]/70 p-7 lg:p-9 flex flex-col justify-between gap-7"
         >
           <div className="flex items-center justify-between gap-3">
-            <span className="font-mono text-xs font-medium uppercase tracking-[0.04em] text-rock-blue">
+            <span className="font-mono text-xs font-medium uppercase tracking-[0.06em] text-[#84B3CE]">
               {eyebrow}
             </span>
-            <Icon className="size-5 text-rock-blue shrink-0" strokeWidth={1.5} />
+            <Icon className="size-5 text-[#84B3CE] shrink-0" strokeWidth={1.5} />
           </div>
 
-          <div className="space-y-2">
-            <p className="font-mono font-medium text-4xl sm:text-5xl leading-none tracking-[-0.02em] tabular-nums text-white dark:text-merino">
+          <div className="space-y-2.5">
+            <p
+              ref={(el) => {
+                numberRefs.current[idx] = el
+              }}
+              className="font-mono font-normal text-4xl sm:text-5xl lg:text-[56px] leading-none tracking-[-0.02em] tabular-nums text-white"
+            >
               {value}
             </p>
-            <h3 className="font-sans text-lg font-semibold text-white dark:text-merino pt-1">
-              {title}
-            </h3>
-            <p className="font-sans text-sm text-merino/80 leading-relaxed">{description}</p>
+            <h3 className="font-sans text-xl font-light text-[#F5EEDD] pt-1">{title}</h3>
+            <p className="font-sans text-sm text-[#F5EEDD]/75 leading-relaxed">{description}</p>
           </div>
-        </motion.div>
+        </div>
       ))}
     </div>
   )

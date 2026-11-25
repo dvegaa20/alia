@@ -46,10 +46,10 @@ export function Footer({ hasLogoLight = false, hasLogoDark = false }: FooterProp
   const isHomePage = pathname === '/'
 
   return (
-    <footer className="w-full bg-deep-harbor dark:bg-band-dark-deep text-merino">
+    <footer className="w-full bg-[#0C354C] text-[#F5EEDD]">
       {isHomePage && <FooterCTA />}
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
+      <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-14 py-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
         <div className="space-y-3">
           <Link
             href="/"
@@ -58,7 +58,7 @@ export function Footer({ hasLogoLight = false, hasLogoDark = false }: FooterProp
           >
             <AliaLogo variant="light" hasLogoLight={hasLogoLight} hasLogoDark={hasLogoDark} />
           </Link>
-          <p className="font-sans text-sm text-merino/75 leading-relaxed max-w-md">
+          <p className="font-sans text-sm text-[#F5EEDD]/75 leading-relaxed max-w-md">
             Alia es un directorio social transparente y accesible que funciona como un puente
             confiable entre ciudadanos y organizaciones verificadas en México.
           </p>
@@ -70,7 +70,7 @@ export function Footer({ hasLogoLight = false, hasLogoDark = false }: FooterProp
               key={social.label}
               href={social.href}
               aria-label={social.label}
-              className="flex items-center justify-center size-10 rounded-full border border-merino/20 text-merino hover:border-rock-blue hover:text-rock-blue hover:bg-white/5 transition-colors duration-200"
+              className="flex items-center justify-center size-10 rounded-[4px] border border-[#84B3CE]/30 text-[#F5EEDD] hover:border-[#84B3CE] hover:text-[#84B3CE] hover:bg-white/5 transition-colors duration-200"
             >
               <social.icon className="size-4" />
             </Link>
@@ -78,9 +78,9 @@ export function Footer({ hasLogoLight = false, hasLogoDark = false }: FooterProp
         </div>
       </div>
 
-      <div className="border-t border-merino/15">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6">
-          <p className="font-mono text-xs text-merino/70">
+      <div className="border-t border-[#84B3CE]/15">
+        <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-14 py-6">
+          <p className="font-mono text-xs text-[#A8CBE0]/80">
             © 2026 Alia. Todos los derechos reservados.
           </p>
         </div>

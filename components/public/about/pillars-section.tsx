@@ -1,8 +1,13 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { useRef } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useGSAP } from '@gsap/react'
 import { Heart, ShieldCheck, Globe } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
+
+gsap.registerPlugin(ScrollTrigger, useGSAP)
 
 const pillars = [
   {
@@ -26,53 +31,71 @@ const pillars = [
 ]
 
 export function PillarsSection() {
+  const sectionRef = useRef<HTMLElement>(null)
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia()
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        gsap.from('[data-pillar-reveal]', {
+          y: 24,
+          opacity: 0,
+          duration: 0.75,
+          stagger: 0.1,
+          ease: 'power3.out',
+          clearProps: 'transform,opacity',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 85%',
+            once: true,
+          },
+        })
+      })
+    },
+    { scope: sectionRef }
+  )
+
   return (
-    <section className="w-full bg-surface border-y border-border/70 py-20 lg:py-28">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+    <section
+      ref={sectionRef}
+      className="w-full bg-[#EAE1CD]/60 border-y border-[#DFD5C0] py-20 lg:py-28"
+    >
+      <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-14">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.45 }}
-          className="text-center mb-14 space-y-3"
-        >
-          <p className="font-mono text-xs font-medium uppercase tracking-[0.04em] text-primary">
+        <div data-pillar-reveal className="text-center mb-14 space-y-3">
+          <p className="font-mono text-xs font-medium uppercase tracking-[0.06em] text-[#16587B]">
             Principios
           </p>
-          <h2 className="font-sans font-medium text-3xl sm:text-4xl lg:text-[44px] leading-[1.15] tracking-[-0.025em] text-foreground">
-            Nuestros Pilares
+          <h2 className="font-sans font-light text-3xl sm:text-5xl lg:text-[52px] leading-[1.06] tracking-normal text-[#0C354C]">
+            Nuestros{' '}
+            <span className="font-serif italic font-normal text-[#16587B] text-[1.06em]">
+              pilares
+            </span>
           </h2>
-          <p className="font-sans text-base sm:text-lg text-foreground-secondary max-w-xl mx-auto leading-[1.6]">
+          <p className="font-sans text-base sm:text-lg text-[#0C354C]/80 max-w-xl mx-auto leading-[1.6]">
             Los valores de revisión humana y transparencia que guían cada decisión en Alia.
           </p>
-        </motion.div>
+        </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6">
-          {pillars.map(({ Icon, title, description }, idx) => (
-            <motion.div
-              key={title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 0.45, delay: idx * 0.08 }}
-            >
-              <Card className="h-full bg-background/50 dark:bg-background border border-border ring-0 rounded-[20px] hover:border-rock-blue transition-colors duration-200 py-0">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+          {pillars.map(({ Icon, title, description }) => (
+            <div key={title} data-pillar-reveal>
+              <Card className="h-full bg-[#FAF7F0] border border-[#DFD5C0] ring-0 shadow-none rounded-[8px] hover:border-[#84B3CE] transition-colors duration-200 py-0">
                 <CardContent className="p-8 flex flex-col items-start gap-5">
-                  <div className="size-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+                  <div className="size-12 rounded-[4px] bg-[#16587B]/10 text-[#16587B] flex items-center justify-center">
                     <Icon className="size-5" strokeWidth={1.5} />
                   </div>
 
                   <div className="space-y-2">
-                    <h3 className="font-sans font-semibold text-xl text-foreground">{title}</h3>
-                    <p className="font-sans text-foreground-secondary text-sm leading-relaxed">
+                    <h3 className="font-sans font-medium text-xl text-[#0C354C]">{title}</h3>
+                    <p className="font-sans text-[#0C354C]/75 text-sm leading-relaxed">
                       {description}
                     </p>
                   </div>
                 </CardContent>
               </Card>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

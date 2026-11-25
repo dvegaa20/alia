@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Leaf, HeartPulse, GraduationCap, PawPrint, Scale, Grid2X2 } from 'lucide-react'
 import { Feature, type CampaignItem } from '@/components/ui/feature-with-image-carousel'
@@ -48,16 +47,10 @@ export function CategoriesSection({ categories = [] }: CategoriesSectionProps) {
   }
 
   return (
-    <section className="px-4 sm:px-6 py-12 bg-surface overflow-hidden">
-      <div className="max-w-6xl mx-auto">
+    <section className="py-12 bg-[#F5EEDD] overflow-hidden">
+      <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-14">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
-          <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.4 }}
-            className="flex flex-wrap gap-2.5"
-          >
+          <div className="flex flex-wrap gap-2.5">
             {categories.map((cat) => {
               const Icon = categoryIcons[cat.slug] || Leaf
               const isActive = cat.id === activeCategoryId
@@ -67,10 +60,10 @@ export function CategoriesSection({ categories = [] }: CategoriesSectionProps) {
                   variant="outline"
                   onClick={() => setActiveCategoryId(cat.id)}
                   className={cn(
-                    'px-5 py-2.5 h-auto rounded-full font-sans text-sm font-medium flex items-center gap-2 transition-colors',
+                    'px-4 py-2.5 h-auto rounded-[4px] font-sans text-sm font-medium flex items-center gap-2 transition-colors shadow-none',
                     isActive
-                      ? 'bg-primary text-primary-foreground border-primary hover:bg-primary-hover hover:text-primary-foreground'
-                      : 'bg-background/60 dark:bg-surface-subtle text-foreground-secondary border-border hover:border-rock-blue hover:text-primary'
+                      ? 'bg-[#16587B] text-white border-[#16587B] hover:bg-[#0C354C] hover:border-[#0C354C] hover:text-white'
+                      : 'bg-[#FAF7F0] text-[#0C354C]/80 border-[#DFD5C0] hover:border-[#16587B] hover:text-[#16587B]'
                   )}
                 >
                   <Icon className="size-4" strokeWidth={1.5} />
@@ -78,12 +71,12 @@ export function CategoriesSection({ categories = [] }: CategoriesSectionProps) {
                 </Button>
               )
             })}
-          </motion.div>
+          </div>
 
           <Link href="/directory">
             <Button
               variant="outline"
-              className="px-5 py-2.5 h-auto rounded-full font-sans text-sm font-medium items-center gap-2 transition-colors bg-surface text-primary border-primary/40 hover:border-primary hover:bg-primary/5 hidden md:flex"
+              className="px-4 py-2.5 h-auto rounded-[4px] font-sans text-sm font-medium items-center gap-2 transition-colors bg-[#FAF7F0] text-[#16587B] border-[#16587B]/40 hover:border-[#16587B] hover:bg-[#16587B]/5 hidden md:flex shadow-none"
             >
               <Grid2X2 className="size-4" strokeWidth={1.5} />
               Ver más categorías
@@ -91,20 +84,14 @@ export function CategoriesSection({ categories = [] }: CategoriesSectionProps) {
           </Link>
         </div>
 
-        <motion.div
-          key={activeCategoryId}
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          className="mt-8"
-        >
+        <div className="mt-8">
           <Feature
             badge={activeCategoryData.badge}
             title={activeCategoryData.title}
             description={activeCategoryData.description}
             items={activeCategoryData.items}
           />
-        </motion.div>
+        </div>
       </div>
     </section>
   )

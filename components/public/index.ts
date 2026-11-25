@@ -5,6 +5,7 @@ export { FooterCTA } from './layout/footer-cta'
 
 // Home
 export { HeroSection } from './home/hero-section'
+export { HeroVideoCarousel } from './home/hero-video-carousel'
 export { CategoriesSection } from './home/categories-section'
 export { CategoryFilters } from './home/category-filters'
 export { CategoryCarousel } from './home/category-carousel'

@@ -66,7 +66,7 @@ export function MapView({ mapPoints }: MapViewProps) {
   const handleClosePopup = useCallback(() => setSelectedOrg(null), [])
 
   return (
-    <div className="relative h-[520px] w-full overflow-hidden rounded-2xl border border-border bg-surface">
+    <div className="relative h-[540px] w-full overflow-hidden rounded-[8px] border border-[#DFD5C0] bg-[#FAF7F0]">
       <Map center={mexicoCenter} zoom={5} className="h-full w-full">
         <MapControls position="bottom-right" showZoom showCompass showLocate showFullscreen />
         <MapBoundsController mapPoints={mapPoints} />
@@ -85,7 +85,7 @@ export function MapView({ mapPoints }: MapViewProps) {
               <button
                 type="button"
                 aria-label={`Ver ${point.name}`}
-                className="size-8 rounded-full bg-venice-blue dark:bg-rock-blue text-white dark:text-midnight-harbor border-2 border-white dark:border-midnight-harbor flex items-center justify-center transition-transform duration-200 hover:scale-110 cursor-pointer"
+                className="size-8 rounded-full bg-[#16587B] text-white border-2 border-[#FAF7F0] flex items-center justify-center transition-transform duration-200 hover:scale-110 cursor-pointer"
               >
                 <MapPin className="size-4" strokeWidth={1.75} />
               </button>

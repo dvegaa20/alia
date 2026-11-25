@@ -1,16 +1,22 @@
 import type { Metadata } from 'next'
-import { Plus_Jakarta_Sans, JetBrains_Mono } from 'next/font/google'
-import { ThemeProvider } from '@/components/providers/theme-provider'
+import { Inter_Tight, Newsreader, JetBrains_Mono } from 'next/font/google'
 import { Toaster } from '@/components/ui/sonner'
 import { SmoothScrolling } from '@/components/providers/smooth-scrolling'
 import { WebsiteJsonLd } from '@/components/seo/json-ld'
 import { GoogleAnalytics } from '@next/third-parties/google'
 import './globals.css'
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const interTight = Inter_Tight({
   subsets: ['latin'],
-  variable: '--font-plus-jakarta',
-  weight: ['400', '500', '600'],
+  variable: '--font-inter-tight',
+  weight: ['300', '400', '500', '600'],
+})
+
+const newsreader = Newsreader({
+  subsets: ['latin'],
+  variable: '--font-newsreader',
+  style: ['italic'],
+  weight: ['400'],
 })
 
 const jetBrainsMono = JetBrains_Mono({
@@ -45,22 +51,14 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      suppressHydrationWarning
-      className={`${plusJakartaSans.variable} ${jetBrainsMono.variable}`}
+      className={`${interTight.variable} ${newsreader.variable} ${jetBrainsMono.variable}`}
     >
       <head>
         <WebsiteJsonLd />
       </head>
       <body className="font-sans antialiased bg-background text-foreground">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem={false}
-          disableTransitionOnChange
-        >
-          <SmoothScrolling>{children}</SmoothScrolling>
-          <Toaster position="bottom-right" richColors closeButton />
-        </ThemeProvider>
+        <SmoothScrolling>{children}</SmoothScrolling>
+        <Toaster position="bottom-right" richColors closeButton />
       </body>
       <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID as string} />
     </html>

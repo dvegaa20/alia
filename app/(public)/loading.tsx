@@ -3,42 +3,37 @@ import { Skeleton } from '@/components/ui/skeleton'
 export default function HomeLoading() {
   return (
     <>
-      {/* Hero Section Skeleton */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-10 pb-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-          <div className="lg:col-span-7 space-y-5">
-            <Skeleton className="h-7 w-56 rounded-full" />
-            <Skeleton className="h-16 w-full rounded-xl" />
-            <Skeleton className="h-16 w-4/5 rounded-xl" />
-            <Skeleton className="h-14 w-full max-w-xl rounded-xl" />
-            <div className="flex gap-3 pt-2">
-              <Skeleton className="h-11 w-44 rounded-full" />
-              <Skeleton className="h-11 w-40 rounded-full" />
-            </div>
-          </div>
-          <div className="lg:col-span-5">
-            <Skeleton className="aspect-[5/6] w-full rounded-2xl" />
+      {/* Full-Width Hero Skeleton */}
+      <div className="relative w-full min-h-[88vh] lg:min-h-[92vh] bg-[#0C354C] flex items-center justify-center px-6">
+        <div className="max-w-4xl w-full mx-auto flex flex-col items-center space-y-6 pt-20">
+          <Skeleton className="h-7 w-56 rounded-[4px] bg-[#124866]" />
+          <Skeleton className="h-16 w-4/5 rounded-[4px] bg-[#124866]" />
+          <Skeleton className="h-16 w-3/5 rounded-[4px] bg-[#124866]" />
+          <Skeleton className="h-6 w-2/3 rounded-[4px] bg-[#124866]" />
+          <div className="flex gap-4 pt-2">
+            <Skeleton className="h-12 w-48 rounded-[4px] bg-[#124866]" />
+            <Skeleton className="h-12 w-44 rounded-[4px] bg-[#124866]" />
           </div>
         </div>
       </div>
 
       {/* Category Section Skeleton */}
-      <div className="bg-surface border-y border-border/70 py-20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="flex gap-3 mb-8">
+      <div className="bg-[#F5EEDD] border-b border-[#DFD5C0] py-20">
+        <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-14">
+          <div className="flex flex-wrap gap-3 mb-8">
             {Array.from({ length: 5 }).map((_, i) => (
-              <Skeleton key={i} className="h-10 w-28 rounded-full" />
+              <Skeleton key={i} className="h-10 w-28 rounded-[4px] bg-[#EAE1CD]" />
             ))}
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {Array.from({ length: 3 }).map((_, i) => (
               <div
                 key={i}
-                className="space-y-3 rounded-[20px] border border-border p-4 bg-background/40"
+                className="space-y-3 rounded-[8px] border border-[#DFD5C0] p-4 bg-[#FAF7F0]"
               >
-                <Skeleton className="h-40 w-full rounded-xl" />
-                <Skeleton className="h-5 w-3/4" />
-                <Skeleton className="h-4 w-1/2" />
+                <Skeleton className="h-40 w-full rounded-[4px] bg-[#EAE1CD]" />
+                <Skeleton className="h-5 w-3/4 bg-[#EAE1CD]" />
+                <Skeleton className="h-4 w-1/2 bg-[#EAE1CD]" />
               </div>
             ))}
           </div>

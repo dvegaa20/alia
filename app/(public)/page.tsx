@@ -1,3 +1,5 @@
+import fs from 'node:fs'
+import path from 'node:path'
 import { type Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
@@ -10,6 +12,8 @@ import {
   FeaturesSection,
   OrganizationCard,
 } from '@/components/public'
+import { HERO_VIDEOS, type ResolvedHeroVideo } from '@/components/public/home/hero-videos'
+import { GsapReveal } from '@/components/public/motion/gsap-reveal'
 import { Button } from '@/components/ui/button'
 import type { OrganizationCardProps } from '@/types'
 
@@ -57,6 +61,15 @@ function mapOrgToCard(org: {
   }
 }
 
+function resolveHeroVideos(): ResolvedHeroVideo[] {
+  const publicDir = path.join(process.cwd(), 'public')
+  return HERO_VIDEOS.map((item) => {
+    const relativePath = item.src.startsWith('/') ? item.src.slice(1) : item.src
+    const hasVideoFile = fs.existsSync(path.join(publicDir, relativePath))
+    return { ...item, hasVideoFile }
+  })
+}
+
 export default async function Page(props: { searchParams: Promise<{ category?: string }> }) {
   const searchParams = await props.searchParams
 
@@ -66,12 +79,7 @@ export default async function Page(props: { searchParams: Promise<{ category?: s
     getPublishedOrgs({ causeType: 'YOUTH_INITIATIVE', limit: 3 }),
   ])
 
-  const formattedOrgs = (orgs || []).map((org) => ({
-    slug: org.slug,
-    name: org.name,
-    categories: org.categories.map((c) => c.name) || ['Organización'],
-    logo: org.logoUrl || '',
-  }))
+  const heroVideos = resolveHeroVideos()
 
   const newAdditions = (orgs || []).slice(0, 3).map(mapOrgToCard)
   const youthInitiatives = (youthOrgs || []).slice(0, 3).map(mapOrgToCard)
@@ -82,33 +90,36 @@ export default async function Page(props: { searchParams: Promise<{ category?: s
 
   return (
     <>
-      {/* Band 1 — Hero (Merino) */}
-      <HeroSection organizations={formattedOrgs} />
+      {/* Band 1 — Full-Width Video Hero (Deep Harbor) */}
+      <HeroSection heroVideos={heroVideos} />
 
-      {/* Band 2 — Categorías y Nuevas Adiciones (Pure White) */}
+      {/* Band 2 — Categorías y Nuevas Adiciones (Merino) */}
       <section
         id="categorias"
-        className="w-full bg-surface border-y border-border/70 py-20 lg:py-28 scroll-mt-24"
+        className="w-full bg-[#F5EEDD] border-b border-[#DFD5C0] py-20 lg:py-28 scroll-mt-24"
       >
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="mb-10 text-left space-y-3">
-            <p className="font-mono text-xs font-medium uppercase tracking-[0.04em] text-primary">
+        <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-14">
+          <GsapReveal className="mb-10 text-left space-y-3">
+            <p className="font-mono text-xs font-medium uppercase tracking-[0.06em] text-[#16587B]">
               Explora por causa
             </p>
-            <h2 className="font-sans text-3xl sm:text-4xl lg:text-[44px] font-medium leading-[1.15] tracking-[-0.025em] text-foreground">
-              Explora por <span className="text-primary">categoría</span>
+            <h2 className="font-sans font-light text-3xl sm:text-5xl lg:text-[56px] leading-[1.04] tracking-normal text-[#0C354C]">
+              Explora por{' '}
+              <span className="font-serif italic font-normal text-[#16587B] text-[1.06em]">
+                categoría
+              </span>
             </h2>
-            <p className="font-sans text-base sm:text-lg text-foreground-secondary max-w-2xl leading-[1.55]">
+            <p className="font-sans text-base sm:text-lg text-[#0C354C]/80 max-w-2xl leading-[1.55]">
               Encuentra iniciativas afines a tus intereses y descubre cómo puedes sumar tu apoyo.
             </p>
-          </div>
+          </GsapReveal>
 
           <CategoryFilters
             categories={topCategories || []}
             activeCategorySlug={activeCategorySlug}
           />
 
-          <div className="mt-8">
+          <GsapReveal className="mt-8">
             {activeCategoryData && (
               <CategoryCarousel
                 categorySlug={activeCategorySlug}
@@ -116,20 +127,21 @@ export default async function Page(props: { searchParams: Promise<{ category?: s
                 categoryDescription={activeCategoryData.description}
               />
             )}
-          </div>
+          </GsapReveal>
 
           {/* Nuevas Adiciones */}
           {newAdditions.length > 0 && (
-            <div className="mt-16 pt-16 border-t border-border space-y-8">
-              <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div className="mt-20 pt-16 border-t border-[#DFD5C0] space-y-8">
+              <GsapReveal className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
                 <div className="space-y-2">
-                  <p className="font-mono text-xs font-medium uppercase tracking-[0.04em] text-primary">
+                  <p className="font-mono text-xs font-medium uppercase tracking-[0.06em] text-[#16587B]">
                     Recién sumadas
                   </p>
-                  <h3 className="font-sans text-2xl sm:text-3xl font-medium tracking-[-0.02em] text-foreground">
-                    Nuevas adiciones al directorio
+                  <h3 className="font-sans font-light text-2xl sm:text-4xl tracking-normal leading-[1.1] text-[#0C354C]">
+                    Nuevas adiciones al{' '}
+                    <span className="font-serif italic font-normal text-[#16587B]">directorio</span>
                   </h3>
-                  <p className="font-sans text-sm sm:text-base text-foreground-secondary max-w-xl">
+                  <p className="font-sans text-sm sm:text-base text-[#0C354C]/80 max-w-xl">
                     Organizaciones e iniciativas que acaban de completar su proceso de verificación.
                   </p>
                 </div>
@@ -137,29 +149,35 @@ export default async function Page(props: { searchParams: Promise<{ category?: s
                 <Button
                   asChild
                   variant="outline"
-                  className="rounded-full border-primary text-primary hover:bg-primary/5 px-5 py-2.5 h-auto text-sm font-medium shrink-0 self-start sm:self-auto"
+                  className="rounded-[4px] border-[#16587B] bg-transparent text-[#16587B] hover:bg-[#16587B] hover:text-white px-5 py-2.5 h-auto text-sm font-medium shrink-0 self-start sm:self-auto shadow-none transition-colors"
                 >
                   <Link href="/directory">
                     Ver directorio completo
                     <ArrowRight className="ml-2 size-4" strokeWidth={1.5} />
                   </Link>
                 </Button>
-              </div>
+              </GsapReveal>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
+              <GsapReveal
+                staggerSelector="[data-reveal-card]"
+                stagger={0.1}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7"
+              >
                 {newAdditions.map((org) => (
-                  <OrganizationCard key={org.slug} {...org} surface="on-white" />
+                  <div key={org.slug} data-reveal-card className="h-full">
+                    <OrganizationCard {...org} surface="on-merino" />
+                  </div>
                 ))}
-              </div>
+              </GsapReveal>
             </div>
           )}
         </div>
       </section>
 
-      {/* Band 3 — Nuestro Alcance: solo estadísticas (Venice Blue) */}
+      {/* Band 3 — Nuestro Alcance: estadísticas con conteo animado (Deep Harbor) */}
       <FeaturesSection />
 
-      {/* Band 4 — Puente de Confianza + Iniciativas Jóvenes (Merino) */}
+      {/* Band 4 — Puente de Confianza + Iniciativas Jóvenes (Merino / Oat Merino) */}
       <TrustSection youthInitiatives={youthInitiatives} />
     </>
   )
