@@ -7,29 +7,24 @@ import { ImpactPhotos } from '@/components/public/impact/impact-photos'
 export const metadata: Metadata = {
   title: 'Alcance Social',
   description:
-    'Datos de impacto sobre el alcance y conexión de Alia — El directorio social de México.',
-  alternates: { canonical: '/impacto' },
+    'Datos de impacto sobre nuestro alcance en México, actualizados constantemente para garantizar total transparencia en nuestra labor comunitaria.',
+  alternates: { canonical: '/impact' },
   openGraph: {
     title: 'Alcance Social | Alia',
     description:
-      'Datos de impacto sobre el alcance y conexión de la plataforma Alia. Transparencia sobre personas ayudando y causas descubiertas.',
+      'Datos de impacto sobre nuestro alcance en México, actualizados constantemente para garantizar total transparencia en nuestra labor comunitaria.',
     type: 'website',
   },
 }
 
-export default async function ImpactoPage() {
+export default async function ImpactPage() {
   const metrics = await getImpactMetrics()
 
   return (
-    <main className="min-h-screen">
-      {/* Hero with metric cards */}
+    <div className="min-h-screen">
       <ImpactHero metrics={metrics} />
-
-      {/* Top 10 organizations */}
       <ImpactTopOrgs topOrgs={metrics.topOrgs} />
-
-      {/* Continuous auto-moving photos carousel */}
       <ImpactPhotos lastUpdated={metrics.lastUpdated} />
-    </main>
+    </div>
   )
 }

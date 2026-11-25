@@ -6,10 +6,10 @@ import { Card, CardContent } from '@/components/ui/card'
 import type { ImpactMetrics } from '@/server/actions/analytics'
 
 const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 28 },
+  initial: { opacity: 0, y: 20 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, margin: '-60px' } as const,
-  transition: { duration: 0.55, ease: 'easeOut' as const, delay },
+  transition: { duration: 0.45, ease: 'easeOut' as const, delay },
 })
 
 function formatNumber(n: number): string {
@@ -29,16 +29,13 @@ function timeAgo(isoDate: string): string {
   return `hace ${hrs}h`
 }
 
-const metrics_cards = [
+const metricsCards = [
   {
     key: 'reach',
     Icon: Users,
     sublabel: 'Voluntad compartida',
     label: 'Personas que han explorado iniciativas locales',
     field: 'communityReach' as const,
-    iconColor: 'text-primary',
-    iconBg: 'bg-primary/10',
-    glowColor: 'var(--color-primary-400)',
   },
   {
     key: 'connections',
@@ -46,19 +43,13 @@ const metrics_cards = [
     sublabel: 'Vínculos directos',
     label: 'Personas conectando con causas sociales',
     field: 'realConnections' as const,
-    iconColor: 'text-primary',
-    iconBg: 'bg-primary/10',
-    glowColor: 'var(--color-primary-400)',
   },
   {
     key: 'views',
     Icon: Globe2,
     sublabel: 'Historias descubiertas',
-    label: 'Iniciativas que han dado a conocer su labor',
+    label: 'Consultas a organizaciones en el directorio',
     field: 'pageViews' as const,
-    iconColor: 'text-primary',
-    iconBg: 'bg-primary/10',
-    glowColor: 'var(--color-primary-400)',
   },
 ]
 
@@ -70,70 +61,53 @@ export function ImpactHero({ metrics }: ImpactHeroProps) {
   const { lastUpdated } = metrics
 
   return (
-    <section className="px-4 sm:px-8 pt-20 pb-16 bg-background overflow-hidden">
-      <div className="max-w-400 mx-auto">
-
-        {/* ── Section Header (About-page pattern) ── */}
-        <motion.div {...fadeUp()} className="text-center mb-16">
-          <p className="text-primary font-label text-xs uppercase tracking-widest font-bold mb-3">
-            Transparencia Activa
+    <section className="w-full bg-background pt-12 pb-16 lg:pt-20 lg:pb-24">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        {/* Header */}
+        <motion.div {...fadeUp()} className="text-center mb-10 space-y-4">
+          <p className="font-mono text-xs font-medium uppercase tracking-[0.04em] text-primary">
+            Transparencia activa
           </p>
-          <h1 className="font-headline font-bold text-4xl sm:text-5xl md:text-6xl text-foreground leading-tight mb-5">
-            Nuestro{' '}
-            <span className="text-primary italic">Alcance</span>{' '}
-            Social
+          <h1 className="font-sans font-medium text-[38px] sm:text-[52px] lg:text-[60px] leading-[1.06] tracking-[-0.03em] text-foreground">
+            Nuestro <span className="text-primary">alcance</span> social
           </h1>
-          <p className="font-body text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Datos de impacto sobre nuestro alcance en México, actualizados
-            constantemente para garantizar total transparencia en nuestra labor
-            comunitaria.
+          <p className="font-sans text-base sm:text-lg text-foreground-secondary max-w-2xl mx-auto leading-[1.6]">
+            Datos de impacto sobre nuestro alcance en México, actualizados constantemente para
+            garantizar total transparencia en nuestra labor comunitaria.
           </p>
-          <div className="mt-5 w-16 h-1 bg-primary/30 rounded-full mx-auto" />
         </motion.div>
 
         {/* Timestamp pill */}
-        <motion.div
-          {...fadeUp(0.1)}
-          className="flex items-center justify-center gap-2 text-xs text-muted-foreground mb-10"
-        >
-          <Clock className="size-3.5" />
-          <span>Datos de los últimos 30 días · Actualizado {timeAgo(lastUpdated)}</span>
+        <motion.div {...fadeUp(0.08)} className="flex justify-center mb-12">
+          <span className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-1.5 font-mono text-xs text-foreground-muted">
+            <Clock className="size-3.5 text-primary" strokeWidth={1.5} />
+            Datos de los últimos 30 días · Actualizado {timeAgo(lastUpdated)}
+          </span>
         </motion.div>
 
-        {/* ── Metric Cards ── */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {metrics_cards.map(({ key, Icon, sublabel, label, field, iconColor, iconBg, glowColor }, idx) => (
-            <motion.div key={key} {...fadeUp(idx * 0.12)}>
-              <Card className="relative h-full bg-card/50 backdrop-blur-sm border border-border/50 ring-0 shadow-sm hover:shadow-[0_12px_32px_rgba(26,28,28,0.08)] transition-all duration-400 py-0 group overflow-hidden">
-
-                {/* ── Warm glow behind the number ── */}
-                <div
-                  className="pointer-events-none absolute bottom-4 right-4 w-32 h-32 rounded-full opacity-[0.08] blur-3xl group-hover:opacity-[0.14] transition-opacity duration-700"
-                  style={{
-                    background: `radial-gradient(circle, ${glowColor} 0%, transparent 70%)`,
-                  }}
-                />
-
-                <CardContent className="relative p-8 flex flex-col justify-between min-h-[220px]">
-                  {/* Top: icon + labels */}
-                  <div>
-                    <div
-                      className={`w-12 h-12 ${iconBg} rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform duration-300`}
-                    >
-                      <Icon className={`size-5 ${iconColor}`} strokeWidth={1.75} />
+        {/* Metric Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6">
+          {metricsCards.map(({ key, Icon, sublabel, label, field }, idx) => (
+            <motion.div key={key} {...fadeUp(idx * 0.08)}>
+              <Card className="h-full bg-surface border border-border ring-0 rounded-[20px] hover:border-rock-blue transition-colors duration-200 py-0">
+                <CardContent className="p-6 lg:p-8 flex flex-col justify-between min-h-[220px] gap-6">
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="font-mono text-xs font-medium uppercase tracking-[0.04em] text-primary">
+                        {sublabel}
+                      </span>
+                      <div className="size-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                        <Icon className="size-5" strokeWidth={1.5} />
+                      </div>
                     </div>
-                    <p className="font-label text-xs font-bold text-muted-foreground uppercase tracking-widest mb-1">
-                      {sublabel}
-                    </p>
-                    <p className="font-body text-sm text-muted-foreground leading-relaxed">
+                    <p className="font-sans text-sm text-foreground-secondary leading-relaxed">
                       {label}
                     </p>
                   </div>
 
-                  {/* Bottom: number */}
-                  <span className="font-headline text-5xl font-bold text-foreground leading-none mt-6">
+                  <p className="font-mono font-medium text-4xl sm:text-5xl leading-none tracking-[-0.02em] tabular-nums text-foreground">
                     {formatNumber(metrics[field])}
-                  </span>
+                  </p>
                 </CardContent>
               </Card>
             </motion.div>

@@ -40,13 +40,13 @@ export function OrgTabs({
 }: OrgTabsProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.4 }}
+      transition={{ duration: 0.4, delay: 0.15 }}
     >
-      <Tabs defaultValue="sobre" className="mt-12">
+      <Tabs defaultValue="sobre" className="mt-10">
         {/* Tab Navigation */}
-        <TabsList className="bg-transparent border-b border-border/30 rounded-none w-full justify-start gap-10 h-auto p-0">
+        <TabsList className="bg-transparent border-b border-border rounded-none w-full justify-start gap-6 sm:gap-8 h-auto p-0 overflow-x-auto scrollbar-none">
           <TabsTrigger value="sobre" className={TAB_TRIGGER_CX}>
             Sobre nosotros
           </TabsTrigger>
@@ -64,8 +64,7 @@ export function OrgTabs({
           </TabsTrigger>
         </TabsList>
 
-        {/* Tab Content */}
-        <TabsContent value="sobre" className="mt-12">
+        <TabsContent value="sobre" className="mt-10">
           <AboutTab
             name={name}
             fullDescription={fullDescription}
@@ -80,21 +79,23 @@ export function OrgTabs({
           />
         </TabsContent>
 
-        <TabsContent value="explorar" className="mt-12">
+        <TabsContent value="explorar" className="mt-10">
           <ExploreTab relevantLinks={relevantLinks} />
         </TabsContent>
 
-        <TabsContent value="necesidades" className="mt-12">
+        <TabsContent value="necesidades" className="mt-10">
           <NeedsTab
             needs={needs}
             howToDonate={howToDonate}
             isDonatariaAutorizada={isDonatariaAutorizada}
             volunteering={volunteering}
             events={events}
+            whatsapp={whatsapp}
+            orgName={name}
           />
         </TabsContent>
 
-        <TabsContent value="impacto" className="mt-12">
+        <TabsContent value="impacto" className="mt-10">
           <ImpactTab
             impactHighlights={impactHighlights}
             impactTestimony={impactTestimony}
@@ -103,7 +104,7 @@ export function OrgTabs({
           />
         </TabsContent>
 
-        <TabsContent value="contacto" className="mt-12">
+        <TabsContent value="contacto" className="mt-10">
           <ContactTab
             email={email}
             phone={phone}

@@ -27,7 +27,6 @@ import {
   SelectGroup,
 } from '@/components/ui/select'
 import {
-  SidebarProvider,
   Sidebar,
   SidebarContent,
   SidebarGroup,
@@ -38,7 +37,7 @@ import {
   SidebarMenuButton,
 } from '@/components/ui/sidebar'
 
-import type { CategoryData, SidebarFiltersProps } from '@/types'
+import type { SidebarFiltersProps } from '@/types'
 
 const iconMap: Record<string, React.ElementType> = {
   educacion: GraduationCap,
@@ -62,7 +61,6 @@ export function SidebarFilters({
   const [isCitiesLoading, startCitiesTransition] = useTransition()
   const isMobile = useIsMobile()
 
-  // Fetch available cities when state changes
   useEffect(() => {
     if (activeState) {
       startCitiesTransition(async () => {
@@ -74,25 +72,19 @@ export function SidebarFilters({
     }
   }, [activeState])
 
-  // Sync input when URL changes externally (e.g. browser back/forward)
   useEffect(() => {
     setInputValue(searchQuery)
   }, [searchQuery])
 
-  // Debounced URL update
   const updateSearch = useCallback(
     (value: string) => {
       const params = new URLSearchParams(searchParams.toString())
-
       if (value.trim()) {
         params.set('q', value.trim())
       } else {
         params.delete('q')
       }
-
-      // Reset to page 1 on new search
       params.delete('page')
-
       const qs = params.toString()
       router.push(`/directory${qs ? `?${qs}` : ''}`, { scroll: false })
     },
@@ -102,13 +94,11 @@ export function SidebarFilters({
   const handleCategoryClick = (e: React.MouseEvent, slug: string | null) => {
     e.preventDefault()
     const params = new URLSearchParams(searchParams.toString())
-
     if (slug) {
       params.set('category', slug)
     } else {
       params.delete('category')
     }
-
     params.delete('page')
     const qs = params.toString()
     router.push(`/directory${qs ? `?${qs}` : ''}`, { scroll: false })
@@ -117,36 +107,39 @@ export function SidebarFilters({
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      // Only push if value actually changed from current URL
       if (inputValue !== searchQuery) {
         updateSearch(inputValue)
       }
     }, 200)
-
     return () => clearTimeout(timer)
   }, [inputValue, searchQuery, updateSearch])
 
   return (
     <motion.aside
-      initial={{ x: -30, opacity: 0 }}
+      initial={{ x: -20, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
-      transition={{ duration: 0.5, ease: 'easeOut' }}
-      className="hidden lg:block w-64 h-[calc(100vh-8rem)] sticky top-28"
+      transition={{ duration: 0.4, ease: 'easeOut' }}
+      className="hidden lg:block w-68 shrink-0 h-fit max-h-[calc(100vh-7.5rem)] sticky top-24 rounded-[20px] border border-border bg-surface p-5 overflow-y-auto scrollbar-none"
     >
       <Sidebar
         collapsible={isMobile ? 'offcanvas' : 'none'}
         className="w-full h-full bg-transparent border-none"
       >
         <SidebarHeader className="px-0 pt-0 pb-4">
-          <div>
-            <h2 className="text-lg font-bold text-foreground font-headline">Filtros</h2>
-            <p className="text-muted-foreground text-sm font-medium">Explorar por categoría</p>
+          <div className="space-y-1">
+            <p className="font-mono text-[11px] font-medium uppercase tracking-[0.04em] text-primary">
+              Filtros
+            </p>
+            <h2 className="font-sans text-lg font-semibold text-foreground">Explorar por causa</h2>
           </div>
 
           <div className="relative mt-4">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground size-4" />
+            <Search
+              className="absolute left-3.5 top-1/2 -translate-y-1/2 text-foreground-muted size-4"
+              strokeWidth={1.5}
+            />
             <Input
-              className="pl-10 pr-4 py-3 h-auto bg-muted/50 border-none rounded-lg focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:bg-background text-sm font-medium placeholder:text-muted-foreground"
+              className="pl-10 pr-4 py-2.5 h-10 bg-background/50 dark:bg-background border border-border hover:border-rock-blue rounded-xl focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:border-primary text-sm font-sans placeholder:text-foreground-muted"
               placeholder="Buscar ONG..."
               type="text"
               value={inputValue}
@@ -159,24 +152,24 @@ export function SidebarFilters({
           <SidebarGroup className="px-0">
             <SidebarGroupContent>
               <SidebarMenu className="space-y-1">
-                {/* Default Action: All Categories */}
                 <SidebarMenuItem>
                   <SidebarMenuButton
                     asChild
                     isActive={!activeCategorySlug}
-                    className="rounded-xl px-4 py-5 flex items-center space-x-3 transition-all duration-200 active:translate-x-1"
+                    className={cn(
+                      'rounded-xl px-3.5 py-5 flex items-center gap-3 transition-colors duration-200',
+                      !activeCategorySlug
+                        ? 'bg-primary/10 text-primary font-semibold'
+                        : 'text-foreground-secondary hover:bg-background/70 hover:text-primary'
+                    )}
                   >
                     <a href="#" onClick={(e) => handleCategoryClick(e, null)}>
-                      <Grid2x2
-                        className="size-5"
-                        {...(!activeCategorySlug ? { fill: 'currentColor', strokeWidth: 0 } : {})}
-                      />
-                      <span className="font-headline text-sm font-medium">Todas las causas</span>
+                      <Grid2x2 className="size-4 shrink-0" strokeWidth={1.5} />
+                      <span className="font-sans text-sm flex-1">Todas las causas</span>
                     </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
 
-                {/* Dynamic Categories */}
                 {categories.slice(0, 4).map((category) => {
                   const Icon = iconMap[category.slug] || Hash
                   const isActive = activeCategorySlug === category.slug
@@ -186,17 +179,17 @@ export function SidebarFilters({
                       <SidebarMenuButton
                         asChild
                         isActive={isActive}
-                        className="rounded-xl px-4 py-5 flex items-center space-x-3 transition-all duration-200 active:translate-x-1"
+                        className={cn(
+                          'rounded-xl px-3.5 py-5 flex items-center gap-3 transition-colors duration-200',
+                          isActive
+                            ? 'bg-primary/10 text-primary font-semibold'
+                            : 'text-foreground-secondary hover:bg-background/70 hover:text-primary'
+                        )}
                       >
                         <a href="#" onClick={(e) => handleCategoryClick(e, category.slug)}>
-                          <Icon
-                            className="size-5"
-                            {...(isActive ? { fill: 'currentColor', strokeWidth: 0 } : {})}
-                          />
-                          <span className="font-headline text-sm font-medium flex-1">
-                            {category.name}
-                          </span>
-                          <span className="text-xs font-medium text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+                          <Icon className="size-4 shrink-0" strokeWidth={1.5} />
+                          <span className="font-sans text-sm flex-1 truncate">{category.name}</span>
+                          <span className="font-mono text-[11px] font-medium tabular-nums text-primary bg-primary/10 px-2 py-0.5 rounded-full">
                             {category._count.organizations}
                           </span>
                         </a>
@@ -205,14 +198,13 @@ export function SidebarFilters({
                   )
                 })}
 
-                {/* Show More Button */}
                 {categories.length > 4 && (
                   <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                     <SidebarMenuItem>
                       <DialogTrigger asChild>
-                        <SidebarMenuButton className="rounded-xl px-4 py-5 flex items-center space-x-3 transition-all duration-200 hover:bg-muted/50 text-muted-foreground hover:text-foreground">
-                          <Grid2x2 className="size-5 opacity-70" />
-                          <span className="font-headline text-sm font-medium">
+                        <SidebarMenuButton className="rounded-xl px-3.5 py-5 flex items-center gap-3 transition-colors duration-200 text-foreground-muted hover:bg-background/70 hover:text-primary">
+                          <Grid2x2 className="size-4 shrink-0" strokeWidth={1.5} />
+                          <span className="font-sans text-sm font-medium">
                             Ver todas las causas
                           </span>
                         </SidebarMenuButton>
@@ -220,11 +212,11 @@ export function SidebarFilters({
                     </SidebarMenuItem>
 
                     <DialogContent
-                      className="sm:max-w-[700px] gap-6 px-8 py-10 rounded-3xl max-h-[90vh] overflow-y-auto"
+                      className="sm:max-w-[700px] gap-6 px-6 sm:px-8 py-8 rounded-[20px] border border-border bg-surface shadow-none ring-0 max-h-[90vh] overflow-y-auto"
                       data-lenis-prevent
                     >
                       <DialogHeader>
-                        <DialogTitle className="text-2xl font-headline font-bold text-center mb-4">
+                        <DialogTitle className="text-2xl font-sans font-semibold text-center mb-2 text-foreground">
                           Todas las causas
                         </DialogTitle>
                       </DialogHeader>
@@ -236,21 +228,22 @@ export function SidebarFilters({
                           return (
                             <button
                               key={`dialog-${category.id}`}
+                              type="button"
                               onClick={(e) => handleCategoryClick(e, category.slug)}
                               className={cn(
-                                'flex flex-col items-center justify-center p-6 rounded-2xl border text-center transition-all duration-200 hover:shadow-md hover:-translate-y-1',
+                                'flex flex-col items-center justify-center p-5 rounded-[20px] border text-center transition-all duration-200 cursor-pointer',
                                 isActive
-                                  ? 'bg-primary/10 border-primary-900 text-primary-900 dark:bg-primary-200/20 dark:text-primary-200 dark:border-primary-200'
-                                  : 'border-transparent text-muted-foreground hover:bg-muted/50 hover:text-foreground'
+                                  ? 'bg-primary/10 border-primary text-primary'
+                                  : 'border-border bg-background/40 text-foreground-secondary hover:border-rock-blue hover:text-primary'
                               )}
                             >
-                              <Icon className="size-8 mb-3 opacity-80" />
-                              <span className="font-headline font-bold mb-1 leading-tight">
+                              <Icon className="size-7 mb-2.5" strokeWidth={1.5} />
+                              <span className="font-sans font-semibold text-sm mb-1 leading-tight">
                                 {category.name}
                               </span>
-                              <span className="text-xs text-muted-foreground font-medium">
+                              <span className="font-mono text-[11px] tabular-nums text-foreground-muted">
                                 {category._count.organizations} ONG
-                                {category._count.organizations !== 1 && 's'} activas
+                                {category._count.organizations !== 1 && 's'}
                               </span>
                             </button>
                           )
@@ -263,11 +256,11 @@ export function SidebarFilters({
             </SidebarGroupContent>
           </SidebarGroup>
 
-          <SidebarGroup className="px-0 mt-4 border-t border-border pt-4">
-            <SidebarGroupContent className="space-y-6">
+          <SidebarGroup className="px-0 mt-4 border-t border-border pt-5">
+            <SidebarGroupContent className="space-y-5">
               {/* Estado */}
               <div className="space-y-2">
-                <Label className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground px-4">
+                <Label className="font-mono text-[11px] font-medium uppercase tracking-[0.04em] text-foreground-muted">
                   Estado
                 </Label>
                 <Select
@@ -285,7 +278,7 @@ export function SidebarFilters({
                     router.push(`/directory${qs ? `?${qs}` : ''}`, { scroll: false })
                   }}
                 >
-                  <SelectTrigger className="w-full bg-muted/30 border-none rounded-lg text-sm font-medium">
+                  <SelectTrigger className="w-full h-10 bg-background/50 dark:bg-background border border-border hover:border-rock-blue rounded-xl text-sm font-sans text-foreground">
                     <SelectValue placeholder="Todo México" />
                   </SelectTrigger>
                   <SelectContent position="popper" className="max-h-64" data-lenis-prevent>
@@ -301,10 +294,10 @@ export function SidebarFilters({
                 </Select>
               </div>
 
-              {/* Municipio (only shows when a state is selected) */}
+              {/* Municipio */}
               {activeState && (
                 <div className="space-y-2">
-                  <Label className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground px-4">
+                  <Label className="font-mono text-[11px] font-medium uppercase tracking-[0.04em] text-foreground-muted">
                     Municipio
                   </Label>
                   <Select
@@ -321,7 +314,7 @@ export function SidebarFilters({
                       router.push(`/directory${qs ? `?${qs}` : ''}`, { scroll: false })
                     }}
                   >
-                    <SelectTrigger className="w-full bg-muted/30 border-none rounded-lg text-sm font-medium">
+                    <SelectTrigger className="w-full h-10 bg-background/50 dark:bg-background border border-border hover:border-rock-blue rounded-xl text-sm font-sans text-foreground">
                       <SelectValue
                         placeholder={isCitiesLoading ? 'Cargando...' : 'Todos los municipios'}
                       />
@@ -341,10 +334,10 @@ export function SidebarFilters({
               )}
 
               {/* Verified Toggle */}
-              <div className="px-4 flex items-center justify-between">
+              <div className="flex items-center justify-between pt-1">
                 <Label
                   htmlFor="verified-toggle"
-                  className="text-sm font-medium text-muted-foreground cursor-pointer"
+                  className="font-sans text-sm font-medium text-foreground-secondary cursor-pointer"
                 >
                   Solo verificadas
                 </Label>

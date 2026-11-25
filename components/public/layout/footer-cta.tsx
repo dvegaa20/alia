@@ -1,34 +1,41 @@
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
 import { ArrowRight } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { SuggestOrgDialog } from '@/components/public/suggest/suggest-org-dialog'
 
 export function FooterCTA() {
   return (
-    <div className="relative pt-24 pb-56 px-8">
-      {/* Radial gradient overlay */}
-      <div
-        className="pointer-events-none absolute inset-0"
-      />
-
-      <div className="relative z-10 max-w-400 mx-auto text-center space-y-6">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold  font-headline leading-tight tracking-tight">
+    <div className="border-b border-merino/15 py-20 lg:py-24 px-4 sm:px-6">
+      <div className="max-w-4xl mx-auto text-center space-y-6">
+        <p className="font-mono text-xs font-medium uppercase tracking-[0.04em] text-rock-blue">
+          Actúa hoy
+        </p>
+        <h2 className="font-sans font-medium text-3xl sm:text-4xl lg:text-[44px] leading-[1.15] tracking-[-0.025em] text-white dark:text-merino">
           ¿Listo para hacer una verdadera diferencia?
         </h2>
-        <p className="text-base-400 text-base sm:text-lg max-w-2xl mx-auto font-body leading-relaxed">
-          Explora nuestro directorio verificado de organizaciones sociales y encuentra el proyecto
-          perfecto para apoyar con tu tiempo o tus recursos.
+        <p className="font-sans text-base sm:text-lg text-merino/80 max-w-2xl mx-auto leading-[1.6]">
+          Explora nuestro directorio verificado de organizaciones sociales y encuentra la causa
+          perfecta para apoyar con tu tiempo o tus recursos.
         </p>
-        <div className="pt-2">
+        <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3.5">
           <Button
             asChild
-            variant="secondary"
-            className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8 py-3 h-auto text-base font-semibold shadow-xl shadow-primary/25 hover:shadow-2xl hover:shadow-primary/40 transition-all duration-500 hover:scale-[1.04] active:scale-95 mb-1"
+            className="rounded-full bg-merino text-deep-harbor hover:bg-white px-6 py-3 h-auto text-[15px] font-medium border-none"
           >
             <Link href="/directory">
-              Explorar Causas
-              <ArrowRight className="ml-2 h-4 w-4" />
+              Explorar causas
+              <ArrowRight className="ml-2 size-4" strokeWidth={1.5} />
             </Link>
           </Button>
+          <SuggestOrgDialog>
+            <Button
+              type="button"
+              variant="outline"
+              className="rounded-full border-merino/50 bg-transparent text-merino hover:bg-white/10 hover:text-white hover:border-merino px-6 py-3 h-auto text-[15px] font-medium"
+            >
+              Sugerir ONG
+            </Button>
+          </SuggestOrgDialog>
         </div>
       </div>
     </div>

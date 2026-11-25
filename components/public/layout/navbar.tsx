@@ -4,13 +4,13 @@ import React from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion } from 'framer-motion'
+import { createPortal } from 'react-dom'
 import { Button } from '@/components/ui/button'
 import { ModeToggle } from '@/components/ui/mode-toggle'
 import { SuggestOrgDialog } from '@/components/public/suggest/suggest-org-dialog'
 import { MenuToggleIcon } from '@/components/ui/menu-toggle-icon'
-import { useScroll } from '@/components/ui/use-scroll'
+import { AliaLogo } from './alia-logo'
 import { cn } from '@/lib/utils'
-import { createPortal } from 'react-dom'
 
 const navLinks = [
   { href: '/', label: 'Inicio' },
@@ -19,13 +19,17 @@ const navLinks = [
   { href: '/impact', label: 'Impacto' },
 ]
 
-export function Navbar() {
+interface NavbarProps {
+  hasLogoLight?: boolean
+  hasLogoDark?: boolean
+}
+
+export function Navbar({ hasLogoLight = false, hasLogoDark = false }: NavbarProps) {
   const [open, setOpen] = React.useState(false)
+  const [suggestOpen, setSuggestOpen] = React.useState(false)
   const [hoveredPath, setHoveredPath] = React.useState<string | null>(null)
-  const scrolled = useScroll(10)
   const pathname = usePathname()
 
-  // Prevent body scroll when mobile menu is open
   React.useEffect(() => {
     if (open) {
       document.body.style.overflow = 'hidden'
@@ -38,112 +42,109 @@ export function Navbar() {
   }, [open])
 
   return (
-    <header
-      className={cn(
-        'sticky top-0 z-50 w-full transition-all duration-300 border-b border-transparent',
-        {
-          'bg-background/80 supports-[backdrop-filter]:bg-background/40 border-border/50 backdrop-blur-xl py-2 shadow-sm':
-            scrolled,
-          'py-4': !scrolled,
-        }
-      )}
-    >
-      <nav className="max-w-400 mx-auto flex h-14 w-full items-center justify-between px-6 sm:px-8">
+    <header className="sticky top-0 z-50 w-full px-4 sm:px-6 pt-3 pb-2 pointer-events-none">
+      <nav
+        aria-label="Navegación principal"
+        className="pointer-events-auto mx-auto max-w-6xl flex h-14 sm:h-15 w-full items-center justify-between rounded-full border border-border bg-white/90 dark:bg-dark-surface/90 backdrop-blur-md px-4 sm:px-6 navbar-float transition-all duration-200"
+      >
         {/* Logo */}
-        <div className="flex items-center gap-2">
-          <Link
-            href="/"
-            className="text-2xl font-bold text-primary dark:text-primary-200 font-headline tracking-tight hover:opacity-80 transition-opacity"
-          >
-            Alia
-          </Link>
-        </div>
+        <Link
+          href="/"
+          className="inline-flex items-center hover:opacity-85 transition-opacity shrink-0"
+          aria-label="Alia — Inicio"
+        >
+          <AliaLogo variant="auto" hasLogoLight={hasLogoLight} hasLogoDark={hasLogoDark} />
+        </Link>
 
-        {/* Desktop Navigation & Actions */}
-        <div className="hidden items-center gap-6 md:flex">
-          <div className="flex items-center gap-8 mr-4" onMouseLeave={() => setHoveredPath(null)}>
-            {navLinks.map((link) => {
-              const isActive = pathname === link.href
-              const isHovered = hoveredPath === link.href
+        {/* Desktop Links */}
+        <div
+          className="hidden items-center gap-7 md:flex"
+          onMouseLeave={() => setHoveredPath(null)}
+        >
+          {navLinks.map((link) => {
+            const isActive =
+              pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href))
+            const isHovered = hoveredPath === link.href
+            const showIndicator = isHovered || (!hoveredPath && isActive)
 
-              // Resolve which link should show the indicator
-              // Priority: Hovered link > Active link (if none is hovered)
-              const showIndicator = isHovered || (!hoveredPath && isActive)
-
-              return (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  onMouseEnter={() => setHoveredPath(link.href)}
-                  className={cn(
-                    'text-sm font-medium font-headline transition-colors duration-200 relative group py-1',
-                    isActive ? 'text-primary dark:text-primary-200' : 'text-muted-foreground'
-                  )}
-                >
-                  {link.label}
-                  {showIndicator && (
-                    <motion.div
-                      layoutId={`nav-indicator-${pathname}`}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      className="absolute bottom-0 left-0 w-full h-[1.5px] bg-primary dark:bg-primary-200 z-10"
-                      transition={{
-                        type: 'spring',
-                        stiffness: 380,
-                        damping: 30,
-                      }}
-                    />
-                  )}
-                </Link>
-              )
-            })}
-          </div>
-
-          <div className="flex items-center gap-3">
-            <SuggestOrgDialog>
-              <Button
-                className="rounded-xl shadow-md hover:shadow-lg transition-all duration-300 group px-6 bg-primary hover:bg-primary/90 text-primary-foreground font-headline text-xs h-9 border-none"
-                asChild
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                onMouseEnter={() => setHoveredPath(link.href)}
+                className={cn(
+                  'relative py-1.5 font-sans text-[14px] font-medium transition-colors duration-200',
+                  isActive ? 'text-primary' : 'text-foreground-secondary hover:text-primary'
+                )}
               >
-                <span>Sugerir ONG</span>
-              </Button>
-            </SuggestOrgDialog>
-            <ModeToggle />
-          </div>
+                {link.label}
+                {showIndicator && (
+                  <motion.div
+                    layoutId={`nav-indicator-${pathname}`}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="absolute bottom-0 left-0 w-full h-[2px] rounded-full bg-primary"
+                    transition={{
+                      type: 'spring',
+                      stiffness: 380,
+                      damping: 30,
+                    }}
+                  />
+                )}
+              </Link>
+            )
+          })}
         </div>
 
-        {/* Mobile menu and button (always on right) */}
-        <div className="flex items-center md:hidden">
+        {/* Desktop Actions */}
+        <div className="hidden items-center gap-2.5 md:flex shrink-0">
+          <ModeToggle />
+          <Button
+            type="button"
+            onClick={() => setSuggestOpen(true)}
+            className="rounded-full bg-primary hover:bg-primary-hover text-primary-foreground px-5 py-2.5 h-auto font-sans text-[14px] font-medium border-none"
+          >
+            Sugerir ONG
+          </Button>
+        </div>
+
+        {/* Mobile Actions */}
+        <div className="flex items-center gap-2 md:hidden">
+          <ModeToggle />
           <Button
             size="icon"
-            variant="ghost"
+            variant="outline"
             onClick={() => setOpen(!open)}
-            className="text-muted-foreground hover:text-foreground"
+            className="rounded-full size-9 border-border bg-surface text-foreground hover:bg-surface-subtle"
             aria-expanded={open}
             aria-controls="mobile-menu"
-            aria-label="Toggle menu"
+            aria-label="Abrir menú"
           >
-            <MenuToggleIcon open={open} className="size-6" duration={300} />
+            <MenuToggleIcon open={open} className="size-5" duration={250} />
           </Button>
         </div>
       </nav>
 
+      {/* Controlled SuggestOrgDialog mounted outside MobileMenu so closing the menu never unmounts the dialog */}
+      <SuggestOrgDialog open={suggestOpen} onOpenChange={setSuggestOpen} />
+
       {/* Mobile Menu Portal */}
       <MobileMenu open={open} className="flex flex-col justify-between p-6 gap-6">
         <div className="grid gap-y-4">
-          <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold mb-2">
+          <p className="font-mono text-xs uppercase tracking-[0.04em] text-foreground-muted mb-2">
             Navegación
           </p>
           {navLinks.map((link) => {
-            const isActive = pathname === link.href
+            const isActive =
+              pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href))
             return (
               <Link
-                key={link.label}
+                key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
                 className={cn(
-                  'text-2xl font-bold font-headline transition-all duration-200 relative group inline-block w-fit py-1',
-                  isActive ? 'text-primary dark:text-primary-200' : 'text-muted-foreground'
+                  'relative inline-block w-fit py-1 font-sans text-2xl font-medium tracking-[-0.02em] transition-colors duration-200',
+                  isActive ? 'text-primary' : 'text-foreground-secondary hover:text-primary'
                 )}
               >
                 {link.label}
@@ -152,7 +153,7 @@ export function Navbar() {
                     layoutId={`mobile-nav-indicator-${pathname}`}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className="absolute bottom-0 left-0 w-full h-[3px] bg-primary dark:bg-primary-200"
+                    className="absolute bottom-0 left-0 w-full h-[2px] rounded-full bg-primary"
                   />
                 )}
               </Link>
@@ -160,21 +161,17 @@ export function Navbar() {
           })}
         </div>
 
-        <div className="flex flex-col gap-4 pt-6 border-t border-border/40">
-          <SuggestOrgDialog>
-            <Button
-              className="w-full rounded-2xl py-6 text-base shadow-lg bg-primary hover:bg-primary/90 text-primary-foreground font-headline border-none"
-              onClick={() => setOpen(false)}
-            >
-              Sugerir una ONG
-            </Button>
-          </SuggestOrgDialog>
-          <div className="flex items-center justify-between px-2 pt-2">
-            <span className="text-sm font-medium text-muted-foreground font-headline">
-              Apariencia
-            </span>
-            <ModeToggle />
-          </div>
+        <div className="flex flex-col gap-4 pt-6 border-t border-border">
+          <Button
+            type="button"
+            onClick={() => {
+              setOpen(false)
+              setSuggestOpen(true)
+            }}
+            className="w-full rounded-full py-3.5 h-auto text-[15px] font-medium bg-primary hover:bg-primary-hover text-primary-foreground border-none"
+          >
+            Sugerir ONG
+          </Button>
         </div>
       </MobileMenu>
     </header>
@@ -192,14 +189,14 @@ function MobileMenu({ open, children, className, ...props }: MobileMenuProps) {
     <div
       id="mobile-menu"
       className={cn(
-        'bg-background/98 supports-[backdrop-filter]:bg-background/80 backdrop-blur-2xl',
-        'fixed top-14 right-0 bottom-0 left-0 z-40 flex flex-col overflow-hidden md:hidden transition-all duration-300'
+        'bg-background/98 supports-[backdrop-filter]:bg-background/95 backdrop-blur-xl',
+        'fixed top-[74px] right-0 bottom-0 left-0 z-40 flex flex-col overflow-hidden md:hidden transition-all duration-200'
       )}
     >
       <div
         data-slot={open ? 'open' : 'closed'}
         className={cn(
-          'data-[slot=open]:animate-in data-[slot=open]:slide-in-from-top-4 data-[slot=open]:fade-in ease-out duration-300',
+          'data-[slot=open]:animate-in data-[slot=open]:slide-in-from-top-4 data-[slot=open]:fade-in ease-out duration-200',
           'size-full flex flex-col',
           className
         )}

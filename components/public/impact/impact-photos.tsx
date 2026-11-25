@@ -2,14 +2,14 @@
 
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { MapPin, Clock, Pause, Play, Sparkles } from 'lucide-react'
+import { MapPin, Clock, Sparkles } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 
 const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 28 },
+  initial: { opacity: 0, y: 20 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, margin: '-60px' } as const,
-  transition: { duration: 0.5, ease: 'easeOut' as const, delay },
+  transition: { duration: 0.45, ease: 'easeOut' as const, delay },
 })
 
 function formatDate(isoDate: string): string {
@@ -83,71 +83,57 @@ interface ImpactPhotosProps {
 }
 
 export function ImpactPhotos({ lastUpdated }: ImpactPhotosProps) {
-  // Duplicate items to create a seamless infinite loop
   const duplicatedPhotos = [...PHOTO_ITEMS, ...PHOTO_ITEMS]
 
   return (
-    <section className="py-24 bg-background overflow-hidden relative">
-      <div className="max-w-400 mx-auto px-4 sm:px-8 mb-12">
-        {/* Section Header */}
-        <motion.div {...fadeUp()} className="text-center">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-label uppercase tracking-widest font-bold mb-3">
-            <Sparkles className="size-3.5" />
-            <span>Comunidad en Acción</span>
+    <section className="w-full py-20 lg:py-24 bg-background overflow-hidden relative">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 mb-12">
+        <motion.div {...fadeUp()} className="text-center space-y-3">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full border border-primary/20 bg-primary/10 text-primary font-mono text-xs uppercase tracking-[0.04em] font-medium">
+            <Sparkles className="size-3.5" strokeWidth={1.5} />
+            <span>Comunidad en acción</span>
           </div>
-          <h2 className="font-headline font-bold text-4xl md:text-5xl text-foreground leading-tight max-w-3xl mx-auto mb-4">
-            El impacto que cobra <span className="text-primary italic">vida</span>
+          <h2 className="font-sans font-medium text-3xl sm:text-4xl lg:text-[42px] leading-[1.15] tracking-[-0.025em] text-foreground max-w-3xl mx-auto">
+            El impacto que cobra <span className="text-primary">vida</span>
           </h2>
-          <p className="font-body text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <p className="font-sans text-base sm:text-lg text-foreground-secondary max-w-2xl mx-auto leading-[1.6]">
             Detrás de cada cifra hay personas, organizaciones y comunidades sumando voluntades todos
-            los días en cada rincón de México.
+            los días en México.
           </p>
-          <div className="mt-5 w-16 h-1 bg-primary/30 rounded-full mx-auto" />
         </motion.div>
       </div>
 
       {/* Marquee Carousel Container */}
-      <motion.div {...fadeUp(0.15)} className="relative w-full overflow-hidden">
-        {/* Gradient fades on left and right edges */}
-        <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-12 sm:w-28 md:w-44 z-10 bg-gradient-to-r from-background via-background/80 to-transparent" />
-        <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-12 sm:w-28 md:w-44 z-10 bg-gradient-to-l from-background via-background/80 to-transparent" />
+      <motion.div {...fadeUp(0.1)} className="relative w-full overflow-hidden">
+        <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-12 sm:w-28 md:w-40 z-10 bg-gradient-to-r from-background via-background/80 to-transparent" />
+        <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-12 sm:w-28 md:w-40 z-10 bg-gradient-to-l from-background via-background/80 to-transparent" />
 
-        {/* Scrolling track */}
-        <div className="animate-marquee flex gap-5 py-3 cursor-grab active:cursor-grabbing hover:[animation-play-state:paused]">
+        <div className="animate-marquee flex gap-5 py-2 cursor-grab active:cursor-grabbing hover:[animation-play-state:paused]">
           {duplicatedPhotos.map((photo, index) => (
             <div
               key={`${photo.src}-${index}`}
-              className="group relative shrink-0 w-[290px] sm:w-[360px] md:w-[420px] aspect-[16/11] rounded-2xl sm:rounded-3xl overflow-hidden border border-border/50 bg-card shadow-sm hover:shadow-xl transition-all duration-500"
+              className="group relative shrink-0 w-[290px] sm:w-[360px] md:w-[420px] aspect-[16/11] rounded-2xl overflow-hidden border border-border bg-surface transition-colors duration-200 hover:border-rock-blue"
             >
-              {/* Photo */}
               <Image
                 src={photo.src}
                 alt={photo.alt}
                 fill
                 sizes="(max-width: 640px) 290px, (max-width: 1024px) 360px, 420px"
-                className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
               />
 
-              {/* Gradient Scrim Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/5 group-hover:from-black/85 transition-colors duration-300" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-black/5" />
 
-              {/* Top Tag Badge */}
               <div className="absolute top-4 left-4 z-10">
-                <Badge
-                  variant="secondary"
-                  className="bg-black/40 backdrop-blur-md text-white border-white/15 text-[11px] font-label font-medium px-2.5 py-0.5 rounded-full shadow-xs"
-                >
+                <Badge className="bg-black/50 backdrop-blur-md text-merino border-white/15 font-mono text-[10px] uppercase tracking-[0.04em] font-medium px-2.5 py-0.5 rounded-full">
                   {photo.tag}
                 </Badge>
               </div>
 
-              {/* Bottom Details */}
-              <div className="absolute bottom-0 inset-x-0 p-5 sm:p-6 z-10 flex flex-col gap-1.5 text-white">
-                <h3 className="font-headline font-bold text-lg sm:text-xl leading-snug drop-shadow-xs">
-                  {photo.title}
-                </h3>
-                <div className="flex items-center gap-1.5 text-xs text-white/80 font-body">
-                  <MapPin className="size-3.5 text-primary-300 shrink-0" />
+              <div className="absolute bottom-0 inset-x-0 p-5 sm:p-6 z-10 flex flex-col gap-1 text-white">
+                <h3 className="font-sans font-semibold text-lg leading-snug">{photo.title}</h3>
+                <div className="flex items-center gap-1.5 text-xs text-merino/85 font-sans">
+                  <MapPin className="size-3.5 text-rock-blue shrink-0" strokeWidth={1.5} />
                   <span>{photo.location}</span>
                 </div>
               </div>
@@ -156,21 +142,17 @@ export function ImpactPhotos({ lastUpdated }: ImpactPhotosProps) {
         </div>
       </motion.div>
 
-      {/* Controls & Footer Info */}
-      <div className="max-w-400 mx-auto px-4 sm:px-8 mt-8 flex flex-col items-center gap-6">
-        {/* Optional Last updated footer */}
-        {lastUpdated && (
-          <motion.div
-            {...fadeUp(0.2)}
-            className="flex items-center justify-center gap-2 text-xs text-muted-foreground pt-4 border-t border-border/40 w-full max-w-xl text-center"
-          >
-            <Clock className="size-3.5 shrink-0" />
-            <span className="font-label">
+      {/* Last updated footer */}
+      {lastUpdated && (
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 mt-10 flex justify-center">
+          <div className="flex items-center justify-center gap-2 text-xs text-foreground-muted pt-4 border-t border-border w-full max-w-xl text-center">
+            <Clock className="size-3.5 shrink-0 text-primary" strokeWidth={1.5} />
+            <span className="font-mono">
               Última actualización de datos: {formatDate(lastUpdated)}
             </span>
-          </motion.div>
-        )}
-      </div>
+          </div>
+        </div>
+      )}
     </section>
   )
 }

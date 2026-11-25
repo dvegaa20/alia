@@ -18,91 +18,84 @@ export function DirectoryShowcase({
 }: DirectoryShowcaseProps) {
   return (
     <Tabs defaultValue="all" className="w-full space-y-8">
-      {/* Top Tab Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-muted/30 p-2 rounded-2xl border border-border/50">
-        <TabsList className="bg-transparent p-0 h-auto flex flex-wrap gap-1.5">
+      {/* Top Tab Bar (Pill Container) */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <TabsList className="bg-surface border border-border rounded-full p-1.5 h-auto flex flex-wrap gap-1 w-full sm:w-fit">
           <TabsTrigger
             value="all"
-            className="rounded-xl px-4 py-2.5 text-sm font-bold data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+            className="rounded-full px-4 py-2 text-sm font-medium text-foreground-secondary data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-none transition-colors"
           >
-            Directorio Completo
+            Directorio completo
           </TabsTrigger>
           <TabsTrigger
             value="youth"
-            className="rounded-xl px-4 py-2.5 text-sm font-bold data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm gap-2"
+            className="group rounded-full px-4 py-2 text-sm font-medium text-foreground-secondary data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-none gap-2 transition-colors"
           >
-            <Sparkles className="size-4 text-amber-500" />
-            Iniciativas Jóvenes
+            <Sparkles className="size-3.5" strokeWidth={1.5} />
+            Iniciativas jóvenes
             {youthInitiatives.length > 0 && (
-              <Badge className="bg-amber-500/15 text-amber-700 dark:text-amber-300 border-none px-2 py-0 text-[10px]">
+              <Badge className="rounded-full bg-rock-blue/25 text-deep-harbor dark:bg-rock-blue/25 dark:text-rock-blue group-data-[state=active]:bg-white/20 group-data-[state=active]:text-white dark:group-data-[state=active]:bg-midnight-harbor/25 dark:group-data-[state=active]:text-midnight-harbor border-none px-2 py-0 font-mono text-[10px] font-medium tabular-nums">
                 {youthInitiatives.length}
               </Badge>
             )}
           </TabsTrigger>
           <TabsTrigger
             value="new"
-            className="rounded-xl px-4 py-2.5 text-sm font-bold data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm gap-2"
+            className="rounded-full px-4 py-2 text-sm font-medium text-foreground-secondary data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-none gap-2 transition-colors"
           >
-            <Clock className="size-4 text-primary" />
-            Nuevas Adiciones
+            <Clock className="size-3.5" strokeWidth={1.5} />
+            Nuevas adiciones
           </TabsTrigger>
         </TabsList>
       </div>
 
-      {/* TAB 1: All Directory + Top Highlights */}
+      {/* TAB 1: All Directory + Highlights */}
       <TabsContent value="all" className="space-y-10 mt-0">
-        {/* Fila de Nuevas Adiciones */}
         {newAdditions.length > 0 && (
-          <section className="bg-slate-50/40 dark:bg-zinc-900/20 p-6 md:p-8 rounded-3xl border border-border/30 space-y-6">
-            <div className="flex items-center justify-between flex-wrap gap-3">
-              <div className="space-y-1">
-                <div className="flex items-center gap-2">
-                  <Badge className="bg-primary/15 text-primary border border-primary/20 rounded-full text-[10px] font-bold uppercase tracking-wider">
-                    Recién sumadas
-                  </Badge>
-                </div>
-                <h2 className="text-2xl font-extrabold font-headline text-foreground tracking-tight">
-                  Nuevas adiciones
-                </h2>
-                <p className="text-sm text-muted-foreground font-medium">
-                  Las causas y organizaciones más recientes que se han integrado a Alia.
-                </p>
-              </div>
+          <section className="rounded-[20px] border border-border bg-surface-subtle/60 dark:bg-surface/40 p-6 md:p-8 space-y-6">
+            <div className="space-y-1.5">
+              <span className="inline-block font-mono text-[11px] font-medium uppercase tracking-[0.04em] text-primary">
+                Recién sumadas
+              </span>
+              <h2 className="font-sans text-2xl font-medium tracking-[-0.02em] text-foreground">
+                Nuevas adiciones
+              </h2>
+              <p className="font-sans text-sm text-foreground-secondary">
+                Las causas y organizaciones más recientes que se han integrado a Alia.
+              </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 lg:gap-6">
               {newAdditions.slice(0, 3).map((org) => (
-                <OrganizationCard key={`new-${org.slug}`} {...org} />
+                <OrganizationCard key={`new-${org.slug}`} {...org} surface="on-merino" />
               ))}
             </div>
           </section>
         )}
 
-        {/* Bloque de Iniciativas Jóvenes en la parte superior */}
-        <section className="relative overflow-hidden rounded-3xl border border-amber-500/25 bg-linear-to-br from-amber-500/10 via-primary/5 to-background p-6 md:p-8 space-y-6">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div className="space-y-2 max-w-2xl">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-300 text-xs font-bold uppercase tracking-wider">
-                <Rocket className="size-3.5" />
-                Iniciativas Jóvenes y Escolares
-              </div>
-              <h2 className="text-2xl md:text-3xl font-extrabold font-headline text-foreground tracking-tight">
-                ¿Te gusta esta iniciativa? ¡Hay que hacerla real!
-              </h2>
-              <p className="text-muted-foreground font-medium text-sm md:text-base">
-                Iniciativas de jóvenes que quieren hacer un impacto real.
-              </p>
-            </div>
+        {/* Youth Initiatives Highlight Block */}
+        <section className="rounded-[20px] border border-rock-blue/50 bg-rock-blue/10 dark:bg-dark-surface p-6 md:p-8 space-y-6">
+          <div className="space-y-2 max-w-2xl">
+            <Badge className="rounded-full bg-rock-blue/25 text-deep-harbor dark:bg-rock-blue/20 dark:text-rock-blue border border-rock-blue/40 px-3 py-1 h-auto font-mono text-[11px] font-medium uppercase tracking-[0.04em] gap-1.5">
+              <Rocket className="size-3.5" strokeWidth={1.5} />
+              Iniciativa Joven · Escolares
+            </Badge>
+            <h2 className="font-sans text-2xl md:text-3xl font-medium tracking-[-0.02em] text-foreground">
+              ¿Te gusta esta iniciativa? ¡Hay que hacerla real!
+            </h2>
+            <p className="font-sans text-sm md:text-base text-foreground-secondary">
+              Iniciativas de jóvenes que quieren generar un impacto real en su comunidad.
+            </p>
           </div>
 
           {youthInitiatives.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 lg:gap-6">
               {youthInitiatives.slice(0, 3).map((org) => (
-                <OrganizationCard key={`youth-top-${org.slug}`} {...org} />
+                <OrganizationCard key={`youth-top-${org.slug}`} {...org} surface="on-merino" />
               ))}
             </div>
           ) : (
-            <div className="rounded-2xl border border-dashed border-amber-500/30 bg-background/60 p-6 text-center text-sm text-muted-foreground">
+            <div className="rounded-2xl border border-dashed border-border bg-surface p-6 text-center text-sm text-foreground-muted">
               Próximamente verás aquí las iniciativas lideradas por jóvenes y comunidades escolares.
             </div>
           )}
@@ -114,33 +107,33 @@ export function DirectoryShowcase({
 
       {/* TAB 2: Iniciativas Jóvenes */}
       <TabsContent value="youth" className="space-y-8 mt-0">
-        <section className="rounded-3xl border border-amber-500/25 bg-linear-to-br from-amber-500/10 via-primary/5 to-background p-6 md:p-10 space-y-8">
-          <div className="space-y-3 max-w-2xl">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-300 text-xs font-bold uppercase tracking-wider">
-              <Sparkles className="size-3.5" />
-              Impulso Joven
-            </div>
-            <h2 className="text-3xl md:text-4xl font-extrabold font-headline text-foreground tracking-tight">
+        <section className="rounded-[20px] border border-rock-blue/50 bg-rock-blue/10 dark:bg-dark-surface p-6 md:p-8 space-y-8">
+          <div className="space-y-2.5 max-w-2xl">
+            <Badge className="rounded-full bg-rock-blue/25 text-deep-harbor dark:bg-rock-blue/20 dark:text-rock-blue border border-rock-blue/40 px-3 py-1 h-auto font-mono text-[11px] font-medium uppercase tracking-[0.04em] gap-1.5">
+              <Sparkles className="size-3.5" strokeWidth={1.5} />
+              Iniciativa Joven
+            </Badge>
+            <h2 className="font-sans text-3xl font-medium tracking-[-0.02em] text-foreground">
               ¿Te gusta esta iniciativa? ¡Hay que hacerla real!
             </h2>
-            <p className="text-muted-foreground font-medium text-base">
+            <p className="font-sans text-base text-foreground-secondary">
               Iniciativas de jóvenes que quieren hacer un impacto real.
             </p>
           </div>
 
           {youthInitiatives.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 lg:gap-6">
               {youthInitiatives.map((org) => (
-                <OrganizationCard key={`youth-tab-${org.slug}`} {...org} />
+                <OrganizationCard key={`youth-tab-${org.slug}`} {...org} surface="on-merino" />
               ))}
             </div>
           ) : (
-            <div className="py-16 text-center rounded-2xl border border-dashed border-border bg-background/60 space-y-2">
-              <Rocket className="size-10 mx-auto text-amber-500/60 mb-2" />
-              <p className="text-lg font-bold text-foreground">
+            <div className="py-16 text-center rounded-2xl border border-dashed border-border bg-surface space-y-2 px-6">
+              <Rocket className="size-9 mx-auto text-primary mb-2" strokeWidth={1.5} />
+              <p className="font-sans text-lg font-semibold text-foreground">
                 Aún no hay iniciativas jóvenes publicadas
               </p>
-              <p className="text-sm text-muted-foreground max-w-md mx-auto">
+              <p className="font-sans text-sm text-foreground-secondary max-w-md mx-auto">
                 Cuando se publiquen causas con el tipo &ldquo;Iniciativa Joven / Escolar&rdquo;,
                 aparecerán en esta sección.
               </p>
@@ -151,27 +144,27 @@ export function DirectoryShowcase({
 
       {/* TAB 3: Nuevas Adiciones */}
       <TabsContent value="new" className="space-y-8 mt-0">
-        <section className="bg-slate-50/40 dark:bg-zinc-900/20 p-6 md:p-8 rounded-3xl border border-border/30 space-y-8">
+        <section className="rounded-[20px] border border-border bg-surface-subtle/60 dark:bg-surface/40 p-6 md:p-8 space-y-8">
           <div className="space-y-2">
-            <Badge className="bg-primary/15 text-primary border border-primary/20 rounded-full text-xs font-bold uppercase tracking-wider">
+            <span className="inline-block font-mono text-[11px] font-medium uppercase tracking-[0.04em] text-primary">
               Ordenadas por fecha de registro
-            </Badge>
-            <h2 className="text-3xl font-extrabold font-headline text-foreground tracking-tight">
+            </span>
+            <h2 className="font-sans text-3xl font-medium tracking-[-0.02em] text-foreground">
               Nuevas adiciones
             </h2>
-            <p className="text-muted-foreground font-medium text-sm">
+            <p className="font-sans text-sm text-foreground-secondary">
               Conoce las organizaciones y proyectos sociales que se sumaron recientemente a Alia.
             </p>
           </div>
 
           {newAdditions.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 lg:gap-6">
               {newAdditions.map((org) => (
-                <OrganizationCard key={`new-tab-${org.slug}`} {...org} />
+                <OrganizationCard key={`new-tab-${org.slug}`} {...org} surface="on-merino" />
               ))}
             </div>
           ) : (
-            <div className="py-16 text-center text-muted-foreground">
+            <div className="py-16 text-center text-foreground-muted">
               No hay organizaciones registradas todavía.
             </div>
           )}

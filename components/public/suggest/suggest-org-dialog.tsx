@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -29,6 +30,8 @@ import {
 import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group'
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'
 import { MEXICO_STATES } from '@/lib/mexico-states'
+import type { SubmitState } from '@/types'
+import { LABEL_CX, INPUT_CX } from '@/lib/styles'
 
 /* ── Zod schema ─────────────────────────────────────── */
 const suggestSchema = z.object({
@@ -41,9 +44,6 @@ const suggestSchema = z.object({
 
 type SuggestValues = z.infer<typeof suggestSchema>
 
-import type { SubmitState } from '@/types'
-import { LABEL_CX, INPUT_CX } from '@/lib/styles'
-
 /* ── Button content map ─────────────────────────────── */
 const BUTTON_STATES: Record<
   SubmitState,
@@ -51,30 +51,49 @@ const BUTTON_STATES: Record<
 > = {
   idle: {
     text: 'Enviar Sugerencia',
-    icon: <Send className="size-4" />,
-    className:
-      'bg-primary text-primary-foreground shadow-lg shadow-primary/10 hover:shadow-primary/20 hover:-translate-y-0.5',
+    icon: <Send className="size-4" strokeWidth={1.5} />,
+    className: 'bg-primary text-primary-foreground hover:bg-primary-hover',
   },
   loading: {
     text: 'Enviando...',
-    icon: <Loader2 className="size-4 animate-spin" />,
+    icon: <Loader2 className="size-4 animate-spin" strokeWidth={1.5} />,
     className: 'bg-primary text-primary-foreground opacity-90 cursor-wait',
   },
   success: {
     text: '¡Enviado con éxito!',
-    icon: <Check className="size-4" />,
-    className: 'bg-gradient-to-r from-emerald-500 to-emerald-600  shadow-lg shadow-emerald-500/20',
+    icon: <Check className="size-4" strokeWidth={1.5} />,
+    className: 'bg-verified-emerald text-white',
   },
   error: {
     text: 'Error al enviar',
-    icon: <X className="size-4" />,
-    className: 'bg-gradient-to-r from-red-500 to-red-600  shadow-lg shadow-red-500/20',
+    icon: <X className="size-4" strokeWidth={1.5} />,
+    className: 'bg-urgency-coral text-white',
   },
 }
 
+interface SuggestOrgDialogProps {
+  children?: React.ReactNode
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
+}
+
 /* ── Component ──────────────────────────────────────── */
-export function SuggestOrgDialog({ children }: { children: React.ReactNode }) {
-  const [open, setOpen] = useState(false)
+export function SuggestOrgDialog({
+  children,
+  open: controlledOpen,
+  onOpenChange: controlledOnOpenChange,
+}: SuggestOrgDialogProps) {
+  const [internalOpen, setInternalOpen] = useState(false)
+  const isControlled = controlledOpen !== undefined
+  const open = isControlled ? controlledOpen : internalOpen
+
+  const handleOpenChange = (nextOpen: boolean) => {
+    if (!isControlled) {
+      setInternalOpen(nextOpen)
+    }
+    controlledOnOpenChange?.(nextOpen)
+  }
+
   const [submitState, setSubmitState] = useState<SubmitState>('idle')
   const [categories, setCategories] = useState<{ id: string; name: string }[]>([])
 
@@ -100,7 +119,7 @@ export function SuggestOrgDialog({ children }: { children: React.ReactNode }) {
     },
   })
 
-  // Reset state when dialog opens/closes
+  // Reset state when dialog opens
   useEffect(() => {
     if (open) {
       setSubmitState('idle')
@@ -117,9 +136,8 @@ export function SuggestOrgDialog({ children }: { children: React.ReactNode }) {
       if (result.success) {
         trackSocialLead('suggest_org', data.orgName)
         setSubmitState('success')
-        // Close dialog after showing success
         setTimeout(() => {
-          setOpen(false)
+          handleOpenChange(false)
         }, 1500)
       } else {
         setSubmitState('error')
@@ -134,36 +152,36 @@ export function SuggestOrgDialog({ children }: { children: React.ReactNode }) {
   const btnState = BUTTON_STATES[submitState]
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>{children}</DialogTrigger>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
+      {children && <DialogTrigger asChild>{children}</DialogTrigger>}
 
       <DialogContent
         data-lenis-prevent
-        className="sm:max-w-2xl max-h-[92vh] overflow-y-auto rounded-2xl p-0"
+        className="sm:max-w-2xl max-h-[92vh] overflow-y-auto rounded-[20px] border border-border bg-surface p-0 shadow-none ring-0"
       >
         {/* ── Header ──────────────────────────────── */}
-        <DialogHeader className="px-8 pt-8 pb-0 text-center">
-          <DialogTitle className="font-headline text-2xl md:text-3xl font-bold tracking-tight text-primary">
+        <DialogHeader className="px-6 sm:px-8 pt-8 pb-0 text-left sm:text-center">
+          <DialogTitle className="font-sans text-2xl md:text-[28px] font-semibold tracking-[-0.02em] text-foreground">
             Sugerir una Organización
           </DialogTitle>
-          <DialogDescription className="font-body text-muted-foreground text-sm max-w-md mx-auto leading-relaxed">
+          <DialogDescription className="font-sans text-foreground-secondary text-sm max-w-md sm:mx-auto leading-relaxed">
             Ayúdanos a ampliar nuestra red conectando a más personas con causas que importan.
           </DialogDescription>
         </DialogHeader>
 
         {/* ── Body ────────────────────────────────── */}
-        <div className="px-8 pb-8 space-y-6">
+        <div className="px-6 sm:px-8 pb-8 space-y-6">
           {/* Info callout */}
-          <Alert className="rounded-xl border-none border-l-4 border-l-primary/20 bg-muted/50 p-4">
-            <Info className="size-4 text-primary mt-0.5" />
-            <AlertDescription className="font-body text-muted-foreground text-xs leading-relaxed">
+          <Alert className="rounded-xl border border-border bg-background p-4">
+            <Info className="size-4 text-primary mt-0.5" strokeWidth={1.5} />
+            <AlertDescription className="font-sans text-foreground-secondary text-xs leading-relaxed">
               Todas las sugerencias son revisadas manualmente por nuestro equipo antes de ser
               publicadas para garantizar la calidad del directorio.
             </AlertDescription>
           </Alert>
 
           {/* Form */}
-          <form id="suggest-org-form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form id="suggest-org-form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
             <FieldGroup>
               {/* Nombre de la Organización */}
               <Controller
@@ -189,7 +207,7 @@ export function SuggestOrgDialog({ children }: { children: React.ReactNode }) {
               />
 
               {/* Categoría & Ubicación */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {/* Categoría */}
                 <Controller
                   name="category"
@@ -297,9 +315,9 @@ export function SuggestOrgDialog({ children }: { children: React.ReactNode }) {
                     <FieldLabel htmlFor="url" className={LABEL_CX}>
                       URL del sitio web o red social
                     </FieldLabel>
-                    <InputGroup className="bg-muted border-none rounded-lg h-auto focus-within:ring-2 focus-within:ring-ring focus-within:bg-background transition-all duration-300">
+                    <InputGroup className="bg-surface border border-border hover:border-rock-blue rounded-xl h-auto focus-within:ring-2 focus-within:ring-primary/30 focus-within:border-primary transition-all duration-200">
                       <InputGroupAddon align="inline-start">
-                        <LinkIcon className="size-4 text-muted-foreground/60" />
+                        <LinkIcon className="size-4 text-foreground-muted" strokeWidth={1.5} />
                       </InputGroupAddon>
                       <InputGroupInput
                         {...field}
@@ -307,11 +325,11 @@ export function SuggestOrgDialog({ children }: { children: React.ReactNode }) {
                         type="url"
                         aria-invalid={fieldState.invalid}
                         placeholder="https://www.organizacion.org"
-                        className="font-body text-foreground placeholder:text-muted-foreground/50 py-3"
+                        className="font-sans text-sm text-foreground placeholder:text-foreground-muted py-3"
                         disabled={submitState !== 'idle'}
                       />
                     </InputGroup>
-                    <p className="font-label text-[10px] text-muted-foreground/70 italic mt-1">
+                    <p className="font-mono text-[11px] text-foreground-muted mt-1">
                       Utilizamos este enlace para verificar la autenticidad de la ONG.
                     </p>
                     {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
@@ -325,10 +343,10 @@ export function SuggestOrgDialog({ children }: { children: React.ReactNode }) {
               <Button
                 type="submit"
                 disabled={submitState === 'loading' || submitState === 'success'}
-                className={`w-full font-headline font-bold py-4 h-auto rounded-lg active:scale-[0.98] transition-all duration-500 text-base border-none ${btnState.className}`}
+                className={`w-full rounded-full py-3.5 h-auto text-[15px] font-medium transition-all duration-200 border-none ${btnState.className}`}
               >
                 <span
-                  className="inline-flex items-center gap-2 transition-all duration-300 animate-fade-slide-in"
+                  className="inline-flex items-center gap-2 transition-all duration-200 animate-fade-slide-in"
                   key={submitState}
                 >
                   {btnState.icon}
@@ -340,14 +358,15 @@ export function SuggestOrgDialog({ children }: { children: React.ReactNode }) {
 
           {/* Secondary CTA */}
           <div className="text-center">
-            <p className="text-muted-foreground font-body text-xs">
+            <p className="text-foreground-muted font-sans text-xs">
               ¿Tienes dudas sobre los criterios de inclusión?{' '}
-              <a
-                href="#"
-                className="text-primary font-semibold underline underline-offset-4 hover:text-primary/80 transition-colors"
+              <Link
+                href="/about#verificacion"
+                onClick={() => handleOpenChange(false)}
+                className="text-primary font-medium underline underline-offset-4 hover:text-primary-hover transition-colors"
               >
                 Consulta nuestras guías
-              </a>
+              </Link>
             </p>
           </div>
         </div>

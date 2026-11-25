@@ -1,50 +1,23 @@
 'use client'
 
-import { useEffect, useState, useId, useMemo, useCallback } from 'react'
-import { Map, MapPopup, MapControls, useMap } from '@/components/ui/map'
-import { Card } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { BadgeCheck, MapPin, ArrowRight } from 'lucide-react'
+import { useEffect, useState, useCallback } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-
+import { BadgeCheck, MapPin, ArrowRight } from 'lucide-react'
+import { Map, MapMarker, MarkerContent, MapPopup, MapControls, useMap } from '@/components/ui/map'
+import { Badge } from '@/components/ui/badge'
 import type { MapPoint, MapViewProps } from '@/types'
+
 export type { MapPoint }
 
-type SelectedOrg = MapPoint
-
-// Convert MapPoints to GeoJSON FeatureCollection
-function toGeoJSON(points: MapPoint[]): GeoJSON.FeatureCollection {
-  return {
-    type: 'FeatureCollection',
-    features: points.map((point) => ({
-      type: 'Feature' as const,
-      properties: {
-        slug: point.slug,
-        name: point.name,
-        categories: JSON.stringify(point.categories),
-        location: point.location,
-        logoImage: point.logoImage,
-        verified: point.verified,
-      },
-      geometry: {
-        type: 'Point' as const,
-        coordinates: point.coordinates,
-      },
-    })),
-  }
-}
-
-function OrganizationsLayer({ mapPoints }: { mapPoints: MapPoint[] }) {
+function MapBoundsController({ mapPoints }: { mapPoints: MapPoint[] }) {
   const { map, isLoaded } = useMap()
-  const id = useId()
-  const sourceId = `orgs-source-${id}`
-  const layerId = `orgs-layer-${id}`
-  const [selectedOrg, setSelectedOrg] = useState<SelectedOrg | null>(null)
 
-  const geojsonData = useMemo(() => toGeoJSON(mapPoints), [mapPoints])
+  useEffect(() => {
+    if (!map) return
+    map.resize()
+  }, [map])
 
-  // Auto-fit bounds when points change
   useEffect(() => {
     if (!map || !isLoaded || mapPoints.length === 0) return
 
@@ -52,12 +25,11 @@ function OrganizationsLayer({ mapPoints }: { mapPoints: MapPoint[] }) {
       map.flyTo({
         center: mapPoints[0].coordinates,
         zoom: 12,
-        duration: 1000,
+        duration: 900,
       })
       return
     }
 
-    // Calculate bounding box
     let minLng = Infinity,
       minLat = Infinity,
       maxLng = -Infinity,
@@ -79,165 +51,125 @@ function OrganizationsLayer({ mapPoints }: { mapPoints: MapPoint[] }) {
       {
         padding: { top: 60, bottom: 60, left: 60, right: 60 },
         maxZoom: 14,
-        duration: 1000,
+        duration: 900,
       }
     )
   }, [map, isLoaded, mapPoints])
 
-  // Add GeoJSON source + circle layer
-  useEffect(() => {
-    if (!map || !isLoaded) return
+  return null
+}
 
-    map.addSource(sourceId, {
-      type: 'geojson',
-      data: geojsonData,
-    })
-
-    map.addLayer({
-      id: layerId,
-      type: 'circle',
-      source: sourceId,
-      paint: {
-        'circle-radius': 8,
-        'circle-color': '#00759A',
-        'circle-stroke-width': 3,
-        'circle-stroke-color': '#ffffff',
-        'circle-opacity': 0.9,
-      },
-    })
-
-    // Click handler
-    const handleClick = (
-      e: maplibregl.MapMouseEvent & {
-        features?: maplibregl.MapGeoJSONFeature[]
-      }
-    ) => {
-      if (!e.features?.length) return
-
-      const feature = e.features[0]
-      const coords = (feature.geometry as GeoJSON.Point).coordinates as [number, number]
-
-      setSelectedOrg({
-        slug: feature.properties?.slug,
-        name: feature.properties?.name,
-        categories: JSON.parse(feature.properties?.categories || '[]'),
-        location: feature.properties?.location,
-        coordinates: coords,
-        logoImage: feature.properties?.logoImage,
-        verified: feature.properties?.verified === true || feature.properties?.verified === 'true',
-      })
-    }
-
-    const handleMouseEnter = () => {
-      map.getCanvas().style.cursor = 'pointer'
-    }
-
-    const handleMouseLeave = () => {
-      map.getCanvas().style.cursor = ''
-    }
-
-    map.on('click', layerId, handleClick)
-    map.on('mouseenter', layerId, handleMouseEnter)
-    map.on('mouseleave', layerId, handleMouseLeave)
-
-    return () => {
-      map.off('click', layerId, handleClick)
-      map.off('mouseenter', layerId, handleMouseEnter)
-      map.off('mouseleave', layerId, handleMouseLeave)
-
-      try {
-        if (map.getLayer(layerId)) map.removeLayer(layerId)
-        if (map.getSource(sourceId)) map.removeSource(sourceId)
-      } catch {
-        // ignore cleanup errors
-      }
-    }
-  }, [map, isLoaded, sourceId, layerId, geojsonData])
+export function MapView({ mapPoints }: MapViewProps) {
+  const mexicoCenter: [number, number] = [-102.5528, 23.6345]
+  const [selectedOrg, setSelectedOrg] = useState<MapPoint | null>(null)
 
   const handleClosePopup = useCallback(() => setSelectedOrg(null), [])
 
   return (
-    <>
-      {selectedOrg && (
-        <MapPopup
-          longitude={selectedOrg.coordinates[0]}
-          latitude={selectedOrg.coordinates[1]}
-          onClose={handleClosePopup}
-          closeOnClick={false}
-          focusAfterOpen={false}
-          offset={14}
-          closeButton
-          className="p-0 border-none bg-transparent shadow-none"
-        >
-          <Link
-            href={`/directory/${selectedOrg.slug}`}
-            className="block w-64 bg-popover rounded-xl border border-border/50 overflow-hidden shadow-lg transition-all hover:shadow-xl group"
+    <div className="relative h-[520px] w-full overflow-hidden rounded-2xl border border-border bg-surface">
+      <Map center={mexicoCenter} zoom={5} className="h-full w-full">
+        <MapControls position="bottom-right" showZoom showCompass showLocate showFullscreen />
+        <MapBoundsController mapPoints={mapPoints} />
+
+        {mapPoints.map((point) => (
+          <MapMarker
+            key={point.slug}
+            longitude={point.coordinates[0]}
+            latitude={point.coordinates[1]}
+            onClick={(e) => {
+              e.stopPropagation()
+              setSelectedOrg(point)
+            }}
           >
-            {/* Header with logo + verified */}
-            <div className="flex items-start gap-3 p-4 pb-3">
-              <div className="w-10 h-10 bg-transparent rounded-lg border border-border/50 flex items-center justify-center p-1 shrink-0">
-                <Image
-                  src={selectedOrg.logoImage}
-                  alt={selectedOrg.name}
-                  width={32}
-                  height={32}
-                  className="object-contain rounded"
-                />
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-1.5">
-                  <h4 className="font-bold text-sm text-foreground truncate font-headline leading-tight">
-                    {selectedOrg.name}
-                  </h4>
-                  {selectedOrg.verified && (
-                    <BadgeCheck className="size-3.5 text-primary-900 dark:text-primary-200 shrink-0" />
-                  )}
-                </div>
-                <div className="flex flex-wrap gap-1 mt-1">
-                  {selectedOrg.categories.slice(0, 2).map((cat) => (
-                    <Badge
-                      key={cat}
-                      className="bg-muted/40 text-muted-foreground border border-border/60 px-2 py-0 rounded-full text-[9px] font-bold uppercase tracking-wider h-auto"
-                    >
-                      {cat}
-                    </Badge>
-                  ))}
-                  {selectedOrg.categories.length > 2 && (
-                    <span className="text-[9px] text-muted-foreground font-bold">
-                      +{selectedOrg.categories.length - 2}
+            <MarkerContent>
+              <button
+                type="button"
+                aria-label={`Ver ${point.name}`}
+                className="size-8 rounded-full bg-venice-blue dark:bg-rock-blue text-white dark:text-midnight-harbor border-2 border-white dark:border-midnight-harbor flex items-center justify-center transition-transform duration-200 hover:scale-110 cursor-pointer"
+              >
+                <MapPin className="size-4" strokeWidth={1.75} />
+              </button>
+            </MarkerContent>
+          </MapMarker>
+        ))}
+
+        {selectedOrg && (
+          <MapPopup
+            longitude={selectedOrg.coordinates[0]}
+            latitude={selectedOrg.coordinates[1]}
+            onClose={handleClosePopup}
+            closeOnClick={false}
+            focusAfterOpen={false}
+            offset={16}
+            closeButton
+            className="p-0 border-none bg-transparent shadow-none"
+          >
+            <Link
+              href={`/directory/${selectedOrg.slug}`}
+              className="block w-68 bg-surface rounded-[20px] border border-border overflow-hidden transition-colors hover:border-rock-blue group"
+            >
+              <div className="flex items-start gap-3 p-4 pb-3">
+                <div className="size-10 rounded-xl border border-border bg-background flex items-center justify-center p-1 shrink-0 overflow-hidden">
+                  {selectedOrg.logoImage ? (
+                    <Image
+                      src={selectedOrg.logoImage}
+                      alt={selectedOrg.name}
+                      width={32}
+                      height={32}
+                      className="object-contain rounded-lg size-full"
+                    />
+                  ) : (
+                    <span className="font-sans font-semibold text-xs text-primary">
+                      {selectedOrg.name.slice(0, 2).toUpperCase()}
                     </span>
                   )}
                 </div>
+
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-1.5">
+                    <h4 className="font-sans font-semibold text-sm text-foreground truncate leading-tight">
+                      {selectedOrg.name}
+                    </h4>
+                    {selectedOrg.verified && (
+                      <BadgeCheck
+                        className="size-3.5 text-verified-emerald shrink-0"
+                        strokeWidth={1.75}
+                      />
+                    )}
+                  </div>
+                  <div className="flex flex-wrap gap-1 mt-1.5">
+                    {selectedOrg.categories.slice(0, 2).map((cat) => (
+                      <Badge
+                        key={cat}
+                        className="bg-background text-foreground-muted border border-border px-2 py-0 rounded-full font-mono text-[9px] font-medium uppercase tracking-[0.04em] h-auto"
+                      >
+                        {cat}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
               </div>
-            </div>
 
-            {/* Footer */}
-            <div className="px-4 pb-3 pt-2 border-t border-border/30 flex items-center justify-between">
-              <div className="flex items-center text-muted-foreground text-[11px] font-medium">
-                <MapPin className="size-3 mr-1 shrink-0" />
-                <span className="truncate max-w-32">{selectedOrg.location}</span>
+              <div className="px-4 pb-3 pt-2.5 border-t border-border flex items-center justify-between gap-2">
+                <div className="flex items-center text-foreground-muted text-[11px] min-w-0">
+                  <MapPin className="size-3 mr-1 shrink-0 text-primary" strokeWidth={1.5} />
+                  <span className="truncate">{selectedOrg.location}</span>
+                </div>
+                <span className="text-primary font-medium text-xs inline-flex items-center gap-0.5 shrink-0 group-hover:underline underline-offset-2">
+                  Ver perfil
+                  <ArrowRight className="size-3" strokeWidth={1.5} />
+                </span>
               </div>
-              <span className="text-primary-900 dark:text-primary-200 font-bold text-[10px] uppercase tracking-wider flex items-center group-hover:underline underline-offset-2">
-                Ver perfil <ArrowRight className="size-2.5 ml-0.5" />
-              </span>
-            </div>
-          </Link>
-        </MapPopup>
-      )}
-    </>
-  )
-}
-
-export function MapView({ total, mapPoints }: MapViewProps) {
-  // Default center: Mexico
-  const mexicoCenter: [number, number] = [-102.5528, 23.6345]
-
-  return (
-    <Card className="h-125 p-0 overflow-hidden w-full rounded-3xl border-border/30 shadow-none">
-      <Map center={mexicoCenter} zoom={5}>
-        <MapControls position="bottom-right" showZoom showCompass showLocate showFullscreen />
-        {mapPoints.length > 0 && <OrganizationsLayer mapPoints={mapPoints} />}
+            </Link>
+          </MapPopup>
+        )}
       </Map>
-    </Card>
+
+      {mapPoints.length === 0 && (
+        <div className="pointer-events-none absolute top-4 left-4 z-10 rounded-full border border-border bg-surface/95 backdrop-blur-md px-4 py-1.5 font-mono text-xs text-foreground-muted">
+          Sin ubicaciones georreferenciadas para este filtro.
+        </div>
+      )}
+    </div>
   )
 }

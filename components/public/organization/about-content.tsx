@@ -9,13 +9,13 @@ interface AboutContentProps {
 
 export function AboutContent({ name, fullDescription, galleryImages = [] }: AboutContentProps) {
   return (
-    <div className="space-y-12">
+    <div className="space-y-10">
       {/* Description Prose */}
-      <div className="space-y-6 text-sm italic">
+      <div className="space-y-6">
         {fullDescription ? (
-          <Prose content={fullDescription} size="lg" />
+          <Prose content={fullDescription} size="base" />
         ) : (
-          <p className="italic text-muted-foreground/60">
+          <p className="font-sans text-sm text-foreground-muted">
             Esta organización aún no ha agregado una descripción.
           </p>
         )}
@@ -23,12 +23,12 @@ export function AboutContent({ name, fullDescription, galleryImages = [] }: Abou
 
       {/* Gallery Grid */}
       {galleryImages.length > 0 && (
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 h-100">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 h-96">
           {galleryImages[0] && (
-            <div className="col-span-1 row-span-2 overflow-hidden rounded-lg">
+            <div className="col-span-1 row-span-2 overflow-hidden rounded-2xl border border-border bg-surface">
               <Image
                 src={galleryImages[0]}
-                alt={`${name} gallery 1`}
+                alt={`${name} galería 1`}
                 width={400}
                 height={800}
                 className="w-full h-full object-cover transition-transform hover:scale-105 duration-500"
@@ -36,10 +36,10 @@ export function AboutContent({ name, fullDescription, galleryImages = [] }: Abou
             </div>
           )}
           {galleryImages[1] && (
-            <div className="col-span-1 overflow-hidden rounded-lg">
+            <div className="col-span-1 overflow-hidden rounded-2xl border border-border bg-surface">
               <Image
                 src={galleryImages[1]}
-                alt={`${name} gallery 2`}
+                alt={`${name} galería 2`}
                 width={400}
                 height={400}
                 className="w-full h-full object-cover transition-transform hover:scale-105 duration-500"
@@ -47,10 +47,10 @@ export function AboutContent({ name, fullDescription, galleryImages = [] }: Abou
             </div>
           )}
           {galleryImages[2] && (
-            <div className="col-span-1 row-span-2 overflow-hidden rounded-lg hidden md:block">
+            <div className="col-span-1 row-span-2 overflow-hidden rounded-2xl border border-border bg-surface hidden md:block">
               <Image
                 src={galleryImages[2]}
-                alt={`${name} gallery 3`}
+                alt={`${name} galería 3`}
                 width={400}
                 height={800}
                 className="w-full h-full object-cover transition-transform hover:scale-105 duration-500"
@@ -58,10 +58,10 @@ export function AboutContent({ name, fullDescription, galleryImages = [] }: Abou
             </div>
           )}
           {galleryImages[3] && (
-            <div className="col-span-1 overflow-hidden rounded-lg">
+            <div className="col-span-1 overflow-hidden rounded-2xl border border-border bg-surface">
               <Image
                 src={galleryImages[3]}
-                alt={`${name} gallery 4`}
+                alt={`${name} galería 4`}
                 width={400}
                 height={400}
                 className="w-full h-full object-cover transition-transform hover:scale-105 duration-500"

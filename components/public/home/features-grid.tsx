@@ -1,19 +1,11 @@
 'use client'
 
-import { motion, AnimatePresence } from 'framer-motion'
-import Image from 'next/image'
-import { HeartHandshake, ShieldCheck, Users, TrendingUp, Globe } from 'lucide-react'
-import { useCarouselCycle } from '@/hooks/use-carousel-cycle'
+import { motion } from 'framer-motion'
+import { Users, HeartHandshake, Globe } from 'lucide-react'
 import type { ImpactMetrics } from '@/server/actions/analytics'
 
-const VERTICAL_IMAGES = [
-  '/images/vertical1.jpg',
-  '/images/vertical2.jpg',
-  '/images/vertical3.jpg',
-]
-
 const fadeUp = {
-  initial: { opacity: 0, y: 24 },
+  initial: { opacity: 0, y: 20 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, margin: '-80px' },
 }
@@ -32,145 +24,58 @@ interface FeaturesSectionGridProps {
 
 export function FeaturesSectionGrid({ metrics }: FeaturesSectionGridProps) {
   const { communityReach, realConnections, pageViews } = metrics
-  const { currentIndex } = useCarouselCycle(VERTICAL_IMAGES, 15000)
+
+  const stats = [
+    {
+      eyebrow: 'Alcance comunitario',
+      value: formatNumber(communityReach),
+      title: 'Usuarios únicos',
+      description: 'Personas reales que exploraron organizaciones sociales en nuestra plataforma.',
+      Icon: Users,
+    },
+    {
+      eyebrow: 'Vínculos reales',
+      value: formatNumber(realConnections),
+      title: 'Conexiones directas',
+      description: 'Interacciones ciudadanas hacia perfiles, sitios web o canales de contacto.',
+      Icon: HeartHandshake,
+    },
+    {
+      eyebrow: 'Historias descubiertas',
+      value: formatNumber(pageViews),
+      title: 'Páginas vistas',
+      description: 'Consultas registradas a proyectos sociales verificados en todo México.',
+      Icon: Globe,
+    },
+  ]
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {/* Card 1 — Brand + Platform Visual (tall) */}
-      <motion.div
-        {...fadeUp}
-        transition={{ duration: 0.5 }}
-        className="relative bg-card rounded-2xl overflow-hidden min-h-[280px] md:row-span-2 group"
-      >
-        <AnimatePresence mode="popLayout">
-          <motion.div
-            key={currentIndex}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.5, ease: 'easeOut' }}
-            className="absolute inset-0"
-          >
-            <Image
-              src={VERTICAL_IMAGES[currentIndex]}
-              alt={`Feature visual ${currentIndex + 1}`}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 33vw"
-            />
-          </motion.div>
-        </AnimatePresence>
-
-        {/* Brand Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
-        <div className="absolute bottom-6 left-6 z-10">
-          <div className="bg-background/80 backdrop-blur-md rounded-full px-4 py-2 flex items-center gap-2 border border-white/20 shadow-xl">
-            <div className="size-6 rounded-full bg-primary/20 flex items-center justify-center">
-              <Users className="size-3 text-primary" />
-            </div>
-            <span className="text-xs font-bold text-foreground font-headline">Alia</span>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Card 2 — Compassion-Driven Support */}
-      <motion.div
-        {...fadeUp}
-        transition={{ duration: 0.5, delay: 0.1 }}
-        className="bg-card rounded-2xl p-8 flex flex-col justify-between min-h-[240px] border border-border/60 shadow-sm"
-      >
-        <div className="size-11 rounded-xl bg-primary/10 flex items-center justify-center mb-6">
-          <HeartHandshake className="size-5 text-primary" />
-        </div>
-        <div>
-          <h3 className="text-xl font-bold text-foreground font-headline leading-snug mb-3">
-            Apoyo Basado en
-            <br />
-            Compasión
-          </h3>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            Conectamos personas con organizaciones que brindan ayuda esencial a familias con cuidado,
-            respeto y dignidad.
-          </p>
-        </div>
-      </motion.div>
-
-      {/* Card 3 — Transparent & Trusted */}
-      <motion.div
-        {...fadeUp}
-        transition={{ duration: 0.5, delay: 0.2 }}
-        className="bg-card rounded-2xl p-8 flex flex-col justify-between min-h-[240px] border border-border/60 shadow-sm"
-      >
-        <div className="size-11 rounded-xl bg-primary/10 flex items-center justify-center mb-6">
-          <ShieldCheck className="size-5 text-primary" />
-        </div>
-        <div>
-          <h3 className="text-xl font-bold text-foreground font-headline leading-snug mb-3">
-            Transparente y Confiable
-          </h3>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            Cada organización es verificada y curada. Con reportes claros y actualizaciones reales de
-            impacto.
-          </p>
-        </div>
-      </motion.div>
-
-      {/* Card 4 — Stat: Community Reach (real GA4 data) */}
-      <motion.div
-        {...fadeUp}
-        transition={{ duration: 0.5, delay: 0.15 }}
-        className="bg-card rounded-2xl p-8 flex flex-col justify-between min-h-[240px] border border-border/60 shadow-sm"
-      >
-        <div className="flex items-start justify-between">
-          <div>
-            <span className="text-4xl font-bold text-foreground font-headline">
-              {formatNumber(communityReach)}
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6">
+      {stats.map(({ eyebrow, value, title, description, Icon }, idx) => (
+        <motion.div
+          key={title}
+          {...fadeUp}
+          transition={{ duration: 0.45, delay: idx * 0.08 }}
+          className="rounded-[20px] border border-white/15 dark:border-border bg-white/[0.06] dark:bg-dark-surface p-6 lg:p-8 flex flex-col justify-between gap-6"
+        >
+          <div className="flex items-center justify-between gap-3">
+            <span className="font-mono text-xs font-medium uppercase tracking-[0.04em] text-rock-blue">
+              {eyebrow}
             </span>
-            <div className="flex items-center gap-1.5 mt-1">
-              <TrendingUp className="size-3 text-primary" />
-              <span className="text-[10px] text-primary font-bold uppercase tracking-wider">
-                últimos 30 días
-              </span>
-            </div>
+            <Icon className="size-5 text-rock-blue shrink-0" strokeWidth={1.5} />
           </div>
-          <span className="text-sm text-muted-foreground font-medium text-right leading-snug max-w-[80px]">
-            Alcance
-            <br />
-            Comunitario
-          </span>
-        </div>
 
-        <div className="mt-auto pt-6">
-          <h3 className="text-lg font-bold text-foreground font-headline leading-snug mb-2">
-            Usuarios Únicos
-          </h3>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            Personas reales que exploraron organizaciones sociales en nuestra plataforma.
-          </p>
-        </div>
-      </motion.div>
-
-      {/* Card 5 — Stat: Page Views (real GA4 data) */}
-      <motion.div
-        {...fadeUp}
-        transition={{ duration: 0.5, delay: 0.25 }}
-        className="bg-card rounded-2xl p-8 flex flex-col justify-center min-h-[180px] border border-border/60 shadow-sm"
-      >
-        <div className="flex items-center gap-2 mb-2">
-          <Globe className="size-4 text-primary/70" />
-          <span className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">
-            Páginas vistas
-          </span>
-        </div>
-        <span className="text-4xl font-bold text-foreground font-headline mb-1">
-          {formatNumber(pageViews)}
-        </span>
-        <span className="text-sm text-muted-foreground font-medium">
-          {realConnections > 0
-            ? `${formatNumber(realConnections)} conexiones directas`
-            : 'Conexiones en crecimiento'}
-        </span>
-      </motion.div>
+          <div className="space-y-2">
+            <p className="font-mono font-medium text-4xl sm:text-5xl leading-none tracking-[-0.02em] tabular-nums text-white dark:text-merino">
+              {value}
+            </p>
+            <h3 className="font-sans text-lg font-semibold text-white dark:text-merino pt-1">
+              {title}
+            </h3>
+            <p className="font-sans text-sm text-merino/80 leading-relaxed">{description}</p>
+          </div>
+        </motion.div>
+      ))}
     </div>
   )
 }

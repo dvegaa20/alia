@@ -24,11 +24,16 @@ export default function UnauthorizedPage() {
   }, [countdown, router])
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center space-y-6 max-w-md px-6">
+    <div className="min-h-screen flex items-center justify-center bg-background text-foreground px-4">
+      <div className="text-center space-y-6 max-w-md rounded-[20px] border border-border bg-surface p-8 sm:p-10">
         <div className="space-y-2">
-          <h1 className="text-4xl font-bold tracking-tight">Acceso Denegado</h1>
-          <p className="text-muted-foreground">
+          <p className="font-mono text-xs uppercase tracking-[0.04em] text-urgency-coral font-medium">
+            Acceso restringido
+          </p>
+          <h1 className="font-sans text-3xl font-medium tracking-[-0.02em] text-foreground">
+            Acceso denegado
+          </h1>
+          <p className="font-sans text-sm text-foreground-secondary leading-relaxed">
             Tu cuenta no tiene permisos para acceder al panel de administración. Si crees que esto
             es un error, contacta al administrador.
           </p>
@@ -36,23 +41,28 @@ export default function UnauthorizedPage() {
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
           <Button
-            className="rounded-xl shadow-md hover:shadow-lg transition-all duration-300 group px-6 bg-linear-to-r from-primary to-primary-300 hover:from-primary/90 hover:to-primary-300/90 text-primary-foreground"
+            className="rounded-full px-6 py-2.5 h-auto bg-primary hover:bg-primary-hover text-primary-foreground font-sans text-sm font-medium group"
             asChild
           >
             <Link href="/">
-              <span className="relative z-10 flex items-center gap-2">
+              <span className="flex items-center gap-2">
                 Volver al inicio
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                <ArrowRight
+                  className="size-4 transition-transform group-hover:translate-x-0.5"
+                  strokeWidth={1.5}
+                />
               </span>
             </Link>
           </Button>
 
           <Button
             variant="outline"
-            className="rounded-xl border-primary/20 text-primary-900 dark:text-primary-200 hover:bg-muted hover:text-primary-900 dark:hover:text-primary-200 transition-colors duration-300 px-6"
+            className="rounded-full border-primary text-primary hover:bg-primary/5 px-6 py-2.5 h-auto font-sans text-sm font-medium"
             asChild
           >
-            <Link href="/">Ir al Inicio ({countdown}s)</Link>
+            <Link href="/">
+              Inicio (<span className="font-mono tabular-nums">{countdown}s</span>)
+            </Link>
           </Button>
         </div>
       </div>

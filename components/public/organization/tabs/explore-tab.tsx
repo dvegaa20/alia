@@ -49,7 +49,7 @@ function LinkCard({ url }: { url: string }) {
 
   if (loading) {
     return (
-      <Card className="rounded-xl overflow-hidden border-border/50 h-85 flex flex-col">
+      <Card className="rounded-[20px] overflow-hidden border border-border bg-surface h-80 flex flex-col py-0">
         <Skeleton className="h-40 w-full rounded-none" />
         <CardContent className="flex-1 space-y-3 pt-6">
           <Skeleton className="h-5 w-3/4" />
@@ -69,46 +69,48 @@ function LinkCard({ url }: { url: string }) {
       rel="noopener noreferrer"
       className="block h-full group"
     >
-      <Card className="rounded-xl overflow-hidden border-border/50 h-full flex flex-col transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(26,28,28,0.06)] dark:hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)] py-0">
+      <Card className="rounded-[20px] overflow-hidden border border-border bg-surface h-full flex flex-col transition-all duration-200 hover:-translate-y-0.5 hover:border-rock-blue py-0">
         {/* Cover Image */}
-        <div className="h-40 overflow-hidden relative bg-muted flex items-center justify-center border-b border-border/50 shrink-0">
+        <div className="h-40 overflow-hidden relative bg-surface-subtle flex items-center justify-center border-b border-border shrink-0">
           {data?.image ? (
             <Image
               src={data.image}
               alt={title}
               width={500}
               height={500}
-              className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110"
+              className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
             />
           ) : (
-            <Link2 className="size-10 text-muted-foreground/30" />
+            <Link2 className="size-8 text-foreground-muted/50" strokeWidth={1.5} />
           )}
-          <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent pointer-events-none" />
         </div>
 
         {/* Content */}
-        <CardContent className="flex-1 flex flex-col pt-6">
-          <div className="flex-1 space-y-3">
-            <h3 className="text-xl font-bold text-foreground leading-tight line-clamp-2 font-headline">
+        <CardContent className="flex-1 flex flex-col pt-5 pb-4">
+          <div className="flex-1 space-y-2">
+            <h3 className="font-sans text-lg font-semibold text-foreground leading-snug line-clamp-2 group-hover:text-primary transition-colors">
               {title}
             </h3>
             {data?.description && (
-              <p className="text-muted-foreground text-sm leading-relaxed line-clamp-3 font-medium">
+              <p className="font-sans text-foreground-secondary text-sm leading-relaxed line-clamp-3">
                 {data.description}
               </p>
             )}
           </div>
         </CardContent>
 
-        <Separator className="opacity-50" />
+        <Separator className="bg-border" />
 
-        <CardFooter className="px-6 py-4 flex items-center justify-between text-muted-foreground text-xs font-medium">
+        <CardFooter className="px-5 py-3.5 flex items-center justify-between text-foreground-muted text-xs">
           <div className="flex items-center flex-1 mr-4 overflow-hidden">
-            <Link2 className="size-3.5 mr-1.5 shrink-0" />
-            <span className="truncate">{url.replace(/^https?:\/\//, '').replace(/\/$/, '')}</span>
+            <Link2 className="size-3.5 mr-1.5 shrink-0 text-primary" strokeWidth={1.5} />
+            <span className="font-mono text-[11px] truncate">
+              {url.replace(/^https?:\/\//, '').replace(/\/$/, '')}
+            </span>
           </div>
-          <span className="text-primary-900 dark:text-primary-200 font-bold text-[11px] uppercase tracking-wider hover:underline underline-offset-4 flex items-center shrink-0">
-            Visitar <ExternalLink className="size-3 ml-1" />
+          <span className="text-primary font-medium text-xs group-hover:underline underline-offset-4 flex items-center shrink-0">
+            Visitar
+            <ExternalLink className="size-3 ml-1" strokeWidth={1.5} />
           </span>
         </CardFooter>
       </Card>
@@ -120,26 +122,26 @@ export function ExploreTab({ relevantLinks }: { relevantLinks: string[] }) {
   const links = relevantLinks.length > 0 ? relevantLinks : []
 
   return (
-    <div className="py-2 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <div className="mb-10">
-        <h2 className="text-2xl font-bold font-headline text-foreground">
+    <div className="py-2 animate-in fade-in slide-in-from-bottom-4 duration-400">
+      <div className="mb-8">
+        <h2 className="font-sans text-2xl font-semibold text-foreground">
           Explora nuestros recursos
         </h2>
-        <p className="text-muted-foreground mt-2 font-medium text-sm max-w-2xl">
+        <p className="font-sans text-foreground-secondary mt-1.5 text-sm max-w-2xl">
           Descubre artículos, noticias, proyectos y material relevante sobre nuestra misión.
         </p>
       </div>
 
       {links.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
           {links.map((url, idx) => (
             <LinkCard key={idx} url={url} />
           ))}
         </div>
       ) : (
-        <div className="py-20 text-center text-muted-foreground border border-dashed border-border/60 rounded-3xl bg-muted/20">
-          <p className="text-lg font-medium">Sin recursos por ahora</p>
-          <p className="text-sm mt-2 max-w-sm mx-auto">
+        <div className="py-16 px-6 text-center text-foreground-muted border border-dashed border-border rounded-[20px] bg-surface">
+          <p className="font-sans text-base font-medium text-foreground">Sin recursos por ahora</p>
+          <p className="font-sans text-sm mt-1.5 max-w-sm mx-auto text-foreground-secondary">
             Esta organización aún no ha compartido enlaces relevantes.
           </p>
         </div>

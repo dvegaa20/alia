@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { DM_Serif_Text, PT_Serif } from 'next/font/google'
+import { Plus_Jakarta_Sans, JetBrains_Mono } from 'next/font/google'
 import { ThemeProvider } from '@/components/providers/theme-provider'
 import { Toaster } from '@/components/ui/sonner'
 import { SmoothScrolling } from '@/components/providers/smooth-scrolling'
@@ -7,16 +7,16 @@ import { WebsiteJsonLd } from '@/components/seo/json-ld'
 import { GoogleAnalytics } from '@next/third-parties/google'
 import './globals.css'
 
-const dmSerifText = DM_Serif_Text({
+const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  variable: '--font-dm-serif',
-  weight: ['400'],
+  variable: '--font-plus-jakarta',
+  weight: ['400', '500', '600'],
 })
 
-const ptSerif = PT_Serif({
+const jetBrainsMono = JetBrains_Mono({
   subsets: ['latin'],
-  variable: '--font-pt-serif',
-  weight: ['400', '700'],
+  variable: '--font-jetbrains-mono',
+  weight: ['400', '500'],
 })
 
 export const metadata: Metadata = {
@@ -43,15 +43,19 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="es" suppressHydrationWarning>
+    <html
+      lang="es"
+      suppressHydrationWarning
+      className={`${plusJakartaSans.variable} ${jetBrainsMono.variable}`}
+    >
       <head>
         <WebsiteJsonLd />
       </head>
-      <body className={`${dmSerifText.variable} ${ptSerif.variable} antialiased`}>
+      <body className="font-sans antialiased bg-background text-foreground">
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
-          enableSystem
+          defaultTheme="light"
+          enableSystem={false}
           disableTransitionOnChange
         >
           <SmoothScrolling>{children}</SmoothScrolling>

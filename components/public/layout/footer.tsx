@@ -1,11 +1,11 @@
 'use client'
 
 import Link from 'next/link'
-import { Separator } from '@/components/ui/separator'
 import { usePathname } from 'next/navigation'
+import { AliaLogo } from './alia-logo'
 import { FooterCTA } from './footer-cta'
 
-/* ── Social icon SVGs (inline for zero-dependency) ── */
+/* ── Social icon SVGs (Instagram, LinkedIn, Facebook) ── */
 function IconInstagram({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden="true">
@@ -30,139 +30,59 @@ function IconFacebook({ className }: { className?: string }) {
   )
 }
 
-/* ── Link column data ── */
-const defaultFooterColumns = [
-  {
-    title: 'Participar',
-    links: [
-      { label: 'Blog', href: '/blog' },
-      { label: 'Guías para donantes', href: '/resources/donors' },
-      { label: 'Guías para voluntarios', href: '/resources/volunteers' },
-      { label: 'Recursos para ONGs', href: '/resources/nonprofits' },
-    ],
-  },
-  {
-    title: 'Conoce Alia',
-    links: [
-      { label: 'Nuestra Misión', href: '/about' },
-      { label: 'Cómo verificamos', href: '/criteria' },
-      { label: 'Impacto y Métricas', href: '/impact' },
-    ],
-  },
-  {
-    title: 'Contacto',
-    links: [
-      { label: 'Preguntas Frecuentes', href: '/faq' },
-      { label: 'Prensa y Medios', href: '/press' },
-      { label: 'Contacto directo', href: '/contact' },
-    ],
-  },
-]
-
 const socialLinks = [
   { icon: IconInstagram, href: '#', label: 'Instagram' },
-  { icon: IconFacebook, href: '#', label: 'Facebook' },
   { icon: IconLinkedIn, href: '#', label: 'LinkedIn' },
+  { icon: IconFacebook, href: '#', label: 'Facebook' },
 ]
 
 interface FooterProps {
-  topCategories?: { name: string; slug: string }[]
+  hasLogoLight?: boolean
+  hasLogoDark?: boolean
 }
 
-/* ── Footer Component ── */
-export function Footer({ topCategories = [] }: FooterProps) {
-  const currentYear = new Date().getFullYear()
+export function Footer({ hasLogoLight = false, hasLogoDark = false }: FooterProps) {
   const pathname = usePathname()
   const isHomePage = pathname === '/'
 
-  const exploreLinks = [
-    { label: 'Directorio', href: '/directory' },
-    ...topCategories.map((cat) => ({
-      label: cat.name,
-      href: `/directory?category=${cat.slug}`,
-    })),
-  ]
-
-  const footerColumns = [
-    {
-      title: 'Explorar Causas',
-      links: exploreLinks,
-    },
-    ...defaultFooterColumns,
-  ]
-
   return (
-    <footer className="relative w-full">
+    <footer className="w-full bg-deep-harbor dark:bg-band-dark-deep text-merino">
       {isHomePage && <FooterCTA />}
 
-      {/* ─── Main Footer Card ─── */}
-      <div className={`relative px-4 pb-4 sm:px-8 sm:pb-8 ${isHomePage ? '-mt-36' : 'pt-8'}`}>
-        <div className="bg-card max-w-400 mx-auto border border-border/60 rounded-[28px] sm:rounded-[32px] shadow-xl overflow-hidden">
-          <div className="p-8 sm:p-10 lg:p-14">
-            <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_2fr] gap-12 lg:gap-16">
-              {/* Left: Brand */}
-              <div className="space-y-5">
-                <Link
-                  href="/"
-                  className="text-2xl font-bold text-primary-900 dark:text-primary-200 font-headline tracking-tight inline-block"
-                >
-                  Alia
-                </Link>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
+        <div className="space-y-3">
+          <Link
+            href="/"
+            className="inline-flex items-center hover:opacity-85 transition-opacity"
+            aria-label="Alia — Inicio"
+          >
+            <AliaLogo variant="light" hasLogoLight={hasLogoLight} hasLogoDark={hasLogoDark} />
+          </Link>
+          <p className="font-sans text-sm text-merino/75 leading-relaxed max-w-md">
+            Alia es un directorio social transparente y accesible que funciona como un puente
+            confiable entre ciudadanos y organizaciones verificadas en México.
+          </p>
+        </div>
 
-                <p className="text-muted-foreground text-sm leading-relaxed font-body max-w-xs">
-                  Alia es un directorio social transparente y accesible que funciona como un puente
-                  confiable entre ciudadanos y organizaciones verídicas en México.
-                </p>
+        <div className="flex items-center gap-3" aria-label="Redes sociales de Alia">
+          {socialLinks.map((social) => (
+            <Link
+              key={social.label}
+              href={social.href}
+              aria-label={social.label}
+              className="flex items-center justify-center size-10 rounded-full border border-merino/20 text-merino hover:border-rock-blue hover:text-rock-blue hover:bg-white/5 transition-colors duration-200"
+            >
+              <social.icon className="size-4" />
+            </Link>
+          ))}
+        </div>
+      </div>
 
-                {/* Social Icons */}
-                <div className="flex items-center gap-3 pt-1">
-                  {socialLinks.map((social) => (
-                    <Link
-                      key={social.label}
-                      href={social.href}
-                      aria-label={social.label}
-                      className="flex items-center justify-center w-9 h-9 rounded-lg bg-muted hover:bg-primary/10 hover:text-primary-900 dark:hover:bg-primary/20 dark:hover:text-primary-200 text-muted-foreground transition-all duration-200"
-                    >
-                      <social.icon className="h-4 w-4" />
-                    </Link>
-                  ))}
-                </div>
-              </div>
-
-              {/* Right: Link Columns */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 sm:gap-6">
-                {footerColumns.map((column) => (
-                  <div key={column.title} className="space-y-4">
-                    <h3 className="text-sm font-semibold text-foreground font-headline tracking-wide">
-                      {column.title}
-                    </h3>
-                    <ul className="space-y-2.5">
-                      {column.links.map((link) => (
-                        <li key={link.label}>
-                          <Link
-                            href={link.href}
-                            className="text-[13px] text-muted-foreground hover:text-primary-900 dark:hover:text-primary-200 transition-colors duration-200 font-body"
-                          >
-                            {link.label}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Legal row */}
-          <div className="px-8 sm:px-10 lg:px-14">
-            <Separator className="bg-border/60" />
-          </div>
-          <div className="px-8 sm:px-10 lg:px-14 py-6 flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p className="text-xs text-muted-foreground font-label">
-              © {currentYear} Alia. Todos los derechos reservados.
-            </p>
-          </div>
+      <div className="border-t border-merino/15">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6">
+          <p className="font-mono text-xs text-merino/70">
+            © 2026 Alia. Todos los derechos reservados.
+          </p>
         </div>
       </div>
     </footer>

@@ -47,7 +47,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function OrganizationProfilePage({ params }: PageProps) {
   const { slug } = await params
-
   const org = await getCachedOrg(slug)
 
   if (!org) {
@@ -57,11 +56,11 @@ export default async function OrganizationProfilePage({ params }: PageProps) {
   const locationString = org.location ? `${org.location.city}, ${org.location.state}` : 'México'
 
   return (
-    <div className="pt-4 pb-20 max-w-400 mx-auto px-6 lg:px-8">
+    <div className="pt-6 pb-20 max-w-6xl mx-auto px-4 sm:px-6">
       <OrganizationProfileJsonLd org={org} />
       <HeroCover
-        coverImageUrl={org.coverImageUrl || '/images/directorio/card-forest.jpg'}
-        logoUrl={org.logoUrl || '/images/directorio/logo-forest.jpg'}
+        coverImageUrl={org.coverImageUrl || '/images/landscape3.jpg'}
+        logoUrl={org.logoUrl || ''}
         name={org.name}
       />
 

@@ -15,18 +15,40 @@ export const metadata: Metadata = {
   alternates: { canonical: '/directory' },
 }
 
-function mapOrgToCard(org: any): OrganizationCardProps {
+function hasUrgentNeeds(needs: unknown): boolean {
+  return (
+    Array.isArray(needs) &&
+    needs.some(
+      (n: { title?: string; urgency?: string }) => Boolean(n?.title) && n?.urgency === 'alta'
+    )
+  )
+}
+
+function mapOrgToCard(org: {
+  slug: string
+  name: string
+  shortDescription: string
+  categories?: { name: string }[]
+  location?: { city: string; state: string } | null
+  coverImageUrl?: string | null
+  logoUrl?: string | null
+  verified: boolean
+  causeType: string
+  isDonatariaAutorizada: boolean
+  needs?: unknown
+}): OrganizationCardProps {
   return {
     slug: org.slug,
     name: org.name,
     description: org.shortDescription,
-    categories: org.categories?.map((c: any) => c.name) || ['Organización'],
+    categories: org.categories?.map((c) => c.name) || ['Organización'],
     location: org.location ? `${org.location.city}, ${org.location.state}` : 'México',
-    coverImage: org.coverImageUrl || '/images/directorio/card-forest.jpg',
-    logoImage: org.logoUrl || '/images/directorio/logo-forest.jpg',
+    coverImage: org.coverImageUrl || '/images/landscape3.jpg',
+    logoImage: org.logoUrl || '',
     verified: org.verified,
-    causeType: org.causeType,
+    causeType: org.causeType as 'ONG' | 'YOUTH_INITIATIVE',
     isDonatariaAutorizada: org.isDonatariaAutorizada,
+    hasUrgentNeeds: hasUrgentNeeds(org.needs),
   }
 }
 
@@ -77,16 +99,15 @@ export default async function DirectoryPage(props: {
   const youthInitiatives: OrganizationCardProps[] = (youthResult.data || []).map(mapOrgToCard)
   const newAdditions: OrganizationCardProps[] = (newAdditionsResult.data || []).map(mapOrgToCard)
 
-  // Build map points from organizations that have coordinates
   const mapPoints: MapPoint[] = (result.data || [])
     .filter((org) => org.location?.latitude != null && org.location?.longitude != null)
     .map((org) => ({
       slug: org.slug,
       name: org.name,
-      categories: org.categories?.map((c: any) => c.name) || ['Organización'],
+      categories: org.categories?.map((c) => c.name) || ['Organización'],
       location: org.location ? `${org.location.city}, ${org.location.state}` : 'México',
       coordinates: [org.location!.longitude!, org.location!.latitude!] as [number, number],
-      logoImage: org.logoUrl || '/images/directorio/logo-forest.jpg',
+      logoImage: org.logoUrl || '',
       verified: org.verified,
     }))
 
@@ -94,7 +115,7 @@ export default async function DirectoryPage(props: {
 
   return (
     <SidebarProvider>
-      <div className="pt-8 pb-12 w-full max-w-400 mx-auto px-4 md:px-8 flex flex-col lg:flex-row gap-6 lg:gap-12">
+      <div className="pt-8 pb-16 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-6 lg:gap-10">
         <Suspense>
           <SidebarFilters
             searchQuery={query}
@@ -105,18 +126,20 @@ export default async function DirectoryPage(props: {
             activeVerified={verified}
           />
         </Suspense>
+
         <div className="flex-1 min-w-0 w-full">
-          <div className="lg:hidden mb-6 flex items-center justify-between bg-muted/30 p-2 rounded-xl border border-border/50">
+          <div className="lg:hidden mb-6 flex items-center justify-between bg-surface p-2.5 rounded-xl border border-border">
             <div className="flex items-center gap-2">
               <SidebarTrigger />
-              <span className="font-semibold text-sm">Filtros</span>
+              <span className="font-sans font-medium text-sm text-foreground">Filtros</span>
             </div>
             {meta.total > 0 && (
-              <span className="text-xs font-medium text-muted-foreground mr-3">
+              <span className="font-mono text-xs text-foreground-muted mr-2 tabular-nums">
                 {meta.total} resultados
               </span>
             )}
           </div>
+
           <DirectoryShowcase youthInitiatives={youthInitiatives} newAdditions={newAdditions}>
             <ResultsGrid
               organizations={organizations}

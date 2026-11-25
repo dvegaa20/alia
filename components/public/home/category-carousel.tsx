@@ -18,22 +18,16 @@ export async function CategoryCarousel({
     slug: org.slug,
     name: org.name,
     description: org.shortDescription || '',
-    location: org.location
-      ? `${org.location.city}, ${org.location.state}`
-      : 'Ubicación no especificada',
+    location: org.location ? `${org.location.city}, ${org.location.state}` : 'México',
     tag: categoryName,
-    image:
-      org.coverImageUrl ||
-      'https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?auto=format&fit=crop&q=80',
-    logo:
-      org.logoUrl ||
-      'https://ui-avatars.com/api/?name=' + encodeURIComponent(org.name) + '&background=random',
+    image: org.coverImageUrl || '/images/landscape3.jpg',
+    logo: org.logoUrl || '',
     isVerified: org.verified,
   }))
 
   if (items.length === 0) {
     return (
-      <div className="text-center py-8 text-muted-foreground">
+      <div className="text-center py-12 rounded-[20px] border border-border bg-background/40 text-sm text-foreground-muted">
         No se encontraron organizaciones para esta categoría aún.
       </div>
     )

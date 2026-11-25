@@ -25,12 +25,12 @@ export function Prose({ content, size = 'base', className }: ProseProps) {
   return (
     <div
       className={cn(
-        'prose prose-stone dark:prose-invert max-w-none',
-        'prose-p:text-muted-foreground prose-p:leading-relaxed',
-        'prose-strong:text-foreground prose-strong:font-bold',
+        'prose dark:prose-invert max-w-none',
+        'prose-p:text-foreground-secondary prose-p:leading-relaxed',
+        'prose-strong:text-foreground prose-strong:font-semibold',
         'prose-a:text-primary prose-a:no-underline hover:prose-a:underline',
-        'prose-li:text-muted-foreground',
-        'prose-headings:text-foreground prose-headings:font-headline',
+        'prose-li:text-foreground-secondary',
+        'prose-headings:text-foreground prose-headings:font-sans prose-headings:font-semibold',
         'prose-ul:my-2 prose-ol:my-2 prose-li:my-0.5',
         sizeClasses[size],
         className

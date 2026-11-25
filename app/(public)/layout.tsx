@@ -1,18 +1,21 @@
+import fs from 'node:fs'
+import path from 'node:path'
 import { Navbar, Footer } from '@/components/public'
-import { getTopCategoriesWithOrgs } from '@/server/actions/categories'
 
-export default async function PublicLayout({
+export default function PublicLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const { data: topCategories } = await getTopCategoriesWithOrgs(3)
+  const publicDir = path.join(process.cwd(), 'public')
+  const hasLogoLight = fs.existsSync(path.join(publicDir, 'logo-light.svg'))
+  const hasLogoDark = fs.existsSync(path.join(publicDir, 'logo-dark.svg'))
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Navbar />
+      <Navbar hasLogoLight={hasLogoLight} hasLogoDark={hasLogoDark} />
       <main className="flex-1">{children}</main>
-      <Footer topCategories={topCategories || []} />
+      <Footer hasLogoLight={hasLogoLight} hasLogoDark={hasLogoDark} />
     </div>
   )
 }

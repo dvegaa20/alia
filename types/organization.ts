@@ -96,10 +96,11 @@ export interface OrganizationCardProps {
   categories: string[]
   location: string
   coverImage: string
-  logoImage: string
+  logoImage?: string | null
   verified?: boolean
   causeType?: 'ONG' | 'YOUTH_INITIATIVE'
   isDonatariaAutorizada?: boolean
+  hasUrgentNeeds?: boolean
 }
 
 /** Organization option for the hero search combobox */
@@ -167,4 +168,6 @@ export interface NeedsTabProps {
   isDonatariaAutorizada?: boolean
   volunteering?: VolunteeringInfo | null
   events?: OrgEventItem[] | null
+  whatsapp?: string | null
+  orgName?: string
 }

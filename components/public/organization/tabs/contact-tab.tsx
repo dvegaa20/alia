@@ -48,7 +48,7 @@ export function ContactTab({
 
     const finalSubject = asunto
       ? `${asunto} (vía Alia)`
-      : `Mensaje de ${nombre || 'un usuario anónimo'} vía Alia`
+      : `Mensaje de ${nombre || 'un ciudadano'} vía Alia`
 
     const subject = encodeURIComponent(finalSubject)
     const body = encodeURIComponent(
@@ -59,37 +59,37 @@ export function ContactTab({
   }
 
   return (
-    <div className="py-2 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="py-2 animate-in fade-in slide-in-from-bottom-4 duration-400">
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-8 items-stretch">
         {/* Left Column: Form */}
-        <Card className="rounded-3xl py-0 overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] border-border/50 h-full flex flex-col">
-          <CardHeader className="px-8 md:px-10 pt-8 md:pt-10 pb-0">
-            <CardTitle className="text-2xl font-bold font-headline text-foreground leading-tight">
+        <Card className="rounded-[20px] py-0 overflow-hidden border border-border bg-surface h-full flex flex-col">
+          <CardHeader className="px-6 sm:px-8 pt-8 pb-0">
+            <CardTitle className="font-sans text-2xl font-semibold text-foreground leading-tight">
               Envíanos un mensaje
             </CardTitle>
-            <p className="text-muted-foreground font-medium text-sm mt-1">
-              Al enviar, se abrirá tu correo con el mensaje listo para enviar.
+            <p className="font-sans text-foreground-secondary text-sm mt-1">
+              Al enviar, se abrirá tu aplicación de correo con el mensaje listo.
             </p>
           </CardHeader>
 
-          <CardContent className="px-8 md:px-10 pb-8 md:pb-10 pt-6 flex-1 flex flex-col">
-            <form onSubmit={handleSubmit} className="flex flex-col flex-1 gap-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <CardContent className="px-6 sm:px-8 pb-8 pt-6 flex-1 flex flex-col">
+            <form onSubmit={handleSubmit} className="flex flex-col flex-1 gap-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div className="space-y-2">
-                  <Label className="text-[11px] font-bold text-muted-foreground uppercase tracking-widest ml-1">
-                    NOMBRE
+                  <Label className="font-mono text-[11px] font-medium text-foreground-muted uppercase tracking-[0.04em]">
+                    Nombre
                   </Label>
                   <Input
                     placeholder="Tu nombre"
                     value={nombre}
                     onChange={(e) => setNombre(e.target.value)}
                     required
-                    className="border-transparent h-14 rounded-2xl px-5 focus-visible:ring-primary shadow-none"
+                    className="h-12 rounded-xl border border-border bg-background/50 dark:bg-background px-4 focus-visible:border-primary focus-visible:ring-primary/30 shadow-none"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-[11px] font-bold text-muted-foreground uppercase tracking-widest ml-1">
-                    ASUNTO
+                  <Label className="font-mono text-[11px] font-medium text-foreground-muted uppercase tracking-[0.04em]">
+                    Asunto
                   </Label>
                   <Input
                     type="text"
@@ -97,38 +97,37 @@ export function ContactTab({
                     value={asunto}
                     onChange={(e) => setAsunto(e.target.value)}
                     required
-                    className="border-transparent h-14 rounded-2xl px-5 focus-visible:ring-primary shadow-none"
+                    className="h-12 rounded-xl border border-border bg-background/50 dark:bg-background px-4 focus-visible:border-primary focus-visible:ring-primary/30 shadow-none"
                   />
                 </div>
               </div>
 
               <div className="space-y-2 flex-1 flex flex-col">
-                <Label className="text-[11px] font-bold text-muted-foreground uppercase tracking-widest ml-1">
-                  MENSAJE
+                <Label className="font-mono text-[11px] font-medium text-foreground-muted uppercase tracking-[0.04em]">
+                  Mensaje
                 </Label>
                 <Textarea
                   placeholder="¿Cómo podemos ayudarte?"
                   value={mensaje}
                   onChange={(e) => setMensaje(e.target.value)}
                   required
-                  className="border-transparent flex-1 resize-none rounded-2xl p-5 focus-visible:ring-primary shadow-none"
+                  className="min-h-[150px] flex-1 resize-none rounded-xl border border-border bg-background/50 dark:bg-background p-4 focus-visible:border-primary focus-visible:ring-primary/30 shadow-none"
                 />
               </div>
 
               <Button
                 type="submit"
-                className="w-full h-14 bg-primary hover:bg-primary/90  rounded-2xl font-bold text-base shadow-md transition-all gap-2"
+                className="w-full h-12 bg-primary hover:bg-primary-hover text-primary-foreground rounded-full font-sans font-medium text-[15px] transition-colors gap-2"
               >
-                <Send className="size-4" />
-                Enviar Mensaje
+                <Send className="size-4" strokeWidth={1.5} />
+                Enviar mensaje
               </Button>
             </form>
           </CardContent>
         </Card>
 
-        {/* Right Column: Info & Map */}
+        {/* Right Column: Map & Info */}
         <div className="space-y-6">
-          {/* Map Card */}
           {coordinates?.lat && coordinates?.lng ? (
             <InteractiveMapCard
               location={location || undefined}
@@ -149,98 +148,101 @@ export function ContactTab({
           )}
 
           {/* Office Hours & Contact Info Card */}
-          <Card className="rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] border-border/50 py-0">
-            <CardContent className="px-8 py-8">
-              {/* Office Hours */}
-              <div className="flex items-center mb-6">
-                <Clock className="size-5 text-[#b94a1d] dark:text-orange-400 mr-2.5 shrink-0" />
-                <CardTitle className="font-bold text-foreground font-headline text-lg tracking-tight">
-                  Horarios de Oficina
+          <Card className="rounded-[20px] border border-border bg-surface py-0">
+            <CardContent className="px-6 sm:px-8 py-7">
+              <div className="flex items-center mb-5 gap-2.5">
+                <Clock className="size-4 text-primary shrink-0" strokeWidth={1.5} />
+                <CardTitle className="font-sans font-semibold text-foreground text-lg">
+                  Horarios de oficina
                 </CardTitle>
               </div>
-              <div className="space-y-3">
+              <div className="space-y-2.5">
                 {officeHours ? (
                   Object.entries(DAY_LABELS).map(([key, label]) => {
                     const dayData = officeHours[key]
                     return (
                       <div key={key} className="flex justify-between items-center text-sm">
-                        <span className="text-muted-foreground font-medium">{label}</span>
+                        <span className="text-foreground-secondary font-sans">{label}</span>
                         {dayData ? (
-                          <span className="font-bold text-foreground">
+                          <span className="font-mono text-xs font-medium tabular-nums text-foreground">
                             {dayData.open} - {dayData.close}
                           </span>
                         ) : (
-                          <span className="font-bold text-muted-foreground opacity-60">
-                            Cerrado
-                          </span>
+                          <span className="font-mono text-xs text-foreground-muted">Cerrado</span>
                         )}
                       </div>
                     )
                   })
                 ) : (
-                  <p className="text-sm text-muted-foreground">Horarios no disponibles</p>
+                  <p className="text-sm text-foreground-muted">Horarios no disponibles</p>
                 )}
               </div>
 
-              <Separator className="my-6 opacity-60" />
+              <Separator className="my-6 bg-border" />
 
               {/* Contact Info */}
-              <div className="space-y-6">
+              <div className="space-y-5">
                 {address && (
-                  <div className="flex items-start">
-                    <div className="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-950/40 flex items-center justify-center mr-4 shrink-0 mt-0.5">
-                      <MapPin className="size-4 text-blue-600 dark:text-blue-400" />
+                  <div className="flex items-start gap-3.5">
+                    <div className="size-10 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0 mt-0.5">
+                      <MapPin className="size-4" strokeWidth={1.5} />
                     </div>
                     <div className="overflow-hidden">
-                      <p className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground mb-1">
-                        DIRECCIÓN FÍSICA
+                      <p className="font-mono text-[10px] uppercase tracking-[0.04em] font-medium text-foreground-muted mb-1">
+                        Dirección física
                       </p>
-                      <p className="text-sm font-bold text-foreground leading-snug">{address}</p>
+                      <p className="font-sans text-sm font-medium text-foreground leading-snug">
+                        {address}
+                      </p>
                     </div>
                   </div>
                 )}
 
-                <div className="flex items-center">
-                  <div className="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-950/40 flex items-center justify-center mr-4 shrink-0">
-                    <Mail className="size-4 text-blue-600 dark:text-blue-400" />
+                <div className="flex items-center gap-3.5">
+                  <div className="size-10 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                    <Mail className="size-4" strokeWidth={1.5} />
                   </div>
                   <div className="overflow-hidden">
-                    <p className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground mb-1">
-                      EMAIL
+                    <p className="font-mono text-[10px] uppercase tracking-[0.04em] font-medium text-foreground-muted mb-1">
+                      Correo electrónico
                     </p>
-                    <p className="text-sm font-bold text-foreground truncate">{email}</p>
+                    <p className="font-sans text-sm font-medium text-foreground truncate">
+                      {email}
+                    </p>
                   </div>
                 </div>
 
-                <div className="flex items-center">
-                  <div className="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-950/40 flex items-center justify-center mr-4 shrink-0">
-                    <Phone className="size-4 text-blue-600 dark:text-blue-400" />
+                {phone && (
+                  <div className="flex items-center gap-3.5">
+                    <div className="size-10 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                      <Phone className="size-4" strokeWidth={1.5} />
+                    </div>
+                    <div className="overflow-hidden">
+                      <p className="font-mono text-[10px] uppercase tracking-[0.04em] font-medium text-foreground-muted mb-1">
+                        Teléfono
+                      </p>
+                      <p className="font-mono text-sm font-medium tabular-nums text-foreground">
+                        {phone}
+                      </p>
+                    </div>
                   </div>
-                  <div className="overflow-hidden">
-                    <p className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground mb-1">
-                      TELÉFONO
-                    </p>
-                    <p className="text-sm font-bold text-foreground">
-                      {phone || '+52 55 1234 5678'}
-                    </p>
-                  </div>
-                </div>
+                )}
 
                 {whatsapp && (
                   <a
                     href={`https://wa.me/${whatsapp.replace(/\D/g, '')}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center group/wa p-3 -mx-3 rounded-2xl hover:bg-emerald-500/10 transition-colors"
+                    className="flex items-center gap-3.5 group/wa p-3 -mx-3 rounded-2xl hover:bg-verified-emerald/10 transition-colors"
                   >
-                    <div className="w-10 h-10 rounded-full bg-emerald-50 dark:bg-emerald-950/40 flex items-center justify-center mr-4 shrink-0">
-                      <MessageCircle className="size-4 text-emerald-600 dark:text-emerald-400" />
+                    <div className="size-10 rounded-full bg-verified-emerald/12 text-verified-emerald flex items-center justify-center shrink-0">
+                      <MessageCircle className="size-4" strokeWidth={1.5} />
                     </div>
                     <div className="overflow-hidden">
-                      <p className="text-[10px] uppercase tracking-widest font-bold text-emerald-600 dark:text-emerald-400 mb-1">
-                        WHATSAPP DIRECTO
+                      <p className="font-mono text-[10px] uppercase tracking-[0.04em] font-medium text-verified-emerald mb-1">
+                        WhatsApp directo
                       </p>
-                      <p className="text-sm font-bold text-foreground group-hover/wa:underline">
+                      <p className="font-mono text-sm font-medium tabular-nums text-foreground group-hover/wa:underline">
                         {whatsapp}
                       </p>
                     </div>
@@ -255,50 +257,31 @@ export function ContactTab({
   )
 }
 
-// Extracted to avoid duplicating the map markup for clickable vs non-clickable variants
 function MapCardInner({ location }: { location?: string }) {
   return (
-    <Card className="rounded-3xl py-3 px-3 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] border-border/50 transition-all duration-300 group-hover/map:shadow-[0_12px_40px_rgb(0,0,0,0.10)] dark:group-hover/map:shadow-[0_12px_40px_rgb(0,0,0,0.35)] group-hover/map:-translate-y-1">
-      <div className="relative w-full h-55 bg-zinc-300 dark:bg-zinc-800 rounded-2xl overflow-hidden flex flex-col justify-end p-4">
-        {/* Map Background Pattern (Simulated) */}
+    <Card className="rounded-2xl p-2 border border-border bg-surface transition-colors duration-200 group-hover/map:border-rock-blue">
+      <div className="relative w-full h-56 bg-surface-subtle rounded-xl overflow-hidden border border-border flex flex-col justify-end p-4">
         <div
-          className="absolute inset-0 opacity-20 dark:opacity-10 pointer-events-none"
+          className="absolute inset-0 opacity-30 pointer-events-none"
           style={{
-            backgroundImage: 'radial-gradient(circle at center, #ffffff 2px, transparent 2px)',
+            backgroundImage:
+              'radial-gradient(circle at center, var(--primary) 1.5px, transparent 1.5px)',
             backgroundSize: '24px 24px',
           }}
         />
-        <div
-          className="absolute inset-0 opacity-10 dark:opacity-5 pointer-events-none mix-blend-overlay"
-          style={{
-            backgroundImage:
-              'linear-gradient(45deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000), linear-gradient(45deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000)',
-            backgroundSize: '60px 60px',
-            backgroundPosition: '0 0, 30px 30px',
-          }}
-        />
 
-        {/* Map Pin / Marker */}
+        {/* Map Pin */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -mt-4">
-          <div className="w-6 h-6 bg-[#1e4a23] rounded-full flex items-center justify-center border-[3px] border-white dark:border-zinc-900 shadow-xl relative z-10">
-            <div className="w-2 h-2 bg-white rounded-full" />
+          <div className="size-7 bg-venice-blue dark:bg-rock-blue rounded-full flex items-center justify-center border-[3px] border-white dark:border-midnight-harbor relative z-10">
+            <div className="size-2 bg-white dark:bg-midnight-harbor rounded-full" />
           </div>
-          <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-1.5 bg-black/40 blur-[2px] rounded-full" />
-        </div>
-
-        {/* Decorative secondary pins */}
-        <div className="absolute top-[30%] right-[20%] w-6 h-6 bg-white/40 rounded-full flex items-center justify-center border-2 border-white/60">
-          <MapPin className="size-3 " />
-        </div>
-        <div className="absolute bottom-[40%] left-[20%] w-5 h-5 bg-white/40 rounded-full flex items-center justify-center border border-white/60">
-          <MapPin className="size-2 " />
         </div>
 
         {/* Location Pill */}
-        <div className="relative bg-white dark:bg-zinc-900 rounded-xl py-3 px-4 flex items-center shadow-lg w-full z-20">
-          <Navigation className="size-4 text-primary-900 dark:text-primary-200 mr-3 shrink-0 fill-current" />
-          <span className="text-sm font-bold text-zinc-900 dark: truncate">
-            {location || 'Ciudad de México'}
+        <div className="relative bg-surface rounded-full border border-border py-2.5 px-4 flex items-center w-full z-20">
+          <Navigation className="size-4 text-primary mr-2.5 shrink-0" strokeWidth={1.5} />
+          <span className="text-sm font-medium text-foreground truncate">
+            {location || 'México'}
           </span>
         </div>
       </div>
@@ -340,33 +323,32 @@ function InteractiveMapCard({
   }
 
   return (
-    <Card className="rounded-3xl py-3 px-3 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] border-border/50 transition-all duration-300">
-      <div className="relative w-full h-[280px] bg-zinc-300 dark:bg-zinc-800 rounded-2xl overflow-hidden flex flex-col justify-end p-4 group">
+    <Card className="rounded-2xl p-2 border border-border bg-surface">
+      <div className="relative w-full h-[280px] rounded-xl overflow-hidden border border-border bg-surface-subtle group">
         <Map
           viewport={{
             center: [coordinates.lng, coordinates.lat],
             zoom: 14,
           }}
-          className="absolute inset-0 z-0"
+          className="h-full w-full"
         >
           {/* Org Marker */}
           <MapMarker longitude={coordinates.lng} latitude={coordinates.lat} offset={[0, -12]}>
             <MarkerContent>
-              <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center border-2 border-white dark:border-zinc-900 shadow-lg relative z-10 transition-transform group-hover:scale-110 cursor-pointer">
-                <div className="w-1.5 h-1.5 bg-white rounded-full" />
+              <div className="size-7 bg-venice-blue dark:bg-rock-blue rounded-full flex items-center justify-center border-[3px] border-white dark:border-midnight-harbor relative z-10 transition-transform group-hover:scale-110 cursor-pointer">
+                <div className="size-2 bg-white dark:bg-midnight-harbor rounded-full" />
               </div>
-              <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-1 bg-black/40 blur-[1px] rounded-full" />
             </MarkerContent>
-            <MarkerPopup className="text-sm font-medium w-48 text-center p-2 rounded-xl border-border bg-background shadow-lg text-foreground">
-              {location || 'Organización'}
+            <MarkerPopup className="text-sm font-medium w-48 text-center p-3 rounded-2xl border border-border bg-surface text-foreground">
+              <p className="font-sans font-medium">{location || 'Organización'}</p>
               {googleMapsUrl && (
                 <a
                   href={googleMapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block text-primary mt-1 text-[11px] font-bold uppercase tracking-wider hover:underline"
+                  className="block text-primary mt-1.5 font-mono text-[11px] font-medium uppercase tracking-[0.04em] hover:underline"
                 >
-                  Ver indicaciones
+                  Ver indicaciones →
                 </a>
               )}
             </MarkerPopup>
@@ -380,14 +362,11 @@ function InteractiveMapCard({
               offset={[0, -12]}
             >
               <MarkerContent>
-                <div className="relative cursor-pointer group/user">
-                  <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center border-2 border-white shadow-lg relative z-10 transition-transform group-hover/user:scale-110">
-                    <User className="size-3.5 " />
-                  </div>
-                  <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-1 bg-black/40 blur-[1px] rounded-full" />
+                <div className="size-6 bg-deep-harbor rounded-full flex items-center justify-center border-2 border-white text-white relative z-10 cursor-pointer">
+                  <User className="size-3.5" strokeWidth={1.5} />
                 </div>
               </MarkerContent>
-              <MarkerPopup className="text-sm p-2 text-foreground font-bold whitespace-nowrap text-center shadow-lg border-border rounded-xl">
+              <MarkerPopup className="text-xs p-2 text-foreground font-medium whitespace-nowrap text-center border border-border bg-surface rounded-xl">
                 Tu ubicación
               </MarkerPopup>
             </MapMarker>
@@ -397,21 +376,21 @@ function InteractiveMapCard({
           {routeCoords && (
             <MapRoute
               coordinates={routeCoords}
-              color="#2563EB"
+              color="#16587B"
               width={4}
-              opacity={0.7}
+              opacity={0.8}
               dashArray={[2, 2]}
             />
           )}
 
-          {/* Controls */}
           <MapControls position="bottom-right" showZoom showLocate onLocate={handleLocate} />
         </Map>
-        <div className="absolute top-4 left-4 z-20 pointer-events-none">
-          <div className="bg-background/80 backdrop-blur-md rounded-xl py-2 px-3 flex items-center shadow-sm">
-            <Navigation className="size-3 text-primary-900 dark:text-primary-200 mr-2 shrink-0 fill-current" />
-            <span className="text-xs font-bold text-foreground truncate select-none">
-              {location || 'Ciudad de México'}
+
+        <div className="absolute top-3 left-3 z-20 pointer-events-none">
+          <div className="bg-surface/95 backdrop-blur-md border border-border rounded-full py-1.5 px-3 flex items-center">
+            <Navigation className="size-3 text-primary mr-1.5 shrink-0" strokeWidth={1.5} />
+            <span className="text-xs font-medium text-foreground truncate select-none">
+              {location || 'México'}
             </span>
           </div>
         </div>

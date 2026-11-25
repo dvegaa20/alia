@@ -29,8 +29,8 @@ export function AboutTab({
   return (
     <div className="py-2 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="mb-10">
-        <h2 className="text-2xl font-bold font-headline text-foreground">Sobre nosotros</h2>
-        <p className="text-muted-foreground mt-2 font-medium text-sm max-w-2xl">
+        <h2 className="font-sans text-2xl font-semibold text-foreground">Sobre nosotros</h2>
+        <p className="font-sans text-foreground-secondary mt-1.5 text-sm max-w-2xl">
           Conoce nuestra historia, misión y la ubicación de nuestra sede principal.
         </p>
       </div>
