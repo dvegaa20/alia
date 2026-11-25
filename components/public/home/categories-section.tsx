@@ -60,7 +60,7 @@ export function CategoriesSection({ categories = [] }: CategoriesSectionProps) {
                   variant="outline"
                   onClick={() => setActiveCategoryId(cat.id)}
                   className={cn(
-                    'px-4 py-2.5 h-auto rounded-[4px] font-sans text-sm font-medium flex items-center gap-2 transition-colors shadow-none',
+                    'px-5 py-2.5 h-auto rounded-full font-sans text-sm font-medium flex items-center gap-2 transition-colors shadow-none',
                     isActive
                       ? 'bg-[#16587B] text-white border-[#16587B] hover:bg-[#0C354C] hover:border-[#0C354C] hover:text-white'
                       : 'bg-[#FAF7F0] text-[#0C354C]/80 border-[#DFD5C0] hover:border-[#16587B] hover:text-[#16587B]'
@@ -76,7 +76,7 @@ export function CategoriesSection({ categories = [] }: CategoriesSectionProps) {
           <Link href="/directory">
             <Button
               variant="outline"
-              className="px-4 py-2.5 h-auto rounded-[4px] font-sans text-sm font-medium items-center gap-2 transition-colors bg-[#FAF7F0] text-[#16587B] border-[#16587B]/40 hover:border-[#16587B] hover:bg-[#16587B]/5 hidden md:flex shadow-none"
+              className="px-5 py-2.5 h-auto rounded-full font-sans text-sm font-medium items-center gap-2 transition-colors bg-[#FAF7F0] text-[#16587B] border-[#16587B]/40 hover:border-[#16587B] hover:bg-[#16587B]/5 hidden md:flex shadow-none"
             >
               <Grid2X2 className="size-4" strokeWidth={1.5} />
               Ver más categorías

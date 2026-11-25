@@ -52,19 +52,19 @@ export function OrgHeader({
 
           <div className="flex items-center gap-2 flex-wrap">
             {causeType === 'YOUTH_INITIATIVE' && (
-              <Badge className="bg-[#124866] text-[#84B3CE] border border-[#124866] px-3 py-1 rounded-[4px] font-mono text-[11px] font-medium uppercase tracking-[0.05em] h-auto gap-1.5">
+              <Badge className="bg-[#124866] text-[#84B3CE] border border-[#124866] px-3 py-1 rounded-full font-mono text-[11px] font-medium uppercase tracking-[0.05em] h-auto gap-1.5">
                 <Sparkles className="size-3.5" strokeWidth={1.5} />
                 Iniciativa Joven
               </Badge>
             )}
             {isDonatariaAutorizada && (
-              <Badge className="bg-[#1E8E68]/12 text-[#1E8E68] border border-[#1E8E68]/25 px-3 py-1 rounded-[4px] font-mono text-[11px] font-medium uppercase tracking-[0.05em] h-auto gap-1.5">
+              <Badge className="bg-[#1E8E68]/12 text-[#1E8E68] border border-[#1E8E68]/25 px-3 py-1 rounded-full font-mono text-[11px] font-medium uppercase tracking-[0.05em] h-auto gap-1.5">
                 <BadgeCheck className="size-3.5" strokeWidth={1.5} />
                 Donataria ISR
               </Badge>
             )}
             {verified && (
-              <Badge className="bg-[#1E8E68]/10 text-[#1E8E68] border border-[#1E8E68]/25 px-3 py-1 rounded-[4px] font-mono text-[11px] font-medium uppercase tracking-[0.05em] h-auto gap-1.5">
+              <Badge className="bg-[#1E8E68]/10 text-[#1E8E68] border border-[#1E8E68]/25 px-3 py-1 rounded-full font-mono text-[11px] font-medium uppercase tracking-[0.05em] h-auto gap-1.5">
                 <BadgeCheck className="size-3.5" strokeWidth={1.5} />
                 Verificada
               </Badge>

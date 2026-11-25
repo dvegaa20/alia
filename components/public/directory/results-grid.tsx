@@ -96,7 +96,7 @@ export function ResultsGrid({
                 Ordenar:
               </span>
               <Select value={sort} onValueChange={handleSortChange}>
-                <SelectTrigger className="rounded-[4px] border border-[#DFD5C0] bg-[#FAF7F0] hover:border-[#84B3CE] px-3 h-9 text-sm font-medium text-[#0C354C] focus:ring-0">
+                <SelectTrigger className="rounded-xl border border-[#DFD5C0] bg-[#FAF7F0] hover:border-[#84B3CE] px-3.5 h-9 text-sm font-medium text-[#0C354C] focus:ring-0">
                   <SelectValue placeholder="Relevancia" />
                 </SelectTrigger>
                 <SelectContent position="popper" align="end" className="w-45">
@@ -110,12 +110,12 @@ export function ResultsGrid({
           )}
 
           {/* View Toggle */}
-          <div className="flex items-center bg-[#FAF7F0] border border-[#DFD5C0] rounded-[4px] p-1 gap-0.5">
+          <div className="flex items-center bg-[#FAF7F0] border border-[#DFD5C0] rounded-full p-1 gap-0.5">
             <button
               type="button"
               onClick={() => handleViewChange('list')}
               className={cn(
-                'flex items-center gap-1.5 px-3.5 py-1.5 rounded-[4px] text-xs font-medium transition-colors duration-200 cursor-pointer',
+                'flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium transition-colors duration-200 cursor-pointer',
                 currentView === 'list'
                   ? 'bg-[#16587B] text-white'
                   : 'text-[#0C354C]/75 hover:text-[#16587B]'
@@ -128,7 +128,7 @@ export function ResultsGrid({
               type="button"
               onClick={() => handleViewChange('map')}
               className={cn(
-                'flex items-center gap-1.5 px-3.5 py-1.5 rounded-[4px] text-xs font-medium transition-colors duration-200 cursor-pointer',
+                'flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium transition-colors duration-200 cursor-pointer',
                 currentView === 'map'
                   ? 'bg-[#16587B] text-white'
                   : 'text-[#0C354C]/75 hover:text-[#16587B]'

@@ -43,11 +43,13 @@ export function PillarsSection() {
           duration: 0.75,
           stagger: 0.1,
           ease: 'power3.out',
+          force3D: true,
           clearProps: 'transform,opacity',
           scrollTrigger: {
             trigger: sectionRef.current,
             start: 'top 85%',
             once: true,
+            fastScrollEnd: true,
           },
         })
       })
@@ -58,6 +60,7 @@ export function PillarsSection() {
   return (
     <section
       ref={sectionRef}
+      data-nav-theme="light"
       className="w-full bg-[#EAE1CD]/60 border-y border-[#DFD5C0] py-20 lg:py-28"
     >
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-14">
@@ -81,9 +84,9 @@ export function PillarsSection() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {pillars.map(({ Icon, title, description }) => (
             <div key={title} data-pillar-reveal>
-              <Card className="h-full bg-[#FAF7F0] border border-[#DFD5C0] ring-0 shadow-none rounded-[8px] hover:border-[#84B3CE] transition-colors duration-200 py-0">
+              <Card className="h-full bg-[#FAF7F0] border border-[#DFD5C0] ring-0 shadow-none rounded-2xl hover:border-[#84B3CE] transition-colors duration-200 py-0">
                 <CardContent className="p-8 flex flex-col items-start gap-5">
-                  <div className="size-12 rounded-[4px] bg-[#16587B]/10 text-[#16587B] flex items-center justify-center">
+                  <div className="size-12 rounded-xl bg-[#16587B]/10 text-[#16587B] flex items-center justify-center">
                     <Icon className="size-5" strokeWidth={1.5} />
                   </div>
 

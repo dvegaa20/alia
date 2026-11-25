@@ -94,11 +94,13 @@ export function ImpactPhotos({ lastUpdated }: ImpactPhotosProps) {
           duration: 0.75,
           stagger: 0.12,
           ease: 'power3.out',
+          force3D: true,
           clearProps: 'transform,opacity',
           scrollTrigger: {
             trigger: sectionRef.current,
             start: 'top 85%',
             once: true,
+            fastScrollEnd: true,
           },
         })
       })
@@ -109,11 +111,12 @@ export function ImpactPhotos({ lastUpdated }: ImpactPhotosProps) {
   return (
     <section
       ref={sectionRef}
+      data-nav-theme="light"
       className="w-full py-20 lg:py-24 bg-[#F5EEDD] overflow-hidden relative"
     >
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-14 mb-12">
         <div data-photos-reveal className="text-center space-y-3">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-[4px] border border-[#16587B]/25 bg-[#16587B]/10 text-[#16587B] font-mono text-xs uppercase tracking-[0.06em] font-medium">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full border border-[#16587B]/25 bg-[#16587B]/10 text-[#16587B] font-mono text-xs uppercase tracking-[0.06em] font-medium">
             <Sparkles className="size-3.5" strokeWidth={1.5} />
             <span>Comunidad en acción</span>
           </div>
@@ -137,7 +140,7 @@ export function ImpactPhotos({ lastUpdated }: ImpactPhotosProps) {
           {duplicatedPhotos.map((photo, index) => (
             <div
               key={`${photo.src}-${index}`}
-              className="group relative shrink-0 w-[290px] sm:w-[360px] md:w-[420px] aspect-[16/11] rounded-[8px] overflow-hidden border border-[#DFD5C0] bg-[#FAF7F0] transition-colors duration-200 hover:border-[#84B3CE]"
+              className="group relative shrink-0 w-[290px] sm:w-[360px] md:w-[420px] aspect-[16/11] rounded-2xl overflow-hidden border border-[#DFD5C0] bg-[#FAF7F0] transition-colors duration-200 hover:border-[#84B3CE]"
             >
               <Image
                 src={photo.src}
@@ -150,7 +153,7 @@ export function ImpactPhotos({ lastUpdated }: ImpactPhotosProps) {
               <div className="absolute inset-0 bg-gradient-to-t from-[#0C354C]/80 via-[#0C354C]/25 to-[#0C354C]/10" />
 
               <div className="absolute top-4 left-4 z-10">
-                <Badge className="bg-[#0C354C]/75 backdrop-blur-md text-[#F5EEDD] border border-[#84B3CE]/30 font-mono text-[10px] uppercase tracking-[0.06em] font-medium px-2.5 py-0.5 rounded-[4px]">
+                <Badge className="bg-[#0C354C]/80 text-[#F5EEDD] border border-[#84B3CE]/30 font-mono text-[10px] uppercase tracking-[0.06em] font-medium px-3 py-0.5 rounded-full">
                   {photo.tag}
                 </Badge>
               </div>

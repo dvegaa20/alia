@@ -119,7 +119,7 @@ export function SidebarFilters({
       initial={{ x: -20, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       transition={{ duration: 0.4, ease: 'easeOut' }}
-      className="hidden lg:block w-72 shrink-0 h-fit max-h-[calc(100vh-8rem)] sticky top-24 rounded-[8px] border border-[#DFD5C0] bg-[#FAF7F0] p-5 overflow-y-auto scrollbar-none"
+      className="hidden lg:block w-72 shrink-0 h-fit max-h-[calc(100vh-8rem)] sticky top-24 rounded-2xl border border-[#DFD5C0] bg-[#FAF7F0] p-5 overflow-y-auto scrollbar-none"
     >
       <Sidebar
         collapsible={isMobile ? 'offcanvas' : 'none'}
@@ -139,7 +139,7 @@ export function SidebarFilters({
               strokeWidth={1.5}
             />
             <Input
-              className="pl-10 pr-4 py-2.5 h-10 bg-[#F5EEDD]/70 border border-[#DFD5C0] hover:border-[#84B3CE] rounded-[4px] focus-visible:ring-2 focus-visible:ring-[#16587B]/30 focus-visible:border-[#16587B] text-sm font-sans placeholder:text-[#0C354C]/55"
+              className="pl-10 pr-4 py-2.5 h-10 bg-[#F5EEDD]/70 border border-[#DFD5C0] hover:border-[#84B3CE] rounded-xl focus-visible:ring-2 focus-visible:ring-[#16587B]/30 focus-visible:border-[#16587B] text-sm font-sans placeholder:text-[#0C354C]/55"
               placeholder="Buscar ONG..."
               type="text"
               value={inputValue}
@@ -278,7 +278,7 @@ export function SidebarFilters({
                     router.push(`/directory${qs ? `?${qs}` : ''}`, { scroll: false })
                   }}
                 >
-                  <SelectTrigger className="w-full h-10 bg-[#F5EEDD]/70 border border-[#DFD5C0] hover:border-[#84B3CE] rounded-[4px] text-sm font-sans text-[#0C354C]">
+                  <SelectTrigger className="w-full h-10 bg-[#F5EEDD]/70 border border-[#DFD5C0] hover:border-[#84B3CE] rounded-xl text-sm font-sans text-[#0C354C]">
                     <SelectValue placeholder="Todo México" />
                   </SelectTrigger>
                   <SelectContent position="popper" className="max-h-64" data-lenis-prevent>
@@ -314,7 +314,7 @@ export function SidebarFilters({
                       router.push(`/directory${qs ? `?${qs}` : ''}`, { scroll: false })
                     }}
                   >
-                    <SelectTrigger className="w-full h-10 bg-[#F5EEDD]/70 border border-[#DFD5C0] hover:border-[#84B3CE] rounded-[4px] text-sm font-sans text-[#0C354C]">
+                    <SelectTrigger className="w-full h-10 bg-[#F5EEDD]/70 border border-[#DFD5C0] hover:border-[#84B3CE] rounded-xl text-sm font-sans text-[#0C354C]">
                       <SelectValue
                         placeholder={isCitiesLoading ? 'Cargando...' : 'Todos los municipios'}
                       />

@@ -39,7 +39,7 @@ export function OrganizationCard({
     >
       <Card
         className={cn(
-          'relative h-full flex flex-col overflow-hidden rounded-[8px] border border-[#DFD5C0] shadow-none ring-0 p-0! gap-0! transition-all duration-200 hover:border-[#84B3CE] hover:-translate-y-0.5',
+          'relative h-full flex flex-col overflow-hidden rounded-2xl border border-[#DFD5C0] shadow-none ring-0 p-0! gap-0! transition-all duration-200 hover:border-[#84B3CE] hover:-translate-y-0.5',
           surface === 'on-white' ? 'bg-[#F5EEDD]/70' : 'bg-[#FAF7F0]'
         )}
       >
@@ -58,17 +58,17 @@ export function OrganizationCard({
         {/* Content */}
         <CardContent className="px-6 pt-9 pb-5 relative flex-1 flex flex-col">
           {/* Overlapping Logo */}
-          <div className="absolute -top-7 left-6 size-14 rounded-[8px] bg-[#FAF7F0] border border-[#DFD5C0] flex items-center justify-center p-1.5 overflow-hidden">
+          <div className="absolute -top-7 left-6 size-14 rounded-2xl bg-[#FAF7F0] border border-[#DFD5C0] flex items-center justify-center p-1.5 overflow-hidden">
             {logoImage ? (
               <Image
                 src={logoImage}
                 alt={`${name} logo`}
                 width={44}
                 height={44}
-                className="object-contain rounded-[4px] size-full"
+                className="object-contain rounded-lg size-full"
               />
             ) : (
-              <span className="font-sans font-medium text-base text-[#16587B] bg-[#16587B]/10 size-full rounded-[4px] flex items-center justify-center">
+              <span className="font-sans font-medium text-base text-[#16587B] bg-[#16587B]/10 size-full rounded-lg flex items-center justify-center">
                 {name.slice(0, 2).toUpperCase()}
               </span>
             )}
@@ -82,13 +82,13 @@ export function OrganizationCard({
 
             <div className="flex items-center gap-1.5 flex-wrap">
               {causeType === 'YOUTH_INITIATIVE' && (
-                <Badge className="rounded-[4px] bg-[#124866] text-[#84B3CE] border border-[#124866] px-2 py-0.5 h-auto font-mono text-[10px] font-medium uppercase tracking-[0.05em] gap-1">
+                <Badge className="rounded-full bg-[#124866] text-[#84B3CE] border border-[#124866] px-2.5 py-0.5 h-auto font-mono text-[10px] font-medium uppercase tracking-[0.05em] gap-1">
                   <Sparkles className="size-2.5" strokeWidth={1.5} />
                   Iniciativa Joven
                 </Badge>
               )}
               {isDonatariaAutorizada && (
-                <Badge className="rounded-[4px] bg-[#1E8E68]/12 text-[#1E8E68] border border-[#1E8E68]/25 px-2 py-0.5 h-auto font-mono text-[10px] font-medium uppercase tracking-[0.05em] gap-1">
+                <Badge className="rounded-full bg-[#1E8E68]/12 text-[#1E8E68] border border-[#1E8E68]/25 px-2.5 py-0.5 h-auto font-mono text-[10px] font-medium uppercase tracking-[0.05em] gap-1">
                   <BadgeCheck className="size-2.5" strokeWidth={1.5} />
                   Donataria ISR
                 </Badge>
@@ -126,7 +126,7 @@ export function OrganizationCard({
         <CardFooter className="px-6 py-3.5 border-t border-[#DFD5C0] flex items-center justify-between gap-2">
           <div>
             {hasUrgentNeeds ? (
-              <span className="inline-flex items-center gap-1.5 rounded-[4px] bg-[#C84B31]/10 text-[#C84B31] border border-[#C84B31]/25 px-2 py-0.5 font-mono text-[10px] font-medium uppercase tracking-[0.05em]">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#C84B31]/10 text-[#C84B31] border border-[#C84B31]/25 px-2.5 py-0.5 font-mono text-[10px] font-medium uppercase tracking-[0.05em]">
                 <span className="size-1.5 rounded-full bg-[#C84B31]" aria-hidden="true" />
                 Con urgencia
               </span>

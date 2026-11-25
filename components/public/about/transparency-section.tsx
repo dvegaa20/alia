@@ -46,11 +46,13 @@ export function TransparencySection() {
           duration: 0.75,
           stagger: 0.1,
           ease: 'power3.out',
+          force3D: true,
           clearProps: 'transform,opacity',
           scrollTrigger: {
             trigger: sectionRef.current,
             start: 'top 85%',
             once: true,
+            fastScrollEnd: true,
           },
         })
       })
@@ -62,6 +64,7 @@ export function TransparencySection() {
     <section
       ref={sectionRef}
       id="verificacion"
+      data-nav-theme="light"
       className="w-full bg-[#F5EEDD] py-20 lg:py-28 scroll-mt-24"
     >
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-14">
@@ -88,10 +91,10 @@ export function TransparencySection() {
             const Icon = step.icon
             return (
               <div key={step.step} data-verify-reveal>
-                <Card className="h-full bg-[#FAF7F0] border border-[#DFD5C0] ring-0 shadow-none rounded-[8px] hover:border-[#84B3CE] transition-colors duration-200 py-0">
+                <Card className="h-full bg-[#FAF7F0] border border-[#DFD5C0] ring-0 shadow-none rounded-2xl hover:border-[#84B3CE] transition-colors duration-200 py-0">
                   <CardContent className="p-8 flex flex-col items-start gap-5">
                     <div className="flex items-center justify-between w-full">
-                      <div className="size-11 rounded-[4px] bg-[#16587B]/10 text-[#16587B] flex items-center justify-center shrink-0">
+                      <div className="size-11 rounded-xl bg-[#16587B]/10 text-[#16587B] flex items-center justify-center shrink-0">
                         <Icon className="size-5" strokeWidth={1.5} />
                       </div>
                       <span className="font-mono font-medium text-3xl tabular-nums text-[#16587B]/40 leading-none select-none">

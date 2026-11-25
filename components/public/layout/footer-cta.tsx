@@ -24,7 +24,7 @@ export function FooterCTA() {
         <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
           <Button
             asChild
-            className="rounded-[4px] bg-[#84B3CE] text-[#0C354C] hover:bg-[#9AC3DA] px-6 py-3 h-auto text-[16px] font-medium border border-[#84B3CE] shadow-none transition-colors"
+            className="rounded-full bg-[#84B3CE] text-[#0C354C] hover:bg-[#9AC3DA] px-7 py-3 h-auto text-[16px] font-medium border border-[#84B3CE] shadow-none transition-colors"
           >
             <Link href="/directory">
               Explorar causas
@@ -35,7 +35,7 @@ export function FooterCTA() {
             <Button
               type="button"
               variant="outline"
-              className="rounded-[4px] border-[#84B3CE] bg-transparent text-[#84B3CE] hover:bg-[#84B3CE]/15 hover:text-white px-6 py-3 h-auto text-[16px] font-medium shadow-none transition-colors"
+              className="rounded-full border-[#84B3CE] bg-transparent text-[#84B3CE] hover:bg-[#84B3CE]/15 hover:text-white px-7 py-3 h-auto text-[16px] font-medium shadow-none transition-colors"
             >
               Sugerir ONG
             </Button>

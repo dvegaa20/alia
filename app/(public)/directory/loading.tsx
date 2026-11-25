@@ -4,7 +4,7 @@ export default function DirectoryLoading() {
   return (
     <div className="pt-28 pb-20 w-full max-w-[1440px] mx-auto px-6 md:px-10 lg:px-14 flex flex-col lg:flex-row gap-6 lg:gap-10">
       {/* Sidebar skeleton */}
-      <aside className="hidden lg:block w-72 shrink-0 space-y-6 rounded-[8px] border border-[#DFD5C0] bg-[#FAF7F0] p-5 h-fit">
+      <aside className="hidden lg:block w-72 shrink-0 space-y-6 rounded-2xl border border-[#DFD5C0] bg-[#FAF7F0] p-5 h-fit">
         <Skeleton className="h-10 w-full rounded-xl" />
         <div className="space-y-3">
           <Skeleton className="h-4 w-20" />

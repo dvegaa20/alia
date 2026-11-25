@@ -37,11 +37,13 @@ export function ImpactTopOrgs({ topOrgs }: ImpactTopOrgsProps) {
           duration: 0.75,
           stagger: 0.08,
           ease: 'power3.out',
+          force3D: true,
           clearProps: 'transform,opacity',
           scrollTrigger: {
             trigger: sectionRef.current,
             start: 'top 85%',
             once: true,
+            fastScrollEnd: true,
           },
         })
       })
@@ -53,10 +55,11 @@ export function ImpactTopOrgs({ topOrgs }: ImpactTopOrgsProps) {
     return (
       <section
         ref={sectionRef}
+        data-nav-theme="light"
         className="w-full bg-[#EAE1CD]/60 border-y border-[#DFD5C0] py-20"
       >
         <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-14">
-          <Card className="bg-[#FAF7F0] border border-[#DFD5C0] shadow-none rounded-[8px] py-0">
+          <Card className="bg-[#FAF7F0] border border-[#DFD5C0] shadow-none rounded-2xl py-0">
             <CardContent className="p-12 text-center space-y-3">
               <TrendingUp className="size-8 text-[#16587B] mx-auto" strokeWidth={1.5} />
               <p className="font-sans text-[#0C354C]/75">
@@ -76,6 +79,7 @@ export function ImpactTopOrgs({ topOrgs }: ImpactTopOrgsProps) {
   return (
     <section
       ref={sectionRef}
+      data-nav-theme="light"
       className="w-full bg-[#EAE1CD]/60 border-y border-[#DFD5C0] py-20 lg:py-24 overflow-hidden"
     >
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-14">
@@ -100,7 +104,7 @@ export function ImpactTopOrgs({ topOrgs }: ImpactTopOrgsProps) {
           {/* LEFT: Visual Podium */}
           <div data-top-org-reveal className="lg:sticky lg:top-28">
             <div className="flex items-center gap-3 mb-8">
-              <div className="size-10 rounded-[4px] bg-[#16587B]/10 text-[#16587B] flex items-center justify-center">
+              <div className="size-10 rounded-xl bg-[#16587B]/10 text-[#16587B] flex items-center justify-center">
                 <Trophy className="size-5" strokeWidth={1.5} />
               </div>
               <div>
@@ -124,12 +128,12 @@ export function ImpactTopOrgs({ topOrgs }: ImpactTopOrgsProps) {
                       <Link href={`/directory/${org.slug}`} className="block w-full group mb-2">
                         <Card
                           className={cn(
-                            'bg-[#FAF7F0] border rounded-[8px] shadow-none transition-all duration-200 hover:border-[#84B3CE] hover:-translate-y-0.5 py-0',
+                            'bg-[#FAF7F0] border rounded-2xl shadow-none transition-all duration-200 hover:border-[#84B3CE] hover:-translate-y-0.5 py-0',
                             rank === 1 ? 'border-[#16587B]/50' : 'border-[#DFD5C0]'
                           )}
                         >
                           <CardContent className="p-4 flex flex-col items-center text-center gap-2">
-                            <div className="size-11 rounded-[4px] bg-[#16587B]/10 text-[#16587B] flex items-center justify-center shrink-0">
+                            <div className="size-11 rounded-xl bg-[#16587B]/10 text-[#16587B] flex items-center justify-center shrink-0">
                               <span className="font-sans font-medium text-base leading-none">
                                 {org.title.charAt(0).toUpperCase()}
                               </span>
@@ -148,7 +152,7 @@ export function ImpactTopOrgs({ topOrgs }: ImpactTopOrgsProps) {
 
                       <div
                         className={cn(
-                          'w-full rounded-t-[8px] flex flex-col items-center justify-start pt-3 gap-1 border border-b-0',
+                          'w-full rounded-t-2xl flex flex-col items-center justify-start pt-3 gap-1 border border-b-0',
                           platformH,
                           rank === 1
                             ? 'bg-[#16587B] text-white border-[#16587B]'
@@ -183,7 +187,7 @@ export function ImpactTopOrgs({ topOrgs }: ImpactTopOrgsProps) {
           {/* RIGHT: Full Ranking List */}
           <div data-top-org-reveal>
             <div className="flex items-center gap-3 mb-6">
-              <div className="size-10 rounded-[4px] bg-[#16587B]/10 text-[#16587B] flex items-center justify-center">
+              <div className="size-10 rounded-xl bg-[#16587B]/10 text-[#16587B] flex items-center justify-center">
                 <Trophy className="size-5" strokeWidth={1.5} />
               </div>
               <div>
@@ -200,7 +204,7 @@ export function ImpactTopOrgs({ topOrgs }: ImpactTopOrgsProps) {
                 return (
                   <div key={org.path} className="group">
                     <Link href={`/directory/${org.slug}`}>
-                      <Card className="bg-[#FAF7F0] border border-[#DFD5C0] ring-0 shadow-none rounded-[8px] hover:border-[#84B3CE] transition-colors duration-200 py-0">
+                      <Card className="bg-[#FAF7F0] border border-[#DFD5C0] ring-0 shadow-none rounded-2xl hover:border-[#84B3CE] transition-colors duration-200 py-0">
                         <CardContent className="px-5 py-3.5 flex items-center gap-4">
                           <span className="font-mono text-sm font-medium tabular-nums w-7 text-center shrink-0 text-[#0C354C]/55">
                             {String(i + 1).padStart(2, '0')}

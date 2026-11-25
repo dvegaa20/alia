@@ -21,11 +21,13 @@ export function StorySection() {
           duration: 0.8,
           stagger: 0.14,
           ease: 'power3.out',
+          force3D: true,
           clearProps: 'transform,opacity',
           scrollTrigger: {
             trigger: sectionRef.current,
             start: 'top 85%',
             once: true,
+            fastScrollEnd: true,
           },
         })
       })
@@ -34,7 +36,11 @@ export function StorySection() {
   )
 
   return (
-    <section ref={sectionRef} className="w-full bg-[#F5EEDD] py-20 lg:py-28 overflow-hidden">
+    <section
+      ref={sectionRef}
+      data-nav-theme="light"
+      className="w-full bg-[#F5EEDD] py-20 lg:py-28 overflow-hidden"
+    >
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-14">
         <div className="grid grid-cols-1 lg:grid-cols-12 items-center gap-12 lg:gap-16">
           {/* Text Column — narrow narrative reading width max-w-3xl */}
@@ -97,8 +103,8 @@ export function StorySection() {
              * Reemplazar con <Image src="/images/founder-working.jpg" alt="Sofía Vega, Fundadora y Directora de Alia" fill className="object-cover" />
              * Especificaciones: 800 x 1000 px mínimo, aspecto 4:5, iluminación cálida y natural.
              */}
-            <div className="relative aspect-4/5 w-full rounded-[8px] overflow-hidden border border-[#DFD5C0] bg-[#FAF7F0] flex flex-col items-center justify-center p-8 text-center">
-              <div className="size-14 rounded-[8px] bg-[#16587B]/10 text-[#16587B] flex items-center justify-center mb-4">
+            <div className="relative aspect-4/5 w-full rounded-2xl overflow-hidden border border-[#DFD5C0] bg-[#FAF7F0] flex flex-col items-center justify-center p-8 text-center">
+              <div className="size-14 rounded-2xl bg-[#16587B]/10 text-[#16587B] flex items-center justify-center mb-4">
                 <Camera className="size-6" strokeWidth={1.5} />
               </div>
               <p className="font-mono text-xs font-medium uppercase tracking-[0.06em] text-[#16587B] mb-2">

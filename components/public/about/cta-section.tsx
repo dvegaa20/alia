@@ -23,11 +23,13 @@ export function CtaSection() {
           opacity: 0,
           duration: 0.75,
           ease: 'power3.out',
+          force3D: true,
           clearProps: 'transform,opacity',
           scrollTrigger: {
             trigger: sectionRef.current,
             start: 'top 85%',
             once: true,
+            fastScrollEnd: true,
           },
         })
       })
@@ -36,11 +38,11 @@ export function CtaSection() {
   )
 
   return (
-    <section ref={sectionRef} className="w-full bg-[#F5EEDD] pb-20 lg:pb-24">
+    <section ref={sectionRef} data-nav-theme="light" className="w-full bg-[#F5EEDD] pb-20 lg:pb-24">
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-14">
         <div
           data-cta-card
-          className="rounded-[12px] bg-[#0C354C] text-[#F5EEDD] border border-[#84B3CE]/20 px-6 py-14 sm:px-14 sm:py-20 flex flex-col items-center text-center gap-6"
+          className="rounded-3xl bg-[#0C354C] text-[#F5EEDD] border border-[#84B3CE]/20 px-6 py-14 sm:px-14 sm:py-20 flex flex-col items-center text-center gap-6"
         >
           <span className="font-mono text-xs font-medium uppercase tracking-[0.06em] text-[#84B3CE]">
             Suma una causa
@@ -62,7 +64,7 @@ export function CtaSection() {
           <div className="flex flex-col sm:flex-row items-center gap-4 pt-2">
             <Button
               asChild
-              className="rounded-[4px] bg-[#84B3CE] text-[#0C354C] hover:bg-[#9AC3DA] px-6 py-3 h-auto text-[16px] font-medium border border-[#84B3CE] shadow-none transition-colors"
+              className="rounded-full bg-[#84B3CE] text-[#0C354C] hover:bg-[#9AC3DA] px-7 py-3 h-auto text-[16px] font-medium border border-[#84B3CE] shadow-none transition-colors"
             >
               <Link href="/directory">
                 Explorar directorio
@@ -74,7 +76,7 @@ export function CtaSection() {
               <Button
                 type="button"
                 variant="outline"
-                className="rounded-[4px] border-[#84B3CE] bg-transparent text-[#84B3CE] hover:bg-[#84B3CE]/15 hover:text-white px-6 py-3 h-auto text-[16px] font-medium shadow-none transition-colors"
+                className="rounded-full border-[#84B3CE] bg-transparent text-[#84B3CE] hover:bg-[#84B3CE]/15 hover:text-white px-7 py-3 h-auto text-[16px] font-medium shadow-none transition-colors"
               >
                 <Lightbulb className="mr-2 size-4" strokeWidth={1.5} />
                 Sugerir una ONG

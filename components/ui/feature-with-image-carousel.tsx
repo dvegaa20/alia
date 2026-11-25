@@ -55,7 +55,7 @@ function Feature({ badge, title, description, items }: FeatureProps) {
               {items.map((item) => (
                 <CarouselItem key={item.slug || item.name} className="md:basis-1/2">
                   <Link href={`/directory/${item.slug}`} className="block h-full group">
-                    <Card className="relative bg-[#FAF7F0] rounded-[8px] overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:border-[#84B3CE] border border-[#DFD5C0] ring-0 shadow-none py-0 gap-0 h-full flex flex-col">
+                    <Card className="relative bg-[#FAF7F0] rounded-2xl overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:border-[#84B3CE] border border-[#DFD5C0] ring-0 shadow-none py-0 gap-0 h-full flex flex-col">
                       {/* Cover Image */}
                       <div className="h-44 overflow-hidden relative bg-[#EAE1CD]">
                         <Image
@@ -66,7 +66,7 @@ function Feature({ badge, title, description, items }: FeatureProps) {
                           height={320}
                         />
                         <div className="absolute top-3.5 left-3.5">
-                          <Badge className="bg-[#0C354C]/80 text-[#F5EEDD] border border-[#84B3CE]/30 backdrop-blur-sm px-2.5 py-1 h-auto rounded-[4px] font-mono text-[10px] font-medium uppercase tracking-[0.06em]">
+                          <Badge className="bg-[#0C354C]/85 text-[#F5EEDD] border border-[#84B3CE]/30 px-3 py-1 h-auto rounded-full font-mono text-[10px] font-medium uppercase tracking-[0.06em]">
                             {item.tag}
                           </Badge>
                         </div>
@@ -75,17 +75,17 @@ function Feature({ badge, title, description, items }: FeatureProps) {
                       {/* Content */}
                       <CardContent className="p-6 pt-10 relative flex-1">
                         {/* Logo overlapping */}
-                        <div className="absolute -top-7 left-6 size-14 bg-[#FAF7F0] rounded-[8px] border border-[#DFD5C0] flex items-center justify-center p-1.5 overflow-hidden">
+                        <div className="absolute -top-7 left-6 size-14 bg-[#FAF7F0] rounded-2xl border border-[#DFD5C0] flex items-center justify-center p-1.5 overflow-hidden">
                           {item.logo ? (
                             <Image
                               alt={`Logo ${item.name}`}
-                              className="size-full rounded-[4px] object-contain"
+                              className="size-full rounded-lg object-contain"
                               src={item.logo}
                               width={48}
                               height={48}
                             />
                           ) : (
-                            <span className="font-sans font-semibold text-base text-[#16587B] bg-[#16587B]/10 size-full rounded-[4px] flex items-center justify-center">
+                            <span className="font-sans font-semibold text-base text-[#16587B] bg-[#16587B]/10 size-full rounded-lg flex items-center justify-center">
                               {item.name.slice(0, 2).toUpperCase()}
                             </span>
                           )}
@@ -123,8 +123,8 @@ function Feature({ badge, title, description, items }: FeatureProps) {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="rounded-[4px] border-[#DFD5C0] bg-[#FAF7F0] text-[#0C354C] hover:border-[#16587B] hover:text-[#16587B]" />
-            <CarouselNext className="rounded-[4px] border-[#DFD5C0] bg-[#FAF7F0] text-[#0C354C] hover:border-[#16587B] hover:text-[#16587B]" />
+            <CarouselPrevious className="rounded-full border-[#DFD5C0] bg-[#FAF7F0] text-[#0C354C] hover:border-[#16587B] hover:text-[#16587B]" />
+            <CarouselNext className="rounded-full border-[#DFD5C0] bg-[#FAF7F0] text-[#0C354C] hover:border-[#16587B] hover:text-[#16587B]" />
           </Carousel>
         </div>
       </div>

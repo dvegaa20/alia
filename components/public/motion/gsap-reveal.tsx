@@ -46,11 +46,13 @@ export function GsapReveal({
           delay,
           stagger: staggerSelector ? stagger : 0,
           ease: 'power3.out',
+          force3D: true,
           clearProps: 'transform,opacity',
           scrollTrigger: {
             trigger: el,
             start: 'top 85%',
             once: true,
+            fastScrollEnd: true,
           },
         })
       })

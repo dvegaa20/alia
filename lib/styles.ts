@@ -12,4 +12,4 @@ export const INPUT_CX =
 
 /** Consistent styling for tabs triggers (like in OrgTabs) */
 export const TAB_TRIGGER_CX =
-  'rounded-none border-0 border-b-2 border-transparent data-[state=active]:border-b-primary data-[state=active]:text-primary data-[state=active]:font-semibold data-[state=active]:shadow-none text-foreground-muted font-medium tracking-tight pb-3.5 px-1 bg-transparent! dark:data-[state=active]:bg-transparent hover:text-primary transition-colors cursor-pointer text-sm'
+  'rounded-none border-0 border-b-2 border-transparent data-[state=active]:border-b-primary data-[state=active]:text-primary data-[state=active]:font-semibold data-[state=active]:shadow-none text-foreground-muted font-medium tracking-tight pb-3.5 px-1 bg-transparent! hover:text-primary transition-colors cursor-pointer text-sm'

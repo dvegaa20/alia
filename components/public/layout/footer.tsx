@@ -46,7 +46,7 @@ export function Footer({ hasLogoLight = false, hasLogoDark = false }: FooterProp
   const isHomePage = pathname === '/'
 
   return (
-    <footer className="w-full bg-[#0C354C] text-[#F5EEDD]">
+    <footer data-nav-theme="dark" className="w-full bg-[#0C354C] text-[#F5EEDD]">
       {isHomePage && <FooterCTA />}
 
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-14 py-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
@@ -70,7 +70,7 @@ export function Footer({ hasLogoLight = false, hasLogoDark = false }: FooterProp
               key={social.label}
               href={social.href}
               aria-label={social.label}
-              className="flex items-center justify-center size-10 rounded-[4px] border border-[#84B3CE]/30 text-[#F5EEDD] hover:border-[#84B3CE] hover:text-[#84B3CE] hover:bg-white/5 transition-colors duration-200"
+              className="flex items-center justify-center size-10 rounded-full border border-[#84B3CE]/30 text-[#F5EEDD] hover:border-[#84B3CE] hover:text-[#84B3CE] hover:bg-white/5 transition-colors duration-200"
             >
               <social.icon className="size-4" />
             </Link>

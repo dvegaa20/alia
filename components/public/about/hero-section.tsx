@@ -20,6 +20,7 @@ export function AboutHeroSection() {
           duration: 0.8,
           stagger: 0.1,
           ease: 'power3.out',
+          force3D: true,
           clearProps: 'transform,opacity',
         })
       })
@@ -28,11 +29,15 @@ export function AboutHeroSection() {
   )
 
   return (
-    <section ref={heroRef} className="w-full bg-[#F5EEDD] pt-28 pb-16 lg:pt-36 lg:pb-24">
+    <section
+      ref={heroRef}
+      data-nav-theme="light"
+      className="w-full bg-[#F5EEDD] pt-28 pb-16 lg:pt-36 lg:pb-24"
+    >
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-14">
         <div className="max-w-4xl mx-auto text-center flex flex-col items-center">
           <div data-about-hero className="mb-6">
-            <span className="inline-flex items-center gap-2 rounded-[4px] border border-[#16587B]/25 bg-[#16587B]/10 px-3.5 py-1.5 font-mono text-xs font-medium uppercase tracking-[0.06em] text-[#16587B]">
+            <span className="inline-flex items-center gap-2 rounded-full border border-[#16587B]/25 bg-[#16587B]/10 px-4 py-1.5 font-mono text-xs font-medium uppercase tracking-[0.06em] text-[#16587B]">
               <Sparkles className="size-3.5" strokeWidth={1.5} />
               Sobre el proyecto
             </span>

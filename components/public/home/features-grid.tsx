@@ -63,11 +63,13 @@ export function FeaturesSectionGrid({ metrics }: FeaturesSectionGridProps) {
           duration: 0.75,
           stagger: 0.12,
           ease: 'power3.out',
+          force3D: true,
           clearProps: 'transform,opacity',
           scrollTrigger: {
             trigger: gridRef.current,
             start: 'top 85%',
             once: true,
+            fastScrollEnd: true,
           },
         })
 
@@ -105,7 +107,7 @@ export function FeaturesSectionGrid({ metrics }: FeaturesSectionGridProps) {
         <div
           key={title}
           data-stat-card
-          className="rounded-[8px] border border-[#84B3CE]/25 bg-[#124866]/70 p-7 lg:p-9 flex flex-col justify-between gap-7"
+          className="rounded-2xl border border-[#84B3CE]/25 bg-[#124866]/70 p-7 lg:p-9 flex flex-col justify-between gap-7"
         >
           <div className="flex items-center justify-between gap-3">
             <span className="font-mono text-xs font-medium uppercase tracking-[0.06em] text-[#84B3CE]">

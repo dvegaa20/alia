@@ -70,6 +70,7 @@ export function ImpactHero({ metrics }: ImpactHeroProps) {
           duration: 0.75,
           stagger: 0.1,
           ease: 'power3.out',
+          force3D: true,
           clearProps: 'transform,opacity',
         })
 
@@ -94,11 +95,18 @@ export function ImpactHero({ metrics }: ImpactHeroProps) {
         })
       })
     },
-    { scope: sectionRef, dependencies: [metrics.communityReach, metrics.realConnections, metrics.pageViews] }
+    {
+      scope: sectionRef,
+      dependencies: [metrics.communityReach, metrics.realConnections, metrics.pageViews],
+    }
   )
 
   return (
-    <section ref={sectionRef} className="w-full bg-[#F5EEDD] pt-28 pb-16 lg:pt-36 lg:pb-24">
+    <section
+      ref={sectionRef}
+      data-nav-theme="light"
+      className="w-full bg-[#F5EEDD] pt-28 pb-16 lg:pt-36 lg:pb-24"
+    >
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-14">
         {/* Header */}
         <div data-impact-hero className="text-center mb-10 space-y-4">
@@ -120,7 +128,7 @@ export function ImpactHero({ metrics }: ImpactHeroProps) {
 
         {/* Timestamp pill */}
         <div data-impact-hero className="flex justify-center mb-12">
-          <span className="inline-flex items-center gap-2 rounded-[4px] border border-[#DFD5C0] bg-[#FAF7F0] px-4 py-1.5 font-mono text-xs text-[#0C354C]/65">
+          <span className="inline-flex items-center gap-2 rounded-full border border-[#DFD5C0] bg-[#FAF7F0] px-4 py-1.5 font-mono text-xs text-[#0C354C]/65">
             <Clock className="size-3.5 text-[#16587B]" strokeWidth={1.5} />
             Datos de los últimos 30 días · Actualizado {timeAgo(lastUpdated)}
           </span>
@@ -130,14 +138,14 @@ export function ImpactHero({ metrics }: ImpactHeroProps) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {metricsCards.map(({ key, Icon, sublabel, label, field }, idx) => (
             <div key={key} data-impact-hero>
-              <Card className="h-full bg-[#FAF7F0] border border-[#DFD5C0] ring-0 shadow-none rounded-[8px] hover:border-[#84B3CE] transition-colors duration-200 py-0">
+              <Card className="h-full bg-[#FAF7F0] border border-[#DFD5C0] ring-0 shadow-none rounded-2xl hover:border-[#84B3CE] transition-colors duration-200 py-0">
                 <CardContent className="p-7 lg:p-8 flex flex-col justify-between min-h-[220px] gap-6">
                   <div className="space-y-3">
                     <div className="flex items-center justify-between gap-2">
                       <span className="font-mono text-xs font-medium uppercase tracking-[0.06em] text-[#16587B]">
                         {sublabel}
                       </span>
-                      <div className="size-10 rounded-[4px] bg-[#16587B]/10 text-[#16587B] flex items-center justify-center shrink-0">
+                      <div className="size-10 rounded-xl bg-[#16587B]/10 text-[#16587B] flex items-center justify-center shrink-0">
                         <Icon className="size-5" strokeWidth={1.5} />
                       </div>
                     </div>

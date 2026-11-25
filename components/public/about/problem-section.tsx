@@ -43,11 +43,13 @@ export function ProblemSection() {
           duration: 0.75,
           stagger: 0.1,
           ease: 'power3.out',
+          force3D: true,
           clearProps: 'transform,opacity',
           scrollTrigger: {
             trigger: sectionRef.current,
             start: 'top 85%',
             once: true,
+            fastScrollEnd: true,
           },
         })
       })
@@ -58,6 +60,7 @@ export function ProblemSection() {
   return (
     <section
       ref={sectionRef}
+      data-nav-theme="light"
       className="w-full bg-[#EAE1CD]/60 border-y border-[#DFD5C0] py-20 lg:py-28"
     >
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-14">
@@ -86,9 +89,9 @@ export function ProblemSection() {
               const Icon = stat.icon
               return (
                 <div key={stat.label} data-problem-reveal>
-                  <Card className="bg-[#FAF7F0] border border-[#DFD5C0] ring-0 shadow-none rounded-[8px] py-0 hover:border-[#84B3CE] transition-colors duration-200">
+                  <Card className="bg-[#FAF7F0] border border-[#DFD5C0] ring-0 shadow-none rounded-2xl py-0 hover:border-[#84B3CE] transition-colors duration-200">
                     <CardContent className="p-6 flex items-start gap-5">
-                      <div className="size-11 rounded-[4px] bg-[#16587B]/10 text-[#16587B] flex items-center justify-center shrink-0 mt-0.5">
+                      <div className="size-11 rounded-xl bg-[#16587B]/10 text-[#16587B] flex items-center justify-center shrink-0 mt-0.5">
                         <Icon className="size-5" strokeWidth={1.5} />
                       </div>
                       <div className="space-y-1">

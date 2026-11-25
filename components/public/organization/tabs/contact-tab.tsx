@@ -84,7 +84,7 @@ export function ContactTab({
                     value={nombre}
                     onChange={(e) => setNombre(e.target.value)}
                     required
-                    className="h-12 rounded-[4px] border border-[#DFD5C0] bg-[#F5EEDD]/60 px-4 focus-visible:border-[#16587B] focus-visible:ring-[#16587B]/30 shadow-none"
+                    className="h-12 rounded-xl border border-[#DFD5C0] bg-[#F5EEDD]/60 px-4 focus-visible:border-[#16587B] focus-visible:ring-[#16587B]/30 shadow-none"
                   />
                 </div>
                 <div className="space-y-2">
@@ -97,7 +97,7 @@ export function ContactTab({
                     value={asunto}
                     onChange={(e) => setAsunto(e.target.value)}
                     required
-                    className="h-12 rounded-[4px] border border-[#DFD5C0] bg-[#F5EEDD]/60 px-4 focus-visible:border-[#16587B] focus-visible:ring-[#16587B]/30 shadow-none"
+                    className="h-12 rounded-xl border border-[#DFD5C0] bg-[#F5EEDD]/60 px-4 focus-visible:border-[#16587B] focus-visible:ring-[#16587B]/30 shadow-none"
                   />
                 </div>
               </div>
@@ -111,7 +111,7 @@ export function ContactTab({
                   value={mensaje}
                   onChange={(e) => setMensaje(e.target.value)}
                   required
-                  className="min-h-[150px] flex-1 resize-none rounded-[4px] border border-[#DFD5C0] bg-[#F5EEDD]/60 p-4 focus-visible:border-[#16587B] focus-visible:ring-[#16587B]/30 shadow-none"
+                  className="min-h-[150px] flex-1 resize-none rounded-xl border border-[#DFD5C0] bg-[#F5EEDD]/60 p-4 focus-visible:border-[#16587B] focus-visible:ring-[#16587B]/30 shadow-none"
                 />
               </div>
 

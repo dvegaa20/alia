@@ -27,7 +27,7 @@ export async function CategoryCarousel({
 
   if (items.length === 0) {
     return (
-      <div className="text-center py-12 rounded-[8px] border border-[#DFD5C0] bg-[#FAF7F0] text-sm text-[#0C354C]/65">
+      <div className="text-center py-12 rounded-2xl border border-[#DFD5C0] bg-[#FAF7F0] text-sm text-[#0C354C]/65">
         No se encontraron organizaciones para esta categoría aún.
       </div>
     )

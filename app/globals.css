@@ -50,7 +50,7 @@
   --destructive: #C84B31;
   --input: #DFD5C0;
   --ring: #16587B;
-  --radius: 0.5rem;
+  --radius: 0.875rem;
   --chart-1: #16587B;
   --chart-2: #84B3CE;
   --chart-3: #0C354C;
@@ -109,13 +109,13 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 8px;
-  --radius-xl: 12px;
-  --radius-2xl: 16px;
-  --radius-3xl: 24px;
-  --radius-4xl: 24px;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
 
   --font-sans: var(--font-inter-tight), 'Inter Tight', -apple-system, sans-serif;
   --font-serif: var(--font-newsreader), 'Newsreader', Georgia, serif;

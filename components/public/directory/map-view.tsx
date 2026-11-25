@@ -66,7 +66,7 @@ export function MapView({ mapPoints }: MapViewProps) {
   const handleClosePopup = useCallback(() => setSelectedOrg(null), [])
 
   return (
-    <div className="relative h-[540px] w-full overflow-hidden rounded-[8px] border border-[#DFD5C0] bg-[#FAF7F0]">
+    <div className="relative h-[540px] w-full overflow-hidden rounded-2xl border border-[#DFD5C0] bg-[#FAF7F0]">
       <Map center={mexicoCenter} zoom={5} className="h-full w-full">
         <MapControls position="bottom-right" showZoom showCompass showLocate showFullscreen />
         <MapBoundsController mapPoints={mapPoints} />
