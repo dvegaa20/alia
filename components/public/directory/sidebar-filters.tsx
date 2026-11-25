@@ -1,13 +1,14 @@
 'use client'
 
-import { useState, useEffect, useCallback, useTransition } from 'react'
+import { useState, useEffect, useTransition } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { useIsMobile } from '@/hooks/use-mobile'
-import { Search, Grid2x2, GraduationCap, TreePine, Stethoscope, Hash } from 'lucide-react'
+import { Grid2x2, GraduationCap, TreePine, Stethoscope, Hash, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { MEXICO_STATES } from '@/lib/mexico-states'
 import { getAvailableCities } from '@/server/actions'
+import { OrgSearchTrigger } from '@/components/public/search/org-search-command'
 import {
   Dialog,
   DialogContent,
@@ -15,7 +16,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
 import { Switch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'
 import {
@@ -55,41 +55,28 @@ export function SidebarFilters({
 }: SidebarFiltersProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const [inputValue, setInputValue] = useState(searchQuery)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [availableCities, setAvailableCities] = useState<string[]>([])
   const [isCitiesLoading, startCitiesTransition] = useTransition()
   const isMobile = useIsMobile()
 
   useEffect(() => {
-    if (activeState) {
-      startCitiesTransition(async () => {
-        const result = await getAvailableCities(activeState)
-        setAvailableCities(result.data || [])
-      })
-    } else {
-      setAvailableCities([])
-    }
+    if (!activeState) return
+    startCitiesTransition(async () => {
+      const result = await getAvailableCities(activeState)
+      setAvailableCities(result.data || [])
+    })
   }, [activeState])
 
-  useEffect(() => {
-    setInputValue(searchQuery)
-  }, [searchQuery])
+  const citiesForState = activeState ? availableCities : []
 
-  const updateSearch = useCallback(
-    (value: string) => {
-      const params = new URLSearchParams(searchParams.toString())
-      if (value.trim()) {
-        params.set('q', value.trim())
-      } else {
-        params.delete('q')
-      }
-      params.delete('page')
-      const qs = params.toString()
-      router.push(`/directory${qs ? `?${qs}` : ''}`, { scroll: false })
-    },
-    [router, searchParams]
-  )
+  const clearSearchQuery = () => {
+    const params = new URLSearchParams(searchParams.toString())
+    params.delete('q')
+    params.delete('page')
+    const qs = params.toString()
+    router.push(`/directory${qs ? `?${qs}` : ''}`, { scroll: false })
+  }
 
   const handleCategoryClick = (e: React.MouseEvent, slug: string | null) => {
     e.preventDefault()
@@ -104,15 +91,6 @@ export function SidebarFilters({
     router.push(`/directory${qs ? `?${qs}` : ''}`, { scroll: false })
     setIsDialogOpen(false)
   }
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (inputValue !== searchQuery) {
-        updateSearch(inputValue)
-      }
-    }, 200)
-    return () => clearTimeout(timer)
-  }, [inputValue, searchQuery, updateSearch])
 
   return (
     <motion.aside
@@ -133,31 +111,33 @@ export function SidebarFilters({
             <h2 className="font-sans text-lg font-semibold text-foreground">Explorar por causa</h2>
           </div>
 
-          <div className="relative mt-4">
-            <Search
-              className="absolute left-3.5 top-1/2 -translate-y-1/2 text-foreground-muted size-4"
-              strokeWidth={1.5}
-            />
-            <Input
-              className="pl-10 pr-4 py-2.5 h-10 bg-[#F5EEDD]/70 border border-[#DFD5C0] hover:border-[#84B3CE] rounded-xl focus-visible:ring-2 focus-visible:ring-[#16587B]/30 focus-visible:border-[#16587B] text-sm font-sans placeholder:text-[#0C354C]/55"
-              placeholder="Buscar ONG..."
-              type="text"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-            />
-          </div>
+          {searchQuery && (
+            <div className="mt-3 flex items-center justify-between gap-2 rounded-xl border border-[#DFD5C0] bg-[#F5EEDD]/70 px-3 py-1.5 text-xs text-[#0C354C]">
+              <span className="truncate">
+                Búsqueda: <strong className="font-medium">&ldquo;{searchQuery}&rdquo;</strong>
+              </span>
+              <button
+                type="button"
+                onClick={clearSearchQuery}
+                aria-label="Limpiar búsqueda"
+                className="text-foreground-muted hover:text-primary transition-colors shrink-0 cursor-pointer"
+              >
+                <X className="size-3.5" strokeWidth={1.75} />
+              </button>
+            </div>
+          )}
         </SidebarHeader>
 
         <SidebarContent className="px-0 scrollbar-none">
           <SidebarGroup className="px-0">
             <SidebarGroupContent>
               <SidebarMenu className="space-y-1">
-                <SidebarMenuItem>
+                <SidebarMenuItem className="flex items-center gap-1.5">
                   <SidebarMenuButton
                     asChild
                     isActive={!activeCategorySlug}
                     className={cn(
-                      'rounded-xl px-3.5 py-5 flex items-center gap-3 transition-colors duration-200',
+                      'w-auto flex-1 min-w-0 rounded-xl px-3.5 py-5 flex items-center gap-3 transition-colors duration-200',
                       !activeCategorySlug
                         ? 'bg-primary/10 text-primary font-semibold'
                         : 'text-foreground-secondary hover:bg-background/70 hover:text-primary'
@@ -165,9 +145,10 @@ export function SidebarFilters({
                   >
                     <a href="#" onClick={(e) => handleCategoryClick(e, null)}>
                       <Grid2x2 className="size-4 shrink-0" strokeWidth={1.5} />
-                      <span className="font-sans text-sm flex-1">Todas las causas</span>
+                      <span className="font-sans text-sm flex-1 truncate">Todas las causas</span>
                     </a>
                   </SidebarMenuButton>
+                  <OrgSearchTrigger variant="light" />
                 </SidebarMenuItem>
 
                 {categories.slice(0, 4).map((category) => {
@@ -322,7 +303,7 @@ export function SidebarFilters({
                     <SelectContent position="popper" className="max-h-72" data-lenis-prevent>
                       <SelectGroup>
                         <SelectItem value="all">Todos los municipios</SelectItem>
-                        {availableCities.map((city) => (
+                        {citiesForState.map((city) => (
                           <SelectItem key={city} value={city}>
                             {city}
                           </SelectItem>

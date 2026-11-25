@@ -1,7 +1,6 @@
 import { Plus } from 'lucide-react'
 import { UserButton } from '@clerk/nextjs'
 import { SidebarTrigger } from '@/components/ui/sidebar'
-import { ModeToggle } from '@/components/ui/mode-toggle'
 import { Button } from '../ui/button'
 import Link from 'next/link'
 
@@ -30,7 +29,6 @@ export function AdminHeader() {
               },
             }}
           />
-          <ModeToggle size="icon-sm" />
         </div>
       </div>
     </header>

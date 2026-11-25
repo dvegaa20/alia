@@ -103,14 +103,6 @@ export interface OrganizationCardProps {
   hasUrgentNeeds?: boolean
 }
 
-/** Organization option for the hero search combobox */
-export type OrganizationOption = {
-  slug: string
-  name: string
-  categories: string[]
-  logo: string
-}
-
 /** Props for the OrgTabs component */
 export interface OrgTabsProps {
   name: string

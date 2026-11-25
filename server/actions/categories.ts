@@ -2,11 +2,56 @@
 
 import { revalidatePath } from 'next/cache'
 import prisma from '@/lib/prisma'
-import { OrganizationStatus } from '@/prisma/generated/client'
+import {
+  OrganizationStatus,
+  type Category,
+  type Location,
+  type Organization,
+} from '@/prisma/generated/client'
 import { slugify } from '@/lib/utils'
+import {
+  isLocalMockEnabled,
+  mergeLocalCategoriesWithCount,
+  mergeLocalCategoriesWithOrgs,
+  mergeLocalLatestByCategory,
+  mergeLocalPublicCategories,
+  type OrgWithLocationAndCategories,
+} from '@/lib/mock-orgs'
 import { withAuth } from './utils'
 
 export async function getTopCategoriesWithOrgs(limit: number = 5) {
+  if (isLocalMockEnabled()) {
+    let dbCategories: (Category & {
+      _count: { organizations: number }
+      organizations: (Organization & { location: Location | null })[]
+    })[] = []
+    try {
+      dbCategories = await prisma.category.findMany({
+        include: {
+          _count: {
+            select: {
+              organizations: {
+                where: { status: OrganizationStatus.PUBLISHED },
+              },
+            },
+          },
+          organizations: {
+            where: { status: OrganizationStatus.PUBLISHED },
+            orderBy: [{ featured: 'desc' }, { createdAt: 'desc' }],
+            take: 5,
+            include: {
+              location: true,
+            },
+          },
+        },
+      })
+    } catch {
+      dbCategories = []
+    }
+
+    return { success: true, data: mergeLocalCategoriesWithOrgs(dbCategories, limit) }
+  }
+
   try {
     const categories = await prisma.category.findMany({
       include: {
@@ -41,6 +86,27 @@ export async function getTopCategoriesWithOrgs(limit: number = 5) {
 }
 
 export async function getAllCategoriesWithCount() {
+  if (isLocalMockEnabled()) {
+    let dbCategories: (Category & { _count: { organizations: number } })[] = []
+    try {
+      dbCategories = await prisma.category.findMany({
+        include: {
+          _count: {
+            select: {
+              organizations: {
+                where: { status: OrganizationStatus.PUBLISHED },
+              },
+            },
+          },
+        },
+      })
+    } catch {
+      dbCategories = []
+    }
+
+    return { success: true, data: mergeLocalCategoriesWithCount(dbCategories) }
+  }
+
   try {
     const categories = await prisma.category.findMany({
       include: {
@@ -67,6 +133,19 @@ export async function getAllCategoriesWithCount() {
 }
 
 export async function getPublicCategories() {
+  if (isLocalMockEnabled()) {
+    let dbCategories: Category[] = []
+    try {
+      dbCategories = await prisma.category.findMany({
+        orderBy: { name: 'asc' },
+      })
+    } catch {
+      dbCategories = []
+    }
+
+    return { success: true, data: mergeLocalPublicCategories(dbCategories) }
+  }
+
   try {
     const categories = await prisma.category.findMany({
       orderBy: { name: 'asc' },
@@ -79,6 +158,33 @@ export async function getPublicCategories() {
 }
 
 export async function getLatestByCategory(categorySlug: string) {
+  if (isLocalMockEnabled()) {
+    let dbOrgs: OrgWithLocationAndCategories[] = []
+    try {
+      dbOrgs = await prisma.organization.findMany({
+        where: {
+          status: OrganizationStatus.PUBLISHED,
+          verified: true,
+          categories: {
+            some: { slug: categorySlug },
+          },
+        },
+        take: 5,
+        orderBy: {
+          createdAt: 'desc',
+        },
+        include: {
+          location: true,
+          categories: true,
+        },
+      })
+    } catch {
+      dbOrgs = []
+    }
+
+    return { success: true, data: mergeLocalLatestByCategory(categorySlug, dbOrgs) }
+  }
+
   try {
     const orgs = await prisma.organization.findMany({
       where: {

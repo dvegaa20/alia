@@ -40,14 +40,18 @@ export function HeroSection({ heroVideos = HERO_VIDEOS }: HeroSectionProps) {
     <section
       ref={heroRef}
       data-nav-theme="dark"
-      className="relative w-full h-[100dvh] min-h-[100dvh] overflow-hidden flex items-center justify-center bg-[#0C354C]"
+      className="relative w-full h-[100dvh] min-h-[100dvh] overflow-hidden flex items-center justify-center bg-black"
     >
       {/* Background Video Carousel (auto-pauses inactive & offscreen videos) */}
       <HeroVideoCarousel videos={heroVideos} />
 
-      {/* Readability Scrim — preserves vivid colors while guaranteeing AAA text contrast */}
+      {/* Readability Scrim — neutral dark veil to reduce video brightness and keep text crisp */}
       <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#0C354C]/65 via-[#0C354C]/45 to-[#0C354C]/75"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/65 via-black/50 to-black/75"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.45)_0%,rgba(0,0,0,0.15)_75%)]"
         aria-hidden="true"
       />
 

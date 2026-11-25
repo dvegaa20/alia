@@ -84,7 +84,7 @@ export function HeroVideoCarousel({
   return (
     <div
       ref={containerRef}
-      className="absolute inset-0 w-full h-full overflow-hidden bg-gradient-to-br from-[#0C354C] via-[#124866] to-[#16587B]"
+      className="absolute inset-0 w-full h-full overflow-hidden bg-slate-950"
       aria-hidden="true"
     >
       {videos.map((item, index) => {
@@ -108,7 +108,7 @@ export function HeroVideoCarousel({
                 fill
                 priority={index === 0}
                 sizes="100vw"
-                className="object-cover"
+                className="object-cover brightness-[0.75]"
                 onError={() => handlePosterError(index)}
               />
             )}
@@ -125,7 +125,7 @@ export function HeroVideoCarousel({
                 playsInline
                 preload={index === 0 ? 'auto' : 'metadata'}
                 onError={() => handleVideoError(index)}
-                className="absolute inset-0 w-full h-full object-cover"
+                className="absolute inset-0 w-full h-full object-cover brightness-[0.75]"
                 aria-label={item.alt}
               />
             )}

@@ -6,7 +6,6 @@ export { FooterCTA } from './layout/footer-cta'
 // Home
 export { HeroSection } from './home/hero-section'
 export { HeroVideoCarousel } from './home/hero-video-carousel'
-export { CategoriesSection } from './home/categories-section'
 export { CategoryFilters } from './home/category-filters'
 export { CategoryCarousel } from './home/category-carousel'
 export { TrustSection } from './home/trust-section'
@@ -35,3 +34,6 @@ export { ContactSidebar } from './organization/contact-sidebar'
 
 // Suggest
 export { SuggestOrgDialog } from './suggest/suggest-org-dialog'
+
+// Search
+export { OrgSearchProvider, OrgSearchTrigger, useOrgSearch } from './search/org-search-command'

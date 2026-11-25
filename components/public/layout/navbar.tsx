@@ -9,6 +9,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
 import { Button } from '@/components/ui/button'
 import { SuggestOrgDialog } from '@/components/public/suggest/suggest-org-dialog'
+import { OrgSearchTrigger } from '@/components/public/search/org-search-command'
 import { MenuToggleIcon } from '@/components/ui/menu-toggle-icon'
 import { AliaLogo } from './alia-logo'
 import { cn } from '@/lib/utils'
@@ -245,13 +246,14 @@ export function Navbar({ hasLogoLight = false, hasLogoDark = false }: NavbarProp
           })}
         </div>
 
-        {/* Columna 3: Desktop CTA */}
-        <div className="hidden md:flex items-center justify-self-end shrink-0">
+        {/* Columna 3: Desktop CTA + Search */}
+        <div className="hidden md:flex items-center justify-self-end gap-2 shrink-0">
+          <OrgSearchTrigger variant={isDarkSurface ? 'dark' : 'light'} />
           <Button
             type="button"
             onClick={() => setSuggestOpen(true)}
             className={cn(
-              'rounded-full px-5 py-2.5 h-auto font-sans text-[14px] font-medium tracking-[-0.015em] border shadow-none transition-colors duration-300',
+              'rounded-full px-4 py-1 h-auto font-sans text-[14px] leading-snug font-medium tracking-[-0.015em] border shadow-none transition-colors duration-300',
               isDarkSurface
                 ? 'bg-[#84B3CE] hover:bg-[#9AC3DA] text-[#0C354C] border-[#84B3CE]'
                 : 'bg-[#16587B] hover:bg-[#0C354C] text-white border-[#16587B] hover:border-[#0C354C]'
@@ -261,8 +263,13 @@ export function Navbar({ hasLogoLight = false, hasLogoDark = false }: NavbarProp
           </Button>
         </div>
 
-        {/* Mobile Hamburger */}
-        <div className="flex items-center md:hidden">
+        {/* Mobile Search + Hamburger */}
+        <div className="flex items-center gap-2 md:hidden">
+          <OrgSearchTrigger
+            variant={isDarkSurface && !open ? 'dark' : 'light'}
+            onBeforeOpen={() => setOpen(false)}
+            className="size-10"
+          />
           <Button
             size="icon"
             variant="outline"

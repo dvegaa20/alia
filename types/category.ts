@@ -1,5 +1,3 @@
-import type { Category, Organization, Location } from '@/prisma/generated/client'
-
 // ============================================================================
 // Category Types
 // ============================================================================
@@ -13,11 +11,6 @@ export type CategoryWithCount = {
   _count: {
     organizations: number
   }
-}
-
-/** Category with full organizations — used in home CategoriesSection */
-export type DynamicCategoryData = Category & {
-  organizations: (Organization & { location: Location | null })[]
 }
 
 /** Minimal category shape — used in sidebar filters and dropdowns */

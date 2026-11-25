@@ -4,9 +4,20 @@ import { revalidatePath } from 'next/cache'
 import prisma from '@/lib/prisma'
 import { orgFormSchema, type OrgFormValues } from '@/lib/schemas'
 import { OrganizationStatus, Prisma } from '@/prisma/generated/client'
+import {
+  getLocalAvailableCities,
+  getLocalOrgBySlug,
+  isLocalMockEnabled,
+  mergeAndFilterLocalOrgs,
+  type OrgWithLocationAndCategories,
+} from '@/lib/mock-orgs'
 import { type TxClient, withAuth } from './utils'
 
 export async function trackDonationClick(organizationId: string) {
+  if (isLocalMockEnabled() && organizationId.startsWith('mock-')) {
+    return { success: true }
+  }
+
   try {
     await prisma.auditLog.create({
       data: {
@@ -48,55 +59,83 @@ export async function getPublishedOrgs(filters?: {
   } = filters || {}
   const skip = (page - 1) * limit
 
+  const whereClause: Prisma.OrganizationWhereInput = {
+    status: OrganizationStatus.PUBLISHED,
+  }
+
+  if (causeType) {
+    whereClause.causeType = causeType
+  }
+
+  if (categorySlug) {
+    whereClause.categories = {
+      some: { slug: categorySlug },
+    }
+  }
+
+  if (featured !== undefined) {
+    whereClause.featured = featured
+  }
+
+  if (verified !== undefined) {
+    whereClause.verified = verified
+  }
+
+  if (state || city) {
+    whereClause.location = {}
+    if (state) {
+      whereClause.location.state = { contains: state, mode: 'insensitive' }
+    }
+    if (city) {
+      whereClause.location.city = { contains: city, mode: 'insensitive' }
+    }
+  }
+
+  if (query) {
+    whereClause.OR = [
+      { name: { contains: query, mode: 'insensitive' } },
+      { shortDescription: { contains: query, mode: 'insensitive' } },
+    ]
+  }
+
+  let orderByClause: Prisma.OrganizationOrderByWithRelationInput = { createdAt: 'desc' }
+  if (sort === 'name-asc') {
+    orderByClause = { name: 'asc' }
+  } else if (sort === 'name-desc') {
+    orderByClause = { name: 'desc' }
+  } else if (sort === 'oldest') {
+    orderByClause = { createdAt: 'asc' }
+  }
+
+  if (isLocalMockEnabled()) {
+    let dbOrgs: OrgWithLocationAndCategories[] = []
+    try {
+      dbOrgs = await prisma.organization.findMany({
+        where: whereClause,
+        include: {
+          location: true,
+          categories: true,
+        },
+        orderBy: orderByClause,
+      })
+    } catch {
+      dbOrgs = []
+    }
+
+    const merged = mergeAndFilterLocalOrgs(dbOrgs, filters)
+    return {
+      success: true,
+      data: merged.orgs,
+      meta: {
+        total: merged.total,
+        page: merged.page,
+        limit: merged.limit,
+        totalPages: merged.totalPages,
+      },
+    }
+  }
+
   try {
-    const whereClause: Prisma.OrganizationWhereInput = {
-      status: OrganizationStatus.PUBLISHED,
-    }
-
-    if (causeType) {
-      whereClause.causeType = causeType
-    }
-
-    if (categorySlug) {
-      whereClause.categories = {
-        some: { slug: categorySlug },
-      }
-    }
-
-    if (featured !== undefined) {
-      whereClause.featured = featured
-    }
-
-    if (verified !== undefined) {
-      whereClause.verified = verified
-    }
-
-    if (state || city) {
-      whereClause.location = {}
-      if (state) {
-        whereClause.location.state = { contains: state, mode: 'insensitive' }
-      }
-      if (city) {
-        whereClause.location.city = { contains: city, mode: 'insensitive' }
-      }
-    }
-
-    if (query) {
-      whereClause.OR = [
-        { name: { contains: query, mode: 'insensitive' } },
-        { shortDescription: { contains: query, mode: 'insensitive' } },
-      ]
-    }
-
-    let orderByClause: Prisma.OrganizationOrderByWithRelationInput = { createdAt: 'desc' }
-    if (sort === 'name-asc') {
-      orderByClause = { name: 'asc' }
-    } else if (sort === 'name-desc') {
-      orderByClause = { name: 'desc' }
-    } else if (sort === 'oldest') {
-      orderByClause = { createdAt: 'asc' }
-    }
-
     const [orgs, total] = await Promise.all([
       prisma.organization.findMany({
         where: whereClause,
@@ -127,7 +166,92 @@ export async function getPublishedOrgs(filters?: {
   }
 }
 
+export interface SearchableOrg {
+  slug: string
+  name: string
+  shortDescription: string
+  categories: string[]
+  location: string
+  verified: boolean
+  causeType: 'ONG' | 'YOUTH_INITIATIVE'
+  isDonatariaAutorizada: boolean
+}
+
+export async function getSearchableOrgs(): Promise<{
+  success: boolean
+  data?: SearchableOrg[]
+  error?: string
+}> {
+  const mapToSearchable = (org: OrgWithLocationAndCategories): SearchableOrg => ({
+    slug: org.slug,
+    name: org.name,
+    shortDescription: org.shortDescription,
+    categories: org.categories.map((c) => c.name),
+    location: org.location ? `${org.location.city}, ${org.location.state}` : 'México',
+    verified: org.verified,
+    causeType: org.causeType as 'ONG' | 'YOUTH_INITIATIVE',
+    isDonatariaAutorizada: org.isDonatariaAutorizada,
+  })
+
+  if (isLocalMockEnabled()) {
+    let dbOrgs: OrgWithLocationAndCategories[] = []
+    try {
+      dbOrgs = await prisma.organization.findMany({
+        where: { status: OrganizationStatus.PUBLISHED },
+        include: { location: true, categories: true },
+        orderBy: [{ featured: 'desc' }, { name: 'asc' }],
+      })
+    } catch {
+      dbOrgs = []
+    }
+
+    const merged = mergeAndFilterLocalOrgs(dbOrgs, { limit: 200, sort: 'name-asc' })
+    return {
+      success: true,
+      data: merged.orgs.map(mapToSearchable),
+    }
+  }
+
+  try {
+    const orgs = await prisma.organization.findMany({
+      where: { status: OrganizationStatus.PUBLISHED },
+      include: { location: true, categories: true },
+      orderBy: [{ featured: 'desc' }, { name: 'asc' }],
+      take: 200,
+    })
+
+    return {
+      success: true,
+      data: orgs.map(mapToSearchable),
+    }
+  } catch (error) {
+    console.error('[getSearchableOrgs] Error:', error)
+    return { success: false, error: 'Failed to fetch searchable organizations' }
+  }
+}
+
 export async function getAvailableCities(state: string) {
+  if (isLocalMockEnabled()) {
+    let dbCities: string[] = []
+    try {
+      const locations = await prisma.location.findMany({
+        where: {
+          state: { contains: state, mode: 'insensitive' },
+          organization: {
+            status: OrganizationStatus.PUBLISHED,
+          },
+        },
+        select: { city: true },
+        distinct: ['city'],
+        orderBy: { city: 'asc' },
+      })
+      dbCities = locations.map((l) => l.city)
+    } catch {
+      dbCities = []
+    }
+    return { success: true, data: getLocalAvailableCities(state, dbCities) }
+  }
+
   try {
     const locations = await prisma.location.findMany({
       where: {
@@ -154,6 +278,30 @@ export async function getAvailableCities(state: string) {
 }
 
 export async function getOrgBySlug(slug: string) {
+  if (isLocalMockEnabled()) {
+    try {
+      const org = await prisma.organization.findUnique({
+        where: { slug },
+        include: {
+          location: true,
+          socialLinks: true,
+          categories: true,
+        },
+      })
+      if (org) {
+        return { success: true, data: org }
+      }
+    } catch {
+      // Fall back to local mock organizations when DB is unreachable locally
+    }
+
+    const mockOrg = getLocalOrgBySlug(slug)
+    if (mockOrg) {
+      return { success: true, data: mockOrg }
+    }
+    return { success: false, error: 'Organization not found' }
+  }
+
   try {
     const org = await prisma.organization.findUnique({
       where: { slug },
