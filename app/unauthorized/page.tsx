@@ -27,7 +27,7 @@ export default function UnauthorizedPage() {
     <div className="min-h-screen flex items-center justify-center bg-background text-foreground px-4">
       <div className="text-center space-y-6 max-w-md rounded-[20px] border border-border bg-surface p-8 sm:p-10">
         <div className="space-y-2">
-          <p className="font-mono text-xs uppercase tracking-[0.04em] text-urgency-coral font-medium">
+          <p className=" text-xs uppercase tracking-[0.04em] text-urgency-coral font-medium">
             Acceso restringido
           </p>
           <h1 className="font-sans text-3xl font-medium tracking-[-0.02em] text-foreground">
@@ -61,7 +61,7 @@ export default function UnauthorizedPage() {
             asChild
           >
             <Link href="/">
-              Inicio (<span className="font-mono tabular-nums">{countdown}s</span>)
+              Inicio (<span className=" tabular-nums">{countdown}s</span>)
             </Link>
           </Button>
         </div>

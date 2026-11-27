@@ -70,7 +70,7 @@ export function TransparencySection() {
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-14">
         {/* Header */}
         <div data-verify-reveal className="text-center mb-14 space-y-3">
-          <p className="font-mono text-xs font-medium uppercase tracking-[0.06em] text-[#16587B]">
+          <p className=" text-xs font-medium uppercase tracking-[0.06em] text-[#16587B]">
             Rigor &amp; Responsabilidad
           </p>
           <h2 className="font-sans font-light text-3xl sm:text-5xl lg:text-[52px] leading-[1.06] tracking-normal text-[#0C354C] max-w-3xl mx-auto">
@@ -97,7 +97,7 @@ export function TransparencySection() {
                       <div className="size-11 rounded-xl bg-[#16587B]/10 text-[#16587B] flex items-center justify-center shrink-0">
                         <Icon className="size-5" strokeWidth={1.5} />
                       </div>
-                      <span className="font-mono font-medium text-3xl tabular-nums text-[#16587B]/40 leading-none select-none">
+                      <span className=" font-medium text-3xl tabular-nums text-[#16587B]/40 leading-none select-none">
                         {step.step}
                       </span>
                     </div>
@@ -118,7 +118,7 @@ export function TransparencySection() {
         {/* Bottom note */}
         <p
           data-verify-reveal
-          className="text-center font-mono text-xs text-[#0C354C]/60 mt-10 max-w-2xl mx-auto"
+          className="text-center  text-xs text-[#0C354C]/60 mt-10 max-w-2xl mx-auto"
         >
           Este proceso es gratuito tanto para quien sugiere como para la organización. Nuestro único
           criterio es el impacto social real.

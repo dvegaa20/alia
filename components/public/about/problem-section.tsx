@@ -66,7 +66,7 @@ export function ProblemSection() {
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-14">
         {/* Header */}
         <div data-problem-reveal className="text-center mb-16 space-y-3">
-          <p className="font-mono text-xs font-medium uppercase tracking-[0.06em] text-[#16587B]">
+          <p className=" text-xs font-medium uppercase tracking-[0.06em] text-[#16587B]">
             El contexto
           </p>
           <h2 className="font-sans font-light text-3xl sm:text-5xl lg:text-[52px] leading-[1.06] tracking-normal text-[#0C354C] max-w-3xl mx-auto">
@@ -95,13 +95,13 @@ export function ProblemSection() {
                         <Icon className="size-5" strokeWidth={1.5} />
                       </div>
                       <div className="space-y-1">
-                        <p className="font-mono font-medium text-3xl sm:text-4xl tracking-[-0.02em] tabular-nums text-[#16587B] leading-none">
+                        <p className=" font-medium text-3xl sm:text-4xl tracking-[-0.02em] tabular-nums text-[#16587B] leading-none">
                           {stat.number}
                         </p>
                         <p className="font-sans text-[#0C354C] text-sm font-medium leading-snug pt-1">
                           {stat.label}
                         </p>
-                        <p className="font-mono text-[#0C354C]/60 text-xs">{stat.note}</p>
+                        <p className=" text-[#0C354C]/60 text-xs">{stat.note}</p>
                       </div>
                     </CardContent>
                   </Card>

@@ -329,7 +329,7 @@ export function SuggestOrgDialog({
                         disabled={submitState !== 'idle'}
                       />
                     </InputGroup>
-                    <p className="font-mono text-[11px] text-foreground-muted mt-1">
+                    <p className=" text-[11px] text-foreground-muted mt-1">
                       Utilizamos este enlace para verificar la autenticidad de la ONG.
                     </p>
                     {fieldState.invalid && <FieldError errors={[fieldState.error]} />}

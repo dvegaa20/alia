@@ -846,6 +846,7 @@ export interface OrgQueryFilters {
   verified?: boolean
   sort?: string
   causeType?: 'ONG' | 'YOUTH_INITIATIVE'
+  isDonatariaAutorizada?: boolean
 }
 
 export function mergeAndFilterLocalOrgs(
@@ -869,6 +870,7 @@ export function mergeAndFilterLocalOrgs(
     verified,
     sort,
     causeType,
+    isDonatariaAutorizada,
   } = filters || {}
 
   const seenSlugs = new Set(dbOrgs.map((o) => o.slug))
@@ -877,6 +879,8 @@ export function mergeAndFilterLocalOrgs(
   const filtered = combined.filter((org) => {
     if (org.status !== OrganizationStatus.PUBLISHED) return false
     if (causeType && org.causeType !== causeType) return false
+    if (isDonatariaAutorizada !== undefined && org.isDonatariaAutorizada !== isDonatariaAutorizada)
+      return false
     if (featured !== undefined && org.featured !== featured) return false
     if (verified !== undefined && org.verified !== verified) return false
     if (categorySlug && !org.categories.some((c) => c.slug === categorySlug)) return false

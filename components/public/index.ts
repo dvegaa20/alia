@@ -8,8 +8,10 @@ export { HeroSection } from './home/hero-section'
 export { HeroVideoCarousel } from './home/hero-video-carousel'
 export { CategoryFilters } from './home/category-filters'
 export { CategoryCarousel } from './home/category-carousel'
-export { TrustSection } from './home/trust-section'
-export { FeaturesSection } from './home/features-section'
+export { UrgentNeedsSection } from './home/urgent-needs-section'
+export { AudiencePathsSection } from './home/audience-paths-section'
+export { ReachSection } from './home/reach-section'
+export { CommunityCtaSection } from './home/community-cta-section'
 
 // Directory
 export { SidebarFilters } from './directory/sidebar-filters'

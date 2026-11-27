@@ -141,7 +141,7 @@ export function MapView({ mapPoints }: MapViewProps) {
                     {selectedOrg.categories.slice(0, 2).map((cat) => (
                       <Badge
                         key={cat}
-                        className="bg-background text-foreground-muted border border-border px-2 py-0 rounded-full font-mono text-[9px] font-medium uppercase tracking-[0.04em] h-auto"
+                        className="bg-background text-foreground-muted border border-border px-2 py-0 rounded-full  text-[9px] font-medium uppercase tracking-[0.04em] h-auto"
                       >
                         {cat}
                       </Badge>
@@ -166,7 +166,7 @@ export function MapView({ mapPoints }: MapViewProps) {
       </Map>
 
       {mapPoints.length === 0 && (
-        <div className="pointer-events-none absolute top-4 left-4 z-10 rounded-full border border-border bg-surface/95 backdrop-blur-md px-4 py-1.5 font-mono text-xs text-foreground-muted">
+        <div className="pointer-events-none absolute top-4 left-4 z-10 rounded-full border border-border bg-surface/95 backdrop-blur-md px-4 py-1.5  text-xs text-foreground-muted">
           Sin ubicaciones georreferenciadas para este filtro.
         </div>
       )}

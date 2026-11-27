@@ -61,6 +61,8 @@ export default async function DirectoryPage(props: {
     city?: string
     verified?: string
     sort?: string
+    type?: string
+    donataria?: string
   }>
 }) {
   const searchParams = await props.searchParams
@@ -71,6 +73,11 @@ export default async function DirectoryPage(props: {
   const city = searchParams?.city
   const verified = searchParams?.verified === 'true' ? true : undefined
   const sort = searchParams?.sort
+  const causeType =
+    searchParams?.type === 'ONG' || searchParams?.type === 'YOUTH_INITIATIVE'
+      ? searchParams.type
+      : undefined
+  const isDonatariaAutorizada = searchParams?.donataria === 'true' ? true : undefined
 
   const [result, categoriesResult, youthResult, newAdditionsResult] = await Promise.all([
     getPublishedOrgs({
@@ -82,6 +89,8 @@ export default async function DirectoryPage(props: {
       city,
       verified,
       sort,
+      causeType,
+      isDonatariaAutorizada,
     }),
     getAllCategoriesWithCount(),
     getPublishedOrgs({
@@ -137,7 +146,7 @@ export default async function DirectoryPage(props: {
               <span className="font-sans font-medium text-sm text-[#0C354C]">Filtros</span>
             </div>
             {meta.total > 0 && (
-              <span className="font-mono text-xs text-[#0C354C]/60 mr-2 tabular-nums">
+              <span className=" text-xs text-[#0C354C]/60 mr-2 tabular-nums">
                 {meta.total} resultados
               </span>
             )}

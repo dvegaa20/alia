@@ -44,7 +44,7 @@ export function CtaSection() {
           data-cta-card
           className="rounded-3xl bg-[#0C354C] text-[#F5EEDD] border border-[#84B3CE]/20 px-6 py-14 sm:px-14 sm:py-20 flex flex-col items-center text-center gap-6"
         >
-          <span className="font-mono text-xs font-medium uppercase tracking-[0.06em] text-[#84B3CE]">
+          <span className=" text-xs font-medium uppercase tracking-[0.06em] text-[#84B3CE]">
             Suma una causa
           </span>
 
@@ -64,7 +64,7 @@ export function CtaSection() {
           <div className="flex flex-col sm:flex-row items-center gap-4 pt-2">
             <Button
               asChild
-              className="rounded-full bg-[#84B3CE] text-[#0C354C] hover:bg-[#9AC3DA] px-7 py-3 h-auto text-[16px] font-medium border border-[#84B3CE] shadow-none transition-colors"
+              className="rounded-full bg-[#84B3CE] text-[#0C354C] hover:bg-[#9AC3DA] px-4 py-2 h-auto text-[16px] font-medium border border-[#84B3CE] shadow-none transition-colors"
             >
               <Link href="/directory">
                 Explorar directorio
@@ -76,7 +76,7 @@ export function CtaSection() {
               <Button
                 type="button"
                 variant="outline"
-                className="rounded-full border-[#84B3CE] bg-transparent text-[#84B3CE] hover:bg-[#84B3CE]/15 hover:text-white px-7 py-3 h-auto text-[16px] font-medium shadow-none transition-colors"
+                className="rounded-full border-[#84B3CE] bg-transparent text-[#84B3CE] hover:bg-[#84B3CE]/15 hover:text-white px-4 py-2 h-auto text-[16px] font-medium shadow-none transition-colors"
               >
                 <Lightbulb className="mr-2 size-4" strokeWidth={1.5} />
                 Sugerir una ONG
@@ -84,7 +84,7 @@ export function CtaSection() {
             </SuggestOrgDialog>
           </div>
 
-          <p className="font-mono text-xs text-[#A8CBE0]/80">
+          <p className=" text-xs text-[#A8CBE0]/80">
             Todas las sugerencias se revisan manualmente. Sin costo, sin intermediarios.
           </p>
         </div>

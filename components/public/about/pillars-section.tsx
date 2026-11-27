@@ -66,7 +66,7 @@ export function PillarsSection() {
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-14">
         {/* Header */}
         <div data-pillar-reveal className="text-center mb-14 space-y-3">
-          <p className="font-mono text-xs font-medium uppercase tracking-[0.06em] text-[#16587B]">
+          <p className=" text-xs font-medium uppercase tracking-[0.06em] text-[#16587B]">
             Principios
           </p>
           <h2 className="font-sans font-light text-3xl sm:text-5xl lg:text-[52px] leading-[1.06] tracking-normal text-[#0C354C]">

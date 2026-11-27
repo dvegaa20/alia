@@ -37,7 +37,7 @@ function Feature({ badge, title, description, items }: FeatureProps) {
       <div className="grid grid-cols-1 lg:grid-cols-12 items-center gap-10 lg:gap-12">
         {/* Left: Text Content */}
         <div className="lg:col-span-4 flex flex-col items-start gap-3">
-          <span className="font-mono text-xs font-medium uppercase tracking-[0.06em] text-[#16587B]">
+          <span className=" text-xs font-medium uppercase tracking-[0.06em] text-[#16587B]">
             {badge}
           </span>
           <h3 className="font-sans text-2xl sm:text-3xl font-light tracking-normal text-[#0C354C] leading-[1.15]">
@@ -66,7 +66,7 @@ function Feature({ badge, title, description, items }: FeatureProps) {
                           height={320}
                         />
                         <div className="absolute top-3.5 left-3.5">
-                          <Badge className="bg-[#0C354C]/85 text-[#F5EEDD] border border-[#84B3CE]/30 px-3 py-1 h-auto rounded-full font-mono text-[10px] font-medium uppercase tracking-[0.06em]">
+                          <Badge className="bg-[#0C354C]/85 text-[#F5EEDD] border border-[#84B3CE]/30 px-3 py-1 h-auto rounded-full  text-[10px] font-medium uppercase tracking-[0.06em]">
                             {item.tag}
                           </Badge>
                         </div>

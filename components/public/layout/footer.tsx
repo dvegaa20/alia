@@ -1,9 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import { AliaLogo } from './alia-logo'
-import { FooterCTA } from './footer-cta'
 
 /* ── Social icon SVGs (Instagram, LinkedIn, Facebook) ── */
 function IconInstagram({ className }: { className?: string }) {
@@ -36,18 +34,9 @@ const socialLinks = [
   { icon: IconFacebook, href: '#', label: 'Facebook' },
 ]
 
-interface FooterProps {
-  hasLogoLight?: boolean
-  hasLogoDark?: boolean
-}
-
-export function Footer({ hasLogoLight = false, hasLogoDark = false }: FooterProps) {
-  const pathname = usePathname()
-  const isHomePage = pathname === '/'
-
+export function Footer() {
   return (
     <footer data-nav-theme="dark" className="w-full bg-[#0C354C] text-[#F5EEDD]">
-      {isHomePage && <FooterCTA />}
 
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-14 py-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
         <div className="space-y-3">
@@ -56,7 +45,7 @@ export function Footer({ hasLogoLight = false, hasLogoDark = false }: FooterProp
             className="inline-flex items-center hover:opacity-85 transition-opacity"
             aria-label="Alia — Inicio"
           >
-            <AliaLogo variant="light" hasLogoLight={hasLogoLight} hasLogoDark={hasLogoDark} />
+            <AliaLogo className="h-10 md:h-11 origin-bottom-left scale-150 md:scale-[1.75]" />
           </Link>
           <p className="font-sans text-sm text-[#F5EEDD]/75 leading-relaxed max-w-md">
             Alia es un directorio social transparente y accesible que funciona como un puente
@@ -80,9 +69,7 @@ export function Footer({ hasLogoLight = false, hasLogoDark = false }: FooterProp
 
       <div className="border-t border-[#84B3CE]/15">
         <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-14 py-6">
-          <p className="font-mono text-xs text-[#A8CBE0]/80">
-            © 2026 Alia. Todos los derechos reservados.
-          </p>
+          <p className=" text-xs text-[#A8CBE0]/80">© 2026 Alia. Todos los derechos reservados.</p>
         </div>
       </div>
     </footer>

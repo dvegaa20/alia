@@ -1,6 +1,7 @@
 export * from './admin-header'
 export * from './admin-pagination'
 export * from './admin-sidebar'
+export * from './analytics-panel'
 export * from './categories-table'
 export * from './category-form-dialog'
 export * from './organization-sheet'

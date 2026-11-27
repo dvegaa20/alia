@@ -104,7 +104,7 @@ function LinkCard({ url }: { url: string }) {
         <CardFooter className="px-5 py-3.5 flex items-center justify-between text-foreground-muted text-xs">
           <div className="flex items-center flex-1 mr-4 overflow-hidden">
             <Link2 className="size-3.5 mr-1.5 shrink-0 text-primary" strokeWidth={1.5} />
-            <span className="font-mono text-[11px] truncate">
+            <span className=" text-[11px] truncate">
               {url.replace(/^https?:\/\//, '').replace(/\/$/, '')}
             </span>
           </div>

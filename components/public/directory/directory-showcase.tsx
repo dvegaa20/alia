@@ -34,7 +34,7 @@ export function DirectoryShowcase({
             <Sparkles className="size-3.5" strokeWidth={1.5} />
             Iniciativas jóvenes
             {youthInitiatives.length > 0 && (
-              <Badge className="rounded-full bg-[#124866] text-[#84B3CE] group-data-[state=active]:bg-white/20 group-data-[state=active]:text-white border-none px-2 py-0 font-mono text-[10px] font-medium tabular-nums">
+              <Badge className="rounded-full bg-[#124866] text-[#84B3CE] group-data-[state=active]:bg-white/20 group-data-[state=active]:text-white border-none px-2 py-0  text-[10px] font-medium tabular-nums">
                 {youthInitiatives.length}
               </Badge>
             )}
@@ -54,7 +54,7 @@ export function DirectoryShowcase({
         {newAdditions.length > 0 && (
           <section className="rounded-2xl border border-[#DFD5C0] bg-[#EAE1CD]/60 p-6 md:p-8 space-y-6">
             <div className="space-y-1.5">
-              <span className="inline-block font-mono text-[11px] font-medium uppercase tracking-[0.06em] text-[#16587B]">
+              <span className="inline-block  text-[11px] font-medium uppercase tracking-[0.06em] text-[#16587B]">
                 Recién sumadas
               </span>
               <h2 className="font-sans text-2xl sm:text-3xl font-light tracking-normal text-[#0C354C]">
@@ -77,7 +77,7 @@ export function DirectoryShowcase({
         {/* Youth Initiatives Highlight Block */}
         <section className="rounded-2xl border border-[#84B3CE]/45 bg-[#84B3CE]/12 p-6 md:p-8 space-y-6">
           <div className="space-y-2 max-w-2xl">
-            <Badge className="rounded-full bg-[#124866] text-[#84B3CE] border border-[#124866] px-3 py-1 h-auto font-mono text-[11px] font-medium uppercase tracking-[0.06em] gap-1.5">
+            <Badge className="rounded-full bg-[#124866] text-[#84B3CE] border border-[#124866] px-3 py-1 h-auto  text-[11px] font-medium uppercase tracking-[0.06em] gap-1.5">
               <Rocket className="size-3.5" strokeWidth={1.5} />
               Iniciativa Joven · Escolares
             </Badge>
@@ -111,7 +111,7 @@ export function DirectoryShowcase({
       <TabsContent value="youth" className="space-y-8 mt-0">
         <section className="rounded-2xl border border-[#84B3CE]/45 bg-[#84B3CE]/12 p-6 md:p-8 space-y-8">
           <div className="space-y-2.5 max-w-2xl">
-            <Badge className="rounded-full bg-[#124866] text-[#84B3CE] border border-[#124866] px-3 py-1 h-auto font-mono text-[11px] font-medium uppercase tracking-[0.06em] gap-1.5">
+            <Badge className="rounded-full bg-[#124866] text-[#84B3CE] border border-[#124866] px-3 py-1 h-auto  text-[11px] font-medium uppercase tracking-[0.06em] gap-1.5">
               <Sparkles className="size-3.5" strokeWidth={1.5} />
               Iniciativa Joven
             </Badge>
@@ -149,12 +149,11 @@ export function DirectoryShowcase({
       <TabsContent value="new" className="space-y-8 mt-0">
         <section className="rounded-2xl border border-[#DFD5C0] bg-[#EAE1CD]/60 p-6 md:p-8 space-y-8">
           <div className="space-y-2">
-            <span className="inline-block font-mono text-[11px] font-medium uppercase tracking-[0.06em] text-[#16587B]">
+            <span className="inline-block  text-[11px] font-medium uppercase tracking-[0.06em] text-[#16587B]">
               Ordenadas por fecha de registro
             </span>
             <h2 className="font-sans text-3xl font-light tracking-normal text-[#0C354C]">
-              Nuevas{' '}
-              <span className="font-serif italic font-normal text-[#16587B]">adiciones</span>
+              Nuevas <span className="font-serif italic font-normal text-[#16587B]">adiciones</span>
             </h2>
             <p className="font-sans text-sm text-[#0C354C]/75">
               Conoce las organizaciones y proyectos sociales que se sumaron recientemente a Alia.

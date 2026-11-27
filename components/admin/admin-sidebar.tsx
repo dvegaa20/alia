@@ -3,7 +3,8 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { SignOutButton, useUser } from '@clerk/nextjs'
-import { LayoutDashboard, Tags, ClipboardList, LogOut } from 'lucide-react'
+import { LayoutDashboard, ChartColumn, Tags, ClipboardList, LogOut } from 'lucide-react'
+import { AliaLogo } from '@/components/public/layout/alia-logo'
 
 import {
   Sidebar,
@@ -25,6 +26,11 @@ export function AdminSidebar({ pendingCount = 0 }: { pendingCount?: number }) {
       href: '/admin',
     },
     {
+      label: 'Analítica (GA4)',
+      icon: ChartColumn,
+      href: '/admin/analytics',
+    },
+    {
       label: 'Categorías',
       icon: Tags,
       href: '/admin/categories',
@@ -40,6 +46,9 @@ export function AdminSidebar({ pendingCount = 0 }: { pendingCount?: number }) {
   return (
     <Sidebar className="border-r-0">
       <SidebarHeader className="px-6 py-8 flex flex-col gap-1">
+        <Link href="/" className="mb-2 inline-flex w-fit items-center hover:opacity-80 transition-opacity">
+          <AliaLogo className="h-9 origin-bottom-left scale-[1.8]" />
+        </Link>
         <span className="text-lg font-bold text-sidebar-foreground">Admin Panel</span>
         <span className="text-xs font-medium text-sidebar-foreground/70 tracking-wide uppercase truncate">
           {user?.fullName || user?.firstName || 'Digital Curator'}

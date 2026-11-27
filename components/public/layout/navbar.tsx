@@ -30,7 +30,7 @@ interface NavbarProps {
 
 type NavTheme = 'dark' | 'light'
 
-export function Navbar({ hasLogoLight = false, hasLogoDark = false }: NavbarProps) {
+export function Navbar() {
   const [open, setOpen] = useState(false)
   const [suggestOpen, setSuggestOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
@@ -204,11 +204,7 @@ export function Navbar({ hasLogoLight = false, hasLogoDark = false }: NavbarProp
           className="inline-flex items-center justify-self-start hover:opacity-80 transition-opacity shrink-0"
           aria-label="Alia — Inicio"
         >
-          <AliaLogo
-            variant={isDarkSurface ? 'light' : 'dark'}
-            hasLogoLight={hasLogoLight}
-            hasLogoDark={hasLogoDark}
-          />
+          <AliaLogo className="h-12 origin-left scale-150 md:scale-[1.65]" />
         </Link>
 
         {/* Columna 2: Desktop Links perfectamente centrados al viewport */}
@@ -295,9 +291,7 @@ export function Navbar({ hasLogoLight = false, hasLogoDark = false }: NavbarProp
       {/* Mobile Menu Portal */}
       <MobileMenu open={open} className="flex flex-col justify-between p-6 gap-6">
         <div className="grid gap-y-4">
-          <p className="font-mono text-xs uppercase tracking-[0.06em] text-[#0C354C]/60 mb-2">
-            Navegación
-          </p>
+          <p className=" text-xs uppercase tracking-[0.06em] text-[#0C354C]/60 mb-2">Navegación</p>
           {navLinks.map((link) => {
             const isActive =
               pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href))

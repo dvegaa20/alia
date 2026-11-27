@@ -472,7 +472,17 @@ export function OrganizationSheet({
                               {...register('fullDescription')}
                             />
                             <FieldDescription className="text-xs text-muted-foreground mt-1">
-                              Soporta Markdown: <code className="font-mono text-[11px] bg-muted px-1 py-0.5 rounded">**negrita**</code>, <code className="font-mono text-[11px] bg-muted px-1 py-0.5 rounded">*cursiva*</code>, listas con <code className="font-mono text-[11px] bg-muted px-1 py-0.5 rounded">-</code>, y saltos de línea normales.
+                              Soporta Markdown:{' '}
+                              <code className=" text-[11px] bg-muted px-1 py-0.5 rounded">
+                                **negrita**
+                              </code>
+                              ,{' '}
+                              <code className=" text-[11px] bg-muted px-1 py-0.5 rounded">
+                                *cursiva*
+                              </code>
+                              , listas con{' '}
+                              <code className=" text-[11px] bg-muted px-1 py-0.5 rounded">-</code>,
+                              y saltos de línea normales.
                             </FieldDescription>
                             <FieldError errors={[errors.fullDescription]} />
                           </FieldContent>
@@ -906,7 +916,9 @@ export function OrganizationSheet({
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-5 bg-muted/30 rounded-xl border">
                           <Field className="md:col-span-2">
-                            <FieldLabel className={LABEL_CX}>¿De qué trata el voluntariado?</FieldLabel>
+                            <FieldLabel className={LABEL_CX}>
+                              ¿De qué trata el voluntariado?
+                            </FieldLabel>
                             <FieldContent>
                               <Textarea
                                 className={`${INPUT_CX} min-h-24`}
@@ -993,14 +1005,13 @@ export function OrganizationSheet({
                                 <Trash2 className="h-4 w-4" />
                               </Button>
 
-                              <input
-                                type="hidden"
-                                {...register(`events.${evIdx}.id` as const)}
-                              />
+                              <input type="hidden" {...register(`events.${evIdx}.id` as const)} />
 
                               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pr-6">
                                 <Field>
-                                  <FieldLabel className={LABEL_CX}>Título del Evento o Campaña</FieldLabel>
+                                  <FieldLabel className={LABEL_CX}>
+                                    Título del Evento o Campaña
+                                  </FieldLabel>
                                   <FieldContent>
                                     <Input
                                       className={INPUT_CX}
@@ -1157,16 +1168,24 @@ export function OrganizationSheet({
                               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <Field>
                                   <FieldLabel>Valor (Ej. 8,500)</FieldLabel>
-                                  <Input {...register(`impactHighlights.${index}.value` as const)} />
+                                  <Input
+                                    {...register(`impactHighlights.${index}.value` as const)}
+                                  />
                                 </Field>
                                 <Field>
                                   <FieldLabel>Etiqueta (Ej. viviendas construidas)</FieldLabel>
-                                  <Input {...register(`impactHighlights.${index}.label` as const)} />
+                                  <Input
+                                    {...register(`impactHighlights.${index}.label` as const)}
+                                  />
                                 </Field>
                                 {index === 0 && (
                                   <Field className="md:col-span-2">
                                     <FieldLabel>Descripción (Solo para destacado)</FieldLabel>
-                                    <Textarea {...register(`impactHighlights.${index}.description` as const)} />
+                                    <Textarea
+                                      {...register(
+                                        `impactHighlights.${index}.description` as const
+                                      )}
+                                    />
                                   </Field>
                                 )}
                               </div>
@@ -1177,7 +1196,9 @@ export function OrganizationSheet({
                               type="button"
                               variant="outline"
                               size="sm"
-                              onClick={() => appendHighlight({ value: '', label: '', description: '' })}
+                              onClick={() =>
+                                appendHighlight({ value: '', label: '', description: '' })
+                              }
                             >
                               <Plus className="mr-2 h-4 w-4" /> Agregar Logro
                             </Button>

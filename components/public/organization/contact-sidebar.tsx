@@ -41,7 +41,7 @@ export function ContactSidebar({
       <div className="bg-surface rounded-[20px] p-6 lg:p-8 border border-border space-y-6">
         <div className="space-y-5">
           <div className="space-y-1">
-            <p className="font-mono text-[11px] font-medium uppercase tracking-[0.04em] text-primary">
+            <p className=" text-[11px] font-medium uppercase tracking-[0.04em] text-primary">
               Contacto directo
             </p>
             <h3 className="font-sans text-xl font-semibold text-foreground">
@@ -56,7 +56,7 @@ export function ContactSidebar({
                   <MapPin className="size-4" strokeWidth={1.5} />
                 </div>
                 <div className="min-w-0">
-                  <p className="font-mono text-[11px] font-medium text-foreground-muted uppercase tracking-[0.04em]">
+                  <p className=" text-[11px] font-medium text-foreground-muted uppercase tracking-[0.04em]">
                     Ubicación
                   </p>
                   <p className="text-sm font-medium text-foreground truncate">{location}</p>
@@ -73,7 +73,7 @@ export function ContactSidebar({
                 <Mail className="size-4" strokeWidth={1.5} />
               </div>
               <div className="min-w-0">
-                <p className="font-mono text-[11px] font-medium text-foreground-muted uppercase tracking-[0.04em]">
+                <p className=" text-[11px] font-medium text-foreground-muted uppercase tracking-[0.04em]">
                   Correo
                 </p>
                 <p className="text-sm font-medium text-foreground truncate group-hover:text-primary transition-colors">
@@ -88,12 +88,10 @@ export function ContactSidebar({
                   <Phone className="size-4" strokeWidth={1.5} />
                 </div>
                 <div className="min-w-0">
-                  <p className="font-mono text-[11px] font-medium text-foreground-muted uppercase tracking-[0.04em]">
+                  <p className=" text-[11px] font-medium text-foreground-muted uppercase tracking-[0.04em]">
                     Teléfono
                   </p>
-                  <p className="font-mono text-sm font-medium text-foreground tabular-nums">
-                    {phone}
-                  </p>
+                  <p className=" text-sm font-medium text-foreground tabular-nums">{phone}</p>
                 </div>
               </div>
             )}
@@ -139,11 +137,11 @@ export function ContactSidebar({
       {/* Impact Stats Snippet */}
       {impactCurrent != null && impactGoal != null && (
         <div className="bg-surface rounded-[20px] border border-border p-6 space-y-4">
-          <p className="font-mono text-xs font-medium tracking-[0.04em] uppercase text-primary">
+          <p className=" text-xs font-medium tracking-[0.04em] uppercase text-primary">
             Impacto reciente
           </p>
           <div className="flex justify-between items-end gap-3">
-            <span className="font-mono text-4xl font-medium tabular-nums text-foreground leading-none">
+            <span className=" text-4xl font-medium tabular-nums text-foreground leading-none">
               {formatNumber(impactCurrent)}+
             </span>
             <span className="text-xs font-medium text-foreground-muted text-right">

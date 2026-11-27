@@ -76,19 +76,19 @@ export function OrganizationCard({
 
           {/* Header: Category (JetBrains Mono) + Conditional Badges */}
           <div className="flex items-start justify-between gap-2 flex-wrap mb-3">
-            <span className="font-mono text-[11px] font-medium uppercase tracking-[0.06em] text-[#0C354C]/60">
+            <span className=" text-[11px] font-medium uppercase tracking-[0.06em] text-[#0C354C]/60">
               {primaryCategory}
             </span>
 
             <div className="flex items-center gap-1.5 flex-wrap">
               {causeType === 'YOUTH_INITIATIVE' && (
-                <Badge className="rounded-full bg-[#124866] text-[#84B3CE] border border-[#124866] px-2.5 py-0.5 h-auto font-mono text-[10px] font-medium uppercase tracking-[0.05em] gap-1">
+                <Badge className="rounded-full bg-[#124866] text-[#84B3CE] border border-[#124866] px-2.5 py-0.5 h-auto  text-[10px] font-medium uppercase tracking-[0.05em] gap-1">
                   <Sparkles className="size-2.5" strokeWidth={1.5} />
                   Iniciativa Joven
                 </Badge>
               )}
               {isDonatariaAutorizada && (
-                <Badge className="rounded-full bg-[#1E8E68]/12 text-[#1E8E68] border border-[#1E8E68]/25 px-2.5 py-0.5 h-auto font-mono text-[10px] font-medium uppercase tracking-[0.05em] gap-1">
+                <Badge className="rounded-full bg-[#1E8E68]/12 text-[#1E8E68] border border-[#1E8E68]/25 px-2.5 py-0.5 h-auto  text-[10px] font-medium uppercase tracking-[0.05em] gap-1">
                   <BadgeCheck className="size-2.5" strokeWidth={1.5} />
                   Donataria ISR
                 </Badge>
@@ -126,12 +126,12 @@ export function OrganizationCard({
         <CardFooter className="px-6 py-3.5 border-t border-[#DFD5C0] flex items-center justify-between gap-2">
           <div>
             {hasUrgentNeeds ? (
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#C84B31]/10 text-[#C84B31] border border-[#C84B31]/25 px-2.5 py-0.5 font-mono text-[10px] font-medium uppercase tracking-[0.05em]">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#C84B31]/10 text-[#C84B31] border border-[#C84B31]/25 px-2.5 py-0.5  text-[10px] font-medium uppercase tracking-[0.05em]">
                 <span className="size-1.5 rounded-full bg-[#C84B31]" aria-hidden="true" />
                 Con urgencia
               </span>
             ) : verified ? (
-              <span className="inline-flex items-center gap-1 font-mono text-[10px] font-medium uppercase tracking-[0.05em] text-[#1E8E68]">
+              <span className="inline-flex items-center gap-1  text-[10px] font-medium uppercase tracking-[0.05em] text-[#1E8E68]">
                 Verificada
               </span>
             ) : (

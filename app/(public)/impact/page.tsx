@@ -1,7 +1,7 @@
 import { type Metadata } from 'next'
-import { getImpactMetrics } from '@/server/actions/analytics'
+import { getPublicImpactStats } from '@/server/data/public-stats'
 import { ImpactHero } from '@/components/public/impact/impact-hero'
-import { ImpactTopOrgs } from '@/components/public/impact/impact-top-orgs'
+import { ImpactCategoryCoverage } from '@/components/public/impact/impact-category-coverage'
 import { ImpactPhotos } from '@/components/public/impact/impact-photos'
 
 export const metadata: Metadata = {
@@ -17,14 +17,25 @@ export const metadata: Metadata = {
   },
 }
 
+export const revalidate = 600
+
 export default async function ImpactPage() {
-  const metrics = await getImpactMetrics()
+  const stats = await getPublicImpactStats()
+  const updatedLabel = new Date(stats.lastUpdated).toLocaleString('es-MX', {
+    dateStyle: 'long',
+    timeStyle: 'short',
+    timeZone: 'America/Mexico_City',
+  })
 
   return (
     <div className="min-h-screen">
-      <ImpactHero metrics={metrics} />
-      <ImpactTopOrgs topOrgs={metrics.topOrgs} />
-      <ImpactPhotos lastUpdated={metrics.lastUpdated} />
+      <ImpactHero stats={stats} updatedLabel={updatedLabel} />
+      <ImpactCategoryCoverage
+        categories={stats.categories}
+        youthCount={stats.youthInitiatives}
+        totalPublished={stats.totalPublished}
+      />
+      <ImpactPhotos lastUpdatedLabel={updatedLabel} />
     </div>
   )
 }

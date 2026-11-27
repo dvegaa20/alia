@@ -77,14 +77,14 @@ function NeedCard({ need }: { need: NeedItem }) {
         <div className="flex justify-between items-start gap-3">
           <div className="inline-flex items-center gap-1.5 text-primary bg-primary/10 px-2.5 py-1 rounded-full shrink-0">
             <Icon className="size-3.5" strokeWidth={1.5} />
-            <span className="font-mono text-[10px] font-medium uppercase tracking-[0.04em]">
+            <span className=" text-[10px] font-medium uppercase tracking-[0.04em]">
               {cat.label}
             </span>
           </div>
 
           <span
             className={cn(
-              'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border shrink-0 font-mono text-[10px] font-medium uppercase tracking-[0.04em]',
+              'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border shrink-0  text-[10px] font-medium uppercase tracking-[0.04em]',
               urgency.badgeClass
             )}
           >
@@ -101,10 +101,10 @@ function NeedCard({ need }: { need: NeedItem }) {
 
         {need.quantity && (
           <div className="mt-auto pt-4 border-t border-border flex items-center justify-between gap-2">
-            <p className="font-mono text-[11px] font-medium text-foreground-muted uppercase tracking-[0.04em]">
+            <p className=" text-[11px] font-medium text-foreground-muted uppercase tracking-[0.04em]">
               Cantidad requerida
             </p>
-            <p className="font-mono text-xs font-medium tabular-nums text-foreground bg-background border border-border px-3 py-1 rounded-full">
+            <p className=" text-xs font-medium tabular-nums text-foreground bg-background border border-border px-3 py-1 rounded-full">
               {need.quantity}
             </p>
           </div>
@@ -164,7 +164,7 @@ export function NeedsTab({
                     <HeartHandshake className="size-5" strokeWidth={1.5} />
                   </div>
                   <div>
-                    <p className="font-mono text-[11px] font-medium uppercase tracking-[0.04em] text-primary">
+                    <p className=" text-[11px] font-medium uppercase tracking-[0.04em] text-primary">
                       Canal directo
                     </p>
                     <h3 className="font-sans text-xl font-semibold text-foreground">
@@ -175,7 +175,7 @@ export function NeedsTab({
 
                 <div className="flex flex-wrap items-center gap-2.5">
                   {isDonatariaAutorizada && (
-                    <Badge className="bg-[#1E8E68]/12 text-[#1E8E68] border border-[#1E8E68]/25 rounded-full px-3 py-1 h-auto font-mono text-[11px] font-medium uppercase tracking-[0.05em] gap-1.5">
+                    <Badge className="bg-[#1E8E68]/12 text-[#1E8E68] border border-[#1E8E68]/25 rounded-full px-3 py-1 h-auto  text-[11px] font-medium uppercase tracking-[0.05em] gap-1.5">
                       <BadgeCheck className="size-3.5" strokeWidth={1.5} />
                       Donataria Autorizada (ISR)
                     </Badge>
@@ -238,7 +238,7 @@ export function NeedsTab({
               </div>
               <Badge
                 variant="outline"
-                className="rounded-full border-urgency-coral/25 bg-urgency-coral/10 text-urgency-coral font-mono text-xs font-medium tabular-nums px-3 py-1 h-auto"
+                className="rounded-full border-urgency-coral/25 bg-urgency-coral/10 text-urgency-coral  text-xs font-medium tabular-nums px-3 py-1 h-auto"
               >
                 {urgentNeeds.length} {urgentNeeds.length === 1 ? 'necesidad' : 'necesidades'}
               </Badge>
@@ -275,7 +275,7 @@ export function NeedsTab({
               </div>
               <Badge
                 variant="outline"
-                className="rounded-full border-primary/20 bg-primary/10 text-primary font-mono text-xs font-medium tabular-nums px-3 py-1 h-auto"
+                className="rounded-full border-primary/20 bg-primary/10 text-primary  text-xs font-medium tabular-nums px-3 py-1 h-auto"
               >
                 {permanentNeeds.length} {permanentNeeds.length === 1 ? 'necesidad' : 'necesidades'}
               </Badge>
@@ -326,7 +326,7 @@ export function NeedsTab({
               <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
                 {volunteering?.description && (
                   <div className="space-y-2 flex-1">
-                    <p className="font-mono text-[11px] font-medium uppercase tracking-[0.04em] text-foreground-muted">
+                    <p className=" text-[11px] font-medium uppercase tracking-[0.04em] text-foreground-muted">
                       ¿De qué trata?
                     </p>
                     <Prose content={volunteering.description} size="sm" />
@@ -339,7 +339,7 @@ export function NeedsTab({
                       <UserCheck className="size-4" strokeWidth={1.5} />
                     </div>
                     <div>
-                      <p className="font-mono text-[11px] font-medium uppercase tracking-[0.04em] text-foreground-muted">
+                      <p className=" text-[11px] font-medium uppercase tracking-[0.04em] text-foreground-muted">
                         ¿Quién puede ayudar?
                       </p>
                       <p className="font-sans text-sm font-semibold text-foreground mt-1">
@@ -352,7 +352,7 @@ export function NeedsTab({
 
               {cleanActivities.length > 0 && (
                 <div className="pt-5 border-t border-border space-y-3">
-                  <p className="font-mono text-[11px] font-medium uppercase tracking-[0.04em] text-foreground-muted">
+                  <p className=" text-[11px] font-medium uppercase tracking-[0.04em] text-foreground-muted">
                     Actividades en las que puedes apoyar
                   </p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -418,10 +418,10 @@ export function NeedsTab({
                         )}
                         <CardContent className="p-5 space-y-2.5">
                           <div className="flex items-center justify-between gap-2 flex-wrap">
-                            <Badge className="bg-primary/10 text-primary border border-primary/20 rounded-full font-mono text-[10px] font-medium uppercase tracking-[0.04em]">
+                            <Badge className="bg-primary/10 text-primary border border-primary/20 rounded-full  text-[10px] font-medium uppercase tracking-[0.04em]">
                               Próximo evento
                             </Badge>
-                            <span className="font-mono text-xs font-medium tabular-nums text-foreground-muted flex items-center gap-1">
+                            <span className=" text-xs font-medium tabular-nums text-foreground-muted flex items-center gap-1">
                               <Clock className="size-3.5" strokeWidth={1.5} />
                               {ev.date}
                             </span>
@@ -468,11 +468,11 @@ export function NeedsTab({
                           <div className="flex items-center justify-between gap-2 flex-wrap">
                             <Badge
                               variant="outline"
-                              className="rounded-full font-mono text-[10px] font-medium uppercase tracking-[0.04em] text-foreground-muted border-border"
+                              className="rounded-full  text-[10px] font-medium uppercase tracking-[0.04em] text-foreground-muted border-border"
                             >
                               Evento realizado
                             </Badge>
-                            <span className="font-mono text-xs font-medium tabular-nums text-foreground-muted flex items-center gap-1">
+                            <span className=" text-xs font-medium tabular-nums text-foreground-muted flex items-center gap-1">
                               <Calendar className="size-3.5" strokeWidth={1.5} />
                               {ev.date}
                             </span>

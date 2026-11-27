@@ -44,6 +44,7 @@ export async function getPublishedOrgs(filters?: {
   verified?: boolean
   sort?: string
   causeType?: 'ONG' | 'YOUTH_INITIATIVE'
+  isDonatariaAutorizada?: boolean
 }) {
   const {
     categorySlug,
@@ -56,6 +57,7 @@ export async function getPublishedOrgs(filters?: {
     verified,
     sort,
     causeType,
+    isDonatariaAutorizada,
   } = filters || {}
   const skip = (page - 1) * limit
 
@@ -65,6 +67,10 @@ export async function getPublishedOrgs(filters?: {
 
   if (causeType) {
     whereClause.causeType = causeType
+  }
+
+  if (isDonatariaAutorizada !== undefined) {
+    whereClause.isDonatariaAutorizada = isDonatariaAutorizada
   }
 
   if (categorySlug) {

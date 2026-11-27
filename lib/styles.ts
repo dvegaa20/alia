@@ -4,7 +4,7 @@
 
 /** Consistent styling for form field labels across the app */
 export const LABEL_CX =
-  'font-mono text-[12px] font-medium uppercase tracking-[0.04em] text-foreground-muted pointer-events-none'
+  ' text-[12px] font-medium uppercase tracking-[0.04em] text-foreground-muted pointer-events-none'
 
 /** Consistent styling for form inputs across the app */
 export const INPUT_CX =

@@ -76,7 +76,7 @@ export function ContactTab({
             <form onSubmit={handleSubmit} className="flex flex-col flex-1 gap-5">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div className="space-y-2">
-                  <Label className="font-mono text-[11px] font-medium text-foreground-muted uppercase tracking-[0.04em]">
+                  <Label className=" text-[11px] font-medium text-foreground-muted uppercase tracking-[0.04em]">
                     Nombre
                   </Label>
                   <Input
@@ -88,7 +88,7 @@ export function ContactTab({
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label className="font-mono text-[11px] font-medium text-foreground-muted uppercase tracking-[0.04em]">
+                  <Label className=" text-[11px] font-medium text-foreground-muted uppercase tracking-[0.04em]">
                     Asunto
                   </Label>
                   <Input
@@ -103,7 +103,7 @@ export function ContactTab({
               </div>
 
               <div className="space-y-2 flex-1 flex flex-col">
-                <Label className="font-mono text-[11px] font-medium text-foreground-muted uppercase tracking-[0.04em]">
+                <Label className=" text-[11px] font-medium text-foreground-muted uppercase tracking-[0.04em]">
                   Mensaje
                 </Label>
                 <Textarea
@@ -164,11 +164,11 @@ export function ContactTab({
                       <div key={key} className="flex justify-between items-center text-sm">
                         <span className="text-foreground-secondary font-sans">{label}</span>
                         {dayData ? (
-                          <span className="font-mono text-xs font-medium tabular-nums text-foreground">
+                          <span className=" text-xs font-medium tabular-nums text-foreground">
                             {dayData.open} - {dayData.close}
                           </span>
                         ) : (
-                          <span className="font-mono text-xs text-foreground-muted">Cerrado</span>
+                          <span className=" text-xs text-foreground-muted">Cerrado</span>
                         )}
                       </div>
                     )
@@ -188,7 +188,7 @@ export function ContactTab({
                       <MapPin className="size-4" strokeWidth={1.5} />
                     </div>
                     <div className="overflow-hidden">
-                      <p className="font-mono text-[10px] uppercase tracking-[0.04em] font-medium text-foreground-muted mb-1">
+                      <p className=" text-[10px] uppercase tracking-[0.04em] font-medium text-foreground-muted mb-1">
                         Dirección física
                       </p>
                       <p className="font-sans text-sm font-medium text-foreground leading-snug">
@@ -203,7 +203,7 @@ export function ContactTab({
                     <Mail className="size-4" strokeWidth={1.5} />
                   </div>
                   <div className="overflow-hidden">
-                    <p className="font-mono text-[10px] uppercase tracking-[0.04em] font-medium text-foreground-muted mb-1">
+                    <p className=" text-[10px] uppercase tracking-[0.04em] font-medium text-foreground-muted mb-1">
                       Correo electrónico
                     </p>
                     <p className="font-sans text-sm font-medium text-foreground truncate">
@@ -218,12 +218,10 @@ export function ContactTab({
                       <Phone className="size-4" strokeWidth={1.5} />
                     </div>
                     <div className="overflow-hidden">
-                      <p className="font-mono text-[10px] uppercase tracking-[0.04em] font-medium text-foreground-muted mb-1">
+                      <p className=" text-[10px] uppercase tracking-[0.04em] font-medium text-foreground-muted mb-1">
                         Teléfono
                       </p>
-                      <p className="font-mono text-sm font-medium tabular-nums text-foreground">
-                        {phone}
-                      </p>
+                      <p className=" text-sm font-medium tabular-nums text-foreground">{phone}</p>
                     </div>
                   </div>
                 )}
@@ -239,10 +237,10 @@ export function ContactTab({
                       <MessageCircle className="size-4" strokeWidth={1.5} />
                     </div>
                     <div className="overflow-hidden">
-                      <p className="font-mono text-[10px] uppercase tracking-[0.04em] font-medium text-verified-emerald mb-1">
+                      <p className=" text-[10px] uppercase tracking-[0.04em] font-medium text-verified-emerald mb-1">
                         WhatsApp directo
                       </p>
-                      <p className="font-mono text-sm font-medium tabular-nums text-foreground group-hover/wa:underline">
+                      <p className=" text-sm font-medium tabular-nums text-foreground group-hover/wa:underline">
                         {whatsapp}
                       </p>
                     </div>
@@ -346,7 +344,7 @@ function InteractiveMapCard({
                   href={googleMapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block text-primary mt-1.5 font-mono text-[11px] font-medium uppercase tracking-[0.04em] hover:underline"
+                  className="block text-primary mt-1.5  text-[11px] font-medium uppercase tracking-[0.04em] hover:underline"
                 >
                   Ver indicaciones →
                 </a>

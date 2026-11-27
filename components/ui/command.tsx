@@ -118,7 +118,7 @@ function CommandGroup({
     <CommandPrimitive.Group
       data-slot="command-group"
       className={cn(
-        'overflow-hidden p-1 text-foreground **:[[cmdk-group-heading]]:px-2.5 **:[[cmdk-group-heading]]:py-1.5 **:[[cmdk-group-heading]]:font-mono **:[[cmdk-group-heading]]:text-[11px] **:[[cmdk-group-heading]]:font-medium **:[[cmdk-group-heading]]:uppercase **:[[cmdk-group-heading]]:tracking-[0.06em] **:[[cmdk-group-heading]]:text-foreground-muted',
+        'overflow-hidden p-1 text-foreground **:[[cmdk-group-heading]]:px-2.5 **:[[cmdk-group-heading]]:py-1.5 **:[[cmdk-group-heading]]: **:[[cmdk-group-heading]]:text-[11px] **:[[cmdk-group-heading]]:font-medium **:[[cmdk-group-heading]]:uppercase **:[[cmdk-group-heading]]:tracking-[0.06em] **:[[cmdk-group-heading]]:text-foreground-muted',
         className
       )}
       {...props}
@@ -164,7 +164,7 @@ function CommandShortcut({ className, ...props }: React.ComponentProps<'span'>) 
     <span
       data-slot="command-shortcut"
       className={cn(
-        'ml-auto font-mono text-[11px] tracking-wider text-foreground-muted group-data-selected/command-item:text-foreground',
+        'ml-auto  text-[11px] tracking-wider text-foreground-muted group-data-selected/command-item:text-foreground',
         className
       )}
       {...props}

@@ -32,12 +32,12 @@ export function AboutHeroSection() {
     <section
       ref={heroRef}
       data-nav-theme="light"
-      className="w-full bg-[#F5EEDD] pt-28 pb-16 lg:pt-36 lg:pb-24"
+      className="w-full bg-[#F5EEDD] pt-24 pb-8 lg:pt-28 lg:pb-10"
     >
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-14">
         <div className="max-w-4xl mx-auto text-center flex flex-col items-center">
           <div data-about-hero className="mb-6">
-            <span className="inline-flex items-center gap-2 rounded-full border border-[#16587B]/25 bg-[#16587B]/10 px-4 py-1.5 font-mono text-xs font-medium uppercase tracking-[0.06em] text-[#16587B]">
+            <span className="inline-flex items-center gap-2 rounded-full border border-[#16587B]/25 bg-[#16587B]/10 px-4 py-1.5  text-xs font-medium uppercase tracking-[0.06em] text-[#16587B]">
               <Sparkles className="size-3.5" strokeWidth={1.5} />
               Sobre el proyecto
             </span>
@@ -62,12 +62,12 @@ export function AboutHeroSection() {
             para todos en México.
           </p>
 
-          <div data-about-hero className="mt-10 flex items-center gap-3">
-            <div className="w-8 h-px bg-[#DFD5C0]" />
-            <span className="font-mono text-xs uppercase tracking-[0.06em] text-[#0C354C]/60">
+          <div data-about-hero className="mt-8 flex items-center gap-3">
+            <div className="w-8 h-px bg-[#0C354C]/25" />
+            <span className=" text-xs uppercase tracking-[0.06em] text-[#0C354C]/65">
               Alia · Directorio Social · México
             </span>
-            <div className="w-8 h-px bg-[#DFD5C0]" />
+            <div className="w-8 h-px bg-[#0C354C]/25" />
           </div>
         </div>
       </div>

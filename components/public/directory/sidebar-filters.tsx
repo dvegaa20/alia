@@ -105,7 +105,7 @@ export function SidebarFilters({
       >
         <SidebarHeader className="px-0 pt-0 pb-4">
           <div className="space-y-1">
-            <p className="font-mono text-[11px] font-medium uppercase tracking-[0.04em] text-primary">
+            <p className=" text-[11px] font-medium uppercase tracking-[0.04em] text-primary">
               Filtros
             </p>
             <h2 className="font-sans text-lg font-semibold text-foreground">Explorar por causa</h2>
@@ -170,7 +170,7 @@ export function SidebarFilters({
                         <a href="#" onClick={(e) => handleCategoryClick(e, category.slug)}>
                           <Icon className="size-4 shrink-0" strokeWidth={1.5} />
                           <span className="font-sans text-sm flex-1 truncate">{category.name}</span>
-                          <span className="font-mono text-[11px] font-medium tabular-nums text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+                          <span className=" text-[11px] font-medium tabular-nums text-primary bg-primary/10 px-2 py-0.5 rounded-full">
                             {category._count.organizations}
                           </span>
                         </a>
@@ -222,7 +222,7 @@ export function SidebarFilters({
                               <span className="font-sans font-semibold text-sm mb-1 leading-tight">
                                 {category.name}
                               </span>
-                              <span className="font-mono text-[11px] tabular-nums text-foreground-muted">
+                              <span className=" text-[11px] tabular-nums text-foreground-muted">
                                 {category._count.organizations} ONG
                                 {category._count.organizations !== 1 && 's'}
                               </span>
@@ -241,7 +241,7 @@ export function SidebarFilters({
             <SidebarGroupContent className="space-y-5">
               {/* Estado */}
               <div className="space-y-2">
-                <Label className="font-mono text-[11px] font-medium uppercase tracking-[0.04em] text-foreground-muted">
+                <Label className=" text-[11px] font-medium uppercase tracking-[0.04em] text-foreground-muted">
                   Estado
                 </Label>
                 <Select
@@ -278,7 +278,7 @@ export function SidebarFilters({
               {/* Municipio */}
               {activeState && (
                 <div className="space-y-2">
-                  <Label className="font-mono text-[11px] font-medium uppercase tracking-[0.04em] text-foreground-muted">
+                  <Label className=" text-[11px] font-medium uppercase tracking-[0.04em] text-foreground-muted">
                     Municipio
                   </Label>
                   <Select

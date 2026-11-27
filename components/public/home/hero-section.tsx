@@ -45,24 +45,29 @@ export function HeroSection({ heroVideos = HERO_VIDEOS }: HeroSectionProps) {
       {/* Background Video Carousel (auto-pauses inactive & offscreen videos) */}
       <HeroVideoCarousel videos={heroVideos} />
 
-      {/* Readability Scrim — neutral dark veil to reduce video brightness and keep text crisp */}
+      {/* Readability Scrim — Deep Harbor veil to reduce video brightness and keep text crisp */}
       <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/65 via-black/50 to-black/75"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#0C354C]/70 via-[#0C354C]/50 to-[#0C354C]/80"
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.45)_0%,rgba(0,0,0,0.15)_75%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(12,53,76,0.45)_0%,rgba(12,53,76,0.15)_75%)]"
         aria-hidden="true"
       />
 
       {/* Centered Editorial Content (no backdrop-blur over video) */}
-      <div className="relative z-10 max-w-4xl mx-auto px-6 pt-20 pb-16 text-center flex flex-col items-center">
+      <div className="relative z-10 max-w-4xl mx-auto px-6 py-20 text-center flex flex-col items-center">
         <p
           data-hero-animate
-          className="inline-flex items-center gap-2 rounded-full border border-[#84B3CE]/40 bg-[#0C354C]/75 px-4 py-1.5 font-mono text-xs font-medium uppercase tracking-[0.06em] text-[#84B3CE] mb-7"
+          className="inline-flex items-center gap-2 rounded-full border border-[#84B3CE]/40 bg-[#0C354C]/75 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.06em] text-[#84B3CE] mb-7"
         >
           <span className="size-1.5 rounded-full bg-[#84B3CE]" aria-hidden="true" />
-          Directorio Social Verificado · México
+          Directorio Social
+          <span className="size-1.5 rounded-full bg-[#84B3CE]" aria-hidden="true" />
+          México
+          <span className="size-1.5 rounded-full bg-[#84B3CE]" aria-hidden="true" />
+          Querétaro
+          <span className="size-1.5 rounded-full bg-[#84B3CE]" aria-hidden="true" />
         </p>
 
         <h1
@@ -87,7 +92,7 @@ export function HeroSection({ heroVideos = HERO_VIDEOS }: HeroSectionProps) {
         <div data-hero-animate className="flex flex-wrap items-center justify-center gap-4">
           <Button
             asChild
-            className="rounded-full bg-[#84B3CE] hover:bg-[#9AC3DA] text-[#0C354C] border border-[#84B3CE] px-7 py-3.5 h-auto font-sans text-[16px] font-medium tracking-[-0.015em] shadow-none transition-colors"
+            className="rounded-full bg-[#84B3CE] hover:bg-[#9AC3DA] text-[#0C354C] border border-[#84B3CE] px-4 py-2 h-auto font-sans text-[16px] font-medium tracking-[-0.015em] shadow-none transition-colors"
           >
             <Link href="/directory">
               Explorar Directorio
@@ -98,7 +103,7 @@ export function HeroSection({ heroVideos = HERO_VIDEOS }: HeroSectionProps) {
           <Button
             asChild
             variant="outline"
-            className="rounded-full bg-transparent hover:bg-[#84B3CE]/15 text-[#84B3CE] hover:text-white border border-[#84B3CE] px-7 py-3.5 h-auto font-sans text-[16px] font-medium tracking-[-0.015em] shadow-none transition-colors"
+            className="rounded-full bg-transparent hover:bg-[#84B3CE]/15 text-[#84B3CE] hover:text-white border border-[#84B3CE] px-4 py-2 h-auto font-sans text-[16px] font-medium tracking-[-0.015em] shadow-none transition-colors"
           >
             <Link href="/about">Sobre el proyecto</Link>
           </Button>

@@ -43,7 +43,7 @@ export default function NotFound() {
               </div>
 
               {/* Floating Badge */}
-              <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-border bg-surface px-4 py-1.5 font-mono text-xs text-foreground-muted">
+              <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-border bg-surface px-4 py-1.5  text-xs text-foreground-muted">
                 <MapPinOff className="size-3.5 text-primary" strokeWidth={1.5} />
                 <span>Ruta no encontrada</span>
               </div>
@@ -52,7 +52,7 @@ export default function NotFound() {
 
           {/* Content */}
           <div className="max-w-xl">
-            <span className="font-mono text-primary font-medium tracking-[0.04em] text-xs uppercase mb-3 block">
+            <span className=" text-primary font-medium tracking-[0.04em] text-xs uppercase mb-3 block">
               Error 404
             </span>
             <h1 className="font-sans text-3xl md:text-4xl font-medium text-foreground tracking-[-0.025em] mb-4">
@@ -86,7 +86,7 @@ export default function NotFound() {
                 asChild
               >
                 <Link href="/">
-                  Ir al inicio (<span className="font-mono tabular-nums">{countdown}s</span>)
+                  Ir al inicio (<span className=" tabular-nums">{countdown}s</span>)
                 </Link>
               </Button>
             </div>
@@ -94,9 +94,7 @@ export default function NotFound() {
 
           {/* Suggestion Content */}
           <div className="mt-10 pt-6 border-t border-border w-full max-w-md">
-            <p className="font-mono text-xs text-foreground-muted mb-3">
-              ¿Buscabas algo específico?
-            </p>
+            <p className=" text-xs text-foreground-muted mb-3">¿Buscabas algo específico?</p>
             <div className="flex flex-wrap justify-center gap-2">
               {['Medio Ambiente', 'Educación', 'Salud', 'Derechos Humanos'].map((cat) => (
                 <Badge

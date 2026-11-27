@@ -50,13 +50,13 @@ export function ImpactTab({
         {heroHighlight && (
           <Card className="rounded-[20px] border border-border bg-surface overflow-hidden py-0">
             <CardContent className="p-8 md:p-10 flex flex-col gap-4">
-              <span className="inline-flex items-center gap-1.5 self-start bg-primary/10 text-primary border border-primary/20 font-mono text-[11px] font-medium uppercase tracking-[0.04em] px-3 py-1 rounded-full">
+              <span className="inline-flex items-center gap-1.5 self-start bg-primary/10 text-primary border border-primary/20  text-[11px] font-medium uppercase tracking-[0.04em] px-3 py-1 rounded-full">
                 <TrendingUp className="size-3.5" strokeWidth={1.5} />
                 Logro principal
               </span>
 
               <div className="flex items-baseline gap-3 flex-wrap mt-2">
-                <span className="font-mono text-5xl md:text-6xl font-medium tabular-nums text-foreground tracking-[-0.02em] leading-none">
+                <span className=" text-5xl md:text-6xl font-medium tabular-nums text-foreground tracking-[-0.02em] leading-none">
                   {heroHighlight.value}
                 </span>
                 <span className="font-sans text-xl md:text-2xl font-semibold text-foreground leading-tight">
@@ -80,11 +80,11 @@ export function ImpactTab({
                 className="rounded-[20px] border border-border bg-surface py-0 h-full"
               >
                 <CardContent className="p-6 flex flex-col gap-4 h-full">
-                  <span className="font-mono text-xs font-medium uppercase tracking-[0.04em] text-primary">
+                  <span className=" text-xs font-medium uppercase tracking-[0.04em] text-primary">
                     {String(idx + 1).padStart(2, '0')} · Indicador
                   </span>
                   <div className="mt-auto pt-2 space-y-1.5">
-                    <span className="font-mono text-3xl sm:text-4xl font-medium tabular-nums text-foreground block">
+                    <span className=" text-3xl sm:text-4xl font-medium tabular-nums text-foreground block">
                       {highlight.value}
                     </span>
                     <p className="font-sans text-sm font-medium text-foreground-secondary leading-snug">
@@ -105,11 +105,11 @@ export function ImpactTab({
                 <div className="flex items-end gap-4">
                   <div className="flex flex-col items-start gap-1 text-foreground-muted">
                     <Calendar className="size-5 text-primary mb-1" strokeWidth={1.5} />
-                    <span className="font-mono text-xs font-medium uppercase tracking-[0.04em]">
+                    <span className=" text-xs font-medium uppercase tracking-[0.04em]">
                       Fundada en
                     </span>
                   </div>
-                  <span className="font-mono text-5xl sm:text-6xl font-medium tabular-nums text-foreground leading-none">
+                  <span className=" text-5xl sm:text-6xl font-medium tabular-nums text-foreground leading-none">
                     {foundedYear}
                   </span>
                 </div>
@@ -117,7 +117,7 @@ export function ImpactTab({
                 {verified && (
                   <div className="inline-flex items-center gap-2 self-start bg-[#1E8E68]/12 text-[#1E8E68] border border-[#1E8E68]/25 px-4 py-2 rounded-full">
                     <Award className="size-4" strokeWidth={1.5} />
-                    <span className="font-mono text-xs font-medium uppercase tracking-[0.04em]">
+                    <span className=" text-xs font-medium uppercase tracking-[0.04em]">
                       Organización verificada
                     </span>
                   </div>
@@ -135,7 +135,7 @@ export function ImpactTab({
                 />
 
                 <div className="relative z-10 space-y-4">
-                  <p className="font-mono text-[11px] uppercase tracking-[0.04em] font-medium text-primary">
+                  <p className=" text-[11px] uppercase tracking-[0.04em] font-medium text-primary">
                     Testimonio
                   </p>
                   <p className="font-sans text-lg font-medium text-foreground leading-relaxed">
@@ -151,9 +151,7 @@ export function ImpactTab({
                     <p className="font-sans font-semibold text-sm text-foreground">
                       {impactTestimony.author}
                     </p>
-                    <p className="font-mono text-xs text-foreground-muted mt-0.5">
-                      {impactTestimony.role}
-                    </p>
+                    <p className=" text-xs text-foreground-muted mt-0.5">{impactTestimony.role}</p>
                   </div>
                 </div>
               </CardContent>

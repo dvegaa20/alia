@@ -83,7 +83,7 @@ export function ResultsGrid({
             <span className="font-serif italic font-normal text-[#16587B]">causas</span>
           </h1>
           <div className="flex items-center gap-2 text-sm text-[#0C354C]/75">
-            <span className="font-mono font-medium tabular-nums text-[#16587B]">{total}</span>
+            <span className=" font-medium tabular-nums text-[#16587B]">{total}</span>
             <span>{total === 1 ? 'organización encontrada' : 'organizaciones encontradas'}</span>
           </div>
         </div>
@@ -92,7 +92,7 @@ export function ResultsGrid({
           {/* Sort — only visible in list view */}
           {currentView === 'list' && (
             <div className="flex items-center gap-2 text-sm">
-              <span className="font-mono text-xs uppercase tracking-[0.06em] text-[#0C354C]/60">
+              <span className=" text-xs uppercase tracking-[0.06em] text-[#0C354C]/60">
                 Ordenar:
               </span>
               <Select value={sort} onValueChange={handleSortChange}>

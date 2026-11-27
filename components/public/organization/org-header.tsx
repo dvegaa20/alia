@@ -41,7 +41,7 @@ export function OrgHeader({
         <div className="flex items-center justify-between gap-3 flex-wrap">
           <Link
             href="/directory"
-            className="inline-flex items-center gap-2 text-foreground-muted hover:text-primary transition-colors font-mono text-xs font-medium uppercase tracking-[0.04em] group"
+            className="inline-flex items-center gap-2 text-foreground-muted hover:text-primary transition-colors  text-xs font-medium uppercase tracking-[0.04em] group"
           >
             <ArrowLeft
               className="size-4 transition-transform group-hover:-translate-x-1"
@@ -52,19 +52,19 @@ export function OrgHeader({
 
           <div className="flex items-center gap-2 flex-wrap">
             {causeType === 'YOUTH_INITIATIVE' && (
-              <Badge className="bg-[#124866] text-[#84B3CE] border border-[#124866] px-3 py-1 rounded-full font-mono text-[11px] font-medium uppercase tracking-[0.05em] h-auto gap-1.5">
+              <Badge className="bg-[#124866] text-[#84B3CE] border border-[#124866] px-3 py-1 rounded-full  text-[11px] font-medium uppercase tracking-[0.05em] h-auto gap-1.5">
                 <Sparkles className="size-3.5" strokeWidth={1.5} />
                 Iniciativa Joven
               </Badge>
             )}
             {isDonatariaAutorizada && (
-              <Badge className="bg-[#1E8E68]/12 text-[#1E8E68] border border-[#1E8E68]/25 px-3 py-1 rounded-full font-mono text-[11px] font-medium uppercase tracking-[0.05em] h-auto gap-1.5">
+              <Badge className="bg-[#1E8E68]/12 text-[#1E8E68] border border-[#1E8E68]/25 px-3 py-1 rounded-full  text-[11px] font-medium uppercase tracking-[0.05em] h-auto gap-1.5">
                 <BadgeCheck className="size-3.5" strokeWidth={1.5} />
                 Donataria ISR
               </Badge>
             )}
             {verified && (
-              <Badge className="bg-[#1E8E68]/10 text-[#1E8E68] border border-[#1E8E68]/25 px-3 py-1 rounded-full font-mono text-[11px] font-medium uppercase tracking-[0.05em] h-auto gap-1.5">
+              <Badge className="bg-[#1E8E68]/10 text-[#1E8E68] border border-[#1E8E68]/25 px-3 py-1 rounded-full  text-[11px] font-medium uppercase tracking-[0.05em] h-auto gap-1.5">
                 <BadgeCheck className="size-3.5" strokeWidth={1.5} />
                 Verificada
               </Badge>
@@ -89,7 +89,7 @@ export function OrgHeader({
             {categories.map((cat) => (
               <Badge
                 key={cat.id}
-                className="bg-surface text-foreground-secondary border border-border px-3 py-1 h-auto rounded-full font-mono text-xs font-medium uppercase tracking-[0.04em]"
+                className="bg-surface text-foreground-secondary border border-border px-3 py-1 h-auto rounded-full  text-xs font-medium uppercase tracking-[0.04em]"
               >
                 {cat.name}
               </Badge>

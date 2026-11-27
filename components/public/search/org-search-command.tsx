@@ -185,7 +185,7 @@ export function OrgSearchProvider({ children }: { children: React.ReactNode }) {
                           </div>
                           <div className="flex items-center gap-2 text-xs text-foreground-muted mt-0.5">
                             {org.categories[0] && (
-                              <span className="font-mono text-[10px] uppercase tracking-[0.04em] text-primary shrink-0">
+                              <span className=" text-[10px] uppercase tracking-[0.04em] text-primary shrink-0">
                                 {org.categories[0]}
                               </span>
                             )}
@@ -233,7 +233,7 @@ export function OrgSearchProvider({ children }: { children: React.ReactNode }) {
                             </div>
                             <div className="flex items-center gap-2 text-xs text-foreground-muted mt-0.5">
                               {org.categories[0] && (
-                                <span className="font-mono text-[10px] uppercase tracking-[0.04em] text-primary shrink-0">
+                                <span className=" text-[10px] uppercase tracking-[0.04em] text-primary shrink-0">
                                   {org.categories[0]}
                                 </span>
                               )}
